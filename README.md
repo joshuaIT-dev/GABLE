@@ -1,6 +1,6 @@
 # GABLE
 
-GABLE (Game Based Learning Environment) is a web application for managing quizzes and coursework with game-inspired progression. Students take quizzes and earn XP, instructors manage classes and review outcomes, and administrators manage the platform.
+GABLE (Gamified Academic-Based Learning Environment) is a web application for managing quizzes and coursework with game-inspired progression. Students take quizzes and earn XP, instructors manage classes and review outcomes, and administrators manage the platform.
 
 ## Roles and portals
 
