@@ -1,0 +1,198 @@
+/* ═══════════════════════════════════════════════════════════
+   notifications.css — Student Portal
+   Notification bell, panel, announcement modal, flag button
+═══════════════════════════════════════════════════════════ */
+
+/* ══════════════════════
+   NOTIFICATION BELL
+══════════════════════ */
+.notif-bell-wrap {
+  position: relative;
+}
+
+.btn-notif-bell {
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .15);
+  color: #fff; border-radius: 10px;
+  width: 38px; height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: background .2s;
+  position: relative;
+}
+.btn-notif-bell:hover { background: rgba(255, 255, 255, .14); }
+
+.notif-badge {
+  position: absolute; top: -5px; right: -5px;
+  background: #ef4444; color: #fff;
+  font-size: .58rem; font-weight: 800;
+  width: 18px; height: 18px; border-radius: 99px;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid #0f0a1e;
+  animation: notif-pop .3s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes notif-pop {
+  from { transform: scale(0); }
+  to   { transform: scale(1); }
+}
+
+
+/* ══════════════════════
+   NOTIFICATION PANEL
+══════════════════════ */
+.notif-panel {
+  position: absolute; top: calc(100% + 10px); right: 0;
+  width: 360px; max-height: 480px;
+  background: #1a1740;
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .55);
+  z-index: 400;
+  display: flex; flex-direction: column;
+  animation: np-slide-in .2s ease;
+  overflow: hidden;
+}
+@keyframes np-slide-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.np-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 1.15rem .75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, .08);
+  flex-shrink: 0;
+}
+.np-title {
+  font-size: .9rem; font-weight: 800;
+}
+.np-mark-all {
+  font-size: .68rem; font-weight: 600;
+  color: var(--purple-light, #c084fc);
+  background: none; border: none; cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  padding: .2rem .5rem;
+  transition: opacity .2s;
+}
+.np-mark-all:hover { opacity: .75; }
+.np-close-btn {
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .12);
+  color: #fff; border-radius: 7px;
+  width: 26px; height: 26px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .75rem; cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+}
+
+.np-tabs {
+  display: flex; gap: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, .08);
+  flex-shrink: 0;
+}
+.np-tab {
+  flex: 1; background: none; border: none;
+  color: rgba(255, 255, 255, .5);
+  font-size: .75rem; font-weight: 600;
+  padding: .65rem .5rem;
+  cursor: pointer; font-family: 'Poppins', sans-serif;
+  display: flex; align-items: center; justify-content: center; gap: .4rem;
+  border-bottom: 2px solid transparent;
+  transition: color .2s, border-color .2s;
+}
+.np-tab.active {
+  color: #fff;
+  border-bottom-color: var(--purple-light, #c084fc);
+}
+.np-tab-badge {
+  font-size: .6rem; font-weight: 800;
+  background: #ef4444; color: #fff;
+  border-radius: 99px; padding: .1rem .4rem;
+  line-height: 1.2;
+}
+
+.np-body {
+  overflow-y: auto; flex: 1;
+  padding: .5rem 0;
+}
+.np-body::-webkit-scrollbar { width: 4px; }
+.np-body::-webkit-scrollbar-track { background: transparent; }
+.np-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 99px; }
+
+.np-empty {
+  text-align: center;
+  font-size: .82rem; color: rgba(255, 255, 255, .35);
+  padding: 2rem 1rem;
+}
+
+/* ── Notification items ── */
+.np-item {
+  display: flex; align-items: flex-start; gap: .75rem;
+  padding: .75rem 1.15rem;
+  cursor: pointer; position: relative;
+  transition: background .15s;
+}
+.np-item:hover { background: rgba(255, 255, 255, .04); }
+.np-item + .np-item {
+  border-top: 1px solid rgba(255, 255, 255, .05);
+}
+.np-unread { background: rgba(124, 92, 191, .06); }
+.np-read   { opacity: .72; }
+
+.np-item-icon {
+  width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, .08);
+}
+.np-priority-urgent   { background: rgba(239, 68, 68, .2); }
+.np-priority-important { background: rgba(245, 158, 11, .2); }
+
+.np-item-body { flex: 1; min-width: 0; }
+.np-item-title {
+  font-size: .82rem; font-weight: 700; margin-bottom: .18rem;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.np-item-preview {
+  font-size: .72rem; color: rgba(255, 255, 255, .6);
+  line-height: 1.4; margin-bottom: .2rem;
+}
+.np-item-meta {
+  font-size: .65rem; color: rgba(255, 255, 255, .35);
+}
+
+.np-unread-dot {
+  width: 8px; height: 8px; border-radius: 99px;
+  background: var(--purple-light, #c084fc);
+  flex-shrink: 0; margin-top: .3rem;
+}
+
+
+/* ══════════════════════
+   FLAG QUESTION BUTTON
+══════════════════════ */
+.btn-flag-question {
+  display: inline-flex; align-items: center; gap: .35rem;
+  background: rgba(239, 68, 68, .1);
+  border: 1px solid rgba(239, 68, 68, .3);
+  color: #fca5a5; border-radius: 9px;
+  padding: .38rem .8rem; font-size: .72rem; font-weight: 700;
+  cursor: pointer; font-family: 'Poppins', sans-serif;
+  transition: background .2s, transform .15s;
+  white-space: nowrap;
+}
+.btn-flag-question:hover {
+  background: rgba(239, 68, 68, .2);
+  transform: translateY(-1px);
+}
+
+.flag-used-badge {
+  display: inline-flex; align-items: center; gap: .3rem;
+  font-size: .72rem; font-weight: 700;
+  color: #fca5a5;
+  background: rgba(239, 68, 68, .12);
+  border: 1px solid rgba(239, 68, 68, .25);
+  border-radius: 9px; padding: .38rem .8rem;
+  white-space: nowrap;
+}

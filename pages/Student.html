@@ -1,0 +1,710 @@
+<!--Student.html-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GABLE – Student Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/student.css">
+    <link rel="stylesheet" href="../assets/css/style.css?v=2">
+
+    <link rel="stylesheet" href="../assets/css/student/levelup.css">
+    <link rel="stylesheet" href="../assets/css/student/fiftyfifty.css">
+    <link rel="stylesheet" href="../assets/css/student/powerups.css?v=2">
+    <link rel="stylesheet" href="../assets/css/student/notifications.css">
+    <link rel="stylesheet" href="../assets/css/student/battlerail.css">
+
+    <!-- AI Integration -->
+    <link rel="stylesheet" href="../assets/css/student/ai integration/explainer.css?v=3">
+    <link rel="stylesheet" href="../assets/css/student/ai integration/studybuddy.css">
+    <link rel="stylesheet" href="../assets/css/student/ai integration/weakspot.css">
+    <link rel="stylesheet" href="../assets/css/student/ai integration/hints.css">
+  <link rel="stylesheet" href="../assets/css/lucide-icons.css">
+    <link rel="stylesheet" href="../assets/css/student/student-shell.css?v=12">
+<link rel="stylesheet" href="../assets/css/actions.css?v=2">
+<link rel="stylesheet" href="../assets/css/review-library.css?v=3">
+  <link rel="stylesheet" href="../assets/css/brand-text.css?v=5">
+<link rel="stylesheet" href="../assets/css/surfaces.css?v=2">
+</head>
+
+<body class="student-portal">
+    <div class="bg-blobs"></div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar student-navbar" aria-label="Student navigation">
+        <div class="student-nav-top">
+            <button class="nav-brand" onclick="switchTab('home')" aria-label="GABLE student home"><span class="brand-mark">G</span><span class="brand-wordmark">GABLE<small>Student workspace</small></span></button>
+            <div class="nav-right">
+                <div class="nav-utilities" aria-label="Learning tools">
+                <div class="xp-badge" id="xp-badge-btn">
+                    <button class="xp-nav-trigger" onclick="toggleXpPopup()" aria-controls="xp-popup" aria-expanded="false"><i data-lucide="zap" aria-hidden="true"></i><span class="nav-xp-copy"><small>Available</small><span class="xp-val" id="xp-display">0 XP</span></span></button>
+                    <div class="xp-popup" id="xp-popup"><div class="xp-popup-heading"><div><span class="card-eyebrow">LEVEL PROGRESS</span><div class="xp-popup-label">Your next milestone</div></div><button class="xp-popup-dismiss" onclick="closeXpPopup()" aria-label="Close XP details"><i data-lucide="x" aria-hidden="true"></i></button></div><div class="xp-popup-level" id="popup-level-text"></div><div class="xp-popup-track"><div class="xp-popup-fill" id="popup-fill" style="width:0%"></div></div><div class="xp-popup-sub" id="popup-sub"></div><div class="xp-popup-btns"><button class="btn-xp-dash" onclick="switchTab('xp');closeXpPopup()">View rewards</button><button class="btn-xp-close" onclick="closeXpPopup()">Close</button></div></div>
+                </div>
+                <button class="btn-help" onclick="openModal('modal-help')" aria-label="Help"><i data-lucide="circle-help" aria-hidden="true"></i></button>
+                </div>
+                <div class="nav-account">
+                <button class="profile-badge" onclick="openModal('modal-profile');renderProfileRewards()" aria-label="Open your profile"><span class="s-avatar-nav" id="nav-avatar"></span><span class="profile-info"><strong id="nav-student-name">Student</strong><span id="nav-student-program"></span></span><i class="profile-chevron" data-lucide="chevron-down" aria-hidden="true"></i></button>
+                <button class="btn-logout" onclick="logout()" title="Log out" aria-label="Log out"><i data-lucide="log-out" aria-hidden="true"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="nav-tabs"><button class="nav-tab active" data-panel="home" aria-controls="panel-home" aria-current="page" onclick="switchTab('home')">Home</button><button class="nav-tab" data-panel="quizzes" aria-controls="panel-quizzes" onclick="switchTab('quizzes')">My Quizzes</button><button class="nav-tab" data-panel="scores" aria-controls="panel-scores" onclick="switchTab('scores')">Performance</button><button class="nav-tab" data-panel="leaderboard" aria-controls="panel-leaderboard" onclick="switchTab('leaderboard')">Leaderboard</button><button class="nav-tab" data-panel="studybuddy" aria-controls="panel-studybuddy" onclick="switchTab('studybuddy')">Study Buddy</button><button class="nav-tab" data-panel="powerups" aria-controls="panel-powerups" onclick="switchTab('powerups')">Power-Ups</button><button class="nav-tab" data-panel="xp" aria-controls="panel-xp" onclick="switchTab('xp')">XP &amp; Rewards</button></div>
+    </nav>
+
+    <div class="main">
+
+        <!-- ══ HOME ══ -->
+        <div class="panel active" id="panel-home">
+
+            <div class="hero-banner student-home-hero fade-up">
+                <div class="hero-text"><div class="card-eyebrow">YOUR STUDENT WORKSPACE</div><h2 id="home-welcome"></h2><p id="home-summary"></p><div class="hero-streak"><button class="btn-join" onclick="switchTab('quizzes')">Continue to my quizzes <span aria-hidden="true">&rarr;</span></button><span class="streak-chip" id="home-streak"></span></div></div>
+                <div class="home-quick-actions"><span class="card-eyebrow">MAKE YOUR NEXT STEP COUNT</span><button onclick="switchTab('studybuddy')"><span><strong>Review a topic</strong><small>Work through it with Study Buddy</small></span><span aria-hidden="true">&rarr;</span></button><button onclick="switchTab('scores')"><span><strong>Check your progress</strong><small>See your results across subjects</small></span><span aria-hidden="true">&rarr;</span></button></div>
+            </div>
+
+            <div class="stats-overview fade-up-1">
+
+                <div class="stat-overview-card">
+                    <div class="soc-top">
+                        <span class="soc-icon lucide-icon"><i data-lucide="star" aria-hidden="true"></i></span>
+                        <span class="soc-trend" id="home-xp-trend"></span>
+                    </div>
+
+                    <div class="soc-val" style="color:var(--gold)" id="home-xp"></div>
+                    <div class="soc-label">Available XP</div>
+                    <div class="soc-sub" id="home-level-sub"></div>
+                </div>
+
+                <div class="stat-overview-card">
+                    <div class="soc-top">
+                        <span class="soc-icon lucide-icon"><i data-lucide="target" aria-hidden="true"></i></span>
+                        <span class="soc-trend" id="home-accuracy-trend"></span>
+                    </div>
+
+                    <div class="soc-val" style="color:var(--green)" id="home-accuracy"></div>
+                    <div class="soc-label">Quiz Accuracy</div>
+                    <div class="soc-sub" id="home-accuracy-sub"></div>
+                </div>
+
+                <div class="stat-overview-card">
+                    <div class="soc-top">
+                        <span class="soc-icon lucide-icon"><i data-lucide="trophy" aria-hidden="true"></i></span>
+                    </div>
+
+                    <div class="soc-val" style="color:var(--purple-light)" id="home-rank"></div>
+                    <div class="soc-label">Class Rank</div>
+                    <div class="soc-sub" id="home-section"></div>
+                </div>
+
+                <div class="stat-overview-card">
+                    <div class="soc-top">
+                        <span class="soc-icon lucide-icon"><i data-lucide="circle-check" aria-hidden="true"></i></span>
+                    </div>
+
+                    <div class="soc-val" style="color:var(--blue)" id="home-completed"></div>
+                    <div class="soc-label">Completed</div>
+                    <div class="soc-sub" id="home-completed-sub"></div>
+                </div>
+            </div>
+
+            <div class="home-two-col fade-up-2">
+
+                <div class="perf-card">
+
+                    <div class="section-title" style="margin-bottom:.85rem">
+                        <i data-lucide="chart-no-axes-column-increasing" class="emoji-lucide" aria-hidden="true"></i> Performance Overview
+                    </div>
+
+                    <div class="perf-section">
+
+                        <div class="perf-section-header">
+                            <span class="perf-section-title">
+                                Informal Activities (Homework)
+                            </span>
+
+                            <span class="perf-section-icon lucide-icon"><i data-lucide="house" aria-hidden="true"></i></span>
+                        </div>
+
+                        <div class="perf-section-desc">
+                            Homework assignments, practice exercises, take-home quizzes
+                        </div>
+
+                        <div class="perf-row">
+                            <div class="perf-row-top">
+                                <span class="perf-row-label"></span>
+                                <span class="perf-row-pct" style="color:var(--blue-light)"></span>
+                            </div>
+
+                            <div class="perf-bar-track">
+                                <div class="perf-bar-fill pf-blue" style="width:0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="perf-row">
+                            <div class="perf-row-top">
+                                <span class="perf-row-label"></span>
+                                <span class="perf-row-pct" style="color:var(--blue-light)"></span>
+                            </div>
+
+                            <div class="perf-bar-track">
+                                <div class="perf-bar-fill pf-blue" style="width:0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="perf-row">
+                            <div class="perf-row-top">
+                                <span class="perf-row-label"></span>
+                                <span class="perf-row-pct" style="color:var(--blue-light)"></span>
+                            </div>
+
+                            <div class="perf-bar-track">
+                                <div class="perf-bar-fill pf-blue" style="width:0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="perf-row">
+                            <div class="perf-row-top">
+                                <span class="perf-row-label"></span>
+                                <span class="perf-row-pct" style="color:var(--blue-light)"></span>
+                            </div>
+
+                            <div class="perf-bar-track">
+                                <div class="perf-bar-fill pf-blue" style="width:0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="perf-section">
+
+                        <div class="perf-section-header">
+                            <span class="perf-section-title">
+                                Formal Activities (In-Class)
+                            </span>
+
+                            <span class="perf-section-icon lucide-icon"><i data-lucide="landmark" aria-hidden="true"></i></span>
+                        </div>
+
+                        <div class="perf-section-desc">
+                            Real-time classroom quizzes, exams, and graded assessments
+                        </div>
+
+                        <div class="perf-row">
+                            <div class="perf-row-top">
+                                <span class="perf-row-label"></span>
+                                <span class="perf-row-pct" style="color:var(--purple-light)"></span>
+                            </div>
+
+                            <div class="perf-bar-track">
+                                <div class="perf-bar-fill pf-purple" style="width:0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="perf-row">
+                            <div class="perf-row-top">
+                                <span class="perf-row-label"></span>
+                                <span class="perf-row-pct" style="color:var(--purple-light)"></span>
+                            </div>
+
+                            <div class="perf-bar-track">
+                                <div class="perf-bar-fill pf-purple" style="width:0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="perf-row">
+                            <div class="perf-row-top">
+                                <span class="perf-row-label"></span>
+                                <span class="perf-row-pct" style="color:var(--purple-light)"></span>
+                            </div>
+
+                            <div class="perf-bar-track">
+                                <div class="perf-bar-fill pf-purple" style="width:0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="perf-row">
+                            <div class="perf-row-top">
+                                <span class="perf-row-label"></span>
+                                <span class="perf-row-pct" style="color:var(--purple-light)"></span>
+                            </div>
+
+                            <div class="perf-bar-track">
+                                <div class="perf-bar-fill pf-purple" style="width:0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="activity-card">
+                    <div class="home-activity-tabs" role="tablist" aria-label="Quiz activity">
+                        <button id="home-recent-tab" role="tab" aria-selected="true" aria-controls="home-available-list" onclick="switchHomeActivity('recent')">Recent quizzes</button>
+                        <button id="home-latest-tab" role="tab" aria-selected="false" aria-controls="home-completed-list" tabindex="-1" onclick="switchHomeActivity('latest')">Latest activities</button>
+                    </div>
+                    <div id="home-available-list" role="tabpanel" aria-labelledby="home-recent-tab"></div>
+                    <div id="home-completed-list" role="tabpanel" aria-labelledby="home-latest-tab" hidden></div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ══ MY QUIZZES ══ -->
+        <div class="panel" id="panel-quizzes">
+
+            <div class="quiz-hero-banner fade-up">
+
+                <div class="qhb-left">
+
+                    <div class="qhb-eyebrow">YOUR LEARNING SPACE</div>
+                    <h2>Your next quiz starts here</h2>
+
+                    <p id="quiz-summary"></p>
+
+                </div>
+
+                    <div class="qhb-streak">
+
+                        <div class="streak-block">
+                            <div class="sb-label">Current Streak</div>
+                            <div class="sb-val" id="current-streak-value"></div>
+                        </div>
+
+                        <div class="streak-block">
+                            <div class="sb-label">Next Milestone</div>
+                            <div class="sb-val" id="next-milestone-value">
+                            </div>
+                        </div>
+
+                    </div>
+            </div>
+
+            <div class="section-title fade-up-1">
+                <i data-lucide="trophy" class="emoji-lucide" aria-hidden="true"></i> Formal Quizzes (Battle Modes)
+                <span class="section-tag">High Stakes!</span>
+            </div>
+
+            <div class="battle-cards-grid fade-up-1"
+     id="formal-battle-grid">
+</div>
+
+
+<div style="height:1.5rem"></div>
+
+
+<div class="section-title fade-up-2">
+    <i data-lucide="library-big" class="emoji-lucide" aria-hidden="true"></i> Informal Quizzes (Homework & Practice)
+</div>
+
+
+<div class="battle-cards-grid fade-up-2"
+     id="informal-battle-grid">
+</div>
+
+
+<div style="height:1.5rem"></div>
+
+
+<section class="quiz-history" aria-label="Completed quiz history">
+    <h2 class="section-title">Completed Quiz History</h2>
+    <p class="history-hint">Choose a subject to browse your completed quizzes.</p>
+    <section class="history-group" aria-labelledby="formal-history-title">
+        <div class="history-header">
+            <h3 id="formal-history-title">Formal Quizzes</h3>
+            <label>Subject <select id="formal-history-subject" onchange="renderQuizzes()"><option value="">All subjects</option></select></label>
+        </div>
+        <div class="completed-list" id="completed-formal-list"></div>
+    </section>
+    <section class="history-group" aria-labelledby="informal-history-title">
+        <div class="history-header">
+            <h3 id="informal-history-title">Informal Quizzes</h3>
+            <label>Subject <select id="informal-history-subject" onchange="renderQuizzes()"><option value="">All subjects</option></select></label>
+        </div>
+        <div class="completed-list" id="completed-informal-list"></div>
+    </section>
+</section>
+        </div>
+
+
+        <!-- ══ PERFORMANCE ══ -->
+        <div class="panel" id="panel-scores">
+            <div class="student-panel-heading"><h2>Your performance</h2><p>Compare quiz types and see your progress in every subject.</p></div>
+            <div class="os-grid performance-summary">
+                <div class="os-item"><div class="os-val" id="overall-accuracy">--</div><div class="os-label">Average graded score</div></div>
+                <div class="os-item"><div class="os-val" id="overall-completed">0</div><div class="os-label">Quizzes submitted</div></div>
+                <div class="os-item"><div class="os-val" id="overall-streak">0</div><div class="os-label">Perfect-score streak</div></div>
+                <div class="os-item"><div class="os-val" id="overall-xp">0</div><div class="os-label">Quiz XP earned</div></div>
+            </div>
+            <div class="performance-legend"><span class="formal">Formal quizzes</span><span class="informal">Informal quizzes</span></div>
+            <div class="perf-comparison"><article class="pc-metric"><h3>Average score</h3><p class="metric-caption">Graded quizzes only | 0-100%</p><div class="pc-bars"><div class="pc-bar-group"><div class="pc-bar-label"><span class="pc-bar-name">Formal</span><strong class="pc-bar-val" id="formal-average">--</strong></div><div class="pc-bar-track"><div class="pc-bar-fill formal" id="formal-average-bar" style="width:0%"></div></div></div><div class="pc-bar-group"><div class="pc-bar-label"><span class="pc-bar-name">Informal</span><strong class="pc-bar-val" id="informal-average">--</strong></div><div class="pc-bar-track"><div class="pc-bar-fill informal" id="informal-average-bar" style="width:0%"></div></div></div></div></article><article class="pc-metric"><h3>Quiz XP earned</h3><p class="metric-caption">Share of earned quiz XP | 0-100%</p><div class="pc-bars"><div class="pc-bar-group"><div class="pc-bar-label"><span class="pc-bar-name">Formal</span><strong class="pc-bar-val" id="formal-xp">--</strong></div><div class="pc-bar-track"><div class="pc-bar-fill formal" id="formal-xp-bar" style="width:0%"></div></div></div><div class="pc-bar-group"><div class="pc-bar-label"><span class="pc-bar-name">Informal</span><strong class="pc-bar-val" id="informal-xp">--</strong></div><div class="pc-bar-track"><div class="pc-bar-fill informal" id="informal-xp-bar" style="width:0%"></div></div></div></div></article><article class="pc-metric"><h3>Completion</h3><p class="metric-caption">Submitted quizzes / assigned quizzes | 0-100%</p><div class="pc-bars"><div class="pc-bar-group"><div class="pc-bar-label"><span class="pc-bar-name">Formal</span><strong class="pc-bar-val" id="formal-completion">--</strong></div><div class="pc-bar-track"><div class="pc-bar-fill formal" id="formal-completion-bar" style="width:0%"></div></div></div><div class="pc-bar-group"><div class="pc-bar-label"><span class="pc-bar-name">Informal</span><strong class="pc-bar-val" id="informal-completion">--</strong></div><div class="pc-bar-track"><div class="pc-bar-fill informal" id="informal-completion-bar" style="width:0%"></div></div></div></div></article></div>
+            <section class="subject-perf-card">
+                <div class="subject-section-heading"><div><h3>Subject performance</h3><p>All assigned subjects, including quizzes you have not started.</p></div><button class="btn-secondary" onclick="switchTab('quizzes')">View my quizzes</button></div>
+                <div id="subject-performance-grid" class="subject-performance-grid"></div>
+            </section>
+        </div>
+
+        <!-- ══ LEADERBOARD ══ -->
+        <div class="panel" id="panel-leaderboard">
+
+            <div class="leaderboard-card fade-up">
+
+                <div class="section-title" style="margin-bottom:.75rem">
+                    <i data-lucide="trophy" class="emoji-lucide" aria-hidden="true"></i> Class Leaderboard
+                </div>
+
+                <div class="lb-filter">
+                    <button class="lb-filter-btn active" onclick="setLbFilter(this,'section')">
+                        My Section
+                    </button>
+
+                    <button class="lb-filter-btn" onclick="setLbFilter(this,'subject')">
+                        By Subject
+                    </button>
+
+                    <button class="lb-filter-btn" onclick="setLbFilter(this,'overall')">
+                        Overall
+                    </button>
+                </div>
+                <div id="lb-subject-selector"></div>
+                <div id="lb-list"></div>
+            </div>
+        </div>
+
+
+        <!-- ══ POWER-UPS ══ -->
+        <div class="panel" id="panel-studybuddy">
+            <div class="studybuddy-workspace">
+                <aside class="studybuddy-guide sb-history-sidebar">
+                    <button class="sb-new-chat" onclick="sbNewChat()">+ New conversation</button>
+                    <div class="sb-history-heading"><h3>Chat history</h3><button onclick="sbLoadHistory()" aria-label="Refresh chat history" title="Refresh history"><i data-lucide="refresh-cw" aria-hidden="true"></i></button></div>
+                    <div id="sb-history-list" class="sb-history-list" aria-label="Saved conversations"><p class="sb-history-empty">Loading conversations...</p></div>
+                    <details class="sb-study-options"><summary>Study tools</summary><label for="sb-subject-select">Subject context</label><select id="sb-subject-select" onchange="sbSetSubject(this.value)"><option value="">Any subject</option></select><button onclick="sbPrompt('explain')">Explain a concept</button><button onclick="sbPrompt('practice')">Practice with me</button><button onclick="sbPrompt('review')">Make a review plan</button></details>
+                </aside>
+                <div id="studybuddy-chat-host"></div>
+            </div>
+        </div>
+
+        <div class="panel" id="panel-powerups">
+
+            <div class="pu-hero fade-up">
+                <div class="pu-hero-left"><div class="card-eyebrow">EARNED THROUGH PROGRESS</div><h2>Your learning toolkit</h2><p>Use the rewards you have earned, see what is available, and plan your next unlock.</p><button class="btn-secondary" onclick="switchTab('xp')">View level progress &rarr;</button></div>
+                <div class="pu-hero-stats"><div><strong id="pu-unlocked-count">0 / 7</strong><span>Rewards unlocked</span></div><div><strong id="pu-uses-count">0</strong><span>Uses available</span></div></div>
+            </div>
+
+            <div class="section-title fade-up-1">
+                <i data-lucide="backpack" class="emoji-lucide" aria-hidden="true"></i> Your Power-Up Inventory
+            </div>
+
+            <div id="pu-inventory-list" class="fade-up-1"></div>
+
+            <div class="section-title fade-up-2" style="margin-top:1.75rem">
+                <i data-lucide="book-open" class="emoji-lucide" aria-hidden="true"></i> All Power-Ups &amp; Unlock Levels
+            </div>
+
+            <div id="pu-catalog-list" class="fade-up-2"></div>
+        </div>
+
+
+        <!-- ══ XP & REWARDS ══ -->
+        <div class="panel" id="panel-xp">
+            <div class="student-panel-heading"><h2>XP &amp; Rewards</h2><p>Your progress, your balance, and the rewards you have earned.</p></div>
+            <section id="weekly-streak-reward" class="xp-streak-card"></section><div class="xp-dashboard">
+                <section class="xp-progress-card xp-progress-panel">
+                    <div class="card-eyebrow">YOUR PROGRESS</div><h3 id="xp-welcome">Keep building your progress</h3><p id="xp-level-sub" class="metric-caption"></p>
+                    <div class="xp-level-block"><div class="xp-level-num" id="xp-level-num"></div><div class="xp-level-info"><div class="lvl-name" id="xp-level-name"></div><div class="lvl-prog" id="xp-next-reward"></div><div class="xp-bar-track"><div class="xp-bar-fill" id="xp-bar-fill-main" style="width:0%"></div></div><div id="next-level-chip" class="next-level-chip"></div></div></div>
+                    <p class="xp-lifetime-note"><strong id="main-xp-num">0</strong> lifetime XP. Spending XP never lowers your level.</p>
+                    <div class="xp-stat-tiles"><div class="xp-stat-tile"><div class="xst-val" id="xp-tile-val">0</div><div class="xst-label">Quiz XP earned</div></div><div class="xp-stat-tile"><div class="xst-val" id="xp-perfect-streak">0</div><div class="xst-label">Perfect streak</div></div><div class="xp-stat-tile"><div class="xst-val" id="xp-completed">0</div><div class="xst-label">Quizzes submitted</div></div></div>
+                </section>
+                <section class="redeem-card xp-balance-panel">
+                    <div class="card-eyebrow">AVAILABLE TO SPEND</div><h3>XP balance</h3><div class="rb-val" id="available-xp">0 XP</div><p class="metric-caption">Use your balance for hints or a grade boost.</p>
+                    <div class="redemption-details"><strong>Grade boost</strong><span>350 XP adds 1 percentage point to one eligible graded formal quiz. Maximum score: 100%.</span></div>
+                    <button class="btn-use-xp" id="btn-use-xp-main" onclick="confirmBoostFromXP()">Choose a quiz &middot; 350 XP</button><p id="boost-quiz-list" class="metric-caption"></p>
+                </section>
+                <section class="redeem-card xp-owned-panel"><div class="card-eyebrow">YOUR COLLECTION</div><h3>Earned rewards</h3><p class="metric-caption">Remaining uses stay saved to your account.</p><div id="xp-rewards-wallet"></div><button class="btn-secondary" onclick="switchTab('powerups')">View all power-ups</button></section>
+                <section class="redeem-card xp-journey-panel"><div class="card-eyebrow">WHAT COMES NEXT</div><h3>Level milestones</h3><div id="xp-level-roadmap" class="level-roadmap"></div></section>
+                <section class="accuracy-card xp-earning-panel"><div><div class="card-eyebrow">UNDERSTAND YOUR XP</div><h3>Quiz results &amp; earning rules</h3><p class="metric-caption">Base XP = quiz reward &times; correct answers / total questions. Identification quizzes earn XP after grading. Active power-ups and one-time level bonuses are added separately.</p></div><div class="acc-overall"><span>Average graded score</span><strong id="xp-accuracy">--</strong></div><div class="xp-score-bands"><div><strong>100%</strong><span id="xp-perfect-sub"></span></div><div><strong>90-99%</strong><span id="xp-excellent-sub"></span></div><div><strong>80-89%</strong><span id="xp-good-sub"></span></div><div><strong>70-79%</strong><span id="xp-pass-sub"></span></div></div></section>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══ MODAL: QUIZ BATTLE ══ -->
+    <div class="modal-overlay" id="modal-battle" role="dialog" aria-modal="true" aria-labelledby="battle-title">
+
+        <div class="modal modal-battle-wide">
+
+            <button class="modal-close" onclick="closeModal('modal-battle')" aria-label="Close">
+                <i data-lucide="x" class="emoji-lucide" aria-hidden="true"></i>
+            </button>
+
+            <h2 id="battle-title">Quiz Battle</h2>
+
+            <div id="battle-body"></div>
+
+        </div>
+    </div>
+
+
+    <!-- ══ MODAL: STUDENT PROFILE ══ -->
+    <div class="modal-overlay account-overlay" id="modal-profile">
+        <section class="modal account-dialog" role="dialog" aria-modal="true" aria-labelledby="profile-dialog-title">
+            <header class="account-dialog-header"><div><span class="card-eyebrow">STUDENT ACCOUNT</span><h2 id="profile-dialog-title">Your profile</h2></div><button class="modal-close" onclick="closeModal('modal-profile')" aria-label="Close profile"><i data-lucide="x" aria-hidden="true"></i></button></header>
+            <div class="account-dialog-body">
+                <div class="profile-identity"><div class="profile-avatar-wrap"><div class="profile-avatar-large" id="profile-avatar"></div><div class="profile-frame-label"></div></div><div class="profile-identity-copy"><h3 id="profile-name"></h3><p id="profile-student-id"></p><div class="profile-meta-pills"><span id="profile-program"></span><span id="profile-year"></span><span id="profile-section"></span></div></div></div>
+                <div class="profile-balance-strip"><span>Available XP</span><strong id="profile-xp-val">0</strong><button onclick="closeModal('modal-profile');switchTab('xp')">View rewards &rarr;</button></div>
+                <div class="profile-stat-grid"><div><strong class="profile-accuracy" id="profile-accuracy">--</strong><span>Accuracy</span></div><div><strong class="profile-rank" id="profile-rank">--</strong><span>Class rank</span></div><div><strong class="profile-completed" id="profile-completed">0</strong><span>Submitted</span></div></div>
+                <dl class="profile-academic-details"><div><dt>College</dt><dd id="profile-college"></dd></div><div><dt>Program</dt><dd id="profile-program-full"></dd></div></dl>
+                <section class="profile-rewards-section"><h3 class="prs-title">Earned rewards</h3><div id="profile-rewards-list"></div></section>
+            </div>
+            <footer class="account-dialog-footer"><button class="btn-secondary" onclick="closeModal('modal-profile');window.location.href='Sdashboard.html'">Open student dashboard</button><button class="btn-secondary" onclick="closeModal('modal-profile')">Done</button></footer>
+        </section>
+    </div>
+
+    <div class="modal-overlay account-overlay" id="modal-help">
+        <section class="modal account-dialog help-dialog" role="dialog" aria-modal="true" aria-labelledby="help-dialog-title">
+            <header class="account-dialog-header"><div><span class="card-eyebrow">A QUICK GUIDE</span><h2 id="help-dialog-title">How can we help?</h2></div><button class="modal-close" onclick="closeModal('modal-help')" aria-label="Close help"><i data-lucide="x" aria-hidden="true"></i></button></header>
+            <div class="account-dialog-body"><p class="dialog-intro">Find your next step in the student workspace.</p>
+                <div class="help-topic-grid">
+                    <article><span class="help-topic-number">01</span><h3>Take a quiz</h3><p>Open My Quizzes to see formal and informal activities assigned to your section. Choose a card to read the instructions and start.</p><button onclick="closeModal('modal-help');switchTab('quizzes')">My quizzes &rarr;</button></article>
+                    <article><span class="help-topic-number">02</span><h3>Understand your results</h3><p>Multiple-choice answers can be graded automatically. Identification answers wait for instructor review. Performance shows your graded scores and completion.</p><button onclick="closeModal('modal-help');switchTab('scores')">View performance &rarr;</button></article>
+                    <article><span class="help-topic-number">03</span><h3>Use XP and rewards</h3><p>Earn XP from quiz results to unlock rewards. Spend 350 XP for a +1 point boost on an eligible graded formal quiz. Spending does not lower your level.</p><button onclick="closeModal('modal-help');switchTab('xp')">XP &amp; rewards &rarr;</button></article>
+                    <article><span class="help-topic-number">04</span><h3>Get help studying</h3><p>Ask Study Buddy to explain a concept or guide your review. Open the full tab for more space, or use the floating chat while browsing.</p><button onclick="closeModal('modal-help');switchTab('studybuddy')">Open Study Buddy &rarr;</button></article>
+                </div><div class="help-review-note"><strong>Waiting for a grade?</strong><p>A result marked ?Awaiting review? needs your instructor's feedback. Your final score and XP will appear after grading.</p></div>
+            </div>
+            <footer class="account-dialog-footer"><button class="btn-secondary" onclick="closeModal('modal-help')">Got it</button></footer>
+        </section>
+    </div>
+
+    <!-- CONFIRM -->
+    <div class="confirm-overlay" id="confirm-overlay">
+
+        <div class="confirm-box">
+
+            <h3 id="confirm-title">Confirm</h3>
+
+            <p id="confirm-msg">
+                Are you sure?
+            </p>
+
+            <div class="confirm-btns">
+
+                <button class="btn-confirm-ok" id="confirm-yes">
+                    Confirm
+                </button>
+
+                <button class="btn-confirm-cancel" onclick="closeConfirm()">
+                    Cancel
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- FLAG QUESTION MODAL -->
+<div class="confirm-overlay" id="flag-overlay">
+
+    <div class="confirm-box flag-report-box">
+
+        <h3><i data-lucide="flag" class="emoji-lucide" aria-hidden="true"></i> Report Question</h3>
+
+        <p style="margin-bottom: 1rem;">
+            Why are you flagging this question?
+        </p>
+
+
+        <div class="flag-reasons">
+
+            <label class="flag-reason-option">
+                <input
+                    type="radio"
+                    name="flag-reason"
+                    value="Question is unclear"
+                    checked
+                >
+                <span>Question is unclear</span>
+            </label>
+
+
+            <label class="flag-reason-option">
+                <input
+                    type="radio"
+                    name="flag-reason"
+                    value="Possible incorrect answer"
+                >
+                <span>Possible incorrect answer</span>
+            </label>
+
+
+            <label class="flag-reason-option">
+                <input
+                    type="radio"
+                    name="flag-reason"
+                    value="More than one correct answer"
+                >
+                <span>More than one correct answer</span>
+            </label>
+
+
+            <label class="flag-reason-option">
+                <input
+                    type="radio"
+                    name="flag-reason"
+                    value="Typo / spelling error"
+                >
+                <span>Typo / spelling error</span>
+            </label>
+
+
+            <label class="flag-reason-option">
+                <input
+                    type="radio"
+                    name="flag-reason"
+                    value="Other"
+                    id="flag-reason-other"
+                >
+                <span>Other</span>
+            </label>
+
+        </div>
+
+
+        <div
+            id="flag-other-container"
+            style="display:none; margin-top:1rem;"
+        >
+
+            <label
+                for="flag-other-text"
+                style="
+                    display:block;
+                    margin-bottom:.45rem;
+                    font-size:.82rem;
+                    color:rgba(255,255,255,.7);
+                "
+            >
+                Additional details
+            </label>
+
+            <textarea
+                id="flag-other-text"
+                rows="4"
+                maxlength="450"
+                placeholder="Please explain the issue..."
+                style="
+                    width:100%;
+                    resize:vertical;
+                    box-sizing:border-box;
+                    padding:.8rem;
+                    border-radius:10px;
+                    border:1px solid rgba(255,255,255,.15);
+                    background:rgba(255,255,255,.06);
+                    color:white;
+                    font-family:inherit;
+                "
+            ></textarea>
+
+        </div>
+
+
+        <div class="confirm-btns">
+
+            <button
+    type="button"
+    class="btn-confirm-ok"
+    id="flag-submit"
+    onclick="submitFlagQuestion()">
+    Submit Flag
+</button>
+
+            <button
+                class="btn-confirm-cancel"
+                onclick="closeFlagModal()"
+            >
+                Cancel
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+    <!-- TOAST -->
+    <div class="toast" id="toast">
+        <span id="toast-icon"><i data-lucide="circle-check" class="emoji-lucide" aria-hidden="true"></i></span> &nbsp;
+        <span id="toast-msg"></span>
+    </div>
+
+
+    <script src="../assets/js/main.js?v=7"></script>
+    <script src="../assets/js/student.js?v=7"></script>
+
+    <!-- Level-Up — must load AFTER student.js -->
+    <script src="../assets/js/student/levelup.js?v=4"></script>
+
+    <!-- 50/50 Lifeline — must load AFTER levelup.js -->
+    <script src="../assets/js/student/fiftyfifty.js"></script>
+
+    <!-- Power-Ups tab + in-battle dropdown — must load AFTER fiftyfifty.js -->
+    <script src="../assets/js/student/powerups.js"></script>
+    <script src="../assets/js/student/powerup-api.js?v=2"></script>
+    <script src="../assets/js/student/quiz-session.js"></script>
+
+    <!-- Notifications — announcements, new quizzes, flag button -->
+    <script src="../assets/js/student/notifications.js"></script>
+
+    <!-- AI Integration -->
+    <script src="../assets/js/student/ai integration/explainer.js?v=3"></script>
+    <script src="../assets/js/student/ai integration/studybuddy.js"></script>
+    <script src="../assets/js/student/ai integration/weakspot.js"></script>
+    <script src="../assets/js/student/ai integration/hints.js"></script>
+
+    <script>
+
+document.addEventListener('change', function(e) {
+
+    if (
+        e.target.name === 'flag-reason'
+    ) {
+
+        const otherContainer =
+            document.getElementById(
+                'flag-other-container'
+            );
+
+        if (!otherContainer) return;
+
+
+        if (e.target.value === 'Other') {
+
+            otherContainer.style.display =
+                'block';
+
+        } else {
+
+            otherContainer.style.display =
+                'none';
+
+            const otherText =
+                document.getElementById(
+                    'flag-other-text'
+                );
+
+            if (otherText) {
+                otherText.value = '';
+            }
+
+        }
+
+    }
+
+});
+
+</script>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="../assets/js/lucide-emoji.js?v=4"></script>
+<script src="../assets/js/academic-document.js"></script>
+<script src="../assets/js/review-library.js?v=10"></script>
+</body>
+
+</html>

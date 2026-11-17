@@ -1,0 +1,267 @@
+/* ==========================================================================
+   GABLE — index.css (Home / Landing Specific Layouts)
+   Built natively to extend and complement style.css / global.css
+   ========================================================================== */
+
+/* ══════════════════════
+   HERO LAYOUT
+   ══════════════════════ */
+.hero {
+  position: relative;
+  z-index: 1;
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 110px 1.5rem 48px;
+  text-align: center;
+}
+
+.hero-badge {
+  display: inline-block;
+  padding: 0.45rem 1.1rem;
+  background: rgba(124, 92, 191, 0.12);
+  border: 1px solid rgba(165, 127, 224, 0.25);
+  color: var(--purple-light);
+  border-radius: 99px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  letter-spacing: 0.02em;
+}
+
+.hero h1 {
+  font-size: clamp(2.4rem, 5.5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.hero h1 span {
+  background: linear-gradient(135deg, var(--purple-light), var(--pink));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  color: var(--text-muted);
+  max-width: 660px;
+  margin: 0 auto 2.5rem auto;
+  line-height: 1.7;
+}
+
+
+/* ══════════════════════
+   STATS GRID
+   ══════════════════════ */
+.stats {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+  max-width: 1200px;
+  margin: 0 auto 5rem auto; /* Slightly reduced bottom margin for tighter structural flow */
+  padding: 0 1.5rem;
+}
+
+.stat-card {
+  background: var(--public-card);
+  border: 1px solid var(--public-card-border);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: background .2s, border-color .2s;
+}
+
+.stat-card:nth-child(4n + 1) { --stat-accent: var(--accent-mint); --card-hover: rgba(110,208,178,.12); }
+.stat-card:nth-child(4n + 2) { --stat-accent: var(--purple-light); --card-hover: rgba(183,154,255,.12); }
+.stat-card:nth-child(4n + 3) { --stat-accent: var(--accent-gold); --card-hover: rgba(242,189,84,.12); }
+.stat-card:nth-child(4n) { --stat-accent: var(--accent-coral); --card-hover: rgba(238,136,117,.12); }
+.stat-card:hover, .stat-card:active { background: linear-gradient(var(--card-hover),var(--card-hover)), var(--public-card); }
+
+.stat-card h3 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--stat-accent);
+  margin-bottom: 0.25rem;
+}
+
+.stat-card p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+
+/* ══════════════════════
+   HOW GABLE WORKS (FIXED MIDDLE PART)
+   ══════════════════════ */
+.how-it-works {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 5rem 1.5rem; /* Clean and symmetrical vertical block spacing */
+}
+
+.section-inner {
+  width: 100%;
+}
+
+.how-it-works h2, 
+.roles h2 {
+  text-align: center;
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin-bottom: 3.5rem; /* Standardized uniform heading layout separation */
+}
+
+.how-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.how-card {
+  position: relative;
+  background: var(--public-card);
+  border: 1px solid var(--public-card-border);
+  --card-hover: rgba(110,208,178,.12);
+  padding: 2.5rem 2rem;
+  border-radius: 16px;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+.how-card:nth-child(3n + 1) { --step-accent: var(--accent-coral); --card-hover: rgba(238,136,117,.12); }
+.how-card:nth-child(3n + 2) { --step-accent: var(--accent-gold); --card-hover: rgba(242,189,84,.12); }
+.how-card:nth-child(3n) { --step-accent: var(--accent-mint); }
+.how-card:hover, .how-card:active { background: linear-gradient(var(--card-hover),var(--card-hover)), var(--public-card); }
+
+.how-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--step-accent);
+}
+
+.how-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+}
+
+.how-icon.red { 
+  background: rgba(238, 136, 117, 0.12);
+  border: 1px solid rgba(238, 136, 117, 0.3);
+  color: var(--accent-coral);
+}
+.how-icon.yellow { 
+  background: rgba(242, 189, 84, 0.12);
+  border: 1px solid rgba(242, 189, 84, 0.3);
+  color: var(--accent-gold);
+}
+.how-icon.trophy { 
+  background: rgba(110, 208, 178, 0.12);
+  border: 1px solid rgba(110, 208, 178, 0.3);
+  color: var(--accent-mint);
+}
+
+.how-card h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.how-card p {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+
+/* ══════════════════════
+   ROLE CHIPS AND TRACKS
+   ══════════════════════ */
+.roles {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 5rem 1.5rem 8rem 1.5rem; /* Perfectly balances vertical layout transitions */
+}
+
+.role-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.role-card {
+  background: var(--public-card);
+  border: 1px solid var(--public-card-border);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+}
+.role-card:nth-child(3n + 1) { --role-accent: var(--accent-mint); --card-hover: rgba(110,208,178,.12); }
+.role-card:nth-child(3n + 2) { --role-accent: var(--purple-light); --card-hover: rgba(183,154,255,.12); }
+.role-card:nth-child(3n) { --role-accent: var(--accent-gold); --card-hover: rgba(242,189,84,.12); }
+.role-card:hover, .role-card:active { background: linear-gradient(var(--card-hover),var(--card-hover)), var(--public-card); }
+
+.role-icon {
+  font-size: 1.8rem;
+  margin-bottom: 1.25rem;
+}
+
+.role-card h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.role-card p {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  flex-grow: 1;
+}
+
+
+/* ══════════════════════
+   MEDIA QUERIES (MOBILE REFINEMENTS)
+   ══════════════════════ */
+@media (max-width: 768px) {
+  .hero {
+    padding: 80px 1rem 32px;
+  }
+  
+  .stats {
+    margin-bottom: 3rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  
+  .how-it-works {
+    padding: 3.5rem 1rem;
+  }
+
+  .roles {
+    padding: 3.5rem 1rem 5rem 1rem;
+  }
+  
+  .how-it-works h2, 
+  .roles h2 {
+    margin-bottom: 2.5rem;
+  }
+}
+
+@media (max-width: 420px) {
+}

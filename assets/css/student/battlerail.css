@@ -1,0 +1,71 @@
+/* battle-rail.css — loads LAST to win specificity war */
+.battle-layout {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1.1rem;
+  align-items: start;
+}
+
+.battle-tools-rail {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 14px;
+  padding: .5rem;
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  align-self: start;
+  width: auto;
+}
+
+.battle-tools-rail .btn-hint,
+.battle-tools-rail .btn-powerup-dd,
+.battle-tools-rail .btn-flag-question,
+.battle-tools-rail .flag-used-badge,
+.battle-tools-rail .hint-used-badge {
+  width: 100%;
+  height: auto;
+  padding: .4rem .6rem;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .3rem;
+  font-size: .72rem;
+  white-space: nowrap;
+}
+
+.battle-tools-rail .pu-dropdown-wrap {
+  width: 100%;
+}
+
+.battle-tools-rail .pu-dropdown-menu {
+  left: auto;
+  right: calc(100% + 8px);
+  bottom: 0;
+}
+
+.battle-main-col {
+  min-width: 0;
+}
+
+@media (max-width: 720px) {
+  .battle-layout {
+    grid-template-columns: 1fr;
+  }
+  .battle-tools-rail {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+  .battle-tools-rail-label {
+    display: none;
+  }
+  .battle-tools-rail .btn-hint,
+  .battle-tools-rail .btn-powerup-dd,
+  .battle-tools-rail .btn-flag-question,
+  .battle-tools-rail .flag-used-badge,
+  .battle-tools-rail .hint-used-badge {
+    width: auto;
+    flex-shrink: 0;
+  }
+}

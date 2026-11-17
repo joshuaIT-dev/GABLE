@@ -1,0 +1,3 @@
+/* Shared, locally served pixel identity; interface text retains its readable font. */
+img.gable-pixel-wordmark{display:block;width:100px;height:auto;aspect-ratio:29/7;object-fit:contain;flex-shrink:0;image-rendering:pixelated}img.gable-pixel-mark{display:block;width:20px;height:28px;object-fit:contain;image-rendering:pixelated}.brand-wordmark:has(.gable-pixel-wordmark){display:flex;flex-direction:column;gap:5px}.brand-wordmark:has(.gable-pixel-wordmark) small{margin-top:0}.logo>.brand-mark{display:grid;place-items:center;width:38px;height:38px;border-radius:11px;border:1px solid #57718f;background:#253c55;flex-shrink:0}.top-brand:has(.gable-pixel-wordmark){display:flex;align-items:center;gap:12px}
+@media(max-width:480px){img.gable-pixel-wordmark{width:87px}}

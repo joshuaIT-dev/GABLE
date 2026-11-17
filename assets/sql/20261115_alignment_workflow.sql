@@ -1,0 +1,6 @@
+ALTER TABLE instructor_syllabi ADD COLUMN IF NOT EXISTS status VARCHAR(20) NOT NULL DEFAULT 'pending', ADD COLUMN IF NOT EXISTS accepted_by INT NULL, ADD COLUMN IF NOT EXISTS accepted_at DATETIME NULL;
+ALTER TABLE syllabus_reviews ADD COLUMN IF NOT EXISTS questions_snapshot LONGTEXT NULL, ADD COLUMN IF NOT EXISTS rubric_version INT NOT NULL DEFAULT 0, ADD COLUMN IF NOT EXISTS attempts INT NOT NULL DEFAULT 0, ADD COLUMN IF NOT EXISTS updated_at DATETIME NULL;
+ALTER TABLE instructor_quiz_alignment_evaluations ADD COLUMN IF NOT EXISTS review_id INT NULL;
+ALTER TABLE instructor_notifications MODIFY student_id INT NULL, MODIFY quiz_id INT NULL;
+CREATE TABLE IF NOT EXISTS syllabus_review_events(id INT AUTO_INCREMENT PRIMARY KEY,review_id INT NOT NULL,actor_role VARCHAR(20) NOT NULL,actor_id INT NOT NULL,action VARCHAR(30) NOT NULL,message TEXT NOT NULL,created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,INDEX(review_id));
+INSERT INTO syllabus_review_events(review_id,actor_role,actor_id,action,message) SELECT r.id,'system',0,'legacy_snapshot',COALESCE(r.report,'No legacy report') FROM syllabus_reviews r WHERE r.rubric_version=0 AND NOT EXISTS(SELECT 1 FROM syllabus_review_events e WHERE e.review_id=r.id AND e.action='legacy_snapshot');

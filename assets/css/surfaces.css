@@ -1,0 +1,63 @@
+/* Portal surface hierarchy. Explicit selectors keep quiz cards and dialogs unchanged.
+   Content: solid neutral. Nested rows: transparent. Status badges and actions retain color. */
+body:is(.instructor-portal,.student-portal,.admin-portal){
+ --surface-content:#1b293b;
+ --surface-summary:#223247;
+ --surface-inset:#152234;
+ --surface-edge:#3b4e65;
+}
+body.instructor-portal :is(.teaching-load-card,.analytics-panel-card,.subject-card,.profile-dept-card),
+body.admin-portal :is(.a-card,.configuration-card),
+body.student-portal :is(.activity-card,.perf-card),
+body:is(.instructor-portal,.admin-portal) .syllabus-panel :is(.syllabus-library,.syllabus-upload,.syllabus-notices,.xp-earning-card){
+ background:var(--surface-content);border:1px solid var(--surface-edge);box-shadow:none;backdrop-filter:none;
+}
+body.instructor-portal .metric-card,
+body.admin-portal .ov-card,
+body.student-portal .profile-stat-grid>div,
+body.instructor-portal #panel-teaching-xp .teaching-xp-stats .syllabus-review{
+ background:var(--surface-summary);border:1px solid var(--surface-edge);box-shadow:none;backdrop-filter:none;
+}
+body.instructor-portal :is(.my-students-hero,.lb-hero,.workspace-heading){background:var(--surface-summary);border-color:var(--surface-edge);box-shadow:none}
+body.instructor-portal .quick-card{background:var(--surface-content);border-color:var(--surface-edge)}
+body.instructor-portal .quick-card:hover{background:var(--surface-summary);border-color:#7891ae;box-shadow:none}
+body.instructor-portal #panel-teaching-xp .teaching-xp-sources>div,
+body.admin-portal .configuration-effect{background:var(--surface-inset);border-color:var(--surface-edge)}
+body:is(.instructor-portal,.admin-portal) .syllabus-panel :is(.syllabus-file,.syllabus-notice-item,.teaching-xp-table tbody tr){background:transparent}
+body.instructor-portal #panel-teaching-xp .teaching-xp-table tbody tr:hover{background:var(--surface-summary)}
+body.instructor-portal #panel-teaching-xp .teaching-xp-table th{background:var(--surface-summary)}
+body.instructor-portal #panel-teaching-xp .teaching-xp-table caption{background:var(--surface-inset)}
+
+/* Student information and reward containers; quiz/result cards keep their own palette. */
+body.student-portal :is(.subject-perf-card,.leaderboard-card,.accuracy-card),
+body.student-portal #panel-xp .xp-dashboard>section,
+body.admin-portal #settings-controls .a-card,
+body.instructor-portal #panel-leaderboard .lb-table{
+ background:var(--surface-content);border:1px solid var(--surface-edge);box-shadow:none;backdrop-filter:none;
+}
+/* Summary tiles have a consistent, brighter neutral surface. */
+body.student-portal #panel-home .stat-overview-card,
+body.student-portal .pu-hero-stats>div,
+body.student-portal #panel-xp :is(.xp-stat-tile,.xp-level-block,.acc-overall),
+body.instructor-portal .profile-xp{
+ background:var(--surface-summary);border:1px solid var(--surface-edge);box-shadow:none;
+}
+/* Nested information uses the parent surface rather than another filled card. */
+body.instructor-portal .profile-dept-card .assignment-row,
+body.student-portal .leaderboard-card .lb-row:not(.me),
+body.instructor-portal #panel-leaderboard .lb-row:not(.lb-top),
+body.student-portal #panel-xp .level-milestone:not(.current),
+body.student-portal #panel-xp .xp-score-bands>div,
+body.admin-portal .a-card .ann-hist-row{
+ background:transparent;box-shadow:none;border-color:var(--surface-edge);
+}
+body.student-portal .leaderboard-card .lb-row:not(.me):hover,
+body.instructor-portal #panel-leaderboard .lb-row:not(.lb-top):hover{
+ background:var(--surface-summary);
+}
+/* Neutral totals; color remains on icons, badges, progress, and awarded amounts. */
+body.admin-portal .ov-card .ov-val,
+body.instructor-portal .metric-card .metric-value,
+body.student-portal #panel-home .stat-overview-card .soc-val{
+ color:#eaf1fc!important;
+}

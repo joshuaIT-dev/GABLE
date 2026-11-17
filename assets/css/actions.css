@@ -1,0 +1,21 @@
+/* Shared primary actions follow the Recent Quizzes buttons. */
+:is(.btn-primary,.btn-create,.btn-join,.btn-view,.btn-continue,.btn-battle,.btn-save,.btn-xp-dash,.btn-confirm-ok,.btn-start.blue) {
+ background: linear-gradient(135deg,#4f8ef7,#7c5cbf) !important; color: #fff !important; border: 1px solid #ffffff20 !important; border-radius: 10px; box-shadow: 0 4px 14px #4f8ef724; font-weight: 700;
+}
+:is(.btn-start:not(.blue),.btn-post-draft,.btn-submit,.btn-save.green-btn) { background: linear-gradient(135deg,#168644,#20a653) !important; color: #fff !important; border: 1px solid #ffffff20 !important; border-radius: 10px; box-shadow: 0 4px 14px #16a34a24; }
+:is(.btn-primary,.btn-create,.btn-join,.btn-view,.btn-continue,.btn-battle,.btn-save,.btn-start,.btn-post-draft,.btn-submit,.btn-confirm-ok):hover:not(:disabled) { filter: brightness(1.1); }
+:is(.btn-primary,.btn-create,.btn-join,.btn-save,.btn-start,.btn-post-draft,.btn-submit):focus-visible { outline: 2px solid #a5c9ff; outline-offset: 3px; }
+button:disabled { cursor: not-allowed; }
+.powerup-tooltip button:disabled { opacity: .45; }
+#confirm-overlay { position: fixed; inset: 0; z-index: 1200; padding: 1rem; background: #030b18b8; backdrop-filter: blur(6px); }
+#confirm-overlay .confirm-box { width: min(440px,100%); max-height: calc(100dvh - 2rem); overflow-y: auto; box-sizing: border-box; padding: 1.5rem; border: 1px solid #354b69; border-radius: 18px; background: #122238; color: #f2f6ff; box-shadow: 0 24px 70px #0007; text-align: left; }
+#confirm-overlay h3 { color: #f2f6ff; margin: 0 0 .65rem; font-size: 1.15rem; }
+#confirm-overlay p { color: #becbde; line-height: 1.65; font-size: .88rem; }
+#confirm-overlay .confirm-btns { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .65rem; margin-top: 1.25rem; }
+#confirm-overlay button { min-height: 42px; padding: .65rem 1.1rem; border-radius: 10px; font-weight: 600; }
+#confirm-overlay .confirm-delete-btn { background: linear-gradient(135deg,#b52e42,#d64154) !important; color: white !important; box-shadow: 0 4px 14px #b52e4224; }
+#confirm-overlay .btn-confirm-cancel { background: #1e324c; border: 1px solid #435a78; color: #dce7f7; }
+
+/* Icons inherit the action's white text rather than semantic icon colors. */
+:is(#post-quiz-btn,.btn-post-draft,#confirm-yes) :is(svg,.lucide,.emoji-lucide) { color: inherit !important; stroke: currentColor; }
+#post-quiz-btn.green-btn { background: linear-gradient(135deg,#168644,#20a653) !important; color: #fff !important; box-shadow: 0 4px 14px #16a34a24; }

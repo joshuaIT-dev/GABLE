@@ -1,0 +1,309 @@
+/* ══════════════════════
+   PAGE LAYOUT
+══════════════════════ */
+body {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 5rem 1rem;
+}
+
+/* Masked */
+.id-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.id-prefix {
+  font-weight: 600;
+  padding: 10px 12px;
+  background: #eee;
+  border-radius: 8px;
+}
+
+/* ══════════════════════
+   ANIMATED BLOBS
+══════════════════════ */
+.blob {
+  position: fixed; border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none; z-index: 0;
+}
+.blob-1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(124, 92, 191, 0.55) 0%, transparent 70%);
+  top: -200px; left: -150px;
+  animation: floatA 8s ease-in-out infinite;
+}
+.blob-2 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(224, 92, 160, 0.45) 0%, transparent 70%);
+  bottom: -150px; right: -100px;
+  animation: floatB 10s ease-in-out infinite;
+}
+.blob-3 {
+  width: 350px; height: 350px;
+  background: radial-gradient(circle, rgba(79, 142, 247, 0.30) 0%, transparent 70%);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  animation: floatC 12s ease-in-out infinite;
+}
+
+
+/* ID field wrapper — slides in/out */
+.id-field-wrap {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  margin-bottom: 0;
+  transition:
+    max-height .35s ease,
+    opacity .3s ease,
+    margin .35s ease,
+    transform .35s ease;
+}
+
+/* visible state */
+.id-field-wrap.visible {
+  max-height: 220px; /* enough space for error text */
+  opacity: 1;
+  margin-bottom: 1.15rem;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* hidden state */
+.id-field-wrap.hide {
+  max-height: 0;
+  opacity: 0;
+  margin-bottom: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+}
+
+@keyframes floatA {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(40px, 30px) scale(1.07); }
+  66%       { transform: translate(-20px, 50px) scale(.95); }
+}
+@keyframes floatB {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40%       { transform: translate(-50px, -30px) scale(1.10); }
+  70%       { transform: translate(20px, -50px) scale(.93); }
+}
+@keyframes floatC {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50%       { transform: translate(-50%, -50%) scale(1.20); }
+}
+
+
+/* ══════════════════════
+   FLOATING PARTICLES
+══════════════════════ */
+.particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.particle {
+  position: absolute;
+  color: rgba(255, 255, 255, .25);
+  font-family: 'Cambria Math', 'Times New Roman', serif;
+  line-height: 1;
+  white-space: nowrap;
+  user-select: none;
+  animation: rise linear infinite;
+  animation-fill-mode: backwards;
+}
+@keyframes rise {
+  0%   { transform: translateY(100vh) scale(.8); opacity: 0; }
+  10%  { opacity: var(--particle-opacity); }
+  90%  { opacity: var(--particle-opacity); }
+  100% { transform: translateY(-10vh) scale(1.1); opacity: 0; }
+}
+
+
+/* ══════════════════════
+   BACK LINK
+══════════════════════ */
+.back-link {
+  position: fixed; top: 1.5rem; left: 2rem; z-index: 10;
+  display: inline-flex; align-items: center; gap: .4rem;
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+  font-size: .88rem; font-weight: 500;
+  transition: color .2s, transform .2s;
+  animation: fadeDown .6s ease both;
+}
+.back-link:hover { color: #fff; transform: translateX(-3px); }
+.back-link::before { content: '‹'; font-size: 1.2rem; line-height: 1; }
+
+
+/* ══════════════════════
+   LOGIN CARD
+══════════════════════ */
+.login-card {
+  position: relative; z-index: 1;
+  background: var(--public-card);
+  border: 1px solid var(--public-card-border);
+  border-radius: 18px;
+  padding: 2.5rem;
+  width: min(100%, 460px);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, .32);
+  animation: cardIn .7s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+
+/* ── LOCK ICON ── */
+.lock-wrap {
+  display: flex; justify-content: center;
+  margin-bottom: 1.6rem;
+  animation: popIn .6s .15s cubic-bezier(.34, 1.56, .64, 1) both;
+}
+.lock-icon {
+  width: 76px; height: 76px; border-radius: 22px;
+  background: var(--purple);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, .22);
+}
+
+/* headings */
+.login-card h1     { text-align: center; font-size: 1.7rem; font-weight: 800; margin-bottom: .4rem; animation: fadeUp .5s .25s ease both; }
+.login-subtitle    { text-align: center; font-size: .88rem; color: rgba(255, 255, 255, 0.55); margin-bottom: 2.25rem; animation: fadeUp .5s .32s ease both; }
+
+
+/* ── SELECT WRAPPER ── */
+.select-wrap { position: relative; }
+.select-wrap select { padding-right: 2.5rem; }
+.select-arrow {
+  position: absolute; right: 1rem; top: 50%; transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.50); font-size: .75rem;
+  pointer-events: none; transition: transform .2s;
+}
+.select-wrap:focus-within .select-arrow { transform: translateY(-50%) rotate(180deg); }
+
+
+/* ── PASSWORD INPUT ── */
+.input-wrap { position: relative; }
+.input-wrap input { padding-right: 2.75rem; }
+.input-wrap input.error {
+  border-color: #f47fc4;
+  box-shadow: 0 0 0 3px rgba(244, 127, 196, 0.20);
+  animation: shake .4s ease;
+}
+.toggle-pw {
+  position: absolute; right: 1rem; top: 50%; transform: translateY(-50%);
+  background: none; border: none;
+  color: rgba(255, 255, 255, 0.40);
+  cursor: pointer; font-size: 1rem; padding: 0;
+  transition: color .2s;
+}
+.toggle-pw:hover { color: rgba(255, 255, 255, 0.80); }
+
+
+.form-group {
+  margin-bottom: 20px; /* Standardize your gap size here */
+}
+
+.error-msg {
+  display: flex; align-items: center; gap: .35rem;
+  font-size: .78rem; color: #f47fc4;
+  padding-left: .25rem;
+  
+  /* Shrinks the element to exactly 0 pixels so it doesn't push the password field down */
+  max-height: 0;
+  margin-top: 0;
+  overflow: hidden; 
+  
+  /* Your existing animation */
+  opacity: 0; 
+  transform: translateY(-4px);
+  transition: all 0.25s ease;
+  pointer-events: none;
+}
+
+.error-msg::before { 
+  content: '⚠'; 
+  font-size: .75rem; 
+}
+
+.error-msg.show { 
+  /* Expands the element only when the error triggers */
+  max-height: 24px; 
+  margin-top: .5rem; 
+  
+  opacity: 1; 
+  transform: translateY(0); 
+  pointer-events: auto; 
+}
+
+
+/* ── SUBMIT BUTTON ── */
+.btn-login-submit {
+  width: 100%; margin-top: .75rem;
+  background: var(--purple);
+  color: #fff; border: none; border-radius: 14px; padding: 1rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem; font-weight: 700;
+  cursor: pointer; letter-spacing: .03em;
+  position: relative; overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, .22);
+  transition: transform .2s, box-shadow .2s, opacity .2s;
+  animation: fadeUp .5s .52s ease both;
+}
+.btn-login-submit::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent);
+  opacity: 0; transition: opacity .2s;
+}
+.btn-login-submit:hover { transform: translateY(-2px); background: #805bd0; box-shadow: 0 12px 26px rgba(0, 0, 0, .28); }
+.btn-login-submit:hover::after { opacity: 1; }
+.btn-login-submit.loading { opacity: .75; pointer-events: none; }
+
+
+/* ── RIPPLE EFFECT ── */
+.ripple {
+  position: absolute; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(0);
+  animation: rippleOut .55s linear;
+  pointer-events: none;
+}
+@keyframes rippleOut { to { transform: scale(4); opacity: 0; } }
+
+
+/* ── HELP BUBBLE ── */
+.help-bubble {
+  position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 10;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--public-card);
+  border: 1px solid var(--public-card-border);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255, 255, 255, 0.70);
+  font-size: 1rem; font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .2s, transform .2s;
+  animation: fadeUp .5s .6s ease both;
+}
+.help-bubble:hover { background: rgba(255, 255, 255, 0.20); transform: scale(1.1); }
+
+@media (max-width: 520px) {
+  body { padding: 4.5rem 1rem 5rem; }
+  .login-card { padding: 1.75rem 1.25rem; }
+  .back-link { top: 1rem; left: 1rem; }
+  .help-bubble { right: 1rem; bottom: 1rem; }
+}
+
+@media (max-height: 680px) {
+  body { align-items: flex-start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-card, .lock-wrap, .login-card h1, .login-subtitle, .btn-login-submit, .help-bubble { animation: none; }
+  .id-field-wrap, .error-msg, .btn-login-submit, .help-bubble { transition: none; }
+  .particle { animation: none; opacity: .1; }
+}
+

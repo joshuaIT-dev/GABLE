@@ -1,0 +1,39 @@
+function instructorXPLevel(xp){
+ const levels=[{xp:0,num:1,name:'Novice'},{xp:500,num:2,name:'Learner'},{xp:1000,num:4,name:'Scholar'},{xp:1600,num:6,name:'Expert'},{xp:2200,num:8,name:'Master'},{xp:3000,num:10,name:'Legend'}];
+ const index=levels.findLastIndex(level=>xp>=level.xp);return {current:levels[Math.max(0,index)],next:levels[Math.max(0,index)+1]||null};
+}
+function instructorXPSource(type){
+ if(type==='syllabus_alignment')return {label:'Admin',detail:'Confirmed syllabus review',kind:'admin'};
+ if(type==='pass_rate_85')return {label:'System',detail:'Student outcomes',kind:'system'};
+ return {label:'Unknown / legacy',detail:'Original source not recorded',kind:'unknown'};
+}
+(() => {
+ const nav=document.querySelector('.nav-tabs'),host=document.querySelector('.main');if(!nav||!host)return;
+ const el=(tag,text,cls)=>{const node=document.createElement(tag);if(text!==undefined)node.textContent=text;if(cls)node.className=cls;return node;};
+ const tab=el('button','XP & Rewards','nav-tab');tab.setAttribute('aria-controls','panel-teaching-xp');nav.append(tab);
+ const panel=el('section',undefined,'panel syllabus-panel');panel.id='panel-teaching-xp';panel.style.display='none';host.append(panel);
+ tab.onclick=async()=>{
+  window.switchTab('teaching-xp');tab.classList.add('active');panel.replaceChildren(el('span','YOUR TEACHING JOURNEY','syllabus-eyebrow'),el('h2','XP & Rewards'),el('p','Track your progress and see the source of every recorded reward.','syllabus-muted'));const status=el('p','Loading your rewards...','syllabus-status');status.setAttribute('role','status');panel.append(status);
+  try{const response=await fetch('../assets/php/get_instructor.php',{credentials:'include',cache:'no-store'});const data=await response.json();if(!response.ok||!data.success)throw Error(data.message||'Unable to load rewards.');
+   const user=data.instructor,xp=Math.max(0,Number(user.teaching_xp)||0),{current,next}=instructorXPLevel(xp);
+   const stats=el('div',undefined,'teaching-xp-stats');for(const [value,caption] of [[xp.toLocaleString(),'Total Teaching XP'],['Level '+current.num,current.name],[user.grade||'Not ranked','Administrator-assigned grading rank'],[Number(user.monthly_teaching_xp).toLocaleString(),'XP recorded this month']]){const card=el('article',undefined,'syllabus-review');card.append(el('strong',value),el('p',caption));stats.append(card);}panel.append(stats);
+   const progress=el('section',undefined,'syllabus-library');progress.append(el('h3',next?(next.xp-xp).toLocaleString()+' XP to '+next.name:'Highest teaching level reached'));const bar=el('progress');bar.max=next?next.xp-current.xp:1;bar.value=next?xp-current.xp:1;bar.setAttribute('aria-label','Progress to next teaching level');progress.append(bar,el('p','Teaching XP determines your level. Your grading rank is assigned separately by an administrator.','syllabus-muted'));panel.append(progress);
+   const guide=el('section',undefined,'teaching-xp-guide');guide.append(el('h3','How you earn Teaching XP'),el('p','Two ways to earn rewards for your teaching.','syllabus-muted'));
+   const routes=el('div',undefined,'teaching-xp-routes');
+   const alignment=el('article',undefined,'xp-earning-card');alignment.append(el('span','ADMIN REVIEW','syllabus-eyebrow'),el('h4','Syllabus alignment'),el('p','An administrator confirms how closely your quiz matches the accepted syllabus.'));
+   const tiers=el('dl',undefined,'xp-earning-tiers');for(const [requirement,reward] of [['95% or higher','Up to 100 XP'],['85-94%','Up to 50 XP'],['Below 85%','No alignment XP']]){const tier=el('div');tier.append(el('dt',requirement),el('dd',reward));tiers.append(tier);}alignment.append(tiers,el('p','Maximum 100 alignment XP per quiz. Previous awards count toward this limit.','xp-earning-note'));
+   const outcomes=el('article',undefined,'xp-earning-card');outcomes.append(el('span','SYSTEM - STUDENT OUTCOMES','syllabus-eyebrow'),el('h4','Class achievement'),el('strong','50 XP','xp-earning-amount'),el('p','Awarded automatically when your class meets all requirements.'));const requirements=el('ul');for(const text of ['At least 85% of the enrolled class scores 80% or higher.','The quiz is finalized.','All pending reviews are resolved.'])requirements.append(el('li',text));outcomes.append(requirements);routes.append(alignment,outcomes);guide.append(routes,el('p','Rewards must be enabled by your administrator. AI analysis alone does not award alignment XP.','xp-earning-note'));panel.append(guide);
+   const history=el('section',undefined,'syllabus-library teaching-xp-history');history.append(el('h3','XP activity'),el('p','Admin reviews and automatic rewards from student outcomes, in one place.','syllabus-muted'));
+   const names={pass_rate_85:'Class pass-rate reward',alignment_95:'Legacy syllabus alignment',syllabus_alignment:'Confirmed syllabus alignment'};
+   const filter=el('select');filter.setAttribute('aria-label','Filter XP activity by source');for(const [value,title] of [['all','All sources'],['admin','Admin'],['system','System - Student outcomes'],['unknown','Unknown / legacy']]){const option=el('option',title);option.value=value;filter.append(option);}history.append(filter);
+   const scroll=el('div',undefined,'teaching-xp-table-scroll');scroll.tabIndex=0;scroll.setAttribute('role','region');scroll.setAttribute('aria-label','XP activity table');const table=el('table',undefined,'teaching-xp-table');const caption=el('caption','Recorded teaching rewards');table.append(caption);const head=el('thead'),headRow=el('tr');for(const title of ['Quiz / Activity','Source','Reason','XP','Recorded date']){const th=el('th',title);th.scope='col';headRow.append(th);}head.append(headRow);const body=el('tbody');table.append(head,body);scroll.append(table);history.append(scroll);
+   const records=user.xp_history||[];const totals={admin:0,system:0,unknown:0};let recorded=0;
+   for(const item of records){const amount=Number(item.exp_awarded);recorded+=amount;totals[instructorXPSource(item.reward_type).kind]+=amount;}
+   const sources=el('div',undefined,'teaching-xp-sources');for(const [kind,title] of [['admin','Admin reviews'],['system','Student outcomes'],['unknown','Legacy / unknown']]){const card=el('div');card.append(el('span',title),el('strong',totals[kind].toLocaleString()+' XP'));sources.append(card);}history.prepend(sources);
+   function renderHistory(){body.replaceChildren();const visible=records.filter(item=>filter.value==='all'||instructorXPSource(item.reward_type).kind===filter.value);for(const item of visible){const source=instructorXPSource(item.reward_type);const row=el('tr'),origin=el('td');origin.append(el('span',source.label,'xp-source is-'+source.kind),el('small',source.detail));const amount=Number(item.exp_awarded);row.append(el('td',item.title||'Quiz #'+item.quiz_id),origin,el('td',names[item.reward_type]||String(item.reward_type).replaceAll('_',' ')),el('td',(amount>0?'+':'')+amount.toLocaleString(),'xp-amount'),el('td',new Date(item.awarded_at.replace(' ','T')).toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'})));body.append(row);}if(!visible.length){const row=el('tr'),cell=el('td','No rewards recorded for this source yet.','xp-empty');cell.colSpan=5;row.append(cell);body.append(row);}}
+   filter.onchange=renderHistory;renderHistory();
+   if(xp!==recorded)history.append(el('p','Unattributed balance difference: '+(xp-recorded).toLocaleString()+' XP. Starting balances or adjustments have no source record and are not assigned to Admin or System.','syllabus-muted'));
+   history.append(el('p','Entries are totals per quiz and reward type. Alignment top-ups may be combined with the original award; the date is the recorded award date.','syllabus-help'));panel.append(history);status.textContent='';
+  }catch(error){status.textContent=error.message;}
+ };
+})();

@@ -1,0 +1,304 @@
+/* ═══════════════════════════════════════════════════════════════
+   ADDITIONS to admin.css
+   Paste at the bottom of your existing admin.css file
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── USERS TABLE: add level column ─────────────────────────── */
+/* Update the grid from 6 to 7 columns */
+.users-head, .users-row {
+  grid-template-columns: 2fr 1.5fr 1fr 1fr 0.7fr 1fr 160px;
+}
+
+/* ── LEVEL BADGE ────────────────────────────────────────────── */
+.lb-level-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  background: linear-gradient(135deg, rgba(124,92,191,.3), rgba(165,127,224,.15));
+  border: 1px solid rgba(165,127,224,.45);
+  color: #c4a8f7;
+  font-size: .75rem;
+  font-weight: 700;
+  padding: .2rem .6rem;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+.lb-level-sm {
+  font-size: .7rem;
+  padding: .15rem .5rem;
+}
+
+/* ── LEADERBOARD PANEL ──────────────────────────────────────── */
+.lb-header-row {
+  display: grid;
+  grid-template-columns: 56px 2.5fr 1fr 1fr 1fr;
+  gap: .5rem;
+  padding: .75rem 1.25rem;
+  background: rgba(255,255,255,.05);
+  border-radius: 14px 14px 0 0;
+  border: 1px solid rgba(255,255,255,.08);
+  font-size: .7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  margin-bottom: 0;
+}
+
+.lb-row {
+  display: grid;
+  grid-template-columns: 56px 2.5fr 1fr 1fr 1fr;
+  gap: .5rem;
+  align-items: center;
+  padding: .85rem 1.25rem;
+  border: 1px solid rgba(255,255,255,.06);
+  border-top: none;
+  background: rgba(255,255,255,.02);
+  transition: background .18s;
+}
+.lb-row:last-child { border-radius: 0 0 14px 14px; }
+.lb-row:hover { background: rgba(255,255,255,.05); }
+
+.lb-row-top { background: rgba(255,255,255,.04); }
+.lb-row-gold   { border-left: 3px solid #f59e0b; }
+.lb-row-silver { border-left: 3px solid #94a3b8; }
+.lb-row-bronze { border-left: 3px solid #cd7c3a; }
+
+.lb-col-rank  { font-size: 1.1rem; text-align: center; }
+.lb-col-mid   { font-size: .82rem; }
+.lb-col-xp    { font-size: .88rem; font-weight: 700; color: var(--gold); }
+.lb-rank      { font-size: 1.2rem; }
+
+/* College grid view */
+.lb-college-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+@media (max-width: 900px) { .lb-college-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .lb-college-grid { grid-template-columns: 1fr; } }
+
+.lb-college-card {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 16px;
+  padding: 1.25rem 1.4rem;
+  transition: transform .2s, border-color .2s;
+}
+.lb-college-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,.18); }
+.lb-college-top {
+  background: rgba(245,158,11,.06);
+  border-color: rgba(245,158,11,.35);
+}
+.lb-college-rank { font-size: 1.5rem; margin-bottom: .5rem; }
+.lb-college-name { font-size: 1.3rem; font-weight: 800; margin-bottom: .75rem; }
+.lb-college-stats {
+  display: flex;
+  flex-direction: column;
+  gap: .15rem;
+}
+
+/* ── AI DRAFT ASSISTANT (anndraft) ─────────────────────────── */
+/* Wrapper injected by anndraft.js above the ann-form fields */
+.ann-draft-section {
+  background: rgba(124,92,191,.1);
+  border: 1px solid rgba(124,92,191,.3);
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+
+.ann-draft-section label,
+.ann-draft-section .draft-label {
+  font-size: .82rem;
+  font-weight: 700;
+  color: #c4a8f7;
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  margin-bottom: 0;
+}
+
+/* The "Select announcement type..." dropdown injected by draft */
+.ann-draft-section select,
+#ann-draft-type,
+[id*="draft-type"],
+[id*="ann-type"] {
+  width: 100%;
+  background: rgba(255,255,255,.07);
+  border: 1.5px solid rgba(124,92,191,.4);
+  border-radius: 12px;
+  padding: .75rem 1rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: .88rem;
+  color: #fff;
+  outline: none;
+  transition: border-color .2s;
+}
+.ann-draft-section select:focus,
+#ann-draft-type:focus {
+  border-color: #a57fe0;
+  box-shadow: 0 0 0 3px rgba(124,92,191,.2);
+}
+.ann-draft-section select option { background: #1a1740; }
+
+/* The Generate Draft button — fix the unstyled appearance */
+.ann-draft-section button,
+#btn-generate-draft,
+[id*="generate-draft"],
+[onclick*="generateDraft"],
+[onclick*="generate_draft"] {
+  background: linear-gradient(135deg, #7c5cbf, #a57fe0) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 12px !important;
+  padding: .65rem 1.25rem !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: .88rem !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: opacity .2s, transform .2s !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: .4rem !important;
+  align-self: flex-start !important;
+}
+.ann-draft-section button:hover,
+#btn-generate-draft:hover {
+  opacity: .88 !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Announcement composer card — give it more breathing room */
+.a-card .ann-form {
+  padding: 1.25rem;
+}
+.ann-form .form-group {
+  margin-bottom: 1.1rem;
+}
+.ann-form textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+/* ── ANNOUNCEMENT HISTORY ───────────────────────────────────── */
+.ann-hist-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 12px;
+  padding: .9rem 1rem;
+  margin-bottom: .6rem;
+  transition: background .18s;
+}
+.ann-hist-row:hover { background: rgba(255,255,255,.06); }
+
+/* ── ANNOUNCEMENT HISTORY — spacing fix ─────────────────────── */
+#ann-history-list {
+  padding: 0 .25rem;
+}
+.ann-hist-row {
+  margin-top: .5rem;
+}
+
+/* ── GENERATE DRAFT — move to right side of draft row ───────── */
+.ann-draft-section {
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+  gap: .65rem !important;
+}
+.ann-draft-section select,
+#ann-draft-type,
+[id*="draft-type"],
+[id*="ann-type"] {
+  flex: 1 !important;
+  min-width: 180px !important;
+}
+.ann-draft-section button,
+#btn-generate-draft,
+[id*="generate-draft"],
+[onclick*="generateDraft"],
+[onclick*="generate_draft"] {
+  margin-left: auto !important;
+  align-self: center !important;
+  white-space: nowrap !important;
+}
+
+#panel-settings .a-card + .a-card {
+  margin-top: 1.25rem;
+}
+
+/* Leaderboard layouts adapt to the selected view. */
+#leaderboard-content[data-view="students"] .lb-header-row,
+#leaderboard-content[data-view="students"] .lb-row {
+  grid-template-columns: 72px minmax(180px, 2fr) minmax(150px, 1.3fr) minmax(100px, 1fr) minmax(90px, .8fr);
+}
+#leaderboard-content[data-view="instructors"] .lb-header-row,
+#leaderboard-content[data-view="instructors"] .lb-row {
+  grid-template-columns: 72px minmax(170px, 1.6fr) minmax(145px, 1.3fr) minmax(160px, 1.5fr) minmax(100px, .9fr);
+}
+#leaderboard-content[data-view="colleges"] .lb-header-row,
+#leaderboard-content[data-view="colleges"] .lb-row {
+  grid-template-columns: 72px minmax(190px, 2fr) minmax(70px, .65fr) minmax(80px, .75fr) minmax(105px, 1fr) minmax(125px, 1.1fr);
+}
+#leaderboard-content .lb-row > span,
+#leaderboard-content .lb-row > div,
+#leaderboard-content .lb-header-row > span { min-width: 0; overflow-wrap: anywhere; }
+/* Keep Rank visually distinct from the name-column heading in every view. */
+#leaderboard-content .lb-header-row { column-gap: 1rem; }
+#leaderboard-content .lb-header-row > .lb-col-rank {
+  white-space: nowrap !important;
+  overflow-wrap: normal !important;
+  word-break: keep-all !important;
+  text-align: center;
+  padding-right: .35rem;
+}
+#leaderboard-content .lb-header-row > .lb-col-name { padding-left: .25rem; }
+/* Keep the Rank header intact in all three leaderboard views. */
+#leaderboard-content .lb-header-row > .lb-col-rank {
+  white-space: nowrap !important;
+  overflow-wrap: normal !important;
+  word-break: keep-all !important;
+  min-width: 58px;
+}
+@media (max-width: 900px) {
+  #leaderboard-content .lb-header-row { display: none; }
+  #leaderboard-content .lb-row { grid-template-columns: 40px minmax(130px, 1.5fr) minmax(110px, 1fr) minmax(95px, 1fr) !important; padding: .75rem; }
+  #leaderboard-content[data-view="colleges"] .lb-row { grid-template-columns: 40px minmax(150px, 1.5fr) minmax(60px, .6fr) minmax(100px, 1fr) !important; }
+}
+
+/* Keep leaderboard rank icons centered and distinct by podium place. */
+#leaderboard-content .lb-rank { display: flex; align-items: center; justify-content: center; }
+#leaderboard-content .lb-rank .lucide { width: 1.2rem; height: 1.2rem; }
+#leaderboard-content .lb-row-silver .lb-rank .lucide-medal { color: #cbd5e1; }
+#leaderboard-content .lb-row-bronze .lb-rank .lucide-medal { color: #cd7f32; }
+.main .empty-state .emoji.lucide-icon { display: flex; align-items: center; justify-content: center; width: 100%; margin-inline: auto; }
+
+#panel-overview .two-col > .a-card { display: flex; flex-direction: column; min-height: 260px; }
+#college-perf-list, #activity-list { display: flex; flex: 1; flex-direction: column; }
+#panel-reports .two-col > .a-card,
+#panel-reports > .a-card.fade-up-3 { display: flex; flex-direction: column; min-height: 250px; }
+#top-students-list, #top-instr-list, #redemption-list { display: flex; flex: 1; flex-direction: column; }
+.overview-placeholder { flex: 1; min-height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .55rem; text-align: center; color: var(--text-muted); }
+.overview-placeholder > svg { width: 1.5rem; height: 1.5rem; color: var(--purple-light); }
+.overview-placeholder strong { color: var(--text); font-size: .88rem; }
+.overview-placeholder span { max-width: 34ch; font-size: .75rem; line-height: 1.5; }
+
+.admin-opening-alerts { position: relative; }
+.admin-opening-alerts summary { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; cursor: pointer; border: 1px solid #405875; border-radius: 9px; background: #22374e; list-style: none; }
+.admin-opening-alerts summary::-webkit-details-marker { display: none; }
+.admin-opening-alerts summary svg { width: 18px; height: 18px; }
+#admin-opening-count { position: absolute; top: -6px; right: -5px; padding: 1px 5px; border-radius: 9px; background: #a25768; color: white; font-size: .6rem; }
+.admin-opening-alerts > section { position: absolute; right: 0; top: calc(100% + 12px); width: min(340px,calc(100vw - 24px)); max-height: 65dvh; overflow-y: auto; padding: 1rem; border: 1px solid #435e7a; border-radius: 12px; background: #192d43; box-shadow: 0 15px 40px #0005; color: #dfebf8; z-index: 300; }
+.admin-opening-alerts > section > p, #admin-opening-list { font-size: .72rem; line-height: 1.6; color: #b5c8dc; }
+#admin-opening-list article { padding: .75rem 0; border-top: 1px solid #3c536b; }
+#admin-opening-list article strong, #admin-opening-list article span { display: block; }
+#admin-opening-list article strong { color: #e0ebf8; }
+#admin-opening-list article p { margin: .3rem 0 0; }

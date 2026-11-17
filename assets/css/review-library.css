@@ -1,0 +1,44 @@
+/* Native modal owns the viewport; only its inner card scrolls. */
+#review-dialog.review-overlay { position: fixed; inset: 0; margin: 0; width: 100%; height: 100dvh; max-width: none; max-height: none; box-sizing: border-box; padding: 20px; border: 0; background: transparent; overflow: hidden; color: #edf4ff; font: inherit; }
+#review-dialog.review-overlay[open] { display: grid; place-items: center; }
+#review-dialog::backdrop { background: rgba(3,11,24,.78); backdrop-filter: blur(6px); }
+#review-dialog .review-dialog { display: flex; flex-direction: column; width: min(900px,100%); min-width: 0; max-height: calc(100dvh - 40px); margin: 0; padding: 0; box-sizing: border-box; overflow: hidden; background: #14253b; border: 1px solid #405975; border-radius: 18px; box-shadow: 0 28px 90px #0007; }
+#review-dialog .review-dialog--settings { width: min(580px,100%); }
+#review-dialog .review-dialog--export { width: min(480px,100%); }
+#review-dialog .review-dialog-header { position: static; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; gap: 16px; padding: 18px 22px; background: #1d334c; border-bottom: 1px solid #354f6d; }
+#review-dialog h2 { color: #edf4ff; font-size: 18px; line-height: 1.4; font-weight: 600; margin: 0; padding: 0; }
+#review-dialog .review-close { display: grid; place-items: center; flex: 0 0 40px; width: 40px; height: 40px; padding: 0; border: 1px solid #496381; border-radius: 10px; background: #28415c; color: #eef5ff; cursor: pointer; }
+#review-dialog .review-close svg { display: block; color: inherit; }
+#review-dialog .review-dialog-body { min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 22px; scrollbar-width: thin; scrollbar-color: #48647f #14253b; }
+#review-dialog .review-muted { color: #afc2d9; font-size: 13px; line-height: 1.65; margin: 0 0 14px; }
+#review-dialog .review-muted:empty { display: none; }
+#review-dialog .review-filters { display: grid; grid-template-columns: minmax(180px,1.5fr) minmax(150px,1fr) minmax(140px,1fr) auto; gap: 10px; padding: 14px; margin: 16px 0; border: 1px solid #344f6c; border-radius: 12px; background: #192e46; }
+#review-dialog :is(input:not([type=checkbox]),select) { box-sizing: border-box; width: 100%; min-width: 0; min-height: 42px; padding: 10px 12px; border: 1px solid #47617e; border-radius: 9px; background: #102036; color: #e7f0fd; font: inherit; font-size: 13px; color-scheme: dark; }
+#review-dialog input::placeholder { color: #9fb4cd; }
+#review-dialog button:not(.review-close) { min-height: 42px; padding: 10px 16px; border-radius: 9px; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+#review-dialog .btn-secondary { border: 1px solid #47617e; background: #253e59; color: #dce9f8; }
+#review-dialog :is(button,input,select):focus-visible { outline: 2px solid #91bfff; outline-offset: 3px; }
+#review-dialog button:disabled { opacity: .5; cursor: not-allowed; }
+#review-dialog .review-list { display: grid; gap: 14px; }
+#review-dialog .saved-review-card { padding: 18px; border: 1px solid #395674; border-radius: 13px; background: #1b3048; }
+#review-dialog .saved-review-card h3 { margin: 0 0 12px; font-size: 15px; color: #edf4ff; }
+#review-dialog .saved-review-card > select { width: auto; max-width: 100%; margin-bottom: 10px; }
+#review-dialog .saved-review-card > p:not(.review-muted) { line-height: 1.65; font-size: 14px; }
+#review-dialog .saved-review-text { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.75; font-size: 14px; padding: 14px; margin: 12px 0 16px; border: 1px solid #334c67; border-radius: 9px; background: #14263c; }
+#review-dialog .review-delete { margin-left: 8px; background: #492735; border: 1px solid #995468; color: #ffdae3; }
+#review-dialog .review-check { display: flex; align-items: flex-start; gap: 14px; padding: 18px; margin: 14px 0; border: 1px solid #415d7b; border-radius: 12px; background: #1b314a; cursor: pointer; }
+#review-dialog .review-check:has(input:checked) { background: #1c3b43; border-color: #4c8d7b; }
+#review-dialog .review-check input { flex: 0 0 20px; width: 20px; height: 20px; margin: 2px 0 0; padding: 0; accent-color: #36b67c; }
+#review-dialog .review-check strong { display: block; font-size: 14px; font-weight: 600; line-height: 1.5; color: #edf4ff; }
+#review-dialog .review-check small { display: block; font-size: 12px; line-height: 1.65; margin-top: 5px; color: #afc2d9; }
+#review-dialog .review-check.is-disabled { opacity: .55; cursor: not-allowed; }
+#review-dialog .review-dialog-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 10px; padding-top: 18px; margin-top: 20px; border-top: 1px solid #354f6d; }
+#review-dialog .review-export-message { font-size: 14px; line-height: 1.75; color: #c5d6e9; margin: 0; }
+.review-toolbar { display: flex; justify-content: flex-end; margin-bottom: .8rem; }
+.review-toolbar button { padding: .6rem 1rem; }
+@media(max-width:700px) { #review-dialog .review-filters { grid-template-columns: 1fr 1fr; } #review-dialog .review-filters input:first-child { grid-column: 1 / -1; } }
+@media(max-width:480px) { #review-dialog.review-overlay { padding: 12px; } #review-dialog .review-dialog { max-height: calc(100dvh - 24px); border-radius: 14px; } #review-dialog .review-dialog-header { padding: 14px 16px; } #review-dialog .review-dialog-body { padding: 16px; } #review-dialog .review-filters { grid-template-columns: 1fr; padding: 10px; } #review-dialog .review-delete { margin: 8px 0 0; } #review-dialog .saved-review-card > button { width: 100%; } #review-dialog .review-dialog-actions > button { flex: 1; } }
+
+#ci-container .review-library-button { min-height: 40px; padding: 9px 14px; border: 1px solid #4a6480; border-radius: 9px; background: #263e58; color: #e4eefb; font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+#ci-container .review-library-button:hover { background: #33516f; }
+@media(max-width:600px) { #ci-container .ci-header-right { flex-wrap: wrap; justify-content: flex-start; } }

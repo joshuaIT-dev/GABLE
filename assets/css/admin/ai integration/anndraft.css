@@ -1,0 +1,118 @@
+/* ══════════════════════════════════════════
+   ANNOUNCEMENT DRAFTING
+   Add to assets/css/anndraft.css
+══════════════════════════════════════════ */
+
+/* ── Draft panel container ── */
+.ann-draft-panel {
+  background: linear-gradient(135deg, rgba(124,92,191,.12), rgba(224,92,160,.08));
+  border: 1px solid rgba(124,92,191,.3);
+  border-radius: 13px; padding: 1rem 1.15rem;
+  margin-bottom: 1.1rem;
+}
+
+/* ── Header row ── */
+.ann-draft-header {
+  display: flex; align-items: center; gap: .55rem;
+  margin-bottom: .85rem;
+}
+.ann-draft-icon  { font-size: 1.1rem; }
+.ann-draft-label {
+  font-size: .85rem; font-weight: 700;
+  color: #fff; flex-shrink: 0;
+}
+.ann-draft-sub {
+  font-size: .7rem; color: rgba(255,255,255,.4);
+  margin-left: .2rem;
+}
+
+/* ── Context row ── */
+.ann-draft-context-row {
+  display: flex; gap: .65rem; align-items: center;
+}
+.ann-context-select {
+  flex: 1;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 10px; padding: .55rem .85rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: .8rem; color: #fff; outline: none;
+  cursor: pointer; transition: border-color .2s;
+}
+.ann-context-select:focus { border-color: rgba(124,92,191,.6); }
+.ann-context-select option { background: #1a1740; }
+
+.ann-draft-btn {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #7c5cbf, #e05ca0);
+  color: #fff; border: none; border-radius: 10px;
+  padding: .55rem 1.1rem; font-size: .8rem; font-weight: 700;
+  cursor: pointer; white-space: nowrap;
+  transition: opacity .2s, transform .15s;
+  flex-shrink: 0;
+}
+.ann-draft-btn:hover:not(:disabled) { opacity: .88; transform: translateY(-1px); }
+.ann-draft-btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+
+/* ── Status / loading ── */
+.ann-draft-status {
+  display: flex; align-items: center; gap: .4rem;
+  margin-top: .75rem; padding: .35rem 0;
+}
+
+/* ── Preview card ── */
+.ann-draft-preview {
+  margin-top: .85rem;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 11px; padding: 1rem 1.1rem;
+  animation: fadeUp .25s ease forwards;
+}
+.ann-preview-label {
+  font-size: .68rem; font-weight: 700;
+  color: var(--purple-light);
+  letter-spacing: .06em; text-transform: uppercase;
+  margin-bottom: .65rem;
+}
+.ann-preview-title {
+  font-size: .95rem; font-weight: 700;
+  margin-bottom: .45rem; color: #fff;
+}
+.ann-preview-body {
+  font-size: .82rem; color: rgba(255,255,255,.78);
+  line-height: 1.65; margin-bottom: .85rem;
+  border-left: 2px solid rgba(124,92,191,.5);
+  padding-left: .8rem;
+}
+
+/* ── Preview action buttons ── */
+.ann-preview-actions { display: flex; gap: .5rem; flex-wrap: wrap; }
+
+.ann-use-btn {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #16a34a, #22c55e);
+  color: #fff; border: none; border-radius: 9px;
+  padding: .45rem 1rem; font-size: .78rem; font-weight: 700;
+  cursor: pointer; transition: opacity .2s;
+}
+.ann-use-btn:hover { opacity: .88; }
+
+.ann-regen-btn {
+  font-family: 'Poppins', sans-serif;
+  background: rgba(124,92,191,.25);
+  border: 1px solid rgba(124,92,191,.4);
+  color: var(--purple-light); border-radius: 9px;
+  padding: .45rem 1rem; font-size: .78rem; font-weight: 700;
+  cursor: pointer; transition: background .2s;
+}
+.ann-regen-btn:hover { background: rgba(124,92,191,.4); }
+
+.ann-discard-btn {
+  font-family: 'Poppins', sans-serif;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.14);
+  color: rgba(255,255,255,.55); border-radius: 9px;
+  padding: .45rem .85rem; font-size: .78rem; font-weight: 600;
+  cursor: pointer; transition: background .2s;
+}
+.ann-discard-btn:hover { background: rgba(255,255,255,.12); color: #fff; }

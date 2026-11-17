@@ -1,0 +1,186 @@
+/* ══════════════════════════════════════════
+   FLAGGED QUIZ TRIAGE
+   Add to assets/css/triage.css
+══════════════════════════════════════════ */
+
+/* ── Patched flagged card ── */
+.triage-flagged-card {
+  background: rgba(224,92,160,.08);
+  border: 1px solid rgba(224,92,160,.25);
+  border-radius: 14px; padding: 1.1rem 1.25rem;
+  margin-bottom: .85rem;
+}
+.triage-card-top {
+  display: flex; align-items: flex-start;
+  gap: 1rem; flex-wrap: wrap;
+}
+.triage-meta {
+  font-size: .68rem; color: rgba(255,255,255,.4);
+  margin-top: .2rem;
+}
+
+/* ── Modal: Summary card ── */
+.triage-summary-card {
+  background: rgba(224,92,160,.07);
+  border: 1px solid rgba(224,92,160,.2);
+  border-radius: 14px; padding: 1.15rem 1.3rem;
+  margin-bottom: 1rem;
+}
+.triage-summary-header {
+  display: flex; justify-content: space-between;
+  align-items: center; margin-bottom: .85rem;
+  flex-wrap: wrap; gap: .5rem;
+}
+.triage-flag-count {
+  font-size: .88rem; font-weight: 700; color: #f47fc4;
+}
+.triage-college {
+  font-size: .72rem; color: rgba(255,255,255,.45);
+}
+
+/* Reasons list */
+.triage-reasons-label {
+  font-size: .68rem; font-weight: 700;
+  color: rgba(255,255,255,.45);
+  text-transform: uppercase; letter-spacing: .06em;
+  margin-bottom: .5rem;
+}
+.triage-reasons-list { margin-bottom: .85rem; }
+.triage-reason-item {
+  display: flex; gap: .6rem; align-items: flex-start;
+  font-size: .8rem; color: rgba(255,255,255,.8);
+  line-height: 1.55; margin-bottom: .4rem;
+  background: rgba(255,255,255,.04);
+  border-radius: 8px; padding: .5rem .75rem;
+}
+.triage-reason-icon { flex-shrink: 0; }
+
+/* Affected questions */
+.triage-affected { margin-bottom: .85rem; }
+.triage-affected-label {
+  font-size: .68rem; font-weight: 700;
+  color: rgba(255,255,255,.45);
+  text-transform: uppercase; letter-spacing: .06em;
+  margin-bottom: .45rem;
+}
+.triage-q-chip {
+  display: inline-block;
+  font-size: .7rem; font-weight: 600;
+  padding: .2rem .65rem; border-radius: 6px;
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.3);
+  color: #fbbf24; margin-right: .4rem; margin-bottom: .3rem;
+}
+
+/* Stats row */
+.triage-stats-row {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: .5rem;
+}
+.triage-stat {
+  background: rgba(255,255,255,.05);
+  border-radius: 10px; padding: .65rem;
+  text-align: center;
+}
+.ts-val { font-size: 1.2rem; font-weight: 800; color: #fff; }
+.ts-lbl { font-size: .65rem; color: rgba(255,255,255,.45); margin-top: .1rem; }
+
+/* ── AI triage card ── */
+.triage-ai-card {
+  background: rgba(124,92,191,.08);
+  border: 1px solid rgba(124,92,191,.22);
+  border-radius: 14px; padding: 1.1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+.triage-ai-header {
+  display: flex; align-items: center; gap: .55rem;
+  margin-bottom: .85rem;
+}
+.triage-ai-icon  { font-size: 1rem; }
+.triage-ai-label {
+  font-size: .85rem; font-weight: 700;
+  color: var(--purple-light); flex: 1;
+}
+.triage-regen-btn {
+  font-family: 'Poppins', sans-serif;
+  background: none;
+  border: 1px solid rgba(255,255,255,.15);
+  color: rgba(255,255,255,.5); border-radius: 7px;
+  padding: .18rem .6rem; font-size: .68rem; font-weight: 600;
+  cursor: pointer; transition: all .2s;
+}
+.triage-regen-btn:hover {
+  border-color: rgba(124,92,191,.5);
+  color: var(--purple-light);
+}
+
+/* ── Triage result ── */
+.triage-result { display: flex; flex-direction: column; gap: .65rem; }
+.triage-result-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: .65rem;
+}
+.triage-result-item {
+  background: rgba(255,255,255,.05);
+  border-radius: 10px; padding: .75rem;
+}
+.tri-label { font-size: .65rem; color: rgba(255,255,255,.45); margin-bottom: .25rem; }
+.tri-val   { font-size: .9rem; font-weight: 700; }
+
+.triage-finding {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 10px; padding: .75rem .9rem;
+}
+.triage-fix {
+  background: rgba(245,158,11,.07);
+  border-color: rgba(245,158,11,.2);
+}
+.tri-finding-label {
+  font-size: .68rem; font-weight: 700;
+  color: rgba(255,255,255,.5);
+  margin-bottom: .35rem;
+}
+.tri-finding-text {
+  font-size: .82rem; color: rgba(255,255,255,.85);
+  line-height: 1.6;
+}
+
+/* ── Admin decision row ── */
+.triage-actions { margin-top: .25rem; }
+.triage-actions-label {
+  font-size: .72rem; font-weight: 700;
+  color: rgba(255,255,255,.45);
+  text-transform: uppercase; letter-spacing: .06em;
+  margin-bottom: .65rem;
+}
+.triage-action-btns {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: .65rem;
+}
+.triage-action-btn {
+  font-family: 'Poppins', sans-serif;
+  border: none; border-radius: 11px;
+  padding: .75rem .5rem; font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: opacity .2s, transform .15s;
+  line-height: 1.4;
+}
+.triage-action-btn:hover { opacity: .88; transform: translateY(-1px); }
+
+.triage-resolve {
+  background: rgba(74,222,128,.15);
+  border: 1.5px solid rgba(74,222,128,.35) !important;
+  border-style: solid;
+  color: #4ade80;
+}
+.triage-edit {
+  background: rgba(245,158,11,.15);
+  border: 1.5px solid rgba(245,158,11,.35) !important;
+  border-style: solid;
+  color: #fbbf24;
+}
+.triage-remove {
+  background: rgba(224,92,160,.15);
+  border: 1.5px solid rgba(224,92,160,.35) !important;
+  border-style: solid;
+  color: #f47fc4;
+}

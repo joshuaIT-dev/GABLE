@@ -1,0 +1,7 @@
+/* Match the original Game.html text branding. */
+body :is(.nav-brand,.dash-nav-brand,.sdash-brand,.logo,.top-brand){font-family:'Silkscreen',monospace}
+body :is(.nav-brand,.dash-nav-brand,.sdash-brand,.logo) .brand-wordmark{font-family:'Silkscreen',monospace;font-size:16px;font-weight:700;letter-spacing:0;color:#edf4ff;background:none;-webkit-text-fill-color:currentColor;line-height:1.4}
+body :is(.nav-brand,.dash-nav-brand,.sdash-brand,.logo) .brand-mark{display:grid;place-items:center;width:38px;height:38px;flex-shrink:0;font-family:'Silkscreen',monospace;font-size:18px;font-weight:700;letter-spacing:0;line-height:1;border:1px solid #57718f;border-radius:11px;background:#253c55;color:#dce9f8;-webkit-text-fill-color:currentColor}
+body .brand-wordmark small{display:block;font-family:'Poppins',sans-serif;font-size:10px;font-weight:400;letter-spacing:0;line-height:1.5;color:#a6bdd6;margin-top:2px}
+body .top-brand{font-family:'Silkscreen',monospace;font-size:16px;font-weight:700;letter-spacing:0}
+body .top-brand>span{font-family:'Poppins',sans-serif;font-weight:400;letter-spacing:0}

@@ -1,0 +1,183 @@
+/* ══════════════════════════════════════════
+   IN-QUIZ CONCEPT HINTS
+   Add to assets/css/hints.css
+══════════════════════════════════════════ */
+
+/* ── Hint button ── */
+.btn-hint {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: rgba(245,158,11,.15);
+  border: 1.5px solid rgba(245,158,11,.4);
+  color: #fcd34d; border-radius: 10px;
+  padding: .45rem .95rem; font-size: .78rem; font-weight: 700;
+  cursor: pointer; font-family: 'Poppins', sans-serif;
+  transition: background .2s, transform .15s;
+}
+.btn-hint:hover:not(:disabled) {
+  background: rgba(245,158,11,.28);
+  transform: translateY(-1px);
+}
+.btn-hint:disabled,
+.btn-hint.hint-broke {
+  opacity: .45; cursor: not-allowed; transform: none;
+}
+
+.hint-xp-cost {
+  font-size: .65rem; font-weight: 800;
+  background: rgba(245,158,11,.25);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 6px; padding: .1rem .4rem;
+  color: #fbbf24;
+}
+
+/* ── Spinner inside button ── */
+.hint-spinner {
+  width: 12px; height: 12px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.3);
+  border-top-color: #fcd34d;
+  animation: hint-spin .7s linear infinite;
+  display: inline-block;
+}
+@keyframes hint-spin { to { transform: rotate(360deg); } }
+
+/* ── Hint card (shown after hint is fetched) ── */
+.hint-card {
+  background: linear-gradient(135deg, rgba(245,158,11,.1), rgba(251,191,36,.06));
+  border: 1px solid rgba(245,158,11,.35);
+  border-radius: 13px; padding: 1rem 1.15rem;
+  margin-top: .85rem;
+  animation: hint-fadein .3s ease forwards;
+}
+@keyframes hint-fadein {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hint-card-header {
+  display: flex; align-items: center; gap: .5rem;
+  margin-bottom: .5rem;
+}
+.hint-card-icon  { font-size: 1rem; }
+.hint-card-title {
+  font-size: .78rem; font-weight: 700;
+  color: #fcd34d; flex: 1;
+}
+.hint-card-cost {
+  font-size: .65rem; font-weight: 700;
+  color: rgba(245,158,11,.7);
+  background: rgba(245,158,11,.12);
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: 6px; padding: .1rem .45rem;
+}
+
+.hint-card-text {
+  font-size: .82rem; color: rgba(255,255,255,.85);
+  line-height: 1.6; margin-bottom: .5rem;
+  border-left: 2px solid rgba(245,158,11,.5);
+  padding-left: .75rem;
+}
+
+.hint-card-footer {
+  font-size: .65rem; color: rgba(255,255,255,.35);
+  font-style: italic;
+}
+
+/* ── Used badge ── */
+.hint-used-badge {
+  font-size: .68rem; font-weight: 600;
+  color: rgba(245,158,11,.65);
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.2);
+  border-radius: 8px; padding: .25rem .75rem;
+  display: inline-block;
+}
+
+/* =========================================
+   CONCEPT HINT
+   ========================================= */
+
+.hint-card {
+    margin-top: 18px;
+    padding: 4px 0;
+    animation: hintFadeIn 0.3s ease;
+}
+
+.hint-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.hint-card-icon {
+    font-size: 16px;
+}
+
+.hint-card-title {
+    color: #a970ff;
+    font-size: 14px;
+}
+
+.hint-card-cost {
+    margin-left: auto;
+    font-size: 12px;
+    opacity: 0.65;
+}
+
+/* Quotation-style AI hint */
+.hint-quote {
+    position: relative;
+
+    padding: 8px 18px 8px 18px;
+
+    border-left: 3px solid #a970ff;
+
+    color: rgba(255, 255, 255, 0.85);
+
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Opening quotation mark */
+.hint-quote-mark {
+    color: #a970ff;
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 0;
+    vertical-align: -5px;
+    margin-right: 4px;
+}
+
+/* Closing quotation mark */
+.hint-quote-close {
+    margin-left: 3px;
+}
+
+/* Hint text */
+.hint-card-text {
+    font-style: italic;
+}
+
+/* Used indicator */
+.hint-used-badge {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #a970ff;
+    opacity: 0.8;
+}
+
+/* Small entrance animation */
+@keyframes hintFadeIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}

@@ -1,0 +1,167 @@
+/* ══════════════════════════════════════════
+   ANOMALY DETECTION
+   Add to assets/css/anomaly.css
+══════════════════════════════════════════ */
+
+/* ── Count badge on section title ── */
+.anomaly-count-badge {
+  background: rgba(239,68,68,.25);
+  border: 1px solid rgba(239,68,68,.45);
+  color: #f87171;
+  font-size: .65rem; font-weight: 800;
+  padding: .15rem .55rem; border-radius: 99px;
+  letter-spacing: .04em;
+}
+
+/* ── Log button ── */
+.anomaly-log-btn {
+  font-family: 'Poppins', sans-serif;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.14);
+  color: rgba(255,255,255,.7);
+  border-radius: 10px; padding: .4rem 1rem;
+  font-size: .78rem; font-weight: 600;
+  cursor: pointer; transition: background .2s;
+}
+.anomaly-log-btn:hover { background: rgba(255,255,255,.13); color: #fff; }
+
+/* ── All clear state ── */
+.anomaly-all-clear {
+  display: flex; align-items: center; gap: 1rem;
+  background: rgba(74,222,128,.07);
+  border: 1px solid rgba(74,222,128,.2);
+  border-radius: 14px; padding: 1.1rem 1.4rem;
+  font-size: .88rem; color: #86efac;
+}
+.anomaly-clear-title { font-weight: 700; margin-bottom: .15rem; }
+.anomaly-clear-sub   { font-size: .72rem; color: rgba(255,255,255,.45); }
+
+/* ── Anomaly list ── */
+.anomaly-list { display: flex; flex-direction: column; gap: .75rem; }
+
+/* ── Individual anomaly card ── */
+.anomaly-card {
+  border-radius: 14px; padding: 1.1rem 1.25rem;
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 1rem;
+  animation: fadeUp .3s ease forwards;
+  flex-wrap: wrap;
+}
+.anomaly-high   { background: rgba(239,68,68,.09);  border: 1px solid rgba(239,68,68,.28); }
+.anomaly-medium { background: rgba(245,158,11,.08); border: 1px solid rgba(245,158,11,.25); }
+
+.anomaly-card-left { display: flex; align-items: flex-start; gap: .85rem; flex: 1; min-width: 0; }
+.anomaly-type-icon {
+  width: 40px; height: 40px; border-radius: 11px;
+  background: rgba(255,255,255,.08);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; flex-shrink: 0;
+}
+
+.anomaly-info { flex: 1; min-width: 0; }
+.anomaly-title {
+  font-size: .88rem; font-weight: 700;
+  margin-bottom: .2rem;
+  display: flex; align-items: center; gap: .45rem; flex-wrap: wrap;
+}
+.anomaly-type-tag {
+  font-size: .62rem; font-weight: 700;
+  padding: .12rem .5rem; border-radius: 6px;
+  background: rgba(255,255,255,.1);
+  color: rgba(255,255,255,.65);
+  letter-spacing: .04em;
+}
+.anomaly-severity-high {
+  font-size: .6rem; font-weight: 800;
+  padding: .12rem .5rem; border-radius: 6px;
+  background: rgba(239,68,68,.25);
+  border: 1px solid rgba(239,68,68,.4);
+  color: #f87171; letter-spacing: .06em;
+}
+.anomaly-severity-med {
+  font-size: .6rem; font-weight: 800;
+  padding: .12rem .5rem; border-radius: 6px;
+  background: rgba(245,158,11,.2);
+  border: 1px solid rgba(245,158,11,.35);
+  color: #fbbf24; letter-spacing: .06em;
+}
+.anomaly-college  { font-size: .72rem; color: rgba(255,255,255,.5); margin-bottom: .3rem; }
+.anomaly-detail   { font-size: .78rem; color: rgba(255,255,255,.8); line-height: 1.5; }
+.anomaly-notified { font-size: .68rem; color: #86efac; margin-top: .35rem; font-weight: 600; }
+
+.anomaly-card-actions {
+  display: flex; gap: .4rem; flex-shrink: 0;
+  align-items: flex-start; flex-wrap: wrap;
+}
+
+/* ══════════════════════
+   DETAIL MODAL
+══════════════════════ */
+.anomaly-detail-grid {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: .65rem; margin-bottom: 1rem;
+}
+.anom-det-box {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 11px; padding: .75rem;
+  text-align: center;
+}
+.anom-det-label { font-size: .65rem; color: rgba(255,255,255,.45); margin-bottom: .25rem; }
+.anom-det-val   { font-size: .88rem; font-weight: 700; }
+
+.anom-det-detail-box {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 12px; padding: 1rem 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.anom-ai-section {
+  background: rgba(124,92,191,.08);
+  border: 1px solid rgba(124,92,191,.2);
+  border-radius: 12px; padding: 1rem 1.1rem;
+}
+.anom-ai-header {
+  font-size: .82rem; font-weight: 700;
+  color: var(--purple-light); margin-bottom: .65rem;
+}
+
+/* ══════════════════════
+   NOTIFICATION LOG
+══════════════════════ */
+.anomaly-log-entry {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 14px; padding: 1rem 1.15rem;
+  margin-bottom: .65rem;
+  animation: fadeUp .25s ease forwards;
+}
+.ale-header {
+  display: flex; align-items: flex-start;
+  gap: .75rem; margin-bottom: .5rem;
+}
+.ale-icon  { font-size: 1.1rem; flex-shrink: 0; }
+.ale-info  { flex: 1; }
+.ale-title { font-size: .88rem; font-weight: 700; margin-bottom: .15rem; }
+.ale-meta  { font-size: .68rem; color: rgba(255,255,255,.45); }
+
+.ale-badge {
+  font-size: .62rem; font-weight: 700;
+  padding: .18rem .55rem; border-radius: 6px;
+  white-space: nowrap; flex-shrink: 0;
+}
+.ale-drop    { background: rgba(239,68,68,.2);  border: 1px solid rgba(239,68,68,.35);  color: #f87171; }
+.ale-pattern { background: rgba(245,158,11,.2); border: 1px solid rgba(245,158,11,.35); color: #fbbf24; }
+
+.ale-detail {
+  font-size: .78rem; color: rgba(255,255,255,.65);
+  line-height: 1.5; margin-bottom: .5rem;
+}
+.ale-ai-msg {
+  background: rgba(124,92,191,.1);
+  border: 1px solid rgba(124,92,191,.2);
+  border-radius: 9px; padding: .65rem .85rem;
+  font-size: .78rem; color: rgba(255,255,255,.8);
+  line-height: 1.55;
+}

@@ -1,0 +1,346 @@
+.student-portal .student-navbar { height: auto; display: block; padding: 0 max(1.25rem, calc((100vw - 1160px) / 2)); background: rgba(17,27,45,.98); border-bottom: 1px solid #30435b; }
+.student-nav-top { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.student-navbar .nav-brand { display: flex; align-items: center; gap: .7rem; background: none; border: 0; padding: 0; color: #e6eef7; font: inherit; cursor: pointer; }
+.student-navbar .nav-brand span { background: none; -webkit-text-fill-color: currentColor; }
+.student-navbar .brand-mark { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid #57718f; border-radius: 11px; background: #253c55; color: #dce9f8; font-size: 1.2rem; font-weight: 800; }
+.brand-wordmark { text-align: left; font-size: 1.05rem; font-weight: 700; letter-spacing: .08em; }
+.brand-wordmark small { display: block; font-size: .65rem; font-weight: 400; color: #9eb1c9; letter-spacing: 0; margin-top: .15rem; }
+.student-navbar .nav-right { margin-left: auto; gap: .6rem; }
+.student-navbar .nav-tabs { display: flex; overflow-x: auto; gap: .25rem; padding: .35rem 0 .7rem; border-top: 1px solid rgba(255,255,255,.055); scrollbar-width: thin; }
+.student-navbar .nav-tab { flex: 1 0 auto; min-height: 42px; padding: .65rem .9rem; border: 1px solid transparent; border-radius: 9px; font-size: .78rem; color: #adbed3; background: transparent; }
+.student-navbar .nav-tab:hover { color: #edf4fc; background: #203248; }
+.student-navbar .nav-tab.active { background: #29425e; border-color: #466586; color: #f0f5fc; box-shadow: none; }
+.student-navbar .xp-badge { padding: 0; border: 0; background: transparent; }
+.xp-nav-trigger { display: flex; align-items: center; gap: .4rem; min-height: 40px; padding: .5rem .7rem; color: #c7daee; border: 1px solid #405a77; border-radius: 10px; background: #22364d; font: inherit; font-size: .75rem; cursor: pointer; }
+.student-navbar .xp-badge .xp-val { color: inherit; }
+.student-navbar .btn-help, .student-navbar .btn-logout, .student-navbar .btn-notif-bell { display: flex; align-items: center; justify-content: center; gap: .35rem; min-height: 40px; border-radius: 10px; border: 1px solid #354a64; background: #1b2b40; color: #becde0; font-size: .72rem; padding: .5rem .7rem; }
+.student-navbar .profile-badge { font: inherit; text-align: left; min-height: 42px; border: 1px solid #354a64; border-radius: 10px; background: #1b2b40; padding: .3rem .65rem .3rem .35rem; }
+.student-navbar .profile-info strong { color: #e0e9f5; font-size: .72rem; }
+.student-navbar .profile-info > span { color: #9bafc8; font-size: .62rem; }
+.student-navbar .s-avatar-nav { background: #344c68; width: 30px; height: 30px; font-size: .75rem; }
+.student-navbar .xp-popup { background: #1b2b40; border-color: #405874; right: 0; top: calc(100% + 12px); }
+.student-portal button:focus-visible, .student-portal select:focus-visible, .student-portal textarea:focus-visible { outline: 2px solid #a7c6e9; outline-offset: 3px; }
+.student-home-hero, .student-portal .pu-hero { background: linear-gradient(115deg,#1c2d43,#243b52); border: 1px solid #3a526c; border-radius: 18px; padding: 1.75rem; gap: 2rem; box-shadow: none; }
+.student-home-hero::before, .student-portal .pu-hero::before { display: none; }
+.student-home-hero .hero-text { flex: 1; min-width: 0; }
+.student-home-hero h2, .student-portal .pu-hero h2 { font-size: clamp(1.3rem,2.6vw,1.75rem); margin: .6rem 0; line-height: 1.35; }
+.student-home-hero .hero-text p, .student-portal .pu-hero p { color: #b6c6d9; font-size: .82rem; line-height: 1.7; }
+.student-home-hero .hero-streak { margin-top: 1.2rem; display: flex; flex-wrap: wrap; gap: .75rem; }
+.student-home-hero .btn-join { min-height: 44px; background: #d5e3f3; color: #182b43; border: 1px solid #d5e3f3; box-shadow: none; border-radius: 9px; font-size: .8rem; }
+.student-home-hero .streak-chip { background: transparent; color: #b4c6db; font-size: .72rem; border: 0; }
+.home-quick-actions { display: grid; gap: .65rem; width: 300px; flex-shrink: 0; }
+.home-quick-actions button { display: flex; align-items: center; justify-content: space-between; gap: 1rem; border: 1px solid #3b526c; background: rgba(12,25,42,.4); border-radius: 11px; color: #dce8f5; font: inherit; padding: .85rem 1rem; text-align: left; cursor: pointer; }
+.home-quick-actions strong { display: block; font-size: .8rem; font-weight: 600; }
+.home-quick-actions small { display: block; color: #a6b9d0; font-size: .68rem; margin-top: .25rem; }
+.student-portal .pu-hero-left { flex: 1; }
+.student-portal .pu-hero-left > button { margin-top: 1rem; min-height: 44px; border-color: #57718e; background: #2b435e; }
+.pu-hero-stats { display: grid; grid-template-columns: repeat(2, minmax(100px,1fr)); gap: .75rem; }
+.pu-hero-stats > div { background: rgba(12,25,42,.4); border: 1px solid #3b526c; padding: 1.1rem; border-radius: 12px; }
+.pu-hero-stats strong { display: block; color: #deebf8; font-size: 1.5rem; }
+.pu-hero-stats span { display: block; margin-top: .35rem; font-size: .7rem; color: #aebfd4; }
+.student-portal #panel-home .stat-overview-card { box-shadow: none; background: var(--bg-card); border-color: #31465f; }
+.student-portal #panel-home .soc-icon { background: #273c54; color: #bad0e8; }
+.student-portal #panel-home .soc-val { color: #d7e5f5 !important; }
+/* Compact desktop navbar: one row, with account controls anchored right. */
+@media (min-width: 851px) {
+  .student-portal .student-navbar { display: flex; align-items: center; gap: .8rem; min-height: 70px; padding-inline: 1.25rem; }
+  .student-portal .student-nav-top { display: contents; }
+  .student-portal .nav-brand { order: 0; flex: 0 0 auto; margin-right: 0; }
+  .student-portal .student-navbar .nav-tabs { order: 1; min-width: 0; flex: 1 1 auto; overflow-x: auto; justify-content: safe center; padding: .45rem 0; border-top: 0; }
+  .student-portal .student-navbar .nav-tab { flex: 0 0 auto; padding: .55rem .62rem; font-size: .72rem; }
+  .student-portal .student-navbar .nav-right { order: 2; flex: 0 0 auto; margin-left: 0; }
+}
+@media (max-width: 850px) {
+  .student-home-hero { flex-direction: column; align-items: stretch; }
+  .home-quick-actions { width: 100%; }
+  .student-navbar .profile-info { display: none; }
+  .student-navbar .profile-badge { padding: .3rem; }
+}
+@media (max-width: 600px) {
+  .student-portal .student-navbar { padding: 0 .75rem; }
+  .student-nav-top { gap: .5rem; flex-wrap: wrap; padding: .75rem 0; }
+  .student-nav-top { position: relative; }
+  .student-navbar .xp-badge { position: static; }
+  .student-navbar .xp-popup { top: 100%; right: 0; width: min(300px, calc(100vw - 24px)); }
+  .student-navbar .brand-wordmark { font-size: .85rem; }
+  .student-navbar .brand-wordmark small { display: none; }
+  .student-navbar .brand-mark { width: 30px; height: 30px; }
+  .student-navbar .nav-right { gap: .35rem; flex-wrap: wrap; justify-content: flex-end; }
+  .student-navbar .btn-help > span { display: none; }
+  .student-navbar .nav-tab { flex: 0 0 auto; }
+  .student-home-hero, .student-portal .pu-hero { padding: 1.25rem; }
+  .pu-hero-stats { width: 100%; }
+}
+@media (min-width: 601px) and (max-width: 850px) {
+  .student-portal .student-navbar { padding-inline: 1rem; }
+  .student-nav-top { min-height: 60px; }
+  .student-portal .student-navbar .nav-tabs { padding-block: .2rem .45rem; }
+  .student-portal .student-navbar .nav-tab { min-height: 36px; padding: .4rem .65rem; }
+}
+.student-navbar .nav-utilities, .student-navbar .nav-account { display: flex; align-items: center; gap: .35rem; }
+.student-navbar .nav-account { padding-left: .65rem; border-left: 1px solid #354b65; }
+.student-navbar .nav-utilities .xp-nav-trigger { height: 44px; padding: .4rem .7rem; gap: .55rem; background: #263c53; border-color: #3f5c78; }
+.nav-xp-copy { display: flex; flex-direction: column; text-align: left; gap: .1rem; }
+.nav-xp-copy small { color: #9db4cc; font-size: .55rem; line-height: 1; }
+.nav-xp-copy .xp-val { font-size: .76rem; font-weight: 700; line-height: 1.2; }
+.student-navbar .nav-utilities .btn-help, .student-navbar .nav-utilities .btn-notif-bell { width: 40px; height: 44px; padding: 0; border-color: transparent; background: transparent; }
+.student-navbar .nav-utilities .btn-help:hover, .student-navbar .nav-utilities .btn-notif-bell:hover { background: #283d54; border-color: #405974; }
+.student-navbar .nav-account .profile-badge { height: 46px; gap: .6rem; padding: .35rem .6rem .35rem .4rem; background: #23364b; border-color: #3a526c; border-radius: 12px; }
+.student-navbar .nav-account .profile-badge:hover { background: #2c435c; border-color: #607c99; }
+.student-navbar .nav-account .s-avatar-nav { width: 32px; height: 32px; background: #416081; border-radius: 9px; color: #edf5fc; }
+.student-navbar .nav-account .profile-info { min-width: 0; max-width: 118px; }
+.student-navbar .nav-account .profile-info strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .72rem; }
+.student-navbar .nav-account .profile-info > span { font-size: .6rem; }
+.student-navbar .profile-chevron { width: 12px; height: 12px; color: #91abc5; }
+.student-navbar .nav-account .btn-logout { width: 40px; height: 44px; padding: 0; border: 1px solid transparent; color: #a9b9cd; background: transparent; }
+.student-navbar .nav-account .btn-logout:hover { background: #432f3a; border-color: #79505d; color: #f0bcc5; }
+.student-navbar .nav-right svg { width: 17px; height: 17px; color: inherit; }
+.student-navbar .notif-badge { top: 2px; right: 0; min-width: 16px; height: 16px; background: #a74e61; border: 2px solid #111b2d; }
+.student-navbar .notif-panel { background: #1b2c41; border: 1px solid #455e79; border-radius: 14px; box-shadow: 0 14px 40px rgba(0,0,0,.3); }
+.student-navbar .np-mark-all { color: #abc9e9; }
+@media (max-width: 1100px) and (min-width: 851px) {
+  .student-navbar .nav-account .profile-info, .student-navbar .profile-chevron { display: none; }
+}
+@media (max-width: 600px) {
+  .student-navbar .nav-account { padding-left: .35rem; }
+  .student-navbar .profile-chevron { display: none; }
+  .student-navbar .nav-utilities, .student-navbar .nav-account { gap: .15rem; }
+  .student-navbar .notif-bell-wrap { position: static; }
+  .student-navbar .notif-panel { position: absolute; top: 100%; right: 0; width: min(360px, calc(100vw - 24px)); max-height: 65dvh; }
+}
+.student-navbar .xp-popup { width: 320px; padding: 1.2rem; border-radius: 16px; box-shadow: 0 18px 50px rgba(0,0,0,.35); }
+.xp-popup-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: .75rem; margin-bottom: 1rem; }
+.student-navbar .xp-popup-label { text-transform: none; letter-spacing: 0; color: #e3edf8; font-size: .95rem; font-weight: 600; margin: .4rem 0 0; }
+.xp-popup-dismiss { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid #3e5670; border-radius: 8px; background: #263d55; color: #c2d4e8; cursor: pointer; }
+.student-navbar .xp-popup-level { color: #bdd3eb; font-size: .8rem; margin-bottom: .65rem; }
+.student-navbar .xp-popup-track { height: 7px; background: #304760; }
+.student-navbar .xp-popup-fill { background: #91b5db; }
+.student-navbar .xp-popup-sub { line-height: 1.7; margin: .75rem 0 1rem; color: #a8bdd5; font-size: .75rem; }
+.student-navbar .xp-popup-btns { gap: .6rem; }
+.student-navbar .btn-xp-dash, .student-navbar .btn-xp-close { min-height: 40px; border-radius: 9px; border: 1px solid #4a6683; background: #2f4b69; color: #e2edf8; font-weight: 500; }
+.student-navbar .btn-xp-close { background: transparent; }
+.student-navbar .notif-panel { width: 390px; max-height: min(600px, calc(100dvh - 110px)); }
+.student-navbar .np-header { padding: 1rem; gap: .75rem; align-items: center; }
+.student-navbar .np-title { font-weight: 600; }
+.student-navbar .np-close-btn { width: 34px; height: 34px; display: grid; place-items: center; background: #2b415a; border: 1px solid #425b76; border-radius: 8px; color: #c9dbed; }
+.student-navbar .np-tabs { padding: .65rem; gap: .4rem; background: #17273b; }
+.student-navbar .np-tab { padding: .65rem; border-radius: 8px; font-size: .73rem; color: #aebfd5; border: 1px solid transparent; }
+.student-navbar .np-tab.active { color: #e1edf9; background: #2a435e; border-color: #4a6683; box-shadow: none; }
+.student-navbar .np-body { padding: .5rem; }
+.student-portal .account-overlay { padding: 1rem; background: rgba(6,14,25,.78); backdrop-filter: blur(6px); }
+.student-portal .account-dialog { display: flex; flex-direction: column; width: min(600px,100%); max-width: 600px; max-height: calc(100dvh - 2rem); padding: 0; overflow: hidden; background: #192b40; border: 1px solid #425b76; border-radius: 18px; box-shadow: 0 24px 80px rgba(0,0,0,.4); }
+.student-portal .help-dialog { width: min(720px,100%); max-width: 720px; }
+.account-dialog-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem 1.5rem; background: #1f344c; border-bottom: 1px solid #354c65; flex-shrink: 0; }
+.student-portal .account-dialog-header h2 { margin: .3rem 0 0; font-size: 1.2rem; font-weight: 600; }
+.student-portal .account-dialog-header .modal-close { position: static; display: grid; place-items: center; flex-shrink: 0; width: 40px; height: 40px; border: 1px solid #4a627d; background: #2b425b; color: #dce8f5; border-radius: 10px; }
+.account-dialog-body { overflow-y: auto; min-height: 0; padding: 1.5rem; }
+.account-dialog-footer { display: flex; justify-content: flex-end; padding: .85rem 1.5rem; border-top: 1px solid #354c65; background: #1b2e44; flex-shrink: 0; }
+.student-portal #modal-profile .account-dialog-footer { justify-content: space-between; gap: .75rem; }
+.account-dialog-footer button { min-height: 42px; min-width: 100px; background: #2c4865; border-color: #52708f; border-radius: 9px; }
+.student-portal #modal-profile .account-dialog-footer button { min-width: 0; padding: .65rem 1rem; }
+@media(max-width:480px) {
+  .student-portal #modal-profile .account-dialog-footer { padding: .75rem 1rem; }
+  .student-portal #modal-profile .account-dialog-footer button { flex: 1 1 0; }
+}
+.profile-identity { display: flex; align-items: center; gap: 1.1rem; margin-bottom: 1.3rem; }
+.profile-avatar-wrap { flex-shrink: 0; text-align: center; }
+#profile-avatar { width: 64px; height: 64px; display: grid; place-items: center; background: #365777; border-radius: 15px; font-size: 1.4rem; font-weight: 700; color: #e1eefb; }
+.profile-identity-copy { min-width: 0; }
+.profile-identity-copy h3 { font-size: 1.1rem; margin: 0 0 .3rem; overflow-wrap: anywhere; }
+.profile-identity-copy p { color: #a9bed5; font-size: .75rem; margin: 0 0 .7rem; }
+.profile-meta-pills { display: flex; flex-wrap: wrap; gap: .4rem; }
+.profile-meta-pills span { color: #b9cfe6; background: #263e56; border: 1px solid #3e5873; padding: .25rem .5rem; border-radius: 6px; font-size: .65rem; }
+.profile-balance-strip { display: flex; align-items: center; flex-wrap: wrap; gap: .7rem; padding: .9rem 1rem; background: #243d56; border: 1px solid #425e7c; border-radius: 12px; }
+.profile-balance-strip > span { font-size: .75rem; color: #b9cde3; }
+.profile-balance-strip strong { color: #e0ecf9; font-size: 1.2rem; }
+.profile-balance-strip button { margin-left: auto; background: none; border: 0; color: #bed8f2; font: inherit; font-size: .72rem; cursor: pointer; min-height: 36px; }
+.profile-stat-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: .65rem; margin: 1rem 0; }
+.profile-stat-grid > div { background: #20354c; border: 1px solid #354e68; border-radius: 10px; padding: .85rem .4rem; text-align: center; }
+.profile-stat-grid strong { display: block; font-size: 1.2rem; color: #d0e2f5; }
+.profile-stat-grid span { display: block; font-size: .67rem; color: #9eb5cd; margin-top: .3rem; }
+.profile-academic-details { margin: 1.2rem 0; display: grid; gap: .85rem; }
+.profile-academic-details dt { color: #9eb5cd; font-size: .67rem; margin-bottom: .3rem; }
+.profile-academic-details dd { margin: 0; font-size: .8rem; color: #d1e1f2; }
+.account-dialog .profile-rewards-section { border-top: 1px solid #354c65; padding-top: 1rem; }
+.account-dialog .prs-title { font-size: .88rem; color: #d3e3f5; }
+.account-dialog .pr-empty { padding: 1rem; border-radius: 10px; background: #20354c; text-align: left; font-size: .75rem; color: #afc2d9; }
+.dialog-intro { font-size: .8rem; color: #afc2d9; margin: 0 0 1.1rem; }
+.help-topic-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .9rem; }
+.help-topic-grid article { display: flex; flex-direction: column; background: #20364d; border: 1px solid #39536e; border-radius: 12px; padding: 1rem; }
+.help-topic-number { color: #8caccd; font-size: .7rem; }
+.help-topic-grid h3 { font-size: .87rem; margin: .5rem 0; }
+.help-topic-grid p, .help-review-note p { font-size: .75rem; color: #afc3da; line-height: 1.75; margin: 0 0 .65rem; }
+.help-topic-grid button { margin-top: auto; padding: .5rem 0; min-height: 40px; text-align: left; background: none; border: 0; color: #c2dcf6; font: inherit; font-size: .73rem; cursor: pointer; }
+.help-review-note { margin-top: 1rem; padding: 1rem; border: 1px dashed #486681; border-radius: 10px; }
+.help-review-note strong { font-size: .8rem; }
+.help-review-note p { margin: .4rem 0 0; }
+@media (max-width: 600px) {
+  .account-dialog-header, .account-dialog-body { padding: 1rem; }
+  .help-topic-grid { grid-template-columns: 1fr; }
+  .student-navbar .notif-panel { width: min(390px,calc(100vw - 24px)); }
+  .student-navbar .xp-popup { width: min(320px,calc(100vw - 24px)); }
+}
+
+/* Activity tabs above a full-width performance overview. */
+#panel-home .home-two-col { display: flex; flex-direction: column; gap: 1.25rem; }
+#panel-home .activity-card { order: 0; padding: 1.25rem; min-width: 0; }
+#panel-home .perf-card { order: 1; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem; padding: 1.25rem; }
+#panel-home .perf-card > .section-title { grid-column: 1 / -1; margin: 0 !important; }
+#panel-home .perf-section { margin: 0; }
+.home-activity-tabs { display: flex; gap: .5rem; border-bottom: 1px solid #354b65; padding-bottom: .85rem; margin-bottom: 1rem; }
+.home-activity-tabs button { font: inherit; font-size: .85rem; font-weight: 600; color: #afc1d7; background: transparent; border: 1px solid transparent; border-radius: 9px; padding: .7rem 1rem; cursor: pointer; }
+.home-activity-tabs button[aria-selected="true"] { color: #e7f0fb; background: #29425e; border-color: #496783; }
+#home-available-list, #home-completed-list { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1rem; }
+#home-available-list[hidden], #home-completed-list[hidden] { display: none !important; }
+#panel-home .activity-available, #panel-home .activity-done { margin: 0; min-width: 0; padding: 1.1rem; display: flex; flex-direction: column; align-items: stretch; gap: .85rem; }
+#panel-home .activity-available .btn-start { margin-top: auto; width: 100%; }
+#panel-home .aa-title, #panel-home .ad-title { overflow-wrap: anywhere; line-height: 1.5; }
+#panel-home .ad-right { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-top: auto; }
+#home-available-list > .empty-state, #home-completed-list > .empty-state { grid-column: 1 / -1; padding: 1.5rem; }
+@media (max-width: 900px) {
+ #home-available-list, #home-completed-list { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 600px) {
+ #home-available-list, #home-completed-list, #panel-home .perf-card { grid-template-columns: 1fr; }
+ .home-activity-tabs button { flex: 1; padding-inline: .5rem; }
+}
+
+/* Quiz workspace */
+#modal-battle { padding: 1rem; background: rgba(7,15,27,.82); backdrop-filter: blur(8px); }
+#modal-battle .modal-battle-wide { width: min(980px,100%); max-width: 980px; max-height: calc(100dvh - 2rem); overflow-y: auto; padding: 1.5rem; border: 1px solid #435d79; border-radius: 18px; background: #182a40; }
+#battle-title { margin: 0 3rem 1.2rem 0; font-size: 1.3rem; line-height: 1.5; }
+#modal-battle .modal-close { width: 38px; height: 38px; display: grid; place-items: center; background: #294159; border: 1px solid #49647f; border-radius: 9px; color: #dce9f8; }
+#modal-battle .battle-layout { display: block; }
+#modal-battle .battle-main-col { min-width: 0; }
+#modal-battle .battle-info { padding: 1rem; background: #20354d; border: 1px solid #38536e; border-radius: 12px; margin-bottom: 1rem; }
+#modal-battle .battle-info h3 { color: #c4d7eb; font-size: .85rem; }
+#modal-battle .battle-info p { color: #aebfd3; line-height: 1.65; font-size: .8rem; }
+#modal-battle .battle-meta-row { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
+#modal-battle .bm-item { border: 1px solid #405b77; border-radius: 8px; padding: .5rem .75rem; color: #c5d8ec; background: #172a3f; font-size: .75rem; }
+#quiz-countdown { font-variant-numeric: tabular-nums; font-size: 1rem; margin-left: .5rem; color: #bee3d6; }
+#quiz-countdown.urgent { color: #ffb5bb; }
+#modal-battle .battle-question { background: #152539; border: 1px solid #354f69; border-radius: 12px; padding: 1.25rem; }
+#modal-battle .bq-text { font-size: 1.05rem; line-height: 1.65; margin-bottom: 1rem; }
+#modal-battle .bq-options { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .75rem; }
+#modal-battle .bq-option { background: #203750; border: 1px solid #435e7b; border-radius: 10px; color: #e0ebf7; padding: 1rem; text-align: left; line-height: 1.6; }
+#modal-battle .bq-option.selected { background: #365b7d; border-color: #a2c3e3; }
+#modal-battle textarea { background: #102137 !important; border: 1px solid #4d6b88 !important; color: #e0ebf7 !important; }
+.quiz-powerup-panel { margin-top: 1rem; padding: 1rem; border: 1px solid #4b5878; border-radius: 12px; background: #26334c; }
+.quiz-powerup-panel h3 { font-size: .85rem; margin: 0 0 .3rem; color: #e0d9f2; }
+.quiz-powerup-panel p, .quiz-session-note { font-size: .72rem; color: #afc1d7; line-height: 1.65; }
+.quiz-powerup-actions { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .8rem; }
+.quiz-powerup-actions button { min-height: 42px; }
+.quiz-powerup-actions button:disabled { opacity: .6; cursor: not-allowed; }
+.quiz-session-note { margin: .8rem 0 0; }
+#modal-battle .battle-actions { flex-wrap: wrap; padding-top: 1rem; border-top: 1px solid #38516a; }
+@media (max-width:600px) { #modal-battle .modal-battle-wide { padding: 1rem; } #modal-battle .bq-options { grid-template-columns: 1fr; } }
+
+/* Keep the quiz inside one viewport with a separate loadout column. */
+body:has(#modal-battle.open) { overflow: hidden; }
+#modal-battle .modal-battle-wide { width: min(1200px,100%); max-width: 1200px; height: calc(100dvh - 2rem); display: flex; flex-direction: column; overflow: hidden; box-sizing: border-box; }
+#battle-title { flex-shrink: 0; padding-right: 1rem; }
+#battle-body { flex: 1; min-height: 0; overflow-y: auto; }
+#battle-body:has(.battle-layout) { display: flex; flex-direction: column; overflow: hidden; }
+#modal-battle .battle-layout { flex: 1; min-height: 0; display: grid; grid-template-columns: 56px minmax(0,1fr); gap: 1rem; }
+#modal-battle .battle-main-col { min-height: 0; overflow-y: auto; padding-right: .4rem; }
+#modal-battle .quiz-powerup-panel { margin: 0; overflow-y: auto; min-height: 0; }
+#modal-battle .quiz-powerup-actions { flex-direction: column; align-items: stretch; }
+#modal-battle .quiz-powerup-actions > * { width: 100%; box-sizing: border-box; justify-content: center; text-align: center; }
+#modal-battle .modal-close { padding: 0; line-height: 1; top: 1rem; right: 1rem; flex-shrink: 0; }
+#modal-battle .modal-close svg { display: block; width: 20px; height: 20px; margin: 0; flex-shrink: 0; }
+#modal-battle .xp-boost-banner { flex-shrink: 0; margin-bottom: .75rem; }
+@media (max-width:700px) { #modal-battle .battle-layout { grid-template-columns: 56px minmax(0,1fr); gap: .5rem; } #modal-battle .quiz-powerup-panel { padding: .65rem; } #modal-battle .battle-question { padding: .75rem; } }
+@media (max-width:420px) { #modal-battle { padding: .4rem; } #modal-battle .modal-battle-wide { padding: .65rem; height: calc(100dvh - .8rem); max-height: calc(100dvh - .8rem); } #modal-battle .battle-layout { grid-template-columns: 48px minmax(0,1fr); } }
+
+/* Results and reviews size to their content, rather than the active quiz workspace. */
+#modal-battle .modal-battle-wide:has(.battle-score-result) { width: min(620px,100%); height: auto; }
+#modal-battle .modal-battle-wide:has(.expl-review) { width: min(860px,100%); height: auto; }
+#battle-body:has(.battle-score-result), #battle-body:has(.expl-review) { flex: 0 1 auto; }
+#modal-battle .battle-score-result { text-align: left; padding: .25rem 0 0; }
+.bsr-summary { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.bsr-summary-detail { text-align: right; }
+#modal-battle .bsr-score { font-size: clamp(2rem,5vw,3rem); line-height: 1.2; margin: 0; }
+#modal-battle .bsr-score.bsr-pending { font-size: 1.7rem; color: #fbbf24; }
+#modal-battle .bsr-label { margin: 0 0 .35rem; }
+#modal-battle .bsr-xp { margin: 0; font-size: 1rem; }
+.bsr-description { font-size: .83rem; line-height: 1.65; color: #b8b7d1; margin: 1rem 0; }
+#modal-battle .bsr-actions { justify-content: flex-start; flex-wrap: wrap; gap: .6rem; }
+#modal-battle .bsr-actions button, #modal-battle .expl-review button { min-height: 42px; }
+#modal-battle .expl-header-row { margin-bottom: .8rem; align-items: center; }
+#modal-battle .expl-cards-list { gap: .65rem; margin-bottom: .75rem; }
+#modal-battle .expl-card { padding: .85rem 1rem; animation: none; opacity: 1; }
+#modal-battle .expl-card-header, #modal-battle .expl-correct-row { flex-wrap: wrap; }
+#modal-battle .expl-correct-row[hidden] { display: none; }
+#modal-battle .expl-question, #modal-battle .expl-text, #modal-battle .expl-wrong-badge { overflow-wrap: anywhere; }
+#modal-battle .expl-note { text-align: left; margin: 0; }
+@media (max-width:480px) { .bsr-summary { align-items: flex-start; flex-direction: column; } .bsr-summary-detail { text-align: left; } }
+
+/* A connected icon rail; the explanation appears only on interaction. */
+#modal-battle .quiz-powerup-panel { overflow: visible; padding: .5rem .6rem 0 0; border: 0; border-right: 1px solid #354760; border-radius: 0; background: transparent; box-shadow: none; }
+.powerup-tool { position: relative; }
+.powerup-tool summary { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 1px solid #46658b; border-radius: 10px; color: #bcd5ff; background: #172c46; cursor: pointer; list-style: none; }
+.powerup-tool summary::-webkit-details-marker { display: none; }
+.powerup-tool summary:focus-visible { outline: 2px solid #8bbaff; outline-offset: 3px; }
+.powerup-tooltip { display: none; position: absolute; left: 100%; top: 0; z-index: 20; width: min(230px, calc(100vw - 120px)); box-sizing: border-box; padding: 1rem; border: 1px solid #456184; border-radius: 12px; background: #132238; color: #edf3ff; box-shadow: 0 12px 32px #0006; text-align: left; }
+.powerup-tool[open] .powerup-tooltip, .powerup-tool:focus-within .powerup-tooltip { display: block; }
+@media (hover:hover) { .powerup-tool:hover .powerup-tooltip { display: block; } }
+.powerup-tooltip p { font-size: .78rem; line-height: 1.5; margin: .5rem 0; color: #c2cee0; }
+#modal-battle .battle-actions { flex-wrap: wrap; }
+
+/* The loadout is a sibling of the quiz dialog, outside its card. */
+#quiz-loadout { display: none; }
+#modal-battle:has(.battle-layout) { gap: 14px; align-items: center; }
+#modal-battle:has(.battle-layout) #quiz-loadout { display: flex; flex-direction: column; align-items: center; order: -1; position: relative; z-index: 2; flex: 0 0 60px; box-sizing: border-box; height: calc(100dvh - 2rem); max-height: 92vh; padding: 1rem .4rem; border: 1px solid #354760; border-radius: 14px; background: #14253c; box-shadow: 0 12px 36px #0004; }
+/* The divider belongs to the quiz card edge, not the gap beside the loadout. */
+#modal-battle:has(.battle-layout) .modal-battle-wide { width: min(1126px,calc(100% - 74px)); flex: 0 1 1126px; max-height: 92vh; border-left: 1px solid #526b8d; }
+#modal-battle .battle-layout { display: flex; gap: 0; border: 0; }
+#modal-battle .battle-main-col { flex: 1; min-width: 0; padding: 0 .4rem 0 0; border: 0; background: transparent; }
+#quiz-loadout .powerup-tool summary { width: 44px; height: 44px; box-sizing: border-box; }
+@media(max-width:420px) { #modal-battle:has(.battle-layout) { gap: 10px; } #modal-battle:has(.battle-layout) #quiz-loadout { flex-basis: 52px; padding: .75rem .2rem; height: calc(100dvh - .8rem); max-height: calc(100dvh - .8rem); } #modal-battle:has(.battle-layout) .modal-battle-wide { width: calc(100% - 62px); max-height: calc(100dvh - .8rem); } }
+
+/* Completed quiz results keep summary, review tools and navigation aligned. */
+#modal-battle .modal-battle-wide:has(.battle-score-result) { width: min(640px,100%); padding: 24px; border: 1px solid #405975; border-radius: 18px; }
+#modal-battle .modal-battle-wide:has(.battle-score-result) #battle-title { font-size: 19px; line-height: 1.5; margin: 0 36px 20px 0; padding: 0; }
+#modal-battle .bsr-summary { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); align-items: stretch; gap: 12px; }
+#modal-battle .bsr-summary > div { display: flex; flex-direction: column; justify-content: center; gap: 6px; min-width: 0; padding: 18px; border: 1px solid #3d5470; border-radius: 12px; background: #1b3048; text-align: left; }
+#modal-battle .bsr-label { font-size: 12px; line-height: 1.6; margin: 0; }
+#modal-battle .bsr-description { line-height: 1.7; margin: 18px 0; }
+#modal-battle .bsr-actions { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+#modal-battle .bsr-actions .btn-explain { grid-column: 1 / -1; }
+#modal-battle :is(.bsr-actions,.bsr-navigation) button { width: 100%; min-width: 0; min-height: 44px; padding: 11px 12px; margin: 0; border-radius: 9px; font-size: 13px; line-height: 1.5; white-space: normal; }
+#modal-battle .bsr-navigation { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; margin-top: 18px; padding-top: 16px; border-top: 1px solid #3b506b; }
+@media(max-width:480px) { #modal-battle .modal-battle-wide:has(.battle-score-result) { padding: 18px; } #modal-battle .bsr-summary { grid-template-columns: 1fr; } #modal-battle .bsr-summary > div { padding: 14px; } }
+
+
+
+/* Empty quiz sections span the grid instead of occupying its first column. */
+.student-portal :is(#formal-battle-grid,#informal-battle-grid)>.empty-state{
+ grid-column:1/-1;width:100%;box-sizing:border-box;min-height:160px;
+ display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+}
+
+/* Student profile: stable identity area, scrollable content, and anchored actions. */
+.student-portal #modal-profile .account-dialog{width:min(640px,100%);max-width:640px;background:var(--surface-content,#1b293b)}
+.student-portal #modal-profile .account-dialog-body{padding:24px;scrollbar-gutter:stable;overscroll-behavior:contain}
+.student-portal #modal-profile .profile-identity{display:grid;grid-template-columns:132px minmax(0,1fr);align-items:center;gap:24px;margin-bottom:24px;padding:8px 0}
+.student-portal #modal-profile .profile-avatar-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;min-width:0}
+.student-portal #modal-profile .profile-avatar-large{display:grid;place-items:center;flex-shrink:0;width:76px;height:76px;margin:0;font-size:26px;border-radius:18px}
+.student-portal #modal-profile .profile-frame-label{max-width:100%;box-sizing:border-box;margin:0;text-align:center;line-height:1.5;white-space:normal;padding:5px 9px}
+.student-portal #modal-profile .profile-identity-copy h3{font-size:21px;line-height:1.4;margin-bottom:6px}
+.student-portal #modal-profile .profile-identity-copy p{line-height:1.6;overflow-wrap:anywhere}
+.student-portal #modal-profile .profile-balance-strip{display:grid;grid-template-columns:minmax(0,1fr) auto;background:var(--surface-summary,#223247);gap:4px 16px;padding:16px 18px}
+.student-portal #modal-profile .profile-balance-strip>span{grid-column:1}
+.student-portal #modal-profile .profile-balance-strip>strong{grid-column:1;font-size:26px;line-height:1.3}
+.student-portal #modal-profile .profile-balance-strip>button{grid-column:2;grid-row:1/3;margin:0;min-height:42px;padding:10px 12px;border:1px solid #52708f;border-radius:9px;background:#2c4865;color:#eaf1fc}
+.student-portal #modal-profile .profile-stat-grid>div{padding:16px 6px}
+.student-portal #modal-profile .profile-academic-details{padding:16px 0;margin:6px 0 18px;border-bottom:1px solid #3b4e65;gap:14px}
+.student-portal #modal-profile .profile-academic-details>div{display:grid;grid-template-columns:90px minmax(0,1fr);gap:12px;align-items:baseline}
+.student-portal #modal-profile .profile-academic-details dd{overflow-wrap:anywhere;line-height:1.6}
+.student-portal #modal-profile .profile-rewards-section{border:0;padding:0}
+.student-portal #modal-profile .prs-title{margin:0 0 12px;font-size:15px}
+.student-portal #modal-profile .pr-item{display:grid;grid-template-columns:36px minmax(0,1fr) auto;align-items:center;gap:12px;margin:0;padding:14px 0;border:0;border-bottom:1px solid #3b4e65;border-radius:0;background:transparent}
+.student-portal #modal-profile .pr-icon{width:36px;text-align:center;margin:0}
+.student-portal #modal-profile .pr-info{min-width:0}.student-portal #modal-profile .pr-label{font-size:13px;line-height:1.5;overflow-wrap:anywhere}.student-portal #modal-profile .pr-from{font-size:11px;line-height:1.6;color:#aebfd3}.student-portal #modal-profile .pr-status{white-space:nowrap;font-size:10px}
+.student-portal #modal-profile .account-dialog-footer{align-items:center}.student-portal #modal-profile .account-dialog-footer button{min-height:44px;line-height:1.5}
+@media(max-width:480px){.student-portal #modal-profile .account-dialog-body{padding:18px}.student-portal #modal-profile .profile-identity{grid-template-columns:1fr;gap:16px;text-align:center}.student-portal #modal-profile .profile-meta-pills{justify-content:center}.student-portal #modal-profile .profile-balance-strip{padding:14px}.student-portal #modal-profile .pr-item{grid-template-columns:32px minmax(0,1fr);gap:6px 10px}.student-portal #modal-profile .pr-right{grid-column:2}.student-portal #modal-profile .account-dialog-footer button{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.student-portal #modal-profile .profile-avatar-large{animation:none}}

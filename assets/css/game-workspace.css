@@ -1,0 +1,121 @@
+/* GABLE classroom workspace */
+.game-portal{--bg-card:#192c43;--text:#edf4ff;--text-muted:#a9bed6;background:#111b2d;color:#edf4ff}.game-portal .blob{opacity:.15}.game-portal .navbar{height:auto;min-height:68px;padding:12px 24px;background:#111f33;border-color:#314963;gap:20px;flex-shrink:0}.game-portal .nav-brand{display:flex;align-items:center;gap:11px}.game-portal .nav-brand span{background:none;-webkit-text-fill-color:currentColor}.game-portal .brand-mark{display:grid;place-items:center;width:38px;height:38px;border:1px solid #57718f;border-radius:11px;background:#253c55!important;color:#dce9f8;font-size:19px;font-weight:800}.game-portal .brand-wordmark{font-size:17px;letter-spacing:.08em}.game-portal .brand-wordmark small{display:block;margin-top:2px;font-size:10px;color:#a6bdd6;font-weight:400;letter-spacing:0}.game-portal .nav-actions{gap:10px;flex-wrap:wrap;justify-content:flex-end}.game-portal .nav-mode{background:#243e59;border-color:#45678a;color:#bfd7f3;border-radius:8px;padding:8px 12px;font-size:10px}.game-portal .nav-timer{background:#243449;border-color:#5b5e54;padding:8px 12px}.game-portal #nav-timer{font-variant-numeric:tabular-nums;color:#efd399;font-size:16px}.game-portal .btn-exit-game{display:flex;align-items:center;gap:8px;min-height:40px;background:#332632;border-color:#715060;color:#edbecb;order:3}.game-portal .btn-exit-game svg{width:16px;height:16px}
+.game-portal .main{width:100%;max-width:1240px;margin:0 auto;padding:28px 24px 40px;min-width:0;flex:1}.game-portal .lobby{max-width:none;width:100%;padding:22px 0;text-align:center}.game-portal .lobby-icon{display:grid;place-items:center;width:52px;height:52px;margin:0 auto 14px;border-radius:15px;background:#233b56;border:1px solid #476789;color:#a9c7ec;font-size:24px}.game-portal .lobby-icon svg{width:26px;height:26px}.game-portal .lobby-title{font-size:clamp(24px,3vw,34px);letter-spacing:-.035em;color:#edf4ff;background:none;-webkit-text-fill-color:currentColor;margin:0 0 10px}.game-portal .lobby-sub{font-size:13px;line-height:1.8;color:#a9bed6;margin-bottom:26px}.game-portal #game-launch-status:empty{display:none}.game-portal #game-launch-status{font-size:12px;color:#e2c798;line-height:1.7;margin:12px 0}
+.game-portal .mode-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;max-width:none;width:100%;margin:0 0 24px}.game-portal .mode-card{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:10px;min-width:0;padding:20px 16px;border-radius:14px;background:#192b42;border:1px solid #36506c;font-family:inherit;color:#e8f1ff;cursor:pointer;transition:background .15s,border-color .15s;box-shadow:none;transform:none;min-height:186px}.game-portal .mode-card:hover{background:#223b56;border-color:#6e90b6;transform:none}.game-portal .mode-card.active{background:#294767;border-color:#91b7df;box-shadow:inset 0 0 0 1px #91b7df}.game-portal .mc-icon{display:grid;place-items:center;width:38px;height:38px;margin:0 0 5px;border-radius:10px;background:#2b4461;color:#bbd5f5;font-size:20px}.game-portal .mc-icon svg{width:21px;height:21px}.game-portal .mc-title{font-size:13px;font-weight:600;margin:0}.game-portal .mc-desc{font-size:11px;line-height:1.8;color:#adc4df;margin:0}.game-portal .lobby-config{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;max-width:850px;width:100%;margin:0 auto 20px;padding:20px;border:1px solid #344e6b;border-radius:14px;background:#16273d}.game-config-field{text-align:left;min-width:0}.game-config-field label{display:block;font-size:11px;font-weight:500;color:#bad0e9;margin-bottom:8px}.game-portal .lc-select{width:100%;min-width:0;min-height:44px;background:#102037;color:#e4eefd;border:1px solid #415e7e;border-radius:9px;padding:10px 12px;font:inherit;font-size:12px}.game-portal .lc-select option{background:#16273d}.game-portal .btn-start-game,.game-portal .btn-play-again{min-height:46px;border-radius:10px;padding:12px 28px;background:#d1e3f6;color:#182d46;border:1px solid #d1e3f6;font-size:13px;font-weight:600;box-shadow:none}.game-portal .btn-start-game:disabled{background:#263b53;border-color:#3d5571;color:#90a7c1;opacity:1;cursor:not-allowed}
+.game-portal .score-bar{gap:16px;margin-bottom:18px}.game-portal .score-box{flex:1;padding:14px 22px;border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:16px;background:#1a304b}.game-portal .score-box.alpha{border-color:#527ca9}.game-portal .score-box.beta{background:#332c43;border-color:#8b6089}.game-portal .sb-label{font-size:12px;letter-spacing:.03em}.game-portal .sb-val{font-size:28px;line-height:1.3}.game-portal .progress-row{gap:14px;margin:16px 0 22px}.game-portal .prog-track{height:7px;background:#263c56;border-radius:9px}.game-portal .prog-fill{background:#8eb9e6;border-radius:9px}.game-portal .prog-label{font-size:12px;color:#b1c8e2}
+.game-portal :is(.question-card,.buzzer-q-wrap,.hotseat-concept-card){background:#1b3049;border:1px solid #3e5b7b;border-radius:16px;padding:26px;box-shadow:none;width:100%;min-width:0}.game-portal :is(.q-text,.buzzer-q-text){font-size:clamp(22px,3vw,34px);line-height:1.6;color:#eef5ff;overflow-wrap:anywhere}.game-portal :is(.q-num-label,.buzzer-q-num,.hs-eyebrow){font-size:11px;color:#a4c3e6;letter-spacing:.1em;margin-bottom:12px}.game-portal :is(.buzzer-screen,.hotseat-screen){padding:0;gap:18px}.game-portal .buzzer-screen>div:last-child{flex-wrap:wrap;justify-content:center;margin-top:16px!important}.game-portal .buzzer-screen button{min-height:44px}.game-portal .buzzer-waiting{font-size:14px;color:#b8cce4}.game-portal .kahoot-grid{gap:14px;margin-top:18px}.game-portal .kahoot-tile{border-radius:12px;min-height:100px;box-shadow:none}.game-portal .hs-concept-word{font-size:clamp(28px,4vw,46px);overflow-wrap:anywhere;color:#e6f1ff}.game-portal .hs-concept-hint{font-size:13px;color:#b5cbe3}.game-portal .hotseat-turn-badge{background:#284967;border-color:#567da3;color:#c9e1fb;border-radius:8px}.game-portal .hs-countdown-wrap{width:110px;height:110px;margin:10px auto}.game-portal .hs-controls{gap:12px;flex-wrap:wrap;justify-content:center}.game-portal .hs-btn{min-height:44px;border-radius:9px}.game-portal .hs-btn.correct{background:#245047;border-color:#548d7d;color:#c1efdf}.game-portal .hs-btn.skip{background:#293e58;border-color:#4a6687;color:#d0e1f7}
+.game-portal .crossword-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.85fr);gap:24px;max-width:960px;margin:auto;align-items:start}.game-portal .crossword-board-wrap{padding:18px;background:#172a42;border:1px solid #3b5674;border-radius:14px;min-width:0}.game-portal .crossword-board{width:100%;max-width:440px;gap:5px;margin:auto}.game-portal .crossword-cell{min-width:0;width:auto;height:auto;aspect-ratio:1;border-radius:6px}.game-portal .crossword-panel{padding:22px;background:#1b3049;border:1px solid #3f5e7d;border-radius:14px;box-shadow:none;min-width:0}.game-portal .crossword-clue{font-size:18px;line-height:1.7;overflow-wrap:anywhere}.game-portal .crossword-answer{min-height:46px;border-radius:9px;background:#102239;border-color:#4c6b8e;font-size:15px}.game-portal .crossword-submit{min-height:44px;background:#365e87;border:1px solid #7194b8;border-radius:9px;color:#fff;box-shadow:none;font-size:13px}.game-portal .result-screen{max-width:620px;margin:20px auto;padding:28px;border:1px solid #3e5878;border-radius:18px;background:#192d45}.game-portal .result-icon{font-size:36px;margin-bottom:12px}.game-portal .result-title{font-size:28px;background:none;-webkit-text-fill-color:currentColor;color:#e5effd}.game-portal .result-sub{font-size:13px;color:#abc2dd;line-height:1.8}.game-portal .result-score-box{background:#10233a;border:1px solid #3b5776;border-radius:12px;padding:22px;margin:20px auto}.game-portal .rsb-pct{font-size:42px;color:#b2d1f3}.game-portal .rsb-xp{font-size:16px;color:#d9c394}.game-portal :is(button,select,input):focus-visible{outline:2px solid #abd2ff;outline-offset:4px}
+@media(max-width:1000px){.game-portal .mode-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.game-portal .mode-card{min-height:160px}.game-portal .crossword-layout{gap:16px}}
+@media(max-width:650px){.game-portal .navbar{padding:12px 16px;flex-wrap:wrap;gap:12px}.game-portal .nav-actions{gap:7px}.game-portal .main{padding:18px 14px 32px}.game-portal .mode-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.game-portal .mode-card{padding:16px 12px}.game-portal .lobby-config{grid-template-columns:1fr;padding:16px}.game-portal .crossword-layout{grid-template-columns:1fr}.game-portal .score-box{padding:12px;gap:8px}.game-portal .sb-label{font-size:10px}.game-portal .kahoot-grid{grid-template-columns:1fr}.game-portal .result-screen{padding:22px 18px}.game-portal :is(.question-card,.buzzer-q-wrap,.hotseat-concept-card){padding:20px}}
+@media(prefers-reduced-motion:reduce){.game-portal *{animation:none!important;transition:none!important}}
+.game-portal #area-jumble>div{max-width:780px!important;background:#192e47;border:1px solid #3c5978;border-radius:16px;padding:24px}.game-portal #jumble-word{font-size:clamp(26px,5vw,46px)!important;letter-spacing:.16em!important;overflow-wrap:anywhere;color:#c2dcf8;margin:24px 0!important}.game-portal #jumble-hint{font-size:16px!important;line-height:1.8;color:#c2d3e9}.game-portal #jumble-answer{background:#102138!important;border-color:#547498!important;min-height:48px}.game-portal #area-jumble button{background:#355e88!important;border:1px solid #7194b8!important;border-radius:9px!important;min-height:44px}.game-portal #area-jumble input:focus-visible{outline:2px solid #abd2ff!important;outline-offset:3px}
+
+/* Compact play panels; long authored content remains accessible. */
+.game-portal .main:has(.game-area.active){padding:14px 24px;min-height:0}
+.game-portal .game-area{padding:0;min-width:0;min-height:0}
+.game-portal .game-area .progress-row{margin:8px 0 12px;flex-shrink:0}
+.game-portal .game-area .score-bar{margin-bottom:8px;flex-shrink:0}
+.game-portal .game-area .score-box{padding:8px 18px}
+.game-portal .game-area .sb-val{font-size:22px}
+.game-portal #area-kahoot{gap:10px}
+.game-portal #area-kahoot .progress-row{margin:0}
+.game-portal #kahoot-feedback{display:block;visibility:hidden;min-height:44px;max-height:76px;overflow:auto;margin:0;padding:10px 16px;font-size:13px;line-height:1.5;flex-shrink:0}
+.game-portal #kahoot-feedback:is(.correct,.wrong,.neutral){visibility:visible}
+.game-portal #area-kahoot .question-card{padding:16px 22px!important;width:100%!important;margin:0;min-height:0}
+.game-portal #kahoot-q-num{margin-bottom:8px}
+.game-portal #kahoot-q-text{font-size:clamp(16px,2vw,24px);line-height:1.5;max-height:22dvh;overflow:auto}
+.game-portal #kahoot-options{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px!important;margin:0!important;min-height:0}
+.game-portal #kahoot-options .kahoot-tile{min-height:76px!important;height:auto!important;padding:12px 16px;flex-direction:row!important;gap:14px!important;border-radius:12px!important;transform:none!important;text-align:left}
+.game-portal #kahoot-options .kt-text{font-size:clamp(13px,1.5vw,18px)!important;line-height:1.5!important;text-align:left!important;overflow-wrap:anywhere;max-height:16dvh;overflow:auto}
+.game-portal #kahoot-options .kt-emoji{flex:0 0 28px;font-size:24px!important;line-height:1!important}
+.game-portal .kahoot-shape{display:block;width:28px;height:28px}
+.game-portal #area-kahoot>div:last-child{margin-top:0!important}
+.game-portal #area-kahoot .kahoot-true-false-options{margin-top:12px!important}
+.game-portal .toast{max-width:min(560px,calc(100vw - 32px));white-space:normal;font-size:13px;line-height:1.5;padding:12px 18px;bottom:16px}
+.game-portal .hotseat-screen{display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:12px;align-content:center;max-width:850px;width:100%;margin:auto;flex:1}
+.game-portal .hotseat-turn-badge{grid-column:1/-1;justify-self:center;font-size:11px}
+.game-portal .hotseat-concept-card{max-width:none;padding:20px}
+.game-portal .hs-concept-word{font-size:clamp(22px,3vw,34px);max-height:24dvh;overflow:auto}
+.game-portal .hs-concept-label{margin-bottom:10px;font-size:11px}
+.game-portal .hs-ring{width:100%;height:100%}
+.game-portal .hs-controls,.game-portal .hs-sub{grid-column:1/-1;justify-self:center}
+.game-portal .hs-btn{padding:10px 22px;font-size:13px;box-shadow:none}
+.game-portal #area-jumble{justify-content:center}
+.game-portal #area-jumble>div{width:100%;padding:18px 24px}
+.game-portal #area-jumble>div>div:nth-child(2){margin-top:12px!important}
+.game-portal #jumble-word{font-size:clamp(20px,3vw,30px)!important;margin:16px 0!important;letter-spacing:.12em!important;line-height:1.5}
+.game-portal #jumble-hint{font-size:14px!important;line-height:1.5;margin-bottom:14px!important;max-height:18dvh;overflow:auto}
+.game-portal #jumble-answer{padding:10px!important;min-height:44px;font-size:14px!important}
+.game-portal #jumble-feedback{margin-top:12px!important;font-size:13px}
+.game-portal .crossword-screen{padding:0;gap:10px;min-height:0}
+.game-portal .crossword-layout{margin:0 auto;gap:16px;align-items:center}
+.game-portal .crossword-board-wrap{padding:12px}
+.game-portal .crossword-board{max-width:min(360px,calc(100dvh - 260px));gap:4px}
+.game-portal .crossword-panel{padding:16px}
+.game-portal .crossword-clue{font-size:15px;line-height:1.5;margin:10px 0;max-height:20dvh;overflow:auto}
+.game-portal .crossword-direction{font-size:13px}
+.game-portal .crossword-feedback,.game-portal .crossword-progress{font-size:12px;margin-top:10px}
+.game-portal .crossword-cell{font-size:clamp(14px,2vw,22px)}
+@media(min-width:701px) and (min-height:600px){
+ .game-portal:has(.game-area.active){height:100dvh;min-height:0}
+ .game-portal .main:has(.game-area.active){overflow:auto}
+}
+@media(max-width:700px){
+ .game-portal .main:has(.game-area.active){padding:12px}
+ .game-portal .hotseat-screen{grid-template-columns:minmax(0,1fr) 84px;gap:10px}
+ .game-portal .hs-countdown-wrap{width:80px;height:80px}
+ .game-portal .hotseat-concept-card{padding:14px}
+ .game-portal .crossword-layout{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+ .game-portal .crossword-panel{padding:10px}
+ .game-portal .crossword-board-wrap{padding:6px}
+ .game-portal .crossword-answer{width:100%;font-size:12px;padding:8px}
+ .game-portal .crossword-submit{width:100%;font-size:11px;padding:8px}
+}
+
+.game-portal #kahoot-options .kahoot-tile{justify-content:center!important;text-align:center!important}
+.game-portal #kahoot-options .kt-text{text-align:center!important}
+.game-portal #kahoot-options .kt-emoji{display:grid;place-items:center}
+.game-portal #area-kahoot .question-card{text-align:center}
+.game-portal #kahoot-q-text{text-align:center}
+
+.game-portal #area-kahoot{justify-content:center;min-height:0}
+
+.game-portal .quit-game-dialog{width:min(420px,calc(100vw - 32px));padding:28px;border:1px solid #486584;border-radius:18px;background:#192e47;color:#edf4ff;text-align:center;box-shadow:0 24px 80px #0009}
+.game-portal .quit-game-dialog::backdrop{background:#07111dcc;backdrop-filter:blur(4px)}
+.game-portal .quit-game-icon{display:grid;place-items:center;width:46px;height:46px;margin:0 auto 14px;border-radius:13px;background:#382c3b;color:#f0b7c7}
+.game-portal .quit-game-icon svg{width:22px;height:22px}
+.game-portal .quit-game-dialog h2{margin:0 0 8px;font-size:20px}
+.game-portal .quit-game-dialog p{margin:0;color:#b5c9df;font-size:13px;line-height:1.6}
+.game-portal .quit-game-actions{display:flex;justify-content:center;gap:10px;margin-top:22px}
+.game-portal .quit-game-actions button{min-height:42px;padding:9px 16px;border-radius:9px;font:600 13px Poppins,sans-serif;cursor:pointer}
+.game-portal .quit-stay{background:#294765;border:1px solid #52769a;color:#e5f1ff}
+.game-portal .quit-confirm{background:#743e50;border:1px solid #a05e72;color:#fff}
+
+.game-portal #area-kahoot>*{width:min(100%,920px);align-self:center}
+.game-portal #area-kahoot>.progress-row{width:min(100%,920px)}
+.game-portal #area-kahoot>.kahoot-grid{width:min(100%,920px)}
+.game-portal #area-kahoot>#kahoot-feedback{width:min(100%,920px);box-sizing:border-box}
+
+.game-portal dialog.quit-game-dialog{position:fixed;inset:50% auto auto 50%;margin:0;transform:translate(-50%,-50%);max-height:calc(100dvh - 32px);overflow:auto}
+
+.game-portal #area-crossword .crossword-layout{grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);max-width:1120px;width:100%;gap:22px}
+.game-portal #area-crossword .crossword-board{max-width:min(520px,calc(100dvh - 230px));width:100%}
+.game-portal #area-crossword .crossword-board-wrap{padding:18px}
+.game-portal #area-crossword .crossword-panel{padding:22px}
+
+.game-portal #area-crossword .crossword-board{max-width:min(520px,calc(100dvh - 320px))}
+.game-portal #area-crossword .crossword-actions{display:flex;gap:10px;margin-top:10px}
+.game-portal #area-crossword .crossword-actions button{flex:1;min-width:0}
+.game-portal #area-crossword .crossword-steal{min-height:44px;padding:10px 14px;border:1px solid #b99251;border-radius:9px;background:#45391f;color:#ffe5aa;font:600 13px Poppins,sans-serif;cursor:pointer}
+.game-portal #area-crossword .crossword-steal[hidden]{display:none}
+.game-portal #area-hotseat{justify-content:center}
+.game-portal #area-hotseat .hotseat-screen{max-width:980px;grid-template-columns:minmax(0,1fr) 140px;gap:12px}
+.game-portal #area-hotseat .hotseat-concept-card{padding:clamp(18px,3vh,30px)}
+.game-portal #area-hotseat .hs-concept-word{font-size:clamp(26px,4vw,42px)}
+.game-portal #area-hotseat .hs-sub{margin-top:0}
+@media(max-width:700px){.game-portal #area-hotseat .hotseat-screen{grid-template-columns:minmax(0,1fr) 84px}.game-portal #area-crossword .crossword-actions{flex-direction:column}}
+
+.game-portal #area-crossword .crossword-steal{flex:0 0 auto!important;width:auto;min-width:112px;min-height:36px;padding:7px 12px;font-size:12px}
+.game-portal #area-crossword .crossword-actions{align-items:center}
+.game-portal #area-crossword .crossword-submit{flex:1}
+

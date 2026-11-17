@@ -1,0 +1,58 @@
+/* ══════════════════════
+   FEATURES GRID
+══════════════════════ */
+.features-grid {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  max-width: 1100px; margin: 0 auto;
+  padding: 0 1.5rem 100px;
+}
+
+
+/* ══════════════════════
+   FEATURE CARD
+══════════════════════ */
+.feature-card {
+  background: var(--public-card);
+  border: 1px solid var(--public-card-border);
+  border-radius: 16px; padding: 1.75rem;
+  box-shadow: 0 12px 28px rgba(4, 12, 25, .16);
+  transition: border-color .2s, transform .2s;
+}
+.feature-card--compete { --feature-accent: var(--accent-coral); --feature-hover: rgba(238,136,117,.12); }
+.feature-card--progress { --feature-accent: var(--accent-mint); --feature-hover: rgba(110,208,178,.12); }
+.feature-card--teach { --feature-accent: var(--accent-gold); --feature-hover: rgba(242,189,84,.12); }
+.feature-card:hover, .feature-card:active, .feature-card:focus-within { transform: translateY(-3px); border-color: var(--feature-accent); background: linear-gradient(var(--feature-hover),var(--feature-hover)), var(--public-card); }
+.feature-tag { display: block; margin-bottom: 1rem; color: var(--feature-accent); font-size: .65rem; font-weight: 800; letter-spacing: .12em; }
+
+
+/* ── ICON ── */
+.feature-card-icon {
+  width: 60px; height: 60px; border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem; margin-bottom: 1.25rem;
+}
+.feature-card--compete .feature-card-icon { background: rgba(238, 136, 117, .14); color: var(--accent-coral); }
+.feature-card--progress .feature-card-icon { background: rgba(110, 208, 178, .14); color: var(--accent-mint); }
+.feature-card--teach .feature-card-icon { background: rgba(242, 189, 84, .14); color: var(--accent-gold); }
+
+
+/* ── CONTENT ── */
+.feature-card h3   { font-size: 1.15rem; font-weight: 700; margin-bottom: .6rem; }
+.feature-card > p  { color: var(--text-muted); font-size: .88rem; line-height: 1.65; margin-bottom: 1.1rem; }
+
+.feature-list {
+  list-style: none;
+  display: flex; flex-direction: column;
+  gap: .45rem;
+}
+.feature-list li {
+  font-size: .85rem; color: var(--text-muted);
+  padding-left: 1.1rem; position: relative;
+}
+.feature-list li::before {
+  content: '•'; position: absolute; left: 0;
+  color: var(--feature-accent);
+}

@@ -1,0 +1,567 @@
+/* ═══════════════════════════════════════════════
+   levelup.css  —  Level-Up Popup, Coupon Wallet
+                   & Level-Progress Enhancements
+   ═══════════════════════════════════════════════ */
+
+
+/* ══════════════════════
+   LEVEL-UP OVERLAY
+══════════════════════ */
+.lu-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0, 0, 0, 0);
+  backdrop-filter: blur(0px);
+  transition: background .35s ease, backdrop-filter .35s ease;
+  pointer-events: none;
+}
+.lu-overlay.lu-visible {
+  background: rgba(0, 0, 0, .72);
+  backdrop-filter: blur(8px);
+  pointer-events: all;
+}
+.lu-overlay.lu-hiding {
+  background: rgba(0, 0, 0, 0);
+  backdrop-filter: blur(0px);
+  pointer-events: none;
+}
+
+
+/* ══════════════════════
+   LEVEL-UP MODAL
+══════════════════════ */
+.lu-modal {
+  background: linear-gradient(160deg, #1a1040 0%, #2d1b69 40%, #1e0a3c 100%);
+  border: 1.5px solid rgba(165, 127, 224, .5);
+  border-radius: 28px;
+  padding: 2.5rem 2.25rem 2rem;
+  max-width: 440px; width: 90%;
+  text-align: center;
+  position: relative; overflow: hidden;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, .7),
+              0 0 60px rgba(124, 92, 191, .25),
+              inset 0 1px 0 rgba(255, 255, 255, .08);
+
+  /* Start hidden, slide up */
+  opacity: 0;
+  transform: scale(.88) translateY(24px);
+  transition: opacity .35s cubic-bezier(.34,1.56,.64,1),
+              transform .35s cubic-bezier(.34,1.56,.64,1);
+}
+.lu-overlay.lu-visible .lu-modal {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+.lu-overlay.lu-hiding .lu-modal {
+  opacity: 0;
+  transform: scale(.92) translateY(16px);
+  transition: opacity .3s ease, transform .3s ease;
+}
+
+/* shimmer sweep */
+.lu-modal::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(110deg,
+    transparent 30%,
+    rgba(255,255,255,.05) 50%,
+    transparent 70%);
+  background-size: 200% 100%;
+  animation: lu-shimmer 2.5s ease-in-out infinite;
+}
+@keyframes lu-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+
+/* ══════════════════════
+   SPARKLE STARS
+══════════════════════ */
+.lu-sparkles {
+  position: absolute; inset: 0;
+  pointer-events: none; overflow: hidden;
+}
+.lu-star {
+  position: absolute;
+  font-size: 1.2rem;
+  animation: lu-float 3s ease-in-out infinite;
+  opacity: .7;
+}
+.s1 { top: 8%;  left: 8%;  animation-delay: 0s;    animation-duration: 2.8s; }
+.s2 { top: 12%; right: 10%; animation-delay: .4s;   animation-duration: 3.2s; }
+.s3 { top: 40%; left: 5%;  animation-delay: .8s;   animation-duration: 2.6s; }
+.s4 { bottom: 20%; right: 8%; animation-delay: 1.2s; animation-duration: 3s;  }
+.s5 { bottom: 12%; left: 18%; animation-delay: .6s;  animation-duration: 2.9s; }
+
+@keyframes lu-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: .7; }
+  50%       { transform: translateY(-10px) rotate(15deg); opacity: 1; }
+}
+
+
+/* ══════════════════════
+   LEVEL BADGE
+══════════════════════ */
+.lu-badge-wrap {
+  position: relative;
+  width: 96px; height: 96px;
+  margin: 0 auto 1.25rem;
+}
+.lu-level-badge {
+  position: relative; z-index: 2;
+  width: 96px; height: 96px; border-radius: 24px;
+  background: linear-gradient(135deg, #7c5cbf, #e05ca0);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.4rem; font-weight: 900;
+  box-shadow: 0 8px 32px rgba(124, 92, 191, .5),
+              0 0 0 3px rgba(255, 255, 255, .15);
+  animation: lu-badge-pop .5s cubic-bezier(.34,1.56,.64,1) .15s both;
+}
+@keyframes lu-badge-pop {
+  from { transform: scale(0) rotate(-15deg); }
+  to   { transform: scale(1) rotate(0deg); }
+}
+
+.lu-level-ring {
+  position: absolute; inset: -8px; z-index: 1;
+  border-radius: 30px;
+  border: 2px solid transparent;
+  background: linear-gradient(135deg, #a57fe0, #e05ca0, #f97316, #a57fe0) border-box;
+  mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  animation: lu-ring-spin 4s linear infinite;
+}
+@keyframes lu-ring-spin {
+  to { transform: rotate(360deg); }
+}
+
+
+/* ══════════════════════
+   TEXT CONTENT
+══════════════════════ */
+.lu-title {
+  font-size: 2rem; font-weight: 900;
+  letter-spacing: .12em;
+  background: linear-gradient(90deg, #f59e0b, #fbbf24, #f97316);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: .2rem;
+  animation: lu-fade-up .4s ease .25s both;
+}
+.lu-subtitle {
+  font-size: .92rem; color: rgba(255, 255, 255, .75);
+  margin-bottom: .2rem;
+  animation: lu-fade-up .4s ease .32s both;
+}
+.lu-level-name {
+  font-size: 1.15rem; font-weight: 800;
+  color: var(--purple-light, #c084fc);
+  margin-bottom: 1rem;
+  animation: lu-fade-up .4s ease .38s both;
+}
+.lu-multi {
+  font-size: .8rem; font-weight: 700;
+  color: var(--gold, #f59e0b);
+  background: rgba(245, 158, 11, .12);
+  border: 1px solid rgba(245, 158, 11, .3);
+  border-radius: 8px; padding: .3rem .75rem;
+  display: inline-block; margin-bottom: .75rem;
+  animation: lu-fade-up .4s ease .42s both;
+}
+.lu-bonus {
+  font-size: 1.3rem; font-weight: 800;
+  color: #4ade80;
+  background: rgba(74, 222, 128, .1);
+  border: 1px solid rgba(74, 222, 128, .3);
+  border-radius: 14px; padding: .65rem 1.25rem;
+  margin-bottom: 1rem;
+  animation: lu-bounce-in .5s cubic-bezier(.34,1.56,.64,1) .45s both;
+}
+@keyframes lu-bounce-in {
+  from { transform: scale(.7); opacity: 0; }
+  to   { transform: scale(1);  opacity: 1; }
+}
+
+
+/* ══════════════════════
+   REWARDS SECTION
+══════════════════════ */
+.lu-rewards-title {
+  font-size: .78rem; font-weight: 700;
+  color: rgba(255, 255, 255, .5);
+  letter-spacing: .08em; text-transform: uppercase;
+  margin-bottom: .6rem;
+  animation: lu-fade-up .4s ease .5s both;
+}
+.lu-reward-item {
+  display: flex; align-items: flex-start; gap: .85rem;
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 14px; padding: .85rem 1rem;
+  margin-bottom: .5rem; text-align: left;
+  animation: lu-fade-up .4s ease .55s both;
+}
+.lu-reward-icon {
+  font-size: 1.5rem; flex-shrink: 0;
+  margin-top: .1rem;
+}
+.lu-reward-label {
+  font-size: .88rem; font-weight: 700;
+  color: var(--gold, #f59e0b); margin-bottom: .15rem;
+}
+.lu-reward-desc {
+  font-size: .72rem; color: rgba(255, 255, 255, .65);
+  line-height: 1.45;
+}
+
+
+/* ══════════════════════
+   CLOSE BUTTON
+══════════════════════ */
+.lu-close-btn {
+  margin-top: 1.25rem; width: 100%;
+  background: linear-gradient(135deg, #7c5cbf, #e05ca0);
+  color: #fff; border: none; border-radius: 14px;
+  padding: .85rem; font-size: .95rem; font-weight: 800;
+  cursor: pointer; font-family: 'Poppins', sans-serif;
+  letter-spacing: .02em;
+  transition: opacity .2s, transform .2s;
+  position: relative; z-index: 2;
+  animation: lu-fade-up .4s ease .6s both;
+}
+.lu-close-btn:hover {
+  opacity: .88; transform: translateY(-2px);
+}
+
+
+/* ══════════════════════
+   SHARED FADE-UP KEYFRAME
+══════════════════════ */
+@keyframes lu-fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ══════════════════════
+   COUPON WALLET  (in XP tab)
+══════════════════════ */
+.coupon-wallet {
+  background: linear-gradient(135deg,
+    rgba(245, 158, 11, .08),
+    rgba(124, 92, 191, .06));
+  border: 1px solid rgba(245, 158, 11, .28);
+  border-radius: 18px; padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+}
+.cw-title {
+  font-size: .88rem; font-weight: 700;
+  color: var(--gold, #f59e0b);
+  margin-bottom: .85rem;
+  display: flex; align-items: center; gap: .4rem;
+}
+.coupon-item {
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 12px; padding: .85rem 1rem;
+  margin-bottom: .55rem; gap: .85rem;
+}
+.coupon-item:last-child { margin-bottom: 0; }
+
+.coupon-left {
+  display: flex; align-items: flex-start;
+  gap: .75rem; flex: 1;
+}
+.coupon-icon   { font-size: 1.4rem; flex-shrink: 0; margin-top: .05rem; }
+.coupon-label  { font-size: .85rem; font-weight: 700; margin-bottom: .15rem; }
+.coupon-desc   { font-size: .72rem; color: rgba(255, 255, 255, .6); line-height: 1.4; margin-bottom: .25rem; }
+.coupon-uses   {
+  font-size: .68rem; font-weight: 700;
+  color: var(--gold, #f59e0b);
+  background: rgba(245, 158, 11, .15);
+  border: 1px solid rgba(245, 158, 11, .3);
+  border-radius: 99px; padding: .15rem .55rem;
+  display: inline-block;
+}
+
+.btn-coupon-use {
+  background: linear-gradient(135deg, #d97706, #f59e0b);
+  color: #000; border: none; border-radius: 9px;
+  padding: .45rem 1rem; font-size: .78rem; font-weight: 800;
+  cursor: pointer; font-family: 'Poppins', sans-serif;
+  transition: opacity .2s; white-space: nowrap; flex-shrink: 0;
+}
+.btn-coupon-use:hover { opacity: .85; }
+
+.coupon-auto-badge {
+  font-size: .68rem; font-weight: 700;
+  color: var(--teal, #2dd4bf);
+  background: rgba(45, 212, 191, .12);
+  border: 1px solid rgba(45, 212, 191, .3);
+  border-radius: 8px; padding: .3rem .65rem;
+  white-space: nowrap; flex-shrink: 0;
+}
+
+
+/* ══════════════════════
+   NEXT LEVEL PREVIEW CHIP
+   (shown in XP tab progress card)
+══════════════════════ */
+.next-level-chip {
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(124, 92, 191, .12);
+  border: 1px solid rgba(124, 92, 191, .25);
+  border-radius: 10px; padding: .55rem .9rem;
+  font-size: .75rem; margin-top: .65rem;
+}
+.nlc-label { color: rgba(255, 255, 255, .55); }
+.nlc-val   { font-weight: 700; color: var(--purple-light, #c084fc); }
+
+/* ══════════════════════
+   LEVEL SCALE TABLE CHIP
+   (shown in "How to Earn" card)
+══════════════════════ */
+.level-scale-box {
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid rgba(255, 255, 255, .09);
+  border-radius: 12px; padding: .85rem 1rem;
+  margin-top: .5rem;
+}
+.lsb-title {
+  font-size: .78rem; font-weight: 700;
+  color: rgba(255, 255, 255, .55);
+  margin-bottom: .65rem;
+  letter-spacing: .06em; text-transform: uppercase;
+}
+.lsb-row {
+  display: flex; justify-content: space-between;
+  align-items: center;
+  font-size: .72rem; padding: .3rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, .06);
+}
+.lsb-row:last-child { border-bottom: none; }
+.lsb-row-me {
+  color: var(--gold, #f59e0b);
+  font-weight: 700;
+  background: rgba(245, 158, 11, .07);
+  border-radius: 6px;
+  padding: .3rem .5rem;
+  margin: 0 -.5rem;
+}
+.lsb-lvl  { color: rgba(255, 255, 255, .7); }
+.lsb-name { color: rgba(255, 255, 255, .5); font-size: .68rem; }
+.lsb-xp   { color: rgba(255, 255, 255, .55); font-size: .7rem; }
+
+
+/* ══════════════════════
+   GABLE MASTER SPECIAL STYLES
+══════════════════════ */
+.lu-modal-gable {
+  background: linear-gradient(160deg, #1a1008 0%, #2d1f00 40%, #1a0a00 100%);
+  border-color: rgba(251, 191, 36, .6);
+  box-shadow: 0 32px 80px rgba(0,0,0,.7),
+              0 0 80px rgba(251,191,36,.2),
+              inset 0 1px 0 rgba(255,255,255,.08);
+}
+.lu-badge-gable {
+  background: linear-gradient(135deg, #d97706, #fbbf24) !important;
+  box-shadow: 0 8px 32px rgba(251,191,36,.5),
+              0 0 0 3px rgba(255,255,255,.2) !important;
+  font-size: 2rem !important;
+}
+.lu-ring-gable {
+  border-color: rgba(251,191,36,.7) !important;
+  animation: lu-ring-spin 2s linear infinite !important;
+}
+.lu-title-gable {
+  background: linear-gradient(90deg, #fbbf24, #f59e0b, #fbbf24) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  font-size: 1.6rem !important;
+}
+.lu-name-gable {
+  color: #fbbf24 !important;
+  font-size: 1.3rem !important;
+}
+.lu-btn-gable {
+  background: linear-gradient(135deg, #d97706, #f59e0b) !important;
+  color: #000 !important;
+  font-size: 1rem !important;
+}
+.lu-reward-perm {
+  background: rgba(251,191,36,.08) !important;
+  border-color: rgba(251,191,36,.25) !important;
+}
+.lu-reward-perm .lu-reward-label { color: #fbbf24 !important; }
+.lu-perm-badge {
+  display: inline-block; margin-top: .3rem;
+  font-size: .6rem; font-weight: 700;
+  background: rgba(251,191,36,.15); color: #fbbf24;
+  border: 1px solid rgba(251,191,36,.35);
+  border-radius: 99px; padding: .1rem .45rem;
+}
+.lu-uses-badge {
+  display: inline-block; margin-top: .3rem;
+  font-size: .6rem; font-weight: 700;
+  background: rgba(245,158,11,.15); color: #f59e0b;
+  border: 1px solid rgba(245,158,11,.3);
+  border-radius: 99px; padding: .1rem .45rem;
+}
+.coupon-item-crown {
+  background: rgba(251,191,36,.07) !important;
+  border-color: rgba(251,191,36,.28) !important;
+}
+
+
+/* ══════════════════════
+   PROFILE FRAMES
+   Applied to .s-avatar-nav and .profile-avatar-large
+══════════════════════ */
+
+/* Base transition for all avatars */
+.s-avatar-nav,
+.profile-avatar-large {
+  transition: box-shadow .3s ease, outline .3s ease;
+}
+
+/* Level 2 — Apprentice: soft purple ring */
+.frame-apprentice {
+  outline: 2.5px solid rgba(165, 127, 224, .7);
+  box-shadow: 0 0 10px rgba(165, 127, 224, .35);
+}
+
+/* Level 3 — Scholar: blue ring */
+.frame-scholar {
+  outline: 2.5px solid rgba(126, 179, 255, .75);
+  box-shadow: 0 0 10px rgba(126, 179, 255, .35);
+}
+
+/* Level 4 — Battle Ready: green ring */
+.frame-ready {
+  outline: 2.5px solid rgba(74, 222, 128, .75);
+  box-shadow: 0 0 12px rgba(74, 222, 128, .35);
+}
+
+/* Level 5 — Battle Veteran: cyan ring */
+.frame-veteran {
+  outline: 2.5px solid rgba(34, 211, 238, .8);
+  box-shadow: 0 0 14px rgba(34, 211, 238, .4);
+}
+
+/* Level 6 — Battle Master: gold ring */
+.frame-master {
+  outline: 2.5px solid rgba(245, 158, 11, .85);
+  box-shadow: 0 0 16px rgba(245, 158, 11, .4);
+}
+
+/* Level 7 — Champion: pink/red ring with pulse */
+.frame-champion {
+  outline: 3px solid rgba(224, 92, 160, .9);
+  box-shadow: 0 0 18px rgba(224, 92, 160, .45);
+  animation: frame-pulse-champion 2.5s ease-in-out infinite;
+}
+@keyframes frame-pulse-champion {
+  0%, 100% { box-shadow: 0 0 18px rgba(224, 92, 160, .45); }
+  50%       { box-shadow: 0 0 28px rgba(224, 92, 160, .7); }
+}
+
+/* Level 8 — GABLE Master: animated gold crown ring */
+.frame-gable {
+  outline: 3px solid rgba(251, 191, 36, 1);
+  box-shadow: 0 0 20px rgba(251, 191, 36, .55),
+              0 0 40px rgba(251, 191, 36, .2);
+  animation: frame-pulse-gable 2s ease-in-out infinite;
+}
+@keyframes frame-pulse-gable {
+  0%, 100% { box-shadow: 0 0 20px rgba(251,191,36,.55), 0 0 40px rgba(251,191,36,.2); }
+  50%       { box-shadow: 0 0 32px rgba(251,191,36,.8),  0 0 60px rgba(251,191,36,.35); }
+}
+
+/* Frame label badge (shown under avatar in profile modal) */
+.profile-frame-label {
+  font-size: .62rem; font-weight: 700;
+  padding: .18rem .6rem; border-radius: 99px;
+  display: inline-block; margin-top: .4rem;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  color: rgba(255,255,255,.65);
+}
+.frame-gable    ~ .profile-frame-label,
+.profile-avatar-large.frame-gable    + .profile-frame-label { background: rgba(251,191,36,.15); border-color: rgba(251,191,36,.4); color: #fbbf24; }
+.frame-champion ~ .profile-frame-label,
+.profile-avatar-large.frame-champion + .profile-frame-label { background: rgba(224,92,160,.15); border-color: rgba(224,92,160,.4); color: #f47fc4; }
+.frame-master   ~ .profile-frame-label,
+.profile-avatar-large.frame-master   + .profile-frame-label { background: rgba(245,158,11,.15); border-color: rgba(245,158,11,.4); color: #f59e0b; }
+
+
+/* ══════════════════════
+   MY REWARDS — Profile Modal Section
+══════════════════════ */
+.profile-rewards-section {
+  margin-top: 1.1rem;
+}
+.prs-title {
+  font-size: .65rem; font-weight: 700;
+  color: var(--purple-light, #c084fc);
+  letter-spacing: .1em; text-transform: uppercase;
+  margin-bottom: .65rem;
+}
+
+.pr-item {
+  display: flex; align-items: center; gap: .75rem;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 12px; padding: .7rem .85rem;
+  margin-bottom: .45rem;
+}
+.pr-item:last-child { margin-bottom: 0; }
+.pr-item-perm {
+  background: rgba(251,191,36,.07);
+  border-color: rgba(251,191,36,.22);
+}
+
+.pr-icon  { font-size: 1.2rem; flex-shrink: 0; }
+.pr-info  { flex: 1; min-width: 0; }
+.pr-label { font-size: .78rem; font-weight: 700; margin-bottom: .1rem;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pr-from  { font-size: .62rem; color: rgba(255,255,255,.4); }
+.pr-right { flex-shrink: 0; }
+
+.pr-status       { font-size: .62rem; font-weight: 700; padding: .18rem .55rem; border-radius: 99px; }
+.pr-status-perm  { background: rgba(251,191,36,.15); color: #fbbf24; border: 1px solid rgba(251,191,36,.3); }
+.pr-status-active{ background: rgba(74,222,128,.12); color: #4ade80; border: 1px solid rgba(74,222,128,.28); }
+.pr-status-used  { background: rgba(255,255,255,.06); color: rgba(255,255,255,.3); border: 1px solid rgba(255,255,255,.1); }
+
+.pr-empty {
+  font-size: .75rem; color: rgba(255,255,255,.3);
+  text-align: center; padding: 1rem 0; font-style: italic;
+}
+
+
+/* ══════════════════════
+   XP MULTIPLIER ACTIVE BANNER
+   Shown inside battle modal when boost is active
+══════════════════════ */
+.xp-boost-banner {
+  display: flex; align-items: center; gap: .6rem;
+  background: rgba(34,211,238,.1);
+  border: 1px solid rgba(34,211,238,.3);
+  border-radius: 10px; padding: .55rem .85rem;
+  margin-bottom: .85rem;
+  font-size: .75rem; font-weight: 700; color: #22d3ee;
+  animation: boost-glow 2s ease-in-out infinite;
+}
+@keyframes boost-glow {
+  0%,100% { box-shadow: 0 0 0 rgba(34,211,238,0); }
+  50%      { box-shadow: 0 0 12px rgba(34,211,238,.25); }
+}

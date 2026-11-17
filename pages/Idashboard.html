@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GABLE – Instructor Dashboard</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/style.css?v=2">
+    <link rel="stylesheet" href="../assets/css/idashboard.css?v=3">
+    <link rel="stylesheet" href="../assets/css/idashboard/additions.css">
+  <link rel="stylesheet" href="../assets/css/lucide-icons.css">
+    <link rel="stylesheet" href="../assets/css/idashboard/workspace.css?v=11">
+<link rel="stylesheet" href="../assets/css/actions.css?v=2">
+<link rel="stylesheet" href="../assets/css/brand-text.css?v=4">
+</head>
+
+<body class="instructor-dashboard">
+
+    <div class="bg-blobs"></div>
+
+    <!-- ═══════════════════════════════════════════════
+         NAVBAR
+    ═══════════════════════════════════════════════ -->
+
+    <nav class="dash-nav">
+
+        <div class="dash-nav-brand"><span class="brand-mark">G</span><span class="brand-wordmark">GABLE<small>Instructor dashboard</small></span></div>
+
+        <div class="dash-nav-right">
+
+            <!-- ANNOUNCEMENT INBOX -->
+            <div class="idb-announce-wrap">
+
+                <button class="idb-announce-btn" id="idb-announce-btn" onclick="openIdbAnnouncements()" title="Admin Announcements">
+                    📢
+                    <span>Inbox</span>
+                    <span
+                        class="idb-announce-dot"
+                        id="idb-announce-dot"
+                    ></span>
+                </button>
+
+            </div>
+
+
+            <!-- NOTIFICATION BELL -->
+            <div class="idb-bell-wrap">
+
+                <button class="idb-bell-btn" id="idb-bell" onclick="toggleIdbBell(event)" title="Notifications">
+                    🔔
+                    <span
+                        class="idb-bell-badge"
+                        id="idb-bell-badge"
+                    ></span>
+                </button>
+
+                <!-- Notification Dropdown -->
+                <div class="idb-notif-dropdown" id="idb-notif-dropdown">
+
+                    <div class="idb-nd-header">
+
+                        <span class="idb-nd-title">
+                            Notifications
+                        </span>
+
+                        <button class="idb-nd-mark-all" onclick="idbMarkAllNotifsRead()">
+                            Mark all read
+                        </button>
+
+                    </div>
+
+                    <div class="idb-nd-list" id="idb-nd-list"></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- TEACHING XP -->
+            <div class="xp-pill-wrap">
+
+    <!-- TEACHING XP BADGE -->
+    <div class="xp-badge" onclick="toggleXpPopup()">
+        ⭐ Teaching XP
+        <span class="xp-val" id="idb-teaching-xp">0 XP</span>
+    </div>
+
+    <!-- TEACHING XP POPUP -->
+    <div class="xp-popup" id="xp-popup">
+
+        <div class="xp-popup-label">
+            TEACHING XP PROGRESS
+        </div>
+
+        <div class="xp-popup-title" id="idb-xp-level-title"></div>
+
+        <div class="xp-popup-sub" id="idb-xp-level-sub"></div>
+
+        <!-- PROGRESS BAR -->
+        <div class="xp-progress-bar-track">
+            <div
+                class="xp-progress-bar-fill"
+                id="idb-xp-progress-fill"
+                style="width: 0%;">
+            </div>
+        </div>
+
+        <!-- PROGRESS LABELS -->
+        <div class="xp-progress-labels" id="idb-xp-progress-labels"></div>
+
+        <!-- XP NEEDED FOR NEXT LEVEL -->
+        <div class="xp-progress-needed" id="idb-xp-needed"></div>
+
+        <!-- CLOSE BUTTON -->
+        <div class="xp-popup-btns">
+            <button class="btn-xp-close" onclick="closeXpPopup()">
+                Close
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- AVATAR -->
+<div class="dash-avatar" id="instructor-avatar">
+</div>
+
+
+            <!-- BACK TO PORTAL -->
+            <a href="Instructor.html" class="dash-back">
+                <i data-lucide="layout-dashboard" aria-hidden="true"></i><span>Instructor portal</span>
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ═══════════════════════════════════════════════
+         MAIN DASHBOARD
+    ═══════════════════════════════════════════════ -->
+
+    <div class="dash-main">
+
+
+        <!-- ANNOUNCEMENT BANNER -->
+
+        <div class="idb-announce-banner" id="idb-announce-banner" onclick="openIdbAnnouncements()">
+
+            <span class="idb-abb-icon lucide-icon"><i data-lucide="megaphone" aria-hidden="true"></i></span>
+
+            <span class="idb-abb-text">
+                <strong>New admin announcement:</strong>
+                Midterm Grading Deadline Extended — Click to read.
+            </span>
+
+            <span class="idb-abb-cta">
+                View all →
+            </span>
+
+            <button class="idb-abb-close" onclick="event.stopPropagation(); idbDismissBanner()" title="Dismiss">
+                ✕
+            </button>
+
+        </div>
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="dash-header-row fade-up">
+
+            <div>
+
+                <h1></h1>
+
+                <p></p>
+
+            </div>
+
+            <div class="dash-header-actions">
+
+                <button class="idb-lb-trigger-btn" onclick="openIdbLeaderboard()">
+                    🏆 Section Leaderboard
+                </button>
+
+                <button class="btn-primary" onclick="openModal('modal-create')">
+                    + Create New Quiz
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ═══════════════════════════════════════════════
+             TEACHING QUALITY SCORE
+        ═══════════════════════════════════════════════ -->
+
+        <div class="dash-stats fade-up-1">
+
+           <div class="dash-stat-card"
+            onclick="openIdbActiveRoster()"
+            style="cursor:pointer">
+
+                <div class="dsc-top">
+                    <span class="dsc-icon lucide-icon"><i data-lucide="users" aria-hidden="true"></i></span>
+                    <span class="dsc-trend">↑ +2</span>
+                </div>
+
+                <div class="dsc-val"
+                    id="stat-active-students"
+                    style="color:var(--purple-light)">
+                    0
+                </div>
+
+                <div class="dsc-label">
+                    Active Students
+                </div>
+
+                <div class="dsc-sub"
+                    id="stat-active-students-sub">
+                    0 sections
+                </div>
+
+            </div>
+
+
+            <div class="dash-stat-card" onclick="openModal('modal-grade')">
+
+                <div class="dsc-top">
+                    <span class="dsc-icon lucide-icon"><i data-lucide="notebook-pen" aria-hidden="true"></i></span>
+                    <span class="dsc-badge new">+0 new</span>
+                </div>
+
+                <div class="dsc-val"
+                    id="stat-assigned-quizzes"
+                    style="color:var(--blue)">
+                    0
+                </div>
+
+                <div class="dsc-label">
+                    Assigned Quizzes
+                </div>
+
+                <div class="dsc-sub"
+                    id="stat-assigned-quizzes-sub">
+                    0 subjects
+                </div>
+
+            </div>
+
+
+            <div class="dash-stat-card"
+            onclick="openIdbCompletionDetails()"
+            style="cursor:pointer">
+
+                <div class="dsc-top">
+                        <span class="dsc-icon lucide-icon"><i data-lucide="circle-check" aria-hidden="true"></i></span>
+
+                        <span class="dsc-trend"
+                            id="stat-completion-trend">
+                            0%
+                        </span>
+                    </div>
+
+                    <div class="dsc-val"
+                        id="stat-completion-rate"
+                        style="color:var(--green)">
+                        0%
+                    </div>
+
+                    <div class="dsc-label">
+                        Completion Rate
+                    </div>
+
+                    <div class="dsc-sub">
+                        Across all quizzes
+                    </div>
+
+            </div>
+
+
+            <div class="dash-stat-card" id="stat-pending-notifs" onclick="toggleIdbBell(event)" style="cursor:pointer">
+
+                <div class="dsc-top">
+                    <span class="dsc-icon lucide-icon"><i data-lucide="bell" aria-hidden="true"></i></span>
+
+                    <span class="dsc-badge new" id="stat-notif-badge">
+                        4 new
+                    </span>
+
+                </div>
+
+                <div class="dsc-val" style="color:var(--gold)" id="stat-notif-count">
+                    4
+                </div>
+
+                <div class="dsc-label">
+                    Notifications
+                </div>
+
+                <div class="dsc-sub">
+                    Flags, boosts &amp; submissions
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ═══════════════════════════════════════════════
+             MAIN CONTENT GRID
+        ═══════════════════════════════════════════════ -->
+
+        <div class="tq-card fade-up-1">
+
+            <div class="tq-inner">
+
+                <div class="tq-top">
+
+                    <div class="tq-top-left">
+
+                        <h2>
+                            Teaching Quality Score
+                        </h2>
+
+                        <p>
+                            Your confirmed syllabus reviews, grading rank and student outcomes
+                        </p>
+
+                    </div>
+
+                    <div class="tq-grade-badge">
+
+                        <span class="gb-letter" id="idb-quality-rank">
+                            --
+                        </span>
+
+                        <span class="gb-label" id="idb-quality-rank-label">
+                            Not ranked
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <p id="idb-quality-rank-note" class="quality-note">Loading your grading rank...</p><p id="idb-quality-evidence" class="quality-note" role="status">Loading confirmed reviews...</p>
+                <div class="tq-metrics">
+
+                    <div class="tq-metric">
+
+                        <div class="tq-metric-header">
+                            <span>Confirmed Quiz Alignment</span>
+                            <span class="tq-metric-pct" id="idb-syllabus-accuracy">0%</span>
+                        </div>
+
+                        <div class="tq-bar-track">
+                            <div class="tq-bar-fill purple"
+                                id="idb-syllabus-accuracy-bar"
+                                style="width:0%">
+                            </div>
+                        </div>
+
+                        <div class="tq-metric-sub">
+                            Average of admin-confirmed quiz alignment scores
+                        </div>
+
+                    </div>
+
+
+                    <div class="tq-metric">
+
+                        <div class="tq-metric-header">
+                            <span>Overall Course Alignment</span>
+                            <span class="tq-metric-pct" id="idb-content-relevance">0%</span>
+                        </div>
+
+                        <div class="tq-bar-track">
+                            <div class="tq-bar-fill pink"
+                                id="idb-content-relevance-bar"
+                                style="width:0%">
+                            </div>
+                        </div>
+
+                        <div class="tq-metric-sub">
+                            Overall evaluation saved by your administrator
+                        </div>
+
+                    </div>
+
+
+                    <div class="tq-metric">
+
+                        <div class="tq-metric-header">
+                            <span>Student Success Rate</span>
+                            <span class="tq-metric-pct" id="idb-student-success-rate">0%</span>
+                        </div>
+
+                        <div class="tq-bar-track">
+                            <div class="tq-bar-fill blue"
+                                id="idb-student-success-rate-bar"
+                                style="width:0%">
+                            </div>
+                        </div>
+
+                        <div class="tq-metric-sub">
+                            Students averaging 80%+ on finalized results for your quizzes
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="quality-rank-guide"><strong>F / C / B / A / S / SS / SSS / SSS+</strong><p>SSS+ requires 100% course alignment and at least 100 evaluated quizzes averaging 99.5% alignment. Ranks are awarded by an administrator.</p></div>
+                <div class="tq-xp-row">
+
+                    <div class="tq-xp-row-left">
+
+                        <h4>
+                            Teaching Quality XP
+                        </h4>
+
+                        <p>
+                            Confirmed alignment: 95%+ earns 100 XP; 85-94% earns 50 XP. Eligible pass-rate bonuses are separate.
+                        </p>
+
+                    </div>
+
+                    <div class="tq-xp-row-right">
+
+                        <div class="xp-num" id="idb-tq-xp-value">0 / 1,000 XP</div>
+
+
+                        <div class="xp-lvl" id="idb-tq-xp-level">Level 1 Educator</div>
+
+
+                    </div>
+
+                </div>
+
+
+                <div class="tq-xp-track">
+    <div class="tq-xp-fill" id="idb-tq-xp-fill"></div>
+
+                </div>
+
+
+                <div class="tq-tip">
+                    💡 Level up benefits: Unlock advanced analytics, custom quiz templates, priority support
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ═══════════════════════════════════════════════
+             MINI STAT CARDS
+        ═══════════════════════════════════════════════ -->
+
+        <div class="dash-content">
+
+    <!-- LEFT COLUMN -->
+
+    <div>
+
+        <!-- MY TEACHING ASSIGNMENTS -->
+
+        <div class="assign-section fade-up-2">
+
+            <div class="assign-header">
+
+                <h2>
+                    My Teaching Assignments
+                </h2>
+
+                <span class="assign-badge gold">
+                    BSIT
+                </span>
+
+                <span class="assign-badge purple">
+                </span>
+
+            </div>
+
+            <div class="assign-grid" id="idb-assignment-grid">
+            </div>
+
+        </div>
+
+
+        <!-- MY STUDENTS -->
+
+        <div class="students-section fade-up-3">
+
+            <div class="students-section-header">
+
+                <h2>
+                    My Students – BSIT 3rd Year
+                </h2>
+
+                <span class="assign-badge gold">
+                    2nd Semester
+                </span>
+
+                <button class="idb-lb-trigger-btn"
+                        style="margin-left:auto;font-size:.75rem;padding:.35rem .9rem"
+                        onclick="openIdbLeaderboard()">
+                    🏆 View Leaderboard
+                </button>
+
+            </div>
+
+            <div id="idb-student-sections">
+            </div>
+
+        </div>
+
+    </div>
+        
+        
+
+
+            <!-- ═══════════════════════════════════════════════
+                 RIGHT SIDEBAR
+            ═══════════════════════════════════════════════ -->
+
+            <div class="quick-sidebar fade-up-2">
+
+                <div class="qs-title">
+                    Quick Actions
+                </div>
+
+                <div class="qs-sub">
+                    You can only modify your own quizzes and student grades
+                </div>
+
+
+                <button class="qs-btn" onclick="openModal('modal-create')">
+
+                    <div class="qs-icon qsi-purple lucide-icon"><i data-lucide="circle-plus" aria-hidden="true"></i></div>
+
+                    <div class="qs-text">
+                        <h4>Create Quiz</h4>
+                        <p>For my assigned subjects only</p>
+                    </div>
+
+                </button>
+
+
+                <button class="qs-btn" onclick="openModal('modal-grade')">
+
+                    <div class="qs-icon qsi-blue lucide-icon"><i data-lucide="clipboard-list" aria-hidden="true"></i></div>
+
+                    <div class="qs-text">
+                        <h4>Grade My Quizzes</h4>
+                        <p>0 submissions to review</p>
+                    </div>
+
+                </button>
+
+
+                <button class="qs-btn" onclick="openModal('modal-reports')">
+
+                    <div class="qs-icon qsi-pink lucide-icon"><i data-lucide="chart-no-axes-column-increasing" aria-hidden="true"></i></div>
+
+                    <div class="qs-text">
+                        <h4>My Students' Reports</h4>
+                        <p>View my sections only</p>
+                    </div>
+
+                </button>
+
+
+                <button class="qs-btn" onclick="openIdbLeaderboard()">
+
+                    <div
+                        class="qs-icon lucide-icon"
+                        style="background:linear-gradient(135deg,#f59e0b,#f97316)"
+                    ><i data-lucide="trophy" aria-hidden="true"></i></div>
+
+                    <div class="qs-text">
+                        <h4>Section Leaderboard</h4>
+                        <p>Top students across sections</p>
+                    </div>
+
+                </button>
+
+
+                <button class="qs-btn" onclick="openIdbAnnouncements()">
+
+                    <div
+                        class="qs-icon lucide-icon"
+                        style="background:linear-gradient(135deg,#4f8ef7,#22d3ee)"
+                    ><i data-lucide="megaphone" aria-hidden="true"></i></div>
+
+                    <div class="qs-text">
+
+                        <h4>
+                            Admin Inbox
+                            <span
+                                id="qs-unread-pill"
+                                class="idb-qs-unread"
+                            ></span>
+                        </h4>
+
+                        <p>
+                            View admin announcements
+                        </p>
+
+                    </div>
+
+                </button>
+
+
+                <!-- RECENT ALERTS -->
+
+                <div class="idb-sidebar-notifs">
+
+                    <div class="idb-sn-label">
+                        Recent Alerts
+                    </div>
+
+                    <div id="idb-sidebar-notif-list"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ═══════════════════════════════════════════════
+             XP BREAKDOWN
+        ═══════════════════════════════════════════════ -->
+
+        <div class="xp-section fade-up-3">
+
+            <div class="xp-section-header">
+
+                <h2>
+                    XP Earning Breakdown
+                </h2>
+
+            </div>
+
+
+            <div class="xp-two-col">
+
+
+                <!-- XP RULES -->
+
+                <div class="xp-rules-card">
+
+                    <div class="xp-rules-label">
+                        📋 How You Earn Teaching XP:
+                    </div>
+
+                    <div class="xp-rule-item">
+                        <strong>
+                            Quiz aligns 95%+ with syllabus:
+                        </strong> &nbsp;+100 XP
+                    </div>
+
+                    <div class="xp-rule-item">
+                        <strong>
+                            Quiz aligns 85–94% with syllabus:
+                        </strong> &nbsp;+50 XP
+                    </div>
+
+                    <div class="xp-rule-item">
+                        <strong>
+                            85%+ students pass quiz:
+                        </strong> &nbsp;+50 XP
+                    </div>
+
+                    <div class="xp-rule-item">
+                        <strong>
+                            Student gives perfect score (100%):
+                        </strong> &nbsp;+10 XP
+                    </div>
+
+                    <div class="xp-rule-item">
+                        <strong>
+                            Maintain 7-day quiz streak:
+                        </strong> &nbsp;+150 bonus XP
+                    </div>
+
+                </div>
+
+
+                <!-- SYLLABUS ALIGNMENT -->
+
+                <div class="syl-card">
+
+                    <div class="syl-card-title">
+                        Syllabus Alignment by Subject
+                    </div>
+
+                    <!-- Dynamic subject analytics -->
+                    <div id="idb-syllabus-subject-list">
+
+                        <p class="syl-loading">
+                            Loading subject analytics...
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════
+         MODAL: CREATE QUIZ
+    ═══════════════════════════════════════════════ -->
+
+    <div class="modal-overlay" id="modal-create">
+    <div class="modal" style="max-width:820px;max-height:90vh;overflow-y:auto">
+
+        <button class="modal-close" aria-label="Close dialog" onclick="closeModal('modal-create')">✕</button>
+
+        <h2>Create New Quiz</h2>
+
+        <!-- QUIZ TITLE -->
+        <div class="form-group">
+            <label for="c-title">Quiz Title</label>
+            <input type="text" id="c-title"
+                   placeholder="e.g. Database Management Quiz">
+        </div>
+
+        <!-- SUBJECT AND SECTION -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="c-subject">Subject</label>
+                <select id="c-subject">
+                    <option value="">Choose assigned subject</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="c-section">Section</label>
+                <select id="c-section">
+                    <option value="">Choose assigned section</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- QUIZ MODE -->
+        <div class="form-group">
+            <label>Quiz Mode</label>
+
+            <div class="idb-mode-options">
+                <button type="button"
+                        class="idb-mode-card selected"
+                        data-mode="formal"
+                        aria-pressed="true"
+                        onclick="idbSelectQuizMode('formal')">
+                    <span class="idb-mode-icon lucide-icon"><i data-lucide="school" aria-hidden="true"></i></span>
+                    <span class="idb-mode-text">
+                        <strong>Formal</strong>
+                        <small>On-Class Quiz</small>
+                    </span>
+                </button>
+
+                <button type="button"
+                        class="idb-mode-card"
+                        data-mode="informal"
+                        aria-pressed="false"
+                        onclick="idbSelectQuizMode('informal')">
+                    <span class="idb-mode-icon lucide-icon"><i data-lucide="house" aria-hidden="true"></i></span>
+                    <span class="idb-mode-text">
+                        <strong>Informal</strong>
+                        <small>Homework / Practice</small>
+                    </span>
+                </button>
+            </div>
+
+            <input type="hidden" id="c-mode" value="formal">
+        </div>
+
+        <!-- QUIZ TYPE -->
+        <div class="form-group">
+            <label for="c-type">Quiz Type</label>
+            <select id="c-type">
+                <option value="Team Battle">Team Battle</option>
+                <option value="Solo">Solo</option>
+                <option value="Battle Royale">Battle Royale</option>
+                <option value="Homework">Homework</option>
+                <option value="Practice">Practice</option>
+            </select>
+        </div>
+
+        <!-- DUE DATE, TIME LIMIT, XP -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="c-due">Due Date</label>
+                <input type="date" id="c-due">
+            </div>
+
+            <div class="form-group">
+                <label for="c-time">Time Limit (minutes)</label>
+                <input type="number" id="c-time"
+                       min="5" max="180" value="30">
+            </div>
+
+            <div class="form-group">
+                <label for="c-xp">XP Reward (minimum 50)</label>
+                <input type="number" id="c-xp"
+                       min="50" value="150">
+            </div>
+        </div>
+
+        <!-- INSTRUCTIONS -->
+        <div class="form-group">
+            <label for="c-instructions">Quiz Instructions</label>
+            <textarea id="c-instructions"
+                      placeholder="Add instructions for students..."></textarea>
+        </div>
+
+        <!-- QUESTIONS -->
+        <div class="questions-section">
+
+            <div style="
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+                margin-bottom:.3rem
+            ">
+
+                <h4>
+                    Questions (<span id="c-q-count">0</span>)
+                </h4>
+
+                <div style="display:flex;gap:.5rem">
+
+                    <button type="button" class="btn-add-q-type"
+                            onclick="addCreateQuestion('mc')">
+                        + Multiple Choice
+                    </button>
+
+                    <button type="button" class="btn-add-q-type btn-add-q-id"
+                            onclick="addCreateQuestion('id')">
+                        + Identification
+                    </button>
+
+                </div>
+
+            </div>
+
+            <p>
+                Multiple choice questions are auto-graded.
+                Identification questions require manual grading.
+            </p>
+
+            <div class="q-list" id="c-questions"></div>
+
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="modal-footer">
+            <button type="button" class="btn-cancel"
+                    onclick="closeModal('modal-create')">
+                    Cancel
+            </button>
+
+            <button type="button" class="btn-save"
+                    id="c-draft-btn"
+                    onclick="saveCreate('draft')">
+                    💾 Save as Draft
+            </button>
+
+            <button type="button" class="btn-save green-btn"
+                    id="c-post-btn"
+                    onclick="saveCreate('active')">
+                    🚀 Post Quiz
+            </button>
+        </div>
+
+    </div>
+</div>
+
+
+    <!-- ═══════════════════════════════════════════════
+         MODAL: GRADE QUIZZES
+    ═══════════════════════════════════════════════ -->
+
+    <div class="modal-overlay" id="modal-grade">
+
+        <div class="modal" style="max-width:720px">
+
+            <button class="modal-close" aria-label="Close dialog" onclick="closeModal('modal-grade')">
+                ✕
+            </button>
+
+            <h2>
+                Grade Quizzes – Submissions Awaiting Review
+            </h2>
+
+            <div id="submission-list"></div>
+
+        </div>
+
+    </div>
+
+
+   
+    <!-- MODAL: STUDENT REPORTS -->
+    <div class="modal-overlay" id="modal-reports">
+        <div class="modal idb-reports-modal">
+
+            <button class="modal-close"
+                    onclick="closeModal('modal-reports')"
+                    aria-label="Close reports">
+                ✕
+            </button>
+
+            <!-- Header -->
+            <div class="idb-reports-header">
+                <div class="idb-reports-icon lucide-icon"><i data-lucide="chart-no-axes-column-increasing" aria-hidden="true"></i></div>
+                <div>
+                    <h2>Student Performance Reports</h2>
+                    <p>Review student performance across your assigned classes.</p>
+                </div>
+            </div>
+
+            <!-- Summary cards -->
+            <div class="idb-report-stats">
+
+                <div class="idb-report-stat purple">
+                    <div class="idb-report-stat-top">
+                        <span>Total Students</span>
+                        <span class="idb-report-stat-icon lucide-icon"><i data-lucide="users" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="idb-report-stat-value" id="rp-student-count">
+                        0
+                    </div>
+                    <div class="idb-report-stat-note">
+                        Students in the selected section
+                    </div>
+                </div>
+
+                <div class="idb-report-stat green">
+                    <div class="idb-report-stat-top">
+                        <span>Average Performance</span>
+                        <span class="idb-report-stat-icon lucide-icon"><i data-lucide="chart-no-axes-column-increasing" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="idb-report-stat-value" id="rp-overall-average">
+                        —
+                    </div>
+                    <div class="idb-report-stat-note">
+                        Based on students with scored submissions
+                    </div>
+                </div>
+
+                <div class="idb-report-stat blue">
+                    <div class="idb-report-stat-top">
+                        <span>Above 80%</span>
+                        <span class="idb-report-stat-icon lucide-icon"><i data-lucide="trophy" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="idb-report-stat-value" id="rp-above-80">
+                        0 (0%)
+                    </div>
+                    <div class="idb-report-stat-note">
+                        Students averaging above 80%
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Filters -->
+            <div class="idb-report-filter-panel">
+                <div class="idb-report-filter-heading">
+                    <div>
+                        <h3>Filter Reports</h3>
+                        <p>Narrow results by section or subject.</p>
+                    </div>
+                    <span class="idb-filter-symbol">⚙</span>
+                </div>
+
+                <div class="idb-report-filters">
+                    <label class="idb-report-field">
+                        <span>Section</span>
+                        <select id="rp-section">
+                            <option value="">All Sections</option>
+                        </select>
+                    </label>
+
+                    <label class="idb-report-field">
+                        <span>Subject</span>
+                        <select id="rp-subject">
+                            <option value="">All Subjects</option>
+                        </select>
+                    </label>
+
+                    <button type="button"
+                            class="btn-primary idb-report-filter-btn"
+                            onclick="renderIdbReports()">
+                        <span>⌕</span> Apply Filters
+                    </button>
+                </div>
+            </div>
+
+            <!-- Student list -->
+            <div class="idb-report-list-header">
+                <div>
+                    <h3>Student Overview</h3>
+                    <p>Individual averages and scored submissions</p>
+                </div>
+                <span class="idb-report-list-badge">REPORTS</span>
+            </div>
+
+            <div id="report-list" class="idb-report-list">
+                <div class="idb-report-loading">
+                    Loading student reports...
+                </div>
+            </div>
+
+            <div class="idb-report-footer">
+                <span class="idb-report-footer-dot"></span>
+                Performance updates according to available scored submissions.
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         MODAL: ADMIN ANNOUNCEMENTS
+    ═══════════════════════════════════════════════ -->
+
+    <div class="modal-overlay" id="modal-idb-announcements">
+
+        <div class="modal" style="max-width:640px">
+
+            <button class="modal-close" aria-label="Close dialog" onclick="closeModal('modal-idb-announcements')">
+                ✕
+            </button>
+
+            <h2>
+                📢 Admin Announcements
+            </h2>
+
+
+            <div style="
+                    display:flex;
+                    align-items:center;
+                    justify-content:space-between;
+                    margin-bottom:1.25rem
+                ">
+
+                <span id="idb-announce-unread-label" style="
+                        font-size:.8rem;
+                        color:rgba(255,255,255,.55)
+                    "></span>
+
+                <button class="idb-nd-mark-all" onclick="idbMarkAllAnnouncementsRead()">
+                    Mark all as read
+                </button>
+
+            </div>
+
+
+            <div class="idb-announcement-list" id="idb-announcement-list"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════
+         MODAL: LEADERBOARD
+    ═══════════════════════════════════════════════ -->
+
+    <div class="modal-overlay" id="modal-idb-leaderboard">
+
+        <div class="modal idb-leaderboard-modal">
+
+            <button class="modal-close" aria-label="Close dialog" onclick="closeModal('modal-idb-leaderboard')">
+                ✕
+            </button>
+
+            <h2>
+                🏆 Section Leaderboard
+            </h2>
+
+
+            <!-- FILTERS -->
+
+            <div class="idb-lb-filters">
+
+                <div class="idb-lb-filter-controls">
+                    <div class="idb-lb-filter-group">
+                        <label>Section</label>
+                        <div class="idb-lb-sec-tabs" id="idb-lb-sec-tabs">
+                            <!-- Section tabs are generated from teaching assignments -->
+                        </div>
+                    </div>
+
+                    <div class="idb-lb-filter-group">
+                        <label for="idb-lb-subj-select">Subject</label>
+                        <select
+                            class="idb-lb-subj-select"
+                            id="idb-lb-subj-select"
+                            onchange="switchIdbLbSubject(this.value)"
+                        >
+                            <option value="All">All Assigned Subjects</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- SUMMARY -->
+
+            <div class="idb-lb-summary" id="idb-lb-summary"></div>
+
+
+            <!-- PODIUM -->
+
+            <div class="idb-lb-podium" id="idb-lb-podium"></div>
+
+
+            <!-- LEADERBOARD TABLE -->
+
+            <div class="idb-lb-table">
+
+                <div class="idb-lb-thead">
+
+                    <div>Rank</div>
+                    <div>Student</div>
+                    <div>XP</div>
+                    <div>Level</div>
+                    <div>Avg Score</div>
+                    <div>Streak</div>
+
+                </div>
+
+                <div id="idb-lb-tbody"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+            <!-- ACTIVE STUDENTS MODAL -->
+        <div class="modal-overlay" id="modal-idb-active-roster">
+            <div class="modal" style="max-width:900px">
+                <button class="modal-close" aria-label="Close dialog"
+                        onclick="closeModal('modal-idb-active-roster')">
+                    ✕
+                </button>
+
+                <h2>👥 Active Students</h2>
+                <p id="idb-active-roster-count">Loading students...</p>
+
+                <div id="idb-active-roster-body">
+                    <p>Loading student roster...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMPLETION RATE MODAL -->
+        <div class="modal-overlay" id="modal-idb-completion-details">
+            <div class="modal" style="max-width:650px">
+                <button class="modal-close" aria-label="Close dialog"
+                        onclick="closeModal('modal-idb-completion-details')">
+                    ✕
+                </button>
+
+                <h2>✅ Completion Rate Details</h2>
+
+                <div id="idb-completion-details-body">
+                    <p>Loading completion details...</p>
+                </div>
+            </div>
+        </div>
+
+
+    <!-- ═══════════════════════════════════════════════
+         TOAST
+    ═══════════════════════════════════════════════ -->
+
+    <div class="toast" id="toast">
+
+        <span id="toast-icon">
+            ✅
+        </span> &nbsp;
+
+        <span id="toast-msg"></span>
+
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════
+         JAVASCRIPT
+    ═══════════════════════════════════════════════ -->
+
+    <script src="../assets/js/main.js?v=7"></script>
+    <script src="../assets/js/idashboard.js?v=8"></script>
+    <script src="../assets/js/idashboard/additions.js?v=9"></script>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="../assets/js/lucide-emoji.js"></script>
+</body>
+
+</html>

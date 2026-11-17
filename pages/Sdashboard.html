@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GABLE | Student Dashboard</title>
+  <link rel="stylesheet" href="../assets/css/style.css?v=2">
+  <link rel="stylesheet" href="../assets/css/student.css">
+  <link rel="stylesheet" href="../assets/css/student/levelup.css">
+  <link rel="stylesheet" href="../assets/css/lucide-icons.css">
+  <link rel="stylesheet" href="../assets/css/brand-text.css?v=5">
+  <link rel="stylesheet" href="../assets/css/student/sdashboard.css?v=2">
+</head>
+<body class="student-portal student-dashboard-page">
+  <div class="bg-blobs"></div>
+  <nav class="sdash-nav">
+    <a class="sdash-brand" href="Student.html"><span class="brand-mark">G</span><span class="brand-wordmark">GABLE<small>Student dashboard</small></span></a>
+    <div class="sdash-nav-actions"><a class="sdash-back" href="Student.html"><i data-lucide="layout-dashboard" aria-hidden="true"></i><span>Student portal</span></a><button class="sdash-logout" onclick="logout()" aria-label="Log out"><i data-lucide="log-out" aria-hidden="true"></i><span>Log out</span></button></div>
+  </nav>
+  <main class="sdash-main">
+    <div class="sdash-loading" id="sdash-status" role="status">Loading your student dashboard…</div>
+    <section id="sdash-content" hidden>
+      <header class="sdash-heading"><div><span class="card-eyebrow">YOUR STUDENT SPACE</span><h1>Student dashboard</h1><p>Track your learning progress, rewards, and profile frames.</p></div><a href="Student.html" class="sdash-return">Return to learning</a></header>
+      <section class="sdash-hero">
+        <div class="sdash-identity"><div class="sdash-avatar-wrap"><div class="profile-avatar-large" id="sdash-avatar"></div><div class="profile-frame-label" id="sdash-frame-label"></div></div><div class="sdash-identity-copy"><span class="sdash-greeting">WELCOME BACK</span><h2 id="sdash-name">Student</h2><p id="sdash-id"></p><div class="sdash-meta"><span id="sdash-program"></span><span id="sdash-year"></span><span id="sdash-section"></span></div></div></div>
+        <div class="sdash-xp-card"><div class="sdash-xp-top"><span>Lifetime XP</span><strong id="sdash-xp">0</strong></div><div class="sdash-level-line"><span id="sdash-level">Level 1 · Rookie</span><span id="sdash-next-level">--</span></div><div class="sdash-xp-track"><div id="sdash-xp-fill"></div></div><p id="sdash-xp-note"></p></div>
+      </section>
+      <section class="sdash-stats" aria-label="Learning statistics"><article><span>Average score</span><strong id="sdash-accuracy">--</strong><small>from graded quizzes</small></article><article><span>Submissions</span><strong id="sdash-submissions">0</strong><small>submitted or graded</small></article><article><span>Current balance</span><strong id="sdash-balance">0 XP</strong><small>available to spend</small></article><article><span>Rewards unlocked</span><strong id="sdash-reward-count">0</strong><small>level milestones</small></article></section>
+      <div class="sdash-grid">
+        <section class="sdash-card"><header><div><span class="card-eyebrow">ACADEMIC PROFILE</span><h2>Your details</h2></div><i data-lucide="graduation-cap" aria-hidden="true"></i></header><dl class="sdash-details"><div><dt>College</dt><dd id="sdash-college">—</dd></div><div><dt>Program</dt><dd id="sdash-program-full">—</dd></div><div><dt>Year level</dt><dd id="sdash-year-full">—</dd></div><div><dt>Section</dt><dd id="sdash-section-full">—</dd></div></dl></section>
+        <section class="sdash-card"><header><div><span class="card-eyebrow">COSMETIC PROGRESS</span><h2>Profile frames</h2></div><i data-lucide="frame" aria-hidden="true"></i></header><p class="sdash-card-note">Frames unlock as you level up and update your avatar automatically.</p><div id="sdash-frames" class="sdash-frames"></div></section>
+        <section class="sdash-card sdash-rewards"><header><div><span class="card-eyebrow">MILESTONES</span><h2>Earned rewards</h2></div><a href="Student.html#xp">XP &amp; Rewards <span aria-hidden="true">›</span></a></header><div id="sdash-reward-list"></div></section>
+        <section class="sdash-card"><header><div><span class="card-eyebrow">LATEST ACTIVITY</span><h2>Recent quiz results</h2></div><a href="Student.html#quizzes">My quizzes <span aria-hidden="true">›</span></a></header><div id="sdash-recent" class="sdash-recent"></div></section>
+      </div>
+    </section>
+  </main>
+  <div class="toast" id="toast"><span id="toast-icon"></span><span id="toast-msg"></span></div>
+  <script src="../assets/js/main.js?v=7"></script>
+  <script src="../assets/js/student/levelup.js?v=4"></script>
+  <script src="../assets/js/student/sdashboard.js?v=2"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="../assets/js/lucide-emoji.js?v=2"></script>
+</body>
+</html>

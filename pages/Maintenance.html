@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GABLE – Under Maintenance</title>
+    <style>
+        :root {
+            --bg: #090614;
+            --card: #1f1431;
+            --text: #f7f3ff;
+            --muted: #b9accd;
+            --accent: #7045c0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #090614;
+                --card: #1f1431;
+                --text: #f7f3ff;
+                --muted: #b9accd;
+                --accent: #b79aff;
+            }
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            background: var(--bg);
+            color: var(--text);
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+        .box {
+            max-width: 460px;
+            width: 100%;
+            text-align: center;
+            background: var(--card);
+            border-radius: 18px;
+            padding: 2.25rem 1.75rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, .15);
+        }
+        .icon { font-size: 3rem; margin-bottom: .5rem; }
+        h1 { font-size: 1.4rem; margin: 0 0 .75rem; }
+        p { color: var(--muted); line-height: 1.55; margin: 0 0 1.25rem; }
+        a.btn {
+            display: inline-block;
+            padding: .65rem 1.4rem;
+            border-radius: 10px;
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+  <link rel="stylesheet" href="../assets/css/lucide-icons.css">
+<link rel="stylesheet" href="../assets/css/actions.css">
+</head>
+<body>
+    <main class="box">
+        <div class="icon lucide-icon"><i data-lucide="wrench" aria-hidden="true"></i></div>
+        <h1>GABLE is under maintenance</h1>
+        <p>
+            The platform is temporarily unavailable for students while we make
+            improvements. Your account, quizzes and submissions are safe.
+            Please check back again soon.
+        </p>
+        <a class="btn" href="Login.html">Back to Login</a>
+    </main>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="../assets/js/lucide-emoji.js"></script>
+</body>
+</html>

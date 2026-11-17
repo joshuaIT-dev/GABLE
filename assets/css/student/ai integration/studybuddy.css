@@ -1,0 +1,93 @@
+/* Shared Study Buddy panel: floating or hosted in its own tab. */
+.sb-window[hidden], .sb-bubble[hidden], .sb-window [hidden], .sb-bubble [hidden] { display: none !important; }
+.sb-bubble { position: fixed; bottom: 24px; right: 24px; z-index: 250; display: flex; align-items: center; gap: .6rem; min-height: 48px; padding: .75rem 1rem; border: 1px solid #55718f; border-radius: 14px; background: #29435f; color: #edf4fc; font: inherit; cursor: pointer; box-shadow: 0 8px 28px rgba(0,0,0,.22); }
+.sb-bubble:hover { background: #345574; }
+.sb-bubble-label { font-size: .78rem; font-weight: 600; }
+.sb-unread { display: grid; place-items: center; width: 19px; height: 19px; border-radius: 50%; color: #172c43; background: #cadff5; font-size: .65rem; }
+.sb-window { position: fixed; bottom: 86px; right: 24px; z-index: 260; width: min(410px,calc(100vw - 32px)); height: min(560px,calc(100dvh - 180px)); display: flex; flex-direction: column; background: #18283d; border: 1px solid #48617e; border-radius: 16px; box-shadow: 0 16px 50px rgba(0,0,0,.35); overflow: hidden; }
+.sb-header { padding: 1rem; display: flex; gap: .5rem; align-items: center; justify-content: space-between; background: #20354c; border-bottom: 1px solid #364c65; }
+.sb-header-left { display: flex; align-items: center; gap: .6rem; min-width: 0; }
+.sb-avatar { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 9px; background: #324e6b; flex-shrink: 0; }
+.sb-header-title { margin: 0; font-size: .85rem; color: #e4eef9; font-weight: 600; }
+.sb-header-sub { margin: .2rem 0 0; font-size: .63rem; color: #adc0d7; line-height: 1.4; }
+.sb-header-right { display: flex; flex-shrink: 0; gap: .15rem; }
+.sb-header-right button { display: grid; place-items: center; width: 36px; height: 40px; padding: 0; color: #c4d6e9; background: transparent; border: 0; border-radius: 7px; cursor: pointer; }
+.sb-header-right button:hover { background: #34506e; }
+.sb-messages { flex: 1; min-height: 0; overflow-y: auto; padding: 1.1rem; display: flex; flex-direction: column; gap: 1rem; overscroll-behavior: contain; }
+.sb-msg { display: flex; flex-direction: column; max-width: 90%; align-self: flex-start; }
+.sb-msg-user { align-self: flex-end; }
+.sb-msg-bubble { background: #243b53; color: #dbe7f5; border: 1px solid #354d67; border-radius: 12px 12px 12px 3px; padding: .8rem 1rem; font-size: .8rem; line-height: 1.75; white-space: pre-wrap; overflow-wrap: anywhere; }
+.sb-msg-user .sb-msg-bubble { background: #355477; border-color: #4a6a8d; border-radius: 12px 12px 3px 12px; }
+.sb-msg-time { color: #91a7c1; font-size: .6rem; margin-top: .25rem; }
+.sb-msg-user .sb-msg-time { text-align: right; }
+.sb-typing { padding: .5rem 1rem; font-size: .72rem; color: #b1c5dd; }
+.sb-input-row { display: flex; align-items: flex-end; gap: .6rem; margin: 0; padding: .85rem 1rem .45rem; border-top: 1px solid #354b64; }
+.sb-input { flex: 1; min-width: 0; max-height: 140px; resize: vertical; border: 1px solid #465f7b; border-radius: 10px; padding: .7rem; color: #e1ecf8; background: #142236; font: inherit; font-size: .8rem; line-height: 1.5; }
+.sb-input::placeholder { color: #91a7c1; }
+.sb-send-btn { display: grid; place-items: center; width: 44px; height: 44px; flex-shrink: 0; border: 1px solid #7999ba; border-radius: 10px; background: #50759b; color: #fff; cursor: pointer; }
+.sb-send-btn:disabled { opacity: .45; cursor: wait; }
+.sb-composer-note { padding: 0 1rem .7rem; font-size: .6rem; color: #8fa6bf; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+/* Keep the history compact so the conversation owns the workspace. */
+body.student-portal:has(.main.studybuddy-expanded) { display: flex; flex-direction: column; height: 100dvh; min-height: 0; overflow: hidden; }
+body.student-portal:has(.main.studybuddy-expanded) > .student-navbar { flex-shrink: 0; }
+.main.studybuddy-expanded { flex: 1; min-height: 0; width: 100%; max-width: 1600px; padding: 1rem 1.5rem; box-sizing: border-box; }
+.main.studybuddy-expanded #panel-studybuddy { height: 100%; min-height: 0; }
+.studybuddy-workspace { display: grid; grid-template-columns: 250px minmax(0,1fr); gap: 1.25rem; align-items: stretch; height: 100%; min-height: 0; grid-template-rows: minmax(0,1fr); }
+.studybuddy-guide { min-width: 0; background: #18283d; border: 1px solid #364c65; padding: 1rem; border-radius: 16px; display: flex; flex-direction: column; height: 100%; min-height: 0; box-sizing: border-box; }
+.studybuddy-guide button, .sb-study-options select, .sb-rename-form input { font: inherit; color: #dbe7f5; }
+.studybuddy-guide button { cursor: pointer; }
+.sb-new-chat { width: 100%; padding: .85rem; border: 1px solid #587797; border-radius: 10px; background: #2e4c6b; font-size: .8rem !important; }
+.sb-new-chat:hover { background: #3b5e80; }
+.sb-history-heading { display: flex; align-items: center; justify-content: space-between; margin: 1.2rem 0 .6rem; }
+.sb-history-heading h3 { margin: 0; font-size: .8rem; color: #c1d2e5; }
+.sb-history-heading button { display: grid; place-items: center; width: 36px; height: 36px; background: transparent; border: 0; border-radius: 8px; }
+.sb-history-list { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: .5rem; }
+.sb-history-empty { color: #a8bdd4; font-size: .75rem; line-height: 1.7; }
+.sb-history-item { border: 1px solid transparent; border-radius: 10px; padding: .6rem; }
+.sb-history-item:hover { background: #20364e; }
+.sb-history-item.selected { background: #263e58; border-color: #496783; }
+.sb-history-open { width: 100%; text-align: left; padding: .2rem; background: transparent; border: 0; }
+.sb-history-open strong { display: block; font-size: .78rem; font-weight: 500; overflow-wrap: anywhere; line-height: 1.5; }
+.sb-history-open span { display: block; margin-top: .3rem; font-size: .65rem; color: #9fb6d0; }
+.sb-history-actions { display: flex; gap: .4rem; margin-top: .4rem; }
+.sb-history-actions button, .sb-rename-form button { background: transparent; border: 0; border-radius: 5px; padding: .4rem; font-size: .65rem; }
+.sb-history-actions button:hover, .sb-history-heading button:hover { background: #34516f; }
+.sb-history-actions button:last-child { color: #e9b4b9; }
+.sb-rename-form { display: flex; flex-wrap: wrap; margin-top: .5rem; }
+.sb-rename-form input { box-sizing: border-box; width: 100%; padding: .5rem; border: 1px solid #7797b6; border-radius: 6px; background: #142236; font-size: .75rem; }
+.sb-study-options { flex-shrink: 0; max-height: 50%; overflow-y: auto; border-top: 1px solid #364c65; padding-top: 1rem; margin-top: 1rem; }
+.sb-study-options summary { cursor: pointer; color: #c1d2e5; font-size: .8rem; padding: .4rem 0; }
+.sb-study-options label { display: block; font-size: .7rem; color: #a8bdd4; margin: .8rem 0 .4rem; }
+.sb-study-options select { width: 100%; background: #142236; border: 1px solid #49627f; border-radius: 8px; padding: .6rem; font-size: .75rem; }
+.sb-study-options button { display: block; width: 100%; text-align: left; padding: .65rem; margin-top: .4rem; border: 0; border-radius: 8px; background: #243950; font-size: .72rem; }
+#studybuddy-chat-host { min-width: 0; min-height: 0; }
+.sb-window.sb-full-view { position: relative; inset: auto; width: 100%; height: 100%; min-height: 0; box-sizing: border-box; z-index: auto; box-shadow: none; }
+.sb-header-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sb-header-left > div { min-width: 0; }
+.sb-full-view .sb-header, .sb-full-view .sb-input-row, .sb-full-view .sb-composer-note, .sb-full-view .sb-typing { flex-shrink: 0; }
+.sb-msg, .sb-history-item { flex-shrink: 0; }
+.sb-full-view .sb-header { padding: 1.1rem 1.5rem; }
+.sb-full-view .sb-messages { padding: 1.5rem 2rem; gap: 1.25rem; }
+.sb-full-view .sb-msg { max-width: min(85%,800px); }
+.sb-full-view .sb-msg-bubble { font-size: .9rem; }
+.sb-full-view .sb-input-row { padding: 1rem 1.5rem .5rem; }
+.sb-full-view .sb-input { height: 80px; min-height: 60px; max-height: 20dvh; box-sizing: border-box; font-size: .9rem; }
+.sb-full-view .sb-composer-note { padding-left: 1.5rem; }
+@media (max-width: 800px) {
+ .main.studybuddy-expanded { padding: .65rem; }
+ .studybuddy-workspace { grid-template-columns: 1fr; grid-template-rows: minmax(0,1fr) minmax(0,3fr); gap: .65rem; }
+ .studybuddy-guide { padding: .65rem; overflow-y: auto; }
+ .sb-history-heading { margin: .35rem 0; }
+ .sb-history-list { flex: 1 0 60px; }
+ .sb-study-options { max-height: none; margin-top: .5rem; padding-top: .5rem; }
+ .sb-full-view .sb-input { height: 60px; }
+}
+@media (max-width: 480px) {
+ .sb-window { right: 12px; bottom: 78px; width: calc(100vw - 24px); }
+ .sb-bubble { right: 12px; bottom: 16px; }
+ .sb-avatar { display: none; }
+ .sb-full-view .sb-messages, .sb-full-view .sb-header { padding: 1rem; }
+ .sb-full-view .sb-input-row { padding: .75rem; }
+ .sb-header-right button { width: 40px; }
+}

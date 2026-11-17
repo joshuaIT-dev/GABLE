@@ -1,0 +1,6 @@
+ALTER TABLE student_quiz_attempts ADD COLUMN IF NOT EXISTS open_count INT NOT NULL DEFAULT 0, ADD COLUMN IF NOT EXISTS deadline BIGINT NULL, ADD COLUMN IF NOT EXISTS session_token VARCHAR(64) NULL;
+CREATE TABLE IF NOT EXISTS student_system_notifications (
+ notification_id INT AUTO_INCREMENT PRIMARY KEY, student_id INT NOT NULL, quiz_id INT NOT NULL,
+ title VARCHAR(255) NOT NULL, message TEXT NOT NULL, is_read TINYINT NOT NULL DEFAULT 0,
+ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, KEY student_feed(student_id,created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

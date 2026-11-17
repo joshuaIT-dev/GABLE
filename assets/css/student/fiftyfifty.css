@@ -1,0 +1,54 @@
+/* ═══════════════════════════════════════════════════════════
+   fiftyfifty.css  —  50/50 Lifeline UI styles
+   Replaces timebuffer.css (Time Buffer Token removed).
+═══════════════════════════════════════════════════════════ */
+
+/* ══════════════════════
+   50/50 BUTTON
+══════════════════════ */
+.btn-fifty-fifty {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: rgba(168, 85, 247, .12);
+  border: 1px solid rgba(168, 85, 247, .35);
+  color: #c084fc; border-radius: 10px;
+  padding: .4rem .9rem; font-size: .78rem; font-weight: 700;
+  cursor: pointer; font-family: 'Poppins', sans-serif;
+  transition: background .2s, transform .15s;
+  white-space: nowrap;
+}
+.btn-fifty-fifty:hover {
+  background: rgba(168, 85, 247, .22);
+  transform: translateY(-1px);
+}
+.ff-uses {
+  font-size: .62rem; font-weight: 700;
+  background: rgba(168, 85, 247, .2);
+  border: 1px solid rgba(168, 85, 247, .3);
+  border-radius: 99px; padding: .1rem .4rem;
+  color: #c084fc;
+}
+
+/* ══════════════════════
+   USED BADGE
+══════════════════════ */
+.ff-used-badge {
+  display: inline-flex; align-items: center; gap: .3rem;
+  font-size: .72rem; font-weight: 700;
+  color: rgba(192, 132, 252, .65);
+  background: rgba(168, 85, 247, .08);
+  border: 1px solid rgba(168, 85, 247, .2);
+  border-radius: 9px; padding: .38rem .8rem;
+  white-space: nowrap;
+}
+
+/* ══════════════════════
+   ELIMINATED OPTION
+   Applied to .bq-option buttons removed by 50/50
+══════════════════════ */
+.bq-option.ff-eliminated {
+  opacity: .25;
+  text-decoration: line-through;
+  cursor: not-allowed;
+  filter: grayscale(1);
+  pointer-events: none;
+}

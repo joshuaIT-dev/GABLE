@@ -1,0 +1,2320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GABLE – Instructor Dashboard</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/style.css?v=2">
+    <link rel="stylesheet" href="../assets/css/instructor.css">
+    <link rel="stylesheet" href="../assets/css/instructor/additions.css">
+
+    <!-- AI integration -->
+    <link rel="stylesheet" href="../assets/css/instructor/ai integration/insight.css">
+    <style>
+
+        /* =========================================================
+   TEAM GAME DETAILS
+   ========================================================= */
+
+.team-game-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.team-game-form-grid .form-group {
+    min-width: 0;
+}
+
+
+/* Game duration stays compact */
+
+.team-game-form-grid
+.form-group:last-child {
+    max-width: 100%;
+}
+
+
+/* Mobile */
+
+@media (max-width: 760px) {
+
+    .team-game-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+    /* MAIN INSTRUCTOR NAV TABS */
+    .main > .panel {
+        display: none !important;
+    }
+
+    .main > .panel.active {
+        display: block !important;
+    }
+
+/* =========================================================
+   TEAM CLASSROOM GAMES — UI ONLY
+   Reference-matched question panel
+   ========================================================= */
+.team-game-card { position:relative; overflow:hidden; }
+.team-game-card .quick-icon { background:rgba(165,127,224,.16); }
+
+.team-game-modal {
+    width: min(900px, calc(100vw - 32px));
+    max-width: 900px !important;
+
+    height: auto;
+    max-height: 85vh;
+
+    padding: 0 !important;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.team-game-modal > .modal-close {
+    z-index:20;
+    top:14px;
+    right:14px;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.08);
+    color:rgba(255,255,255,.65);
+}
+.team-game-modal > .modal-close:hover { background:rgba(255,255,255,.12); color:#fff; }
+
+.team-game-setup-view {
+    flex:1;
+    min-height:0;
+    overflow-y:auto;
+    padding:26px 28px 18px;
+    scrollbar-width:thin;
+    scrollbar-color:rgba(165,127,224,.35) transparent;
+}
+.team-game-heading h2 { font-size:1.25rem; font-weight:800; margin:0 38px 4px 0; letter-spacing:-.02em; }
+.team-game-modal-subtitle { margin:0 0 24px; color:rgba(255,255,255,.62); font-size:.76rem; line-height:1.55; }
+.team-game-hidden-config { display:none; }
+
+.team-game-mode-tabs {
+    display:grid;
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    gap:8px;
+    padding:5px;
+    margin-bottom:26px;
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:15px;
+    background:rgba(255,255,255,.025);
+}
+
+#modal-team-games {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+.team-game-mode {
+    appearance:none;
+    min-height:74px;
+    padding:10px 8px;
+    border:1px solid transparent;
+    border-radius:11px;
+    background:rgba(255,255,255,.025);
+    color:rgba(255,255,255,.58);
+    cursor:pointer;
+    font-family:'Poppins',sans-serif;
+    transition:transform .2s ease,background .2s ease,border-color .2s ease,color .2s ease,box-shadow .2s ease;
+}
+.team-game-mode:hover { background:rgba(255,255,255,.055); color:#fff; transform:translateY(-1px); }
+.team-game-mode.active {
+    color:#fff;
+    background:linear-gradient(135deg,rgba(69,81,170,.58),rgba(55,57,130,.48));
+    border-color:rgba(79,142,247,.65);
+    box-shadow:inset 0 0 20px rgba(79,142,247,.06),0 0 0 1px rgba(79,142,247,.10);
+}
+.team-game-mode-icon { display:block; font-size:1.35rem; line-height:1; margin-bottom:7px; }
+.team-game-mode-title { display:block; font-size:.70rem; font-weight:700; line-height:1.2; }
+
+.team-game-mode-panel {
+    border:1px solid rgba(255,255,255,.11);
+    border-radius:18px;
+    background:rgba(255,255,255,.018);
+    overflow:hidden;
+    margin-bottom:24px;
+}
+.team-game-mode-panel-head {
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:26px 28px;
+    border-bottom:1px solid rgba(255,255,255,.09);
+}
+.team-game-mode-icon-large {
+    width:52px;
+    height:52px;
+    flex:0 0 52px;
+    border-radius:13px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.65rem;
+    background:linear-gradient(135deg,#5864cf,#7652cf);
+    box-shadow:0 8px 24px rgba(83,79,207,.22);
+}
+.team-game-selected-mode-info { min-width:0; flex:1; }
+.team-game-selected-mode-info h3 { font-size:1rem; font-weight:800; margin:0 0 4px; }
+.team-game-selected-mode-info p { color:rgba(255,255,255,.63); font-size:.73rem; line-height:1.45; margin:0; max-width:620px; }
+.team-game-live-pill {
+    flex-shrink:0;
+    padding:6px 11px;
+    border-radius:999px;
+    color:#72a7ff;
+    border:1px solid rgba(79,142,247,.40);
+    background:rgba(79,142,247,.11);
+    font-size:.60rem;
+    font-weight:800;
+    letter-spacing:.02em;
+}
+
+.team-game-mode-content { padding:25px 28px 26px; }
+.team-game-settings-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+.team-game-setting label { display:block; color:rgba(255,255,255,.58); font-size:.67rem; font-weight:700; margin-bottom:8px; }
+.team-game-setting input,.team-game-setting select {
+    width:100%; height:38px; padding:0 12px;
+    border-radius:10px; border:1px solid rgba(255,255,255,.13);
+    background:rgba(255,255,255,.07); color:#fff;
+    font:500 .72rem 'Poppins',sans-serif; outline:none;
+}
+.team-game-setting input:focus,.team-game-setting select:focus { border-color:rgba(126,145,255,.7); box-shadow:0 0 0 3px rgba(79,142,247,.12); }
+.team-game-info-banner {
+    margin-top:20px; padding:11px 13px; border-radius:10px;
+    background:rgba(79,94,190,.13); border:1px solid rgba(79,142,247,.20);
+    color:rgba(255,255,255,.68); font-size:.67rem; line-height:1.5;
+}
+.team-game-info-banner strong { color:#fff; }
+.team-game-generic-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+.team-game-generic-card { padding:14px; border:1px solid rgba(255,255,255,.08); border-radius:11px; background:rgba(255,255,255,.035); }
+.team-game-generic-card strong { display:block; font-size:.74rem; margin-bottom:4px; }
+.team-game-generic-card span { color:rgba(255,255,255,.55); font-size:.65rem; line-height:1.4; }
+
+.team-game-questions-section { padding-bottom:2px; }
+.team-game-questions-head { display:flex; align-items:flex-end; justify-content:space-between; gap:15px; margin-bottom:10px; }
+.team-game-questions-head h3 { font-size:.92rem; margin:0; font-weight:800; }
+.team-game-questions-head h3 span { color:rgba(255,255,255,.52); font-weight:500; }
+.team-game-questions-head p { color:rgba(255,255,255,.48); font-size:.66rem; margin:3px 0 0; }
+.team-game-question-add-buttons { display:flex; gap:7px; }
+.team-game-add-btn {
+    padding:8px 12px; border-radius:9px; cursor:pointer; font:700 .66rem 'Poppins',sans-serif;
+    transition:transform .2s ease,background .2s ease;
+}
+.team-game-add-btn:hover { transform:translateY(-1px); }
+.team-game-add-blue { color:#9ebcff; background:rgba(79,142,247,.12); border:1px solid rgba(79,142,247,.42); }
+.team-game-add-blue:hover { background:rgba(79,142,247,.20); }
+.team-game-add-green { color:#75e7a1; background:rgba(74,222,128,.10); border:1px solid rgba(74,222,128,.38); }
+.team-game-add-green:hover { background:rgba(74,222,128,.17); }
+
+.team-game-summary {
+    display:flex; align-items:center; gap:9px; min-height:50px;
+    padding:8px 16px; margin-bottom:16px;
+    border:1px solid rgba(255,255,255,.08); border-radius:11px;
+    background:rgba(255,255,255,.045);
+}
+.team-game-summary-pill { display:inline-flex; align-items:center; padding:5px 11px; border-radius:999px; font-size:.61rem; font-weight:700; }
+.team-game-summary-blue { color:#91b6ff; background:rgba(79,142,247,.12); border:1px solid rgba(79,142,247,.28); }
+.team-game-summary-green { color:#69e59b; background:rgba(74,222,128,.10); border:1px solid rgba(74,222,128,.28); }
+.team-game-summary-gold { color:#f5c14e; background:rgba(245,158,11,.10); border:1px solid rgba(245,158,11,.30); }
+
+.team-game-question-list { display:flex; flex-direction:column; gap:8px; }
+.team-game-empty {
+    min-height:126px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:20px; border:1px dashed rgba(255,255,255,.12); border-radius:13px;
+    background:rgba(255,255,255,.012); color:rgba(255,255,255,.55);
+}
+.team-game-empty div:first-child { margin-bottom:7px; }
+.team-game-empty strong { color:rgba(255,255,255,.80); font-size:.72rem; }
+.team-game-empty p { margin:5px 0 0; font-size:.63rem; }
+
+.team-game-question-card {
+    display:grid; grid-template-columns:34px minmax(0,1fr) auto; align-items:center; gap:12px;
+    padding:11px 13px; border:1px solid rgba(255,255,255,.08); border-radius:11px;
+    background:rgba(255,255,255,.035);
+}
+.team-game-question-number { width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; background:rgba(124,92,191,.18); color:#b89cf0; font-size:.68rem; font-weight:800; }
+.team-game-question-content { min-width:0; }
+.team-game-question-text { font-size:.72rem; line-height:1.4; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.team-game-question-type { display:inline-block; margin-top:4px; color:rgba(255,255,255,.48); font-size:.59rem; }
+.team-game-question-actions { display:flex; gap:6px; }
+.team-game-question-actions .btn-sm { border:0; border-radius:8px; padding:7px 9px; cursor:pointer; font:600 .62rem 'Poppins',sans-serif; color:#fff; background:rgba(255,255,255,.07); }
+.team-game-question-actions .btn-sm:hover { background:rgba(255,255,255,.13); }
+.team-game-question-actions .btn-danger { color:#ff9d9d; background:rgba(239,68,68,.10); }
+.team-game-question-actions .btn-danger:hover { background:rgba(239,68,68,.17); }
+
+.team-game-question-editor {
+    margin:0 0 12px; padding:16px; border-radius:12px;
+    background:rgba(255,255,255,.035); border:1px solid rgba(165,127,224,.22);
+}
+.team-game-editor-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:15px; }
+.team-game-editor-header h3 { font-size:.82rem; margin:0; }
+.team-game-editor-close { width:28px; height:28px; border:0; border-radius:8px; background:rgba(255,255,255,.07); color:#fff; cursor:pointer; }
+.team-game-editor-fields { display:grid; gap:12px; }
+.team-game-form-group label { display:block; margin-bottom:6px; font-size:.66rem; font-weight:700; color:rgba(255,255,255,.75); }
+.team-game-form-group input,.team-game-form-group textarea,.team-game-form-group select { width:100%; box-sizing:border-box; border:1px solid rgba(255,255,255,.13); border-radius:9px; background:rgba(255,255,255,.055); color:#fff; padding:9px 11px; font:500 .68rem 'Poppins',sans-serif; outline:none; }
+.team-game-form-group textarea { min-height:72px; resize:vertical; }
+.team-game-form-group input:focus,.team-game-form-group textarea:focus,.team-game-form-group select:focus { border-color:#8c80e8; box-shadow:0 0 0 3px rgba(124,92,191,.13); }
+.team-game-editor-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.team-game-editor-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:14px; }
+
+.team-game-footer {
+    flex:0 0 auto; display:flex; justify-content:flex-end; align-items:center; gap:10px;
+    padding:15px 28px; border-top:1px solid rgba(255,255,255,.09);
+    background:rgba(28,25,57,.82); backdrop-filter:blur(10px);
+}
+.team-game-footer-btn { height:40px; padding:0 20px; border-radius:10px; border:0; color:#fff; cursor:pointer; font:700 .70rem 'Poppins',sans-serif; transition:transform .2s ease,opacity .2s ease,box-shadow .2s ease; }
+.team-game-footer-btn:hover { transform:translateY(-1px); }
+.team-game-save-btn { background:linear-gradient(135deg,#8c53d9,#a15ce0); box-shadow:0 6px 20px rgba(143,83,217,.22); }
+.team-game-launch-btn { background:linear-gradient(135deg,#4f8ef7,#7857d8); box-shadow:0 6px 20px rgba(79,142,247,.20); }
+.team-game-footer .btn-cancel { height:40px; padding:0 20px; border-radius:10px; }
+
+@media (max-width:760px) {
+    .team-game-modal { width:calc(100vw - 18px); height:auto; max-height:94vh; }
+    .team-game-setup-view { padding:20px 16px 14px; }
+    .team-game-mode-tabs { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .team-game-mode-panel-head { padding:20px 18px; }
+    .team-game-mode-content { padding:20px 18px; }
+    .team-game-settings-grid,.team-game-generic-grid { grid-template-columns:1fr; }
+    .team-game-questions-head { align-items:flex-start; flex-direction:column; }
+    .team-game-question-add-buttons { width:100%; }
+    .team-game-add-btn { flex:1; }
+    .team-game-summary { flex-wrap:wrap; }
+    .team-game-question-card { grid-template-columns:34px minmax(0,1fr); }
+    .team-game-question-actions { grid-column:2; }
+    .team-game-footer { padding:12px 16px; }
+    .team-game-footer-btn,.team-game-footer .btn-cancel { padding:0 13px; }
+}
+
+/* =========================================================
+   ANALYTICS — reference layout additions
+   ========================================================= */
+#panel-analytics .analytics-grid { margin-bottom: 1rem; }
+.analytics-reference-grid {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:14px;
+    margin-top:14px;
+    align-items:stretch;
+}
+.analytics-panel-card {
+    min-width:0;
+    padding:16px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:15px;
+    background:rgba(34,31,61,.88);
+    box-shadow:0 8px 24px rgba(0,0,0,.08);
+    color:#f8f7ff;
+}
+.analytics-panel-title {
+    display:flex;align-items:center;gap:7px;
+    margin:0 0 14px;font-size:.82rem;font-weight:800;
+}
+.analytics-panel-kicker { margin:-8px 0 13px;color:rgba(255,255,255,.5);font-size:.62rem; }
+.analytics-activity-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px; }
+.analytics-activity-stat {
+    min-width:0;padding:12px;border:1px solid rgba(255,255,255,.09);
+    border-radius:10px;background:rgba(255,255,255,.035);
+}
+.analytics-activity-stat .num {display:block;font-size:1.35rem;font-weight:800;line-height:1.25;margin-bottom:3px}
+.analytics-activity-stat .label {display:block;font-size:.62rem;font-weight:700}
+.analytics-activity-stat .sub {display:block;font-size:.55rem;color:rgba(255,255,255,.48);margin-top:3px}
+.analytics-purple {color:#b18af2}.analytics-blue {color:#82b8ff}.analytics-green {color:#4ade80}.analytics-orange {color:#fbbf24}
+.analytics-quality {margin-top:17px}
+.analytics-quality-row {margin:10px 0}
+.analytics-quality-head {display:flex;justify-content:space-between;gap:8px;font-size:.59rem;margin-bottom:5px;color:rgba(255,255,255,.76)}
+.analytics-quality-track,.analytics-progress-track {height:6px;border-radius:99px;background:rgba(255,255,255,.10);overflow:hidden}
+.analytics-quality-fill,.analytics-progress-fill {height:100%;border-radius:99px;transition:width .25s ease}
+.analytics-xp-level {
+    display:flex;align-items:center;gap:11px;padding:12px;border-radius:11px;
+    border:1px solid rgba(165,127,224,.25);
+    background:linear-gradient(120deg,rgba(124,92,191,.23),rgba(79,142,247,.15));
+}
+.analytics-xp-level-icon {
+    display:flex;align-items:center;justify-content:center;flex:0 0 36px;height:36px;
+    border-radius:10px;background:linear-gradient(135deg,#a45bc8,#7856d8);font-weight:800;font-size:1rem
+}
+.analytics-xp-level-info {min-width:0;flex:1}
+.analytics-xp-level-info strong {display:block;font-size:.66rem}
+.analytics-xp-level-info span {display:block;font-size:.55rem;color:rgba(255,255,255,.56);margin:4px 0 7px}
+.analytics-xp-sources {margin-top:14px}
+.analytics-xp-source {display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:.59rem}
+.analytics-xp-source:last-child {border-bottom:0}
+.analytics-xp-source span:first-child {color:rgba(255,255,255,.78)}
+.analytics-xp-source strong {white-space:nowrap;color:#fbbf24;font-size:.59rem}
+.analytics-tip {margin-top:12px;padding:10px 11px;border-radius:9px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.24);color:rgba(255,255,255,.72);font-size:.58rem;line-height:1.5}
+.analytics-subject-row {margin:0 0 14px}
+.analytics-subject-top {display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:.62rem;font-weight:700}
+.analytics-subject-meta {display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.48);font-size:.53rem;white-space:nowrap}
+.analytics-subject-track {height:5px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden;margin-top:7px}
+.analytics-subject-fill {height:100%;border-radius:99px;background:linear-gradient(90deg,#8d63d7,#b47af0)}
+.analytics-overall {display:flex;justify-content:space-between;gap:8px;align-items:center;padding:9px 10px;border-radius:9px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);font-size:.58rem;color:rgba(255,255,255,.7)}
+.analytics-section-card {padding:12px;margin-top:9px;border:1px solid rgba(255,255,255,.08);border-radius:11px;background:rgba(255,255,255,.025)}
+.analytics-section-head {display:flex;justify-content:space-between;align-items:center;gap:10px}
+.analytics-section-head strong {font-size:.67rem}
+.analytics-section-head small {display:block;font-size:.53rem;color:rgba(255,255,255,.48);margin-top:3px}
+.analytics-section-score {font-size:1rem;font-weight:800}
+.analytics-section-substats {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:11px}
+.analytics-section-substat {text-align:center;padding:9px 5px;border-radius:7px;background:rgba(255,255,255,.05)}
+.analytics-section-substat strong {display:block;font-size:.78rem;color:#8bb9ff}
+.analytics-section-substat span {display:block;font-size:.52rem;color:rgba(255,255,255,.48);margin-top:3px}
+.analytics-empty {padding:15px;border:1px dashed rgba(255,255,255,.13);border-radius:10px;text-align:center;color:rgba(255,255,255,.5);font-size:.65rem;line-height:1.5}
+@media(max-width:850px){.analytics-reference-grid{grid-template-columns:1fr}}
+@media(max-width:520px){
+ .analytics-activity-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .analytics-panel-card{padding:13px}
+ .analytics-subject-top{align-items:flex-start;flex-direction:column;gap:4px}
+}
+
+</style>
+  <link rel="stylesheet" href="../assets/css/lucide-icons.css">
+    <link rel="stylesheet" href="../assets/css/instructor/workspace.css?v=10">
+<link rel="stylesheet" href="../assets/css/actions.css?v=2">
+<link rel="stylesheet" href="../assets/css/review-library.css?v=4">
+<link rel="stylesheet" href="../assets/css/syllabus.css?v=216">
+<link rel="stylesheet" href="../assets/css/brand-text.css?v=4">
+<link rel="stylesheet" href="../assets/css/surfaces.css?v=2">
+</head>
+
+<body class="instructor-portal">
+
+    <div class="bg-blobs"></div>
+
+
+    <!-- =========================================================
+         NAVBAR
+    ========================================================== -->
+
+    <nav class="navbar" aria-label="Instructor navigation">
+
+        <div class="nav-brand"><span class="brand-mark">G</span><span class="brand-wordmark">GABLE<small>Instructor workspace</small></span></div>
+
+        <div class="nav-tabs">
+
+            <button class="nav-tab active" onclick="switchTab('quiz')">
+                Quiz Management
+            </button>
+
+            <button class="nav-tab" onclick="switchTab('students')">
+                My Students
+            </button>
+
+            <button class="nav-tab" onclick="switchTab('analytics')">
+                Analytics
+            </button>
+
+            <button class="nav-tab" onclick="switchTab('leaderboard')">
+                Leaderboard
+            </button>
+
+            <button class="nav-tab" onclick="switchTab('flagged')">
+                <i data-lucide="triangle-alert" class="warning-icon" aria-hidden="true"></i> Flagged
+                <span class="notif-badge-inline"
+                    id="flagged-nav-badge"
+                    style="display:none">
+                    0
+                </span>
+            </button>
+
+        </div>
+
+
+        <div class="nav-right">
+
+            <div class="nav-utilities">
+            <!-- NOTIFICATIONS -->
+
+            <div class="notif-bell-wrap" id="notif-bell-wrap">
+
+                <button class="notif-bell-btn" aria-label="Notifications" onclick="toggleNotifDropdown()">
+                    <i data-lucide="bell" aria-hidden="true"></i>
+                    <span class="notif-badge" id="notif-badge">0</span>
+                </button>
+
+                <div class="notif-dropdown" id="notif-dropdown">
+
+                    <div class="notif-header">
+
+                        <span class="notif-header-title">
+                            Notifications
+                        </span>
+
+                        <button class="notif-mark-all" onclick="markAllNotifsRead()">
+                            Mark all read
+                        </button>
+
+                    </div>
+
+                    <div class="notif-list" id="notif-list"></div>
+
+                </div>
+
+            </div>
+
+
+            
+<!-- TEACHING XP -->
+<div class="xp-badge" id="xp-badge-btn" onclick="toggleXpPopup()">
+    <i data-lucide="zap" aria-hidden="true"></i><span class="nav-xp-copy"><small>Teaching XP</small><span class="xp-val" id="instructor-xp-value">0 XP</span></span>
+
+    <div class="xp-popup" id="xp-popup">
+
+        <div class="xp-popup-label">
+            YOUR XP PROGRESS
+        </div>
+
+        <div class="xp-popup-title" id="instructor-xp-level">
+            Level 4 → Level 6
+        </div>
+
+        <div class="xp-popup-sub" id="instructor-xp-sub">
+            Scholar
+        </div>
+
+        <div class="xp-progress-bar-track">
+            <div
+                class="xp-progress-bar-fill"
+                id="instructor-xp-progress-fill"
+                style="width: 0%">
+            </div>
+        </div>
+
+        <div class="xp-progress-needed" id="instructor-xp-needed">
+            Loading XP progress...
+        </div>
+
+        <div class="xp-popup-btns">
+            <button
+                class="btn-xp-dash"
+                onclick="event.stopPropagation(); window.location.href='Idashboard.html'">
+                View Full Dashboard
+            </button>
+
+            <button
+                class="btn-xp-close"
+                onclick="event.stopPropagation(); closeXpPopup()">
+                Close
+            </button>
+        </div>
+
+    </div>
+</div>
+
+
+
+            </div>
+            <div class="nav-account">
+            <!-- PROFILE -->
+
+            <div class="profile-badge" onclick="openModal('modal-profile')">
+
+                <div class="avatar" id="instructor-avatar">
+                </div>
+
+                <div class="profile-info">
+
+                    <strong id="instructor-name"></strong>
+
+                    <span id="instructor-role"></span>
+
+                </div>
+
+            </div>
+
+
+            <!-- LOGOUT -->
+
+            <button class="btn-logout" onclick="logout()" aria-label="Log out" title="Log out">
+                <i data-lucide="log-out" aria-hidden="true"></i>
+            </button>
+
+            </div>
+        </div>
+
+    </nav>
+
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+    ========================================================== -->
+
+    <div class="main">
+
+
+        <!-- =====================================================
+             QUIZ MANAGEMENT PANEL
+        ====================================================== -->
+
+        <div class="panel active" id="panel-quiz">
+
+
+            <div class="hero-banner fade-up">
+                <div class="hero-text">
+                    <div class="card-eyebrow">YOUR INSTRUCTOR WORKSPACE</div>
+                    <h2>Your quiz workspace</h2>
+                    <p>Create assessments, review submissions, and manage your classroom activities.</p>
+                    <button class="btn-create" onclick="openCreateModal()">+ Create New Quiz</button>
+                </div>
+            </div>
+                <div class="quick-actions">
+
+                <button type="button" class="quick-card" onclick="openGradeModal()">
+
+                    <div class="quick-icon qi-purple lucide-icon"><i data-lucide="clipboard-list" aria-hidden="true"></i></div>
+
+                    <div>
+
+                        <h4>
+                            Grade My Quizzes
+                        </h4>
+
+                        <p id="grade-count-label"></p>
+
+                    </div>
+
+                    <span class="quick-arrow" aria-hidden="true">
+                        ›
+                    </span>
+</button>
+
+
+
+                <button type="button" class="quick-card team-game-card" onclick="openTeamClassroomGamesModal()">
+
+                    <div class="quick-icon qi-purple lucide-icon"><i data-lucide="gamepad-2" aria-hidden="true"></i></div>
+
+                    <div>
+                        <h4>
+                            Team Classroom Games
+                        </h4>
+
+                        <p>
+                            Create, manage, and launch classroom games
+                        </p>
+                    </div>
+
+                    <span class="quick-arrow" aria-hidden="true">
+                        ›
+                    </span>
+</button>
+
+                <button type="button" class="quick-card" onclick="openReportsModal()">
+
+                    <div class="quick-icon qi-pink lucide-icon"><i data-lucide="chart-no-axes-column-increasing" aria-hidden="true"></i></div>
+
+                    <div>
+
+                        <h4>
+                            My Students' Reports
+                        </h4>
+
+                        <p>
+                            View performance across all sections
+                        </p>
+
+                    </div>
+
+                    <span class="quick-arrow" aria-hidden="true">
+                        ›
+                    </span>
+</button>
+
+                </div>
+
+            <!-- FLAGGED QUESTIONS QUICK VIEW -->
+
+            <div class="section-title fade-up-1" id="flagged-section-title" style="display:none">
+
+                ⚠️ Flagged Questions
+
+                <span class="live-badge" style="background:#f59e0b">
+                    NEEDS REVIEW
+                </span>
+
+                <button class="flagged-view-all-btn" onclick="switchTab('flagged')">
+                    View All →
+                </button>
+
+            </div>
+
+            <div id="flagged-questions-preview" class="fade-up-1">
+            </div>
+
+
+            <!-- FORMAL QUIZZES -->
+
+            <div class="section-title fade-up-2">
+
+                ⚔️ Formal Quizzes (Battle Modes)
+
+                <span class="live-badge">
+                    LIVE
+                </span>
+
+            </div>
+
+            <div class="quiz-grid fade-up-2" id="formal-quiz-grid">
+            </div>
+
+
+            <!-- INFORMAL QUIZZES -->
+
+            <div class="section-title fade-up-3">
+
+                📚 Informal Quizzes (Homework &amp; Practice)
+
+            </div>
+
+            <div class="quiz-grid fade-up-3" id="informal-quiz-grid">
+            </div>
+
+
+            <!-- DRAFT QUIZZES -->
+
+            <div class="section-title">
+                📝 Draft Quizzes
+            </div>
+
+            <div id="drafts-container"></div>
+
+        </div>
+
+        <!-- =========================================================
+     MY STUDENTS PANEL
+========================================================== -->
+<div class="panel" id="panel-students">
+
+    <!-- STUDENTS HERO -->
+    <div class="my-students-hero fade-up">
+        <div class="msh-info">
+            <h2 id="students-title">My Students 👥</h2>
+            <p id="students-subtitle"></p>
+            <div class="msh-tags">
+                <span class="msh-tag gold">⭐ SPECIALIZATION LEVEL</span>
+                <span class="msh-tag">CITCS</span>
+            </div>
+        </div>
+        <div class="msh-emoji lucide-icon"><i data-lucide="laptop" aria-hidden="true"></i></div>
+    </div>
+
+    <!-- STUDENT SUB-TABS -->
+    <div class="students-sub-tabs fade-up-1">
+        <button class="sub-tab active" onclick="switchSubTab('sections')">Sections &amp; Subjects</button>
+        <button class="sub-tab" onclick="switchSubTab('roster')">Student Roster</button>
+    </div>
+
+    <!-- SECTIONS & SUBJECTS SUB-PANEL -->
+    <div class="sub-panel active" id="sub-sections">
+        <div class="year-badge-row fade-up-2">
+            <span class="yr-badge" id="teaching-year-badge">—</span>
+            <span class="yr-label">SPECIALIZATION LEVEL</span>
+            <span class="yr-sem">1st Semester</span>
+        </div>
+
+        <div class="teaching-load-card fade-up-2">
+            <div class="tl-title">Semester Subjects (Your Teaching Load)</div>
+            <div class="tl-grid" id="teaching-load-grid"></div>
+        </div>
+
+        <div id="teaching-sections-container"></div>
+    </div>
+
+    <!-- STUDENT ROSTER SUB-PANEL -->
+    <div class="sub-panel" id="sub-roster">
+        <div class="students-header fade-up">
+            <div>
+                <h2>Student Roster</h2>
+                <p>Students assigned to your teaching sections</p>
+            </div>
+
+            <div class="search-bar">
+                <span>🔍</span>
+                <input type="text" id="student-search" aria-label="Search students" placeholder="Search student..." oninput="filterStudents()">
+            </div>
+        </div>
+
+        <div class="section-filter fade-up-1" id="student-section-filters">
+            <button class="filter-btn active" data-section="All" onclick="setFilter(this, 'All')">All Sections</button>
+        </div>
+
+        <div class="students-table fade-up-2">
+            <div class="table-head">
+                <div>Student</div>
+                <div>Program</div>
+                <div>Section</div>
+                <div>XP</div>
+                <div>Avg Score</div>
+                <div>Rank</div>
+            </div>
+
+            <div id="students-list"></div>
+        </div>
+    </div>
+
+</div>
+<!-- END MY STUDENTS PANEL -->
+
+
+<!-- =========================================================
+     ANALYTICS PANEL
+========================================================= -->
+
+<div class="panel" id="panel-analytics">
+    <header class="workspace-heading"><h2>Teaching analytics</h2><p>Track quiz participation, class performance, and progress across your teaching sections.</p></header>
+
+
+            <div class="analytics-grid fade-up">
+
+
+                <!-- TOTAL STUDENTS -->
+
+                <div class="metric-card">
+
+                    <div class="metric-icon lucide-icon"><i data-lucide="users" aria-hidden="true"></i></div>
+
+                    <div class="metric-label">
+                        Total Students
+                    </div>
+
+                    <div class="metric-val" style="color:var(--purple-light)" id="analytics-total-students">
+                    </div>
+
+                    <div class="metric-sub" id="analytics-student-sub">
+                    </div>
+
+                </div>
+
+
+                <!-- CLASS SCORE -->
+
+                <div class="metric-card">
+
+                    <div class="metric-icon lucide-icon"><i data-lucide="target" aria-hidden="true"></i></div>
+
+                    <div class="metric-label">
+                        Avg Class Score
+                    </div>
+
+                    <div class="metric-val" style="color:var(--green)" id="analytics-class-score">
+                    </div>
+
+                    <div class="metric-up" id="analytics-score-change">
+                    </div>
+
+                </div>
+
+
+                <!-- TEACHING XP -->
+
+                <div class="metric-card">
+
+                    <div class="metric-icon lucide-icon"><i data-lucide="star" aria-hidden="true"></i></div>
+
+                    <div class="metric-label">
+                        Teaching XP
+                    </div>
+
+                    <div class="metric-val" style="color:var(--gold)" id="analytics-teaching-xp">
+                    </div>
+
+                    <div class="metric-sub" id="analytics-teaching-level">
+                    </div>
+
+                </div>
+
+
+                <!-- QUIZ COMPLETION -->
+
+                <div class="metric-card">
+
+                    <div class="metric-icon lucide-icon"><i data-lucide="circle-check" aria-hidden="true"></i></div>
+
+                    <div class="metric-label">
+                        Quiz Completion
+                    </div>
+
+                    <div class="metric-val" style="color:var(--pink-light)" id="analytics-completion">
+                    </div>
+
+                    <div class="metric-sub" id="analytics-quiz-count">
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="analytics-reference-grid fade-up-1">
+                <section class="analytics-panel-card">
+                    <h3 class="analytics-panel-title">🗓️ Quiz Activity This Month</h3>
+                    <div class="analytics-activity-grid" id="analytics-activity-stats"></div>
+                    <div class="analytics-quality">
+                        <h4 class="analytics-panel-title" style="font-size:.68rem;margin-bottom:10px">Quiz Quality Distribution</h4>
+                        <div id="analytics-quality-distribution"></div>
+                    </div>
+                </section>
+
+                <section class="analytics-panel-card">
+                    <h3 class="analytics-panel-title">⭐ Teaching XP &amp; Level Progress</h3>
+                    <div id="analytics-xp-progress"></div>
+                    <div class="analytics-xp-sources">
+                        <h4 class="analytics-panel-title" style="font-size:.66rem;margin-bottom:3px">XP Sources This Month</h4>
+                        <div id="analytics-xp-sources"></div>
+                    </div>
+                    <div class="analytics-tip" id="analytics-xp-tip"></div>
+                </section>
+
+                <section class="analytics-panel-card">
+                    <div class="analytics-panel-title" style="justify-content:space-between">
+                        <span>📐 Syllabus Alignment by Subject</span>
+                        <span id="analytics-year-badge" style="font-size:.52rem;color:#fbbf24;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);padding:4px 7px;border-radius:99px">Your teaching load</span>
+                    </div>
+                    <div id="analytics-syllabus-subjects"></div>
+                    <div class="analytics-overall" id="analytics-overall-alignment"></div>
+                </section>
+
+                <section class="analytics-panel-card">
+                    <div class="analytics-panel-title" style="justify-content:space-between">
+                        <span>📊 Student Performance by Section</span>
+                        <span id="analytics-section-year-badge" style="font-size:.52rem;color:#fbbf24;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);padding:4px 7px;border-radius:99px">Your sections</span>
+                    </div>
+                    <div id="analytics-section-performance"></div>
+                </section>
+            </div>
+
+        </div>
+        <!-- END ANALYTICS PANEL -->
+
+
+
+        <!-- =====================================================
+             LEADERBOARD PANEL
+        ====================================================== -->
+
+        <div class="panel" id="panel-leaderboard">
+
+
+            <!-- HERO -->
+
+            <div class="lb-hero fade-up">
+
+                <div class="lb-hero-left">
+
+                    <h2>
+                        Class Leaderboard 🏆
+                    </h2>
+
+                    <p>
+                        See how your students rank by XP across your sections. Recognize top performers and motivate the class!
+                    </p>
+
+                </div>
+
+                <div class="lb-hero-emoji lucide-icon"><i data-lucide="medal" aria-hidden="true"></i></div>
+
+            </div>
+
+
+            <!-- SECTION TABS -->
+
+            <div class="lb-section-tabs" id="leaderboard-section-filters"></div>
+
+
+            <!-- PODIUM -->
+
+            <div class="lb-podium fade-up-2" id="lb-podium">
+            </div>
+
+
+            <!-- LEADERBOARD TABLE -->
+
+            <div class="lb-table fade-up-3">
+
+                <div class="lb-table-head">
+
+                    <span>
+                        Rank
+                    </span>
+
+                    <span>
+                        Student
+                    </span>
+
+                    <span>
+                        Section
+                    </span>
+
+                    <span>
+                        Level
+                    </span>
+
+                    <span>
+                        XP
+                    </span>
+
+                    <span>
+                        Avg Score
+                    </span>
+
+                </div>
+
+
+                <div id="lb-table-body"></div>
+
+            </div>
+
+        </div>
+        <!-- END LEADERBOARD PANEL -->
+
+
+
+        <!-- =====================================================
+             FLAGGED QUESTIONS PANEL
+        ====================================================== -->
+
+        <div class="panel" id="panel-flagged">
+
+
+            <!-- HERO -->
+
+            <div class="flagged-hero fade-up">
+
+                <div class="flagged-hero-left">
+
+                    <h2>
+                        Flagged Questions ⚠️
+                    </h2>
+
+                    <p>
+                        Questions students have flagged as unclear, ambiguous, or incorrect. Review, edit, or resolve them — resolved flags are visible to Admin for tracking.
+                    </p>
+
+                </div>
+
+                <div class="flagged-hero-emoji lucide-icon"><i data-lucide="triangle-alert" aria-hidden="true"></i></div>
+
+            </div>
+
+
+            <!-- STATUS TABS -->
+
+            <div class="flagged-status-tabs fade-up-1">
+
+                <button class="flag-status-tab active" onclick="setFlagStatusFilter('pending',this)">
+
+                    Pending
+
+                    <span id="flag-count-pending"
+                        class="fst-count">
+                        0
+                    </span>
+
+                </button>
+
+
+                <button class="flag-status-tab" onclick="setFlagStatusFilter('resolved',this)">
+
+                    Resolved
+
+                    <span id="flag-count-resolved"
+                        class="fst-count">
+                        0
+                    </span>
+
+                </button>
+
+
+                <button class="flag-status-tab" onclick="setFlagStatusFilter('all',this)">
+                    All
+                </button>
+
+            </div>
+
+
+            <div id="flagged-questions-full" class="fade-up-2">
+            </div>
+
+        </div>
+        <!-- END FLAGGED PANEL -->
+
+
+
+        <!-- =====================================================
+             MODAL: VIEW RESULTS
+        ====================================================== -->
+
+        
+
+
+
+
+        <!-- =====================================================
+             MODAL: TEAM CLASSROOM GAMES
+             Create, manage, and launch classroom games
+        ====================================================== -->
+        
+
+<!-- =====================================================
+             MODAL: EDIT / CREATE QUIZ
+        ====================================================== -->
+
+        
+
+
+
+        <!-- =====================================================
+             MODAL: GRADE QUIZZES
+        ====================================================== -->
+
+        
+
+
+
+        <!-- =====================================================
+             MODAL: STUDENT REPORTS
+        ====================================================== -->
+
+        
+
+
+
+        <!-- =====================================================
+             MODAL: STUDENT DETAIL
+        ====================================================== -->
+
+        
+
+
+
+        <!-- =====================================================
+             MODAL: INSTRUCTOR PROFILE
+        ====================================================== -->
+
+        
+
+
+
+        <!-- =====================================================
+             MODAL: FLAGGED QUESTION DETAIL
+        ====================================================== -->
+
+        
+
+
+
+        <!-- =====================================================
+             MODAL: ADJUST GRADE
+        ====================================================== -->
+
+        
+
+
+
+        <!-- =====================================================
+             MODAL: SUBJECT ANALYTICS
+        ====================================================== -->
+
+        
+
+
+
+        <!-- =====================================================
+             CONFIRMATION
+        ====================================================== -->
+
+        <div class="confirm-overlay" id="confirm-overlay">
+
+            <div class="confirm-box">
+
+                <h3 id="confirm-title">
+                    Confirm
+                </h3>
+
+                <p id="confirm-msg">
+                    Are you sure?
+                </p>
+
+
+                <div class="confirm-btns">
+
+                    <button class="btn-confirm-ok" id="confirm-yes">
+                        Confirm
+                    </button>
+
+                    <button class="btn-confirm-cancel" onclick="closeConfirm()">
+                        Cancel
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+    <!-- END MAIN -->
+
+
+
+    <!-- =========================================================
+         TOAST
+    ========================================================== -->
+
+    <div class="toast" id="toast">
+
+        <span id="toast-icon">
+            ✅
+        </span> &nbsp;
+
+        <span id="toast-msg"></span>
+
+    </div>
+
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================== -->
+
+    <div class="modal-overlay" id="modal-results">
+
+            <div class="modal" style="max-width:720px">
+
+                <button class="modal-close" aria-label="Close dialog" onclick="closeModal('modal-results')">
+                    ✕
+                </button>
+
+                <h2 id="results-title">
+                    Quiz Results
+                </h2>
+
+
+                <div class="result-stats">
+
+                    <div class="result-stat-box rsb-purple">
+
+                        <span class="r-val r-purple" id="rs-total">
+                            42
+                        </span>
+
+                        <span class="r-lbl">
+                            Total Submissions
+                        </span>
+
+                    </div>
+
+
+                    <div class="result-stat-box rsb-green">
+
+                        <span class="r-val r-green" id="rs-avg">
+                            88%
+                        </span>
+
+                        <span class="r-lbl">
+                            Average Score
+                        </span>
+
+                    </div>
+
+
+                    <div class="result-stat-box rsb-gold">
+
+                        <span class="r-val r-gold" id="rs-perfect">
+                            8
+                        </span>
+
+                        <span class="r-lbl">
+                            Perfect Scores
+                        </span>
+
+                    </div>
+
+
+                    <div class="result-stat-box rsb-pink">
+
+                        <span class="r-val r-pink" id="rs-passed">
+                            35
+                        </span>
+
+                        <span class="r-lbl">
+                            Passed (80%+)
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="sub-title">
+                    Student Scores
+                </div>
+
+                <div class="score-list" id="score-list-container">
+                </div>
+
+            </div>
+
+        </div>
+<div class="modal-overlay" id="modal-team-games">
+    <div class="modal team-game-modal">
+
+        <button class="modal-close" onclick="closeModal('modal-team-games')" aria-label="Close">✕</button>
+
+        <div id="team-game-setup-view" class="team-game-setup-view">
+
+            <div class="team-game-heading">
+                <div>
+                    <h2>🎮 Team Classroom Games — Question Panel</h2>
+                    <p class="team-game-modal-subtitle">
+                        Design and manage questions for each game mode. Select a mode to get started.
+                    </p>
+                </div>
+            </div>
+
+            <!-- =====================================================
+     GAME DETAILS
+====================================================== -->
+
+
+            <div class="team-game-mode-tabs" role="tablist" aria-label="Team classroom game modes">
+
+    <!-- TEAM BUZZER -->
+    <button type="button" class="team-game-mode active"
+    data-game-mode="buzzer"
+    onclick="selectTeamGameMode('buzzer',this)">
+    <span class="team-game-mode-icon lucide-icon"><i data-lucide="bell" aria-hidden="true"></i></span>
+    <span class="team-game-mode-title">Team Buzzer</span>
+    <span class="team-game-mode-desc">Manual scoring</span>
+    <span class="team-game-mode-count" id="team-game-count-buzzer">
+        0 Questions
+    </span>
+    </button>
+
+
+    <!-- KAHOOT -->
+    <button type="button" class="team-game-mode"
+    data-game-mode="kahoot"
+    onclick="selectTeamGameMode('kahoot',this)">
+    <span class="team-game-mode-icon lucide-icon"><i data-lucide="trophy" aria-hidden="true"></i></span>
+    <span class="team-game-mode-title">Kahoot Battle</span>
+    <span class="team-game-mode-desc">Live quiz</span>
+    <span class="team-game-mode-count" id="team-game-count-kahoot">
+        0 Questions
+    </span>
+    </button>
+
+
+    <!-- HOT SEAT -->
+    <button type="button" class="team-game-mode"
+    data-game-mode="hotseat"
+    onclick="selectTeamGameMode('hotseat',this)">
+    <span class="team-game-mode-icon lucide-icon"><i data-lucide="armchair" aria-hidden="true"></i></span>
+    <span class="team-game-mode-title">The Hot Seat</span>
+    <span class="team-game-mode-desc">Clue-based game</span>
+    <span class="team-game-mode-count" id="team-game-count-hotseat">
+        0 Questions
+    </span>
+    </button>
+
+
+    <!-- CROSSWORD -->
+    <button type="button" class="team-game-mode"
+    data-game-mode="crossword"
+    onclick="selectTeamGameMode('crossword',this)">
+    <span class="team-game-mode-icon lucide-icon"><i data-lucide="puzzle" aria-hidden="true"></i></span>
+    <span class="team-game-mode-title">Crossword</span>
+    <span class="team-game-mode-desc">Clues & answers</span>
+    <span class="team-game-mode-count" id="team-game-count-crossword">
+        0 Questions
+    </span>
+</button>
+
+
+    <!-- WORD JUMBLE -->
+    <button type="button" class="team-game-mode"
+    data-game-mode="jumble"
+    onclick="selectTeamGameMode('jumble',this)">
+    <span class="team-game-mode-icon lucide-icon"><i data-lucide="case-sensitive" aria-hidden="true"></i></span>
+    <span class="team-game-mode-title">Word Jumble</span>
+    <span class="team-game-mode-desc">Unscramble words</span>
+    <span class="team-game-mode-count" id="team-game-count-jumble">
+        0 Questions
+    </span>
+    </button>
+
+</div>
+
+            <!-- =====================================================
+     GAME DETAILS
+====================================================== -->
+
+<div class="team-game-form-grid">
+
+    <!-- SELECT SECTION -->
+
+    <div class="form-group">
+
+        <label for="team-game-section">
+            Select Section
+        </label>
+
+        <select
+            id="team-game-section"
+            onchange="updateTeamGameTopics()">
+
+            <option value="">
+                Loading sections...
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- SELECT TOPIC -->
+
+    <div class="form-group">
+
+        <label for="team-game-topic">
+            Select Topic
+        </label>
+
+        <select
+            id="team-game-topic"
+            onchange="refreshTeamGameQuestions()">
+
+            <option value="">
+                Loading topics...
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- GAME DURATION -->
+
+    <div class="form-group">
+
+        <label for="team-game-duration">
+            Game Duration (min)
+        </label>
+
+        <select id="team-game-duration">
+
+            <option value="5">
+                5 minutes
+            </option>
+
+            <option value="10">
+                10 minutes
+            </option>
+
+            <option value="15" selected>
+                15 minutes
+            </option>
+
+            <option value="20">
+                20 minutes
+            </option>
+
+            <option value="30">
+                30 minutes
+            </option>
+
+        </select>
+
+    </div>
+
+</div>
+
+            <section class="team-game-mode-panel" id="team-game-mode-panel">
+                <div class="team-game-mode-panel-head">
+                    <div class="team-game-mode-icon-large lucide-icon" id="team-game-selected-mode-icon"><i data-lucide="zap" aria-hidden="true"></i></div>
+                    <div class="team-game-selected-mode-info">
+                        <h3 id="team-game-selected-mode-label">Kahoot Battle</h3>
+                        <p id="team-game-selected-mode-description">
+                            Fast-paced multiple choice and true/false questions. Teams compete in real time — fastest correct answer earns the most points.
+                        </p>
+                    </div>
+                    <span class="team-game-live-pill">TEAM · REAL-TIME</span>
+                </div>
+                <div id="team-game-mode-content"></div>
+            </section>
+
+            <section class="team-game-questions-section">
+                <div class="team-game-questions-head">
+                    <div>
+                        <h3>Questions <span id="team-game-question-count">(0)</span></h3>
+                        <p id="team-game-question-helper">Mix multiple choice and true/false for variety</p>
+                    </div>
+                    <div
+    class="team-game-question-add-buttons"
+    id="team-game-question-add-buttons">
+
+    <button
+    type="button"
+    class="team-game-add-btn team-game-add-blue"
+    id="team-game-add-word-btn"
+    onclick="addTeamGameQuestion()">
+
+    + Add Question
+
+</button>
+
+
+    <button
+        type="button"
+        class="team-game-add-btn team-game-add-blue"
+        id="team-game-add-mc-btn"
+        onclick="addTeamGameQuestion('multiple_choice')">
+
+        + Multiple Choice
+
+    </button>
+
+
+    <button
+        type="button"
+        class="team-game-add-btn team-game-add-green"
+        id="team-game-add-tf-btn"
+        onclick="addTeamGameQuestion('true_false')">
+
+        + True / False
+
+    </button>
+
+</div>
+                </div>
+
+                <div class="team-game-summary" id="team-game-summary">
+                    <span class="team-game-summary-pill team-game-summary-blue" id="team-game-mc-count">0 Multiple Choice</span>
+                    <span class="team-game-summary-pill team-game-summary-green" id="team-game-tf-count">0 True/False</span>
+                    <span class="team-game-summary-pill team-game-summary-gold" id="team-game-points">0 pts total</span>
+                </div>
+
+                <div id="team-game-question-editor" class="team-game-question-editor" style="display:none;"></div>
+
+                <div class="team-game-question-list" id="team-game-question-list"></div>
+            </section>
+
+        </div>
+
+        <div id="team-game-status" role="status" aria-live="polite" hidden></div>
+        <div class="team-game-footer">
+            <button class="btn-cancel" onclick="closeModal('modal-team-games')">Cancel</button>
+            <button
+    type="button"
+    class="team-game-footer-btn team-game-save-btn"
+    onclick="saveTeamGameQuestionsUI()">
+
+    💾 Save Questions
+
+</button>
+            <button class="team-game-footer-btn team-game-launch-btn" id="team-game-launch-btn" onclick="prepareTeamGameLaunch()">⚡ Launch Battle</button>
+        </div>
+    </div>
+</div>
+<div class="modal-overlay" id="modal-edit">
+
+            <div class="modal workspace-dialog" role="dialog" aria-modal="true">
+<div class="workspace-dialog-header">
+
+                <button class="modal-close" aria-label="Close dialog" onclick="closeModal('modal-edit')"><i data-lucide="x" aria-hidden="true"></i></button>
+
+                <h2 id="edit-modal-title">
+                    Edit Quiz
+                </h2>
+</div>
+<div class="workspace-dialog-body">
+
+                <input type="hidden" id="editing-quiz-id">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Quiz Title
+                    </label>
+
+                    <input type="text" id="e-title" placeholder="e.g. React Hooks Basics">
+
+                </div>
+
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Subject
+                        </label>
+
+                        <select id="e-subject"></select>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Section
+                        </label>
+
+                        <select id="e-section"></select>
+
+                    </div>
+
+                </div>
+
+             <!-- QUIZ MODE -->
+
+<div class="form-group">
+
+    <label>
+        Quiz Mode
+    </label>
+
+    <div class="quiz-mode-options">
+
+        <button
+            type="button"
+            class="quiz-mode-btn active"
+            data-mode="formal"
+            onclick="selectQuizMode('formal')"
+        >
+
+            <span class="quiz-mode-icon lucide-icon"><i data-lucide="school" aria-hidden="true"></i></span>
+
+            <span class="quiz-mode-content">
+
+                <strong>
+                    Formal
+                </strong>
+
+                <small>
+                    On-Class Quiz
+                </small>
+
+            </span>
+
+        </button>
+
+
+        <button
+            type="button"
+            class="quiz-mode-btn"
+            data-mode="informal"
+            onclick="selectQuizMode('informal')"
+        >
+
+            <span class="quiz-mode-icon lucide-icon"><i data-lucide="house" aria-hidden="true"></i></span>
+
+            <span class="quiz-mode-content">
+
+                <strong>
+                    Informal
+                </strong>
+
+                <small>
+                    Homework / Practice
+                </small>
+
+            </span>
+
+        </button>
+
+    </div>
+
+    <input
+        type="hidden"
+        id="e-mode"
+        value="formal"
+    >
+
+</div>
+
+                <!-- QUIZ TYPE + DUE DATE -->
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Quiz Type
+                        </label>
+
+                        <select id="e-type">
+
+                            <option value="Team Battle">Team Battle</option>
+
+                            <option value="Solo">Solo</option>
+
+                            <option value="Battle Royale">Battle Royale</option>
+
+                            <option value="Homework">Homework</option>
+
+                            <option value="Practice">Practice</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Due Date
+                        </label>
+
+                        <input type="date" id="e-due">
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Time Limit (minutes)
+                        </label>
+
+                        <input type="number" id="e-time" min="5" max="180" placeholder="30">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            XP Reward
+
+                            <span style="
+                                font-size:.72rem;
+                                color:var(--text-muted);
+                                font-weight:400
+                            ">
+                                (max XP students can earn)
+                            </span>
+
+                        </label>
+
+                        <input type="number" id="e-xp" min="50" max="500" step="10" placeholder="e.g. 150">
+
+                        <div class="xp-hint">
+                            Suggested: Easy = 100 XP &bull; Medium = 150 XP &bull; Hard = 200–300 XP
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Quiz Instructions
+                    </label>
+
+                    <textarea id="e-instructions" placeholder="Add instructions for students...">
+                    </textarea>
+
+                </div>
+
+
+                <!-- QUESTIONS -->
+
+                <div class="questions-section">
+
+                    <div style="
+                        display:flex;
+                        align-items:center;
+                        justify-content:space-between;
+                        margin-bottom:.3rem
+                    ">
+
+                        <h4>
+                            Questions (
+                            <span id="q-count">0</span>)
+                        </h4>
+
+
+                        <div style="
+                            display:flex;
+                            gap:.5rem
+                        ">
+
+                            <button class="btn-add-q-type" onclick="addQuestion('e-questions','q-count','mc')">
+                                + Multiple Choice
+                            </button>
+
+                            <button class="btn-add-q-type btn-add-q-id" onclick="addQuestion('e-questions','q-count','id')">
+                                + Identification
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <p>
+                        Multiple choice questions are auto-graded. Identification questions require manual grading.
+                    </p>
+
+
+                    <div class="q-list" id="e-questions">
+                    </div>
+
+                </div>
+
+
+                <!-- FOOTER -->
+
+                </div>
+<div class="modal-footer">
+
+                    <button class="btn-cancel" onclick="closeModal('modal-edit')">
+                        Cancel
+                    </button>
+
+                    <button class="btn-save" id="save-draft-btn" onclick="saveDraft()">
+                        💾 Save as Draft
+                    </button>
+
+                    <button class="btn-save green-btn" id="post-quiz-btn" onclick="postQuiz()">
+                        🚀 Post Quiz
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+<div class="modal-overlay" id="modal-grade">
+
+            <div class="modal workspace-dialog" role="dialog" aria-modal="true">
+<div class="workspace-dialog-header">
+
+                <button class="modal-close" aria-label="Close dialog" onclick="closeModal('modal-grade')"><i data-lucide="x" aria-hidden="true"></i></button>
+
+                <h2>
+                    Grade Quizzes – Submissions Awaiting Review
+                </h2>
+</div>
+<div class="workspace-dialog-body">
+
+                <div class="submission-list" id="submission-list">
+                </div>
+
+            </div>
+</div>
+
+        </div>
+<div class="modal-overlay" id="modal-reports">
+
+            <div class="modal workspace-dialog" role="dialog" aria-modal="true">
+<div class="workspace-dialog-header">
+
+                <button class="modal-close" aria-label="Close dialog" onclick="closeModal('modal-reports')"><i data-lucide="x" aria-hidden="true"></i></button>
+
+                <h2>
+                    Student Performance Reports
+                </h2>
+</div>
+<div class="workspace-dialog-body">
+
+
+                <div class="report-stats">
+
+                    <div class="report-stat rs-purple">
+
+                        <span class="rs-val rp-purple">
+                            80
+                        </span>
+
+                        <span class="rs-lbl">
+                            Total Students
+                        </span>
+
+                    </div>
+
+
+                    <div class="report-stat rs-green">
+
+                        <span class="rs-val rp-green">
+                            88%
+                        </span>
+
+                        <span class="rs-lbl">
+                            Average Performance
+                        </span>
+
+                    </div>
+
+
+                    <div class="report-stat rs-blue">
+
+                        <span class="rs-val rp-blue">
+                            67
+                        </span>
+
+                        <span class="rs-lbl">
+                            Above 80%
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="report-filters">
+
+                    <select class="report-select" id="rp-section" onchange="renderReports()">
+                        <option value="">All Sections</option>
+                    </select>
+
+
+                    <select class="report-select" id="rp-quiz" onchange="renderReports()">
+
+                        <option value="">
+                            All Quizzes
+                        </option>
+
+                        <option>
+                            React Components &amp; Props
+                        </option>
+
+                        <option>
+                            Network Security Basics
+                        </option>
+
+                        <option>
+                            Agile Methodology Practice
+                        </option>
+
+                    </select>
+
+
+                    <button class="btn-filter" onclick="renderReports()">
+                        Filter
+                    </button>
+
+                </div>
+
+
+                <div class="report-list" id="report-list">
+                </div>
+
+            </div>
+</div>
+
+        </div>
+<div class="modal-overlay" id="modal-student-detail">
+
+            <div class="modal" style="max-width:560px">
+
+                <button class="modal-close" aria-label="Close dialog" onclick="closeModal('modal-student-detail')">
+                    ✕
+                </button>
+
+                <h2 id="sd-modal-title">
+                    Student Details
+                </h2>
+
+                <div id="sd-modal-body"></div>
+
+            </div>
+
+        </div>
+<div class="modal-overlay" id="modal-profile">
+
+            <div class="modal instructor-profile-dialog" role="dialog" aria-modal="true" aria-label="Instructor profile">
+                <div class="profile-dialog-header">
+
+                <button class="modal-close" aria-label="Close dialog" onclick="closeModal('modal-profile')"><i data-lucide="x" aria-hidden="true"></i></button>
+
+                <h2>
+                    Instructor Profile
+                </h2>
+                </div>
+                <div class="profile-dialog-body">
+
+
+                <div class="profile-modal-card">
+                    <div class="profile-rank-display"><span>TEACHING RANK</span><strong id="profile-grade-badge">--</strong><small>Admin assigned</small></div>
+
+                    <div class="profile-modal-avatar" id="profile-modal-avatar">
+                        DM
+                    </div>
+
+
+                    <div class="profile-modal-info">
+
+                        <h3 id="profile-modal-name"></h3>
+
+                        <div class="fac-id" id="profile-modal-facid">
+
+                        </div>
+
+
+                        <div class="profile-badges">
+
+                            <!-- College -->
+                            <span class="pbadge purple" id="profile-college-badge">
+                                College
+                            </span>
+
+                            <!-- Current Level -->
+                            <span class="pbadge green" id="profile-level-badge">
+                                Level 1 Educator
+                            </span>
+
+                            <!-- Admin Evaluation -->
+
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-xp">
+    <span class="pxp-val" id="profile-modal-xp">
+        0
+    </span>
+
+    <span class="pxp-lbl">
+        Teaching XP
+    </span>
+</div>
+
+                </div>
+
+
+                <!-- DEPARTMENT -->
+
+                <div class="profile-dept-card">
+
+                    <div class="pdc-label">
+                        College &amp; Department
+                    </div>
+
+
+                    <div class="pdc-grid">
+
+                        <div>
+    <div class="pdi-label">
+        College
+    </div>
+
+    <div class="pdi-val" id="profile-college-val">
+    </div>
+
+    <div class="pdi-sub">
+    </div>
+</div>
+
+
+                        <div id="profile-program-block">
+    <div class="pdi-label">
+        Program
+    </div>
+
+    <div class="pdi-val" id="profile-program-val">
+    </div>
+
+    <div class="pdi-sub">
+    </div>
+</div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TEACHING ASSIGNMENTS -->
+
+                <div class="assignments-label">
+                    Teaching Assignments
+                </div>
+
+
+                <div class="assignment-row">
+
+                    <div class="asgn-left">
+
+                        <div class="asgn-name">
+
+                        </div>
+
+                        <div class="asgn-sub">
+
+                        </div>
+
+                    </div>
+
+                    <span class="asgn-type">
+                       
+                    </span>
+
+                    <span class="asgn-pct">
+                      
+                    </span>
+
+                </div>
+
+
+                <div class="assignment-row">
+
+                    <div class="asgn-left">
+
+                        <div class="asgn-name">
+
+                        </div>
+
+                        <div class="asgn-sub">
+
+                        </div>
+
+                    </div>
+
+                    <span class="asgn-type">
+                        
+                    </span>
+
+                    <span class="asgn-pct">
+                       
+                    </span>
+
+                </div>
+
+
+                <div class="assignment-row">
+
+                    <div class="asgn-left">
+
+                        <div class="asgn-name">
+
+                        </div>
+
+                        <div class="asgn-sub">
+
+                        </div>
+
+                    </div>
+
+                    <span class="asgn-type">
+                        
+                    </span>
+
+                    <span class="asgn-pct">
+                       
+                    </span>
+
+                </div>
+
+
+                </div>
+                <!-- MODAL FOOTER -->
+
+                <div class="modal-footer">
+
+                    <button class="btn-secondary" onclick="closeModal('modal-profile');window.location.href='Idashboard.html'">
+                        Open instructor dashboard
+                    </button>
+
+                    <button class="btn-secondary" onclick="closeModal('modal-profile')">
+                        Done
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+<div class="modal-overlay" id="modal-flag-detail">
+
+            <div class="modal" style="max-width:520px">
+
+                <button class="modal-close" aria-label="Close dialog" onclick="closeModal('modal-flag-detail')">
+                    ✕
+                </button>
+
+                <h2>
+                    ⚠️ Flagged Question
+                </h2>
+
+                <div id="flag-detail-body"></div>
+
+
+                <div class="modal-footer">
+
+                    <button class="btn-cancel" onclick="closeModal('modal-flag-detail')">
+                        Close
+                    </button>
+
+                    <button class="btn-save" id="flag-edit-btn">
+                        ✏️ Edit Question
+                    </button>
+
+                    <button class="btn-save green-btn" id="flag-resolve-btn">
+                        ✅ Mark Resolved
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+<div class="modal-overlay" id="modal-adjust-grade">
+
+            <div class="modal" style="max-width:420px">
+
+                <button class="modal-close" aria-label="Close dialog" onclick="closeModal('modal-adjust-grade');openGradeModal()">
+                    ✕
+                </button>
+
+                <h2 id="adj-modal-title">
+                    Adjust Grade
+                </h2>
+
+
+                <div class="adj-current-row">
+
+                    <span class="adj-current-label">
+                        Current Score
+                    </span>
+
+                    <span class="adj-current-val" id="adj-current-score">
+                        0%
+                    </span>
+
+                </div>
+
+
+                <div class="form-group" style="margin-bottom:1rem">
+
+                    <label>
+                        New Score (0–100)
+                    </label>
+
+
+                    <div class="adj-score-row">
+
+                        <input type="number" id="adj-score-input" min="0" max="100" placeholder="e.g. 85">
+
+                        <span class="adj-score-preview" id="adj-score-preview">
+                            0%
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group" style="margin-bottom:1.25rem">
+
+                    <label>
+
+                        Reason
+
+                        <span style="
+                            font-size:.72rem;
+                            color:var(--text-muted);
+                            font-weight:400
+                        ">
+                            (optional)
+                        </span>
+
+                    </label>
+
+
+                    <textarea id="adj-reason" placeholder="e.g. Student answered verbally, marking error..." style="min-height:70px">
+                    </textarea>
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                    <button class="btn-cancel" onclick="closeModal('modal-adjust-grade');openGradeModal()">
+                        Cancel
+                    </button>
+
+                    <button class="btn-save green-btn" onclick="saveAdjustedGrade()">
+                        💾 Save Grade
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+<div class="modal-overlay" id="modal-subject-analytics">
+
+            <div class="modal" style="max-width:560px">
+
+                <button class="modal-close" aria-label="Close dialog" onclick="closeModal('modal-subject-analytics')">
+                    ✕
+                </button>
+
+                <h2 id="sa-modal-title">
+                    Subject Analytics
+                </h2>
+
+                <div id="sa-modal-body"></div>
+
+
+                <div class="modal-footer">
+
+                    <button class="btn-secondary" onclick="closeModal('modal-subject-analytics')">
+                        Close
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+<script src="../assets/js/main.js?v=7"></script>
+<script src="../assets/js/academic-document.js"></script>
+
+    <script src="../assets/js/instructor.js?v=6"></script>
+
+    <!-- Word document export -->
+    <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
+
+    <!-- AI integration -->
+    <script src="../assets/js/instructor/ai integration/insight.js?v=2"></script>
+
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="../assets/js/lucide-emoji.js"></script>
+<script src="../assets/js/review-library.js?v=9"></script>
+<script src="../assets/js/syllabus.js?v=14"></script>
+<script src="../assets/js/instructor-xp.js?v=3"></script>
+</body>
+
+</html>

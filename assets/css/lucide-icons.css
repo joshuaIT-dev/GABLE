@@ -1,0 +1,26 @@
+.lucide-icon {
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  vertical-align: middle;
+}
+.empty-state .emoji.lucide-icon { display: flex; align-items: center; justify-content: center; width: 100%; margin-inline: auto; }
+.lucide { width: 1em; height: 1em; flex: 0 0 auto; vertical-align: middle; color: var(--purple-light, #b79aff); }
+.lucide-icon > svg { width: 1em; height: 1em; display: block; margin-inline: auto; }
+.emoji-lucide { display: inline-flex; vertical-align: -0.125em; margin-inline: .2em .38em; color: var(--purple-light, #b79aff); }
+.lucide-icon > .emoji-lucide { margin: 0; }
+.bottom-btn > svg.lucide { margin-inline-end: .4em; }
+.emoji-lucide svg { width: 1em; height: 1em; display: block; }
+.lucide-trophy, .lucide-medal, .lucide-star, .lucide-crown { color: #f5c45e; }
+.lucide-circle-check, .lucide-check { color: #61d99a; }
+.lucide-target, .lucide-heart, .lucide-rocket { color: #e879b9; }
+.lucide-users, .lucide-graduation-cap, .lucide-chart-no-axes-column-increasing { color: #80b8ff; }
+.lucide-flame, .lucide-siren { color: #ff986b; }
+
+.emoji-medal-gold { color: #f5c45e !important; }
+.emoji-medal-silver { color: #cbd5e1 !important; }
+.emoji-medal-bronze { color: #cd7f32 !important; }

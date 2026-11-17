@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GABLE – Admin Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css?v=2">
+    <link rel="stylesheet" href="../assets/css/admin.css">
+
+    <!-- Additions -->
+    <link rel="stylesheet" href="../assets/css/admin/additions.css">
+
+    <!-- AI integration -->
+    <link rel="stylesheet" href="../assets/css/admin/ai integration/anomaly.css">
+    <link rel="stylesheet" href="../assets/css/admin/ai integration/anndraft.css">
+    <link rel="stylesheet" href="../assets/css/admin/ai integration/triage.css">
+    <link rel="stylesheet" href="../assets/css/admin/ai integration/semreport.css">
+  <link rel="stylesheet" href="../assets/css/lucide-icons.css">
+<link rel="stylesheet" href="../assets/css/actions.css">
+<link rel="stylesheet" href="../assets/css/syllabus.css?v=214">
+<link rel="stylesheet" href="../assets/css/admin/workspace.css?v=7">
+<link rel="stylesheet" href="../assets/css/brand-text.css?v=4">
+<link rel="stylesheet" href="../assets/css/surfaces.css?v=2">
+</head>
+
+<body class="admin-portal">
+    <div class="bg-blobs"></div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-brand"><span class="brand-mark">G</span><span class="brand-wordmark">GABLE<small>Administrator portal</small></span></div>
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="switchTab('overview')">Overview</button>
+            <button class="nav-tab" onclick="switchTab('users')">Users</button>
+            <button class="nav-tab" onclick="switchTab('instructors')">Instructors</button>
+            <button class="nav-tab" onclick="switchTab('quizzes')">Quizzes</button>
+            <button class="nav-tab" onclick="switchTab('reports')">Reports</button>
+            <button class="nav-tab" onclick="switchTab('leaderboard')">Leaderboard</button>
+            <button class="nav-tab" onclick="switchTab('settings')">Settings</button>
+        </div>
+        <div class="nav-right">
+            <details class="admin-opening-alerts"><summary aria-label="System quiz opening alerts"><i data-lucide="bell" aria-hidden="true"></i><span id="admin-opening-count" hidden>0</span></summary><section aria-label="Section quiz alerts"><strong>System notifications</strong><p>Syllabus updates and final quiz openings by college and section.</p><div id="admin-opening-list">Loading alerts...</div></section></details>
+            <div class="nav-account">
+                <button type="button" class="profile-badge" onclick="openModal('modal-profile')" aria-label="Open administrator profile">
+                    <span class="a-avatar">AD</span>
+                    <span class="profile-info"><strong>System Admin</strong><span>Administrator</span></span>
+                    <i class="profile-chevron" data-lucide="chevron-down" aria-hidden="true"></i>
+                </button>
+                <button class="btn-logout" onclick="logout()" aria-label="Log out" title="Log out"><i data-lucide="log-out" aria-hidden="true"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main">
+
+        <!-- ══ OVERVIEW ══ -->
+        <div class="panel active" id="panel-overview">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.75rem;" class="fade-up admin-page-heading overview-heading">
+                <div>
+                    <h1 style="font-size:1.6rem;font-weight:800;margin-bottom:.25rem;">System Overview</h1>
+                    <p style="font-size:.88rem;color:var(--text-muted);">Manage accounts, teaching quality and platform activity.</p>
+                </div>
+                <button class="btn-primary" onclick="openModal('modal-announce')">Send announcement</button>
+            </div>
+
+            <div class="overview-stats fade-up-1">
+                <div class="ov-card">
+                    <div class="ov-top"><span class="ov-icon lucide-icon"><i data-lucide="users" aria-hidden="true"></i></span><span class="ov-trend" id="ov-students-trend"></span></div>
+                    <div class="ov-val" style="color:var(--purple-light)" id="ov-students">0</div>
+                    <div class="ov-label">Total Students</div>
+                    <div class="ov-sub">Across all colleges</div>
+                </div>
+                <div class="ov-card">
+                    <div class="ov-top"><span class="ov-icon lucide-icon"><i data-lucide="graduation-cap" aria-hidden="true"></i></span><span class="ov-trend" id="ov-instructors-trend"></span></div>
+                    <div class="ov-val" style="color:var(--blue)" id="ov-instructors">0</div>
+                    <div class="ov-label">Instructors</div>
+                    <div class="ov-sub" id="ov-instructors-sub">across colleges</div>
+                </div>
+                <div class="ov-card">
+                    <div class="ov-top"><span class="ov-icon lucide-icon"><i data-lucide="notebook-pen" aria-hidden="true"></i></span><span class="ov-trend" id="ov-quizzes-trend"></span></div>
+                    <div class="ov-val" style="color:var(--green)" id="ov-quizzes">0</div>
+                    <div class="ov-label">Active Quizzes</div>
+                    <div class="ov-sub" id="ov-quizzes-sub">Formal + Informal</div>
+                </div>
+                <div class="ov-card">
+                    <div class="ov-top"><span class="ov-icon lucide-icon"><i data-lucide="star" aria-hidden="true"></i></span><span class="ov-trend" id="ov-xp-trend"></span></div>
+                    <div class="ov-val" style="color:var(--gold)" id="ov-xp">0</div>
+                    <div class="ov-label">Total XP Earned</div>
+                    <div class="ov-sub">This semester</div>
+                </div>
+            </div>
+
+            <div class="two-col fade-up-2">
+                <div class="a-card">
+                    <div class="a-card-title">Performance by College</div>
+                    <div id="college-perf-list"></div>
+                </div>
+                <div class="a-card">
+                    <div class="a-card-title">Recent Activity</div>
+                    <div id="activity-list"></div>
+                </div>
+            </div>
+
+            <div class="section-title fade-up-3"><span class="admin-warning-icon"><i data-lucide="triangle-alert" aria-hidden="true"></i></span>Flagged Quizzes Awaiting Review</div>
+            <div id="flagged-list" class="fade-up-3"></div>
+        </div>
+
+        <!-- ══ USERS ══ -->
+        <div class="panel" id="panel-users">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;" class="fade-up admin-page-heading">
+                <div class="section-title" style="margin:0">Student Users</div>
+                <button class="btn-primary" onclick="openModal('modal-add-user')">+ Add User</button>
+            </div>
+  <div class="filter-row fade-up-1">
+
+    <!-- SEARCH -->
+    <div class="a-search">
+        <span>🔍</span>
+
+        <input
+            type="text"
+            id="user-search" aria-label="user search"
+            placeholder="Search by name or ID..."
+            oninput="filterUsers()"
+        >
+    </div>
+
+
+    <!-- COLLEGE -->
+    <select
+        class="a-select"
+        id="user-college-filter" aria-label="user college filter"
+        onchange="onCollegeFilterChange()"
+    >
+        <option value="">All Colleges</option>
+    </select>
+
+
+    <!-- PROGRAM -->
+    <select
+        class="a-select"
+        id="user-program-filter" aria-label="user program filter"
+        onchange="onProgramFilterChange()"
+    >
+        <option value="">All Programs</option>
+    </select>
+
+
+    <!-- SECTION / BLOCK -->
+    <select
+        class="a-select"
+        id="user-section-filter" aria-label="user section filter"
+        onchange="filterUsers()"
+    >
+        <option value="">All Sections</option>
+    </select>
+
+
+    <!-- STATUS -->
+    <select
+        class="a-select"
+        id="user-status-filter" aria-label="user status filter"
+        onchange="filterUsers()"
+    >
+        <option value="">All Status</option>
+        <option value="Active">Active</option>
+        <option value="Inactive">Inactive</option>
+    </select>
+
+
+    <!-- CLEAR -->
+    <button
+        type="button"
+        class="btn-sm btn-sm-view"
+        onclick="clearUserFilters()"
+    >
+        Clear
+    </button>
+
+</div>
+            <div class="a-table fade-up-2">
+                <div class="a-table-head users-head">
+                    <div>Student</div>
+                    <div>Program</div>
+                    <div>Section</div>
+                    <div>XP</div>
+                    <div>Level</div>
+                    <div>Status</div>
+                    <div>Actions</div>
+                </div>
+                <div id="users-table-body"></div>
+            </div>
+        </div>
+
+        <!-- ══ INSTRUCTORS ══ -->
+        <div class="panel" id="panel-instructors">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;" class="fade-up admin-page-heading">
+                <div class="section-title" style="margin:0">Instructor Management</div>
+                <button class="btn-primary" onclick="openModal('modal-add-instr')">+ Add Instructor</button>
+            </div>
+            <div class="filter-row fade-up-1">
+                <div class="a-search"><span>🔍</span><input type="text" id="instr-search" aria-label="instr search" placeholder="Search instructor..." oninput="filterInstructors()"></div>
+                <select class="a-select" id="instr-college-filter" aria-label="instr college filter" onchange="filterInstructors()">
+          <option value="">All Colleges</option>
+          <option>CITCS</option><option>CAS</option><option>CBA</option>
+          <option>COA</option><option>CCJ</option><option>COM</option><option>CTE</option>
+        </select>
+            </div>
+            <div class="a-table fade-up-2">
+                <div class="a-table-head instr-head">
+                    <div>Instructor</div>
+                    <div>College</div>
+                    <div>Teaching XP</div>
+                    <div>Grade</div>
+                    <div>Status</div>
+                    <div>Actions</div>
+                </div>
+                <div id="instr-table-body"></div>
+            </div>
+        </div>
+
+        <!-- MODAL: INSTRUCTOR DETAIL -->
+        <div class="modal-overlay" id="modal-instr-detail">
+            <div class="modal" style="max-width:520px">
+                <button class="modal-close" onclick="closeModal('modal-instr-detail')" aria-label="Close dialog"><i data-lucide="x" aria-hidden="true"></i></button>
+                <h2 id="instr-detail-title">Instructor Details</h2>
+                <div id="instr-detail-body"></div>
+                <div class="modal-footer">
+                    <button class="btn-danger-full" id="instr-deactivate-btn">Deactivate</button>
+                    <button class="btn-secondary" onclick="closeModal('modal-instr-detail')">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL: GRADE ADJUSTMENT -->
+        <div class="modal-overlay" id="modal-grade">
+            <div class="modal" style="max-width:420px">
+                <button class="modal-close" onclick="closeModal('modal-grade')" aria-label="Close dialog"><i data-lucide="x" aria-hidden="true"></i></button>
+                <h2 id="grade-modal-title">Adjust Grade</h2>
+                <div id="grade-modal-body"></div>
+                <div class="modal-footer">
+                    <button class="btn-secondary" onclick="closeModal('modal-grade')">Cancel</button>
+                    <button class="btn-primary" onclick="saveGrade()">Save Grade</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL: QUIZ DETAIL -->
+        <div class="modal-overlay" id="modal-quiz-detail">
+            <div class="modal" style="max-width:520px">
+                <button class="modal-close" onclick="closeModal('modal-quiz-detail')" aria-label="Close dialog"><i data-lucide="x" aria-hidden="true"></i></button>
+                <h2 id="quiz-detail-title">Quiz Details</h2>
+                <div id="quiz-detail-body"></div>
+                <div class="modal-footer">
+                    <button class="btn-danger-full" id="quiz-remove-btn">Remove Quiz</button>
+                    <button class="btn-secondary" onclick="closeModal('modal-quiz-detail')">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL: QUIZ ALIGNMENT -->
+        <div class="modal-overlay" id="modal-quiz-alignment">
+            <div class="modal" style="max-width:650px">
+                <button class="modal-close" onclick="closeModal('modal-quiz-alignment')" aria-label="Close dialog"><i data-lucide="x" aria-hidden="true"></i></button>
+
+                <h2>Evaluate Quiz Alignment</h2>
+
+                <div id="quiz-alignment-body"></div>
+            </div>
+        </div>
+
+        <!-- ══ QUIZZES ══ -->
+        <div class="panel" id="panel-quizzes">
+            <div class="fade-up">
+                <div class="section-title" style="margin-bottom:.75rem">All Quizzes</div>
+                <div class="filter-row">
+                    <div class="a-search"><span>🔍</span><input type="text" id="quiz-search" aria-label="quiz search" placeholder="Search quizzes..." oninput="filterAdminQuizzes()"></div>
+                    <select class="a-select" id="quiz-type-filter" aria-label="quiz type filter" onchange="filterAdminQuizzes()">
+            <option value="">All Types</option><option>Team Battle</option><option>Solo</option><option>Battle Royale</option><option>Homework</option>
+          </select> 
+          
+<select class="a-select" id="quiz-college-filter" aria-label="quiz college filter" onchange="filterAdminQuizzes()">
+    <option value="">All Colleges</option>
+</select>
+
+<select class="a-select" id="quiz-subject-filter" aria-label="quiz subject filter" onchange="filterAdminQuizzes()">
+    <option value="">All Subjects</option>
+</select>
+
+<select class="a-select" id="quiz-instructor-filter" aria-label="quiz instructor filter" onchange="filterAdminQuizzes()">
+    <option value="">All Instructors</option>
+</select>
+
+
+                    <select class="a-select" id="quiz-status-filter" aria-label="quiz status filter" onchange="filterAdminQuizzes()">
+            <option value="">All Status</option><option>Active</option><option>Draft</option><option>Flagged</option>
+          </select>
+                </div>
+            </div>
+            <div class="a-table fade-up-1">
+                <div class="a-table-head rep-head">
+    <div>Quiz</div>
+    <div>Instructor</div>
+    <div>College</div>
+    <div>Type</div>
+    <div>Submissions</div>
+    <div>Actions</div>
+</div>
+                <div id="quizzes-table-body"></div>
+            </div>
+        </div>
+
+        <!-- ══ REPORTS ══ -->
+        <div class="panel" id="panel-reports">
+            <div class="section-title fade-up">System Reports</div>
+            <div class="three-col fade-up-1">
+                <div class="a-card">
+                    <div class="a-card-title">Quiz Completion Rate</div>
+                    <div id="report-completion-rate" style="font-size:2.5rem;font-weight:800;color:var(--green);margin-bottom:.35rem;">Loading…</div>
+                    <div id="report-completion-caption" style="font-size:.78rem;color:var(--text-muted);margin-bottom:1rem;">Loading report metrics…</div>
+                    <div class="prog-track"><div id="report-completion-progress" class="prog-fill pf-green" style="width:0%"></div></div>
+                </div>
+                <div class="a-card">
+                    <div class="a-card-title">Average XP Per Student</div>
+                    <div id="report-average-xp" style="font-size:2.5rem;font-weight:800;color:var(--gold);margin-bottom:.35rem;">Loading…</div>
+                    <div id="report-average-xp-caption" style="font-size:.78rem;color:var(--text-muted);margin-bottom:1rem;">Loading report metrics…</div>
+                    <div class="prog-track"><div id="report-average-xp-progress" class="prog-fill pf-gold" style="width:0%"></div></div>
+                </div>
+                <div class="a-card">
+                    <div class="a-card-title">Average Score</div>
+                    <div id="report-average-score" style="font-size:2.5rem;font-weight:800;color:var(--purple-light);margin-bottom:.35rem;">Loading…</div>
+                    <div id="report-average-score-caption" style="font-size:.78rem;color:var(--text-muted);margin-bottom:1rem;">Loading report metrics…</div>
+                    <div class="prog-track"><div id="report-average-score-progress" class="prog-fill pf-purple" style="width:0%"></div></div>
+                </div>
+            </div>
+
+            <div class="two-col fade-up-2">
+                <div class="a-card">
+                    <div class="a-card-title">Top Performing Students</div>
+                    <div id="top-students-list"></div>
+                </div>
+                <div class="a-card">
+                    <div class="a-card-title">Top Performing Instructors</div>
+                    <div id="top-instr-list"></div>
+                </div>
+            </div>
+
+            <div class="a-card fade-up-3">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;">
+                    <div class="a-card-title" style="margin:0">Grade Boost Redemptions</div>
+                    <span style="font-size:.78rem;color:var(--text-muted);">This semester</span>
+                </div>
+                <div id="redemption-list"></div>
+            </div>
+        </div>
+
+        <!-- ══ LEADERBOARD ══ -->
+        <div class="panel" id="panel-leaderboard">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;" class="fade-up admin-page-heading">
+                <div class="section-title" style="margin:0">School-Wide Leaderboard</div>
+                <div class="filter-pills" style="margin:0">
+                    <button class="fpill active" onclick="setLbView('students',this)">Students</button>
+                    <button class="fpill" onclick="setLbView('instructors',this)">Instructors</button>
+                    <button class="fpill" onclick="setLbView('colleges',this)">Colleges</button>
+                </div>
+            </div>
+            <div class="filter-row fade-up-1" style="display:flex;gap:.75rem;flex-wrap:wrap">
+                <select class="a-select" id="lb-college-filter" onchange="populateLeaderboardFilters(); renderLeaderboard()" aria-label="Filter leaderboard by college">
+                    <option value="">All Colleges</option>
+                </select>
+                <select class="a-select" id="lb-section-filter" onchange="renderLeaderboard()" aria-label="Filter leaderboard by section">
+                    <option value="">All Sections</option>
+                </select>
+            </div>
+            <div id="leaderboard-content" class="fade-up-2"></div>
+        </div>
+
+        <!-- ══ SETTINGS ══ -->
+        <div class="panel" id="panel-settings">
+            <header class="settings-heading"><span class="admin-eyebrow">ADMINISTRATION</span><h2>System settings</h2><p>Manage teaching rewards, platform access and announcements.</p></header>
+            <div class="settings-navigation" aria-label="Settings sections"><button type="button" class="active" aria-pressed="true" onclick="showAdminSettingsSection('controls',this)">Platform &amp; rewards</button><button type="button" aria-pressed="false" onclick="showAdminSettingsSection('communications',this)">Announcements &amp; history</button></div>
+<section id="settings-controls"><p class="configuration-intro">Changes save automatically and apply to new requests. Existing scores and earned rewards are preserved.</p><div class="configuration-grid"><article class="configuration-card"><header><span class="admin-eyebrow">Teaching rewards</span><h3>Syllabus alignment</h3></header><p>Awards 100 XP for 95%+ alignment or 50 XP for 85-94%, after admin confirmation.</p><div class="configuration-effect">Applies to future approval rewards; earned XP stays unchanged.</div><footer><div class="toggle-wrap"><button type="button" class="toggle" id="toggle-95" role="switch" aria-checked="false" aria-label="Syllabus alignment" onclick="toggleSetting('toggle-95')" disabled></button><span class="toggle-label">Loading</span></div><span id="toggle-95-status" class="configuration-status" role="status">Loading settings...</span></footer></article><article class="configuration-card"><header><span class="admin-eyebrow">Teaching rewards</span><h3>Student pass bonus</h3></header><p>Awards 50 teaching XP when at least 85% of students pass a quiz.</p><div class="configuration-effect">Evaluated after the due date and final grading.</div><footer><div class="toggle-wrap"><button type="button" class="toggle" id="toggle-85" role="switch" aria-checked="false" aria-label="Student pass bonus" onclick="toggleSetting('toggle-85')" disabled></button><span class="toggle-label">Loading</span></div><span id="toggle-85-status" class="configuration-status" role="status">Loading settings...</span></footer></article><article class="configuration-card"><header><span class="admin-eyebrow">Student features</span><h3>Grade boost redemption</h3></header><p>Allows students to redeem 350 XP for a +1 grade boost on formal quizzes.</p><div class="configuration-effect">Turning this off blocks new redemptions.</div><footer><div class="toggle-wrap"><button type="button" class="toggle" id="toggle-redeem" role="switch" aria-checked="false" aria-label="Grade boost redemption" onclick="toggleSetting('toggle-redeem')" disabled></button><span class="toggle-label">Loading</span></div><span id="toggle-redeem-status" class="configuration-status" role="status">Loading settings...</span></footer></article><article class="configuration-card"><header><span class="admin-eyebrow">Quiz access</span><h3>Battle Royale</h3></header><p>Allows instructors to create and publish Battle Royale quizzes.</p><div class="configuration-effect">Turning this off also blocks student access to this mode.</div><footer><div class="toggle-wrap"><button type="button" class="toggle" id="toggle-royale" role="switch" aria-checked="false" aria-label="Battle Royale" onclick="toggleSetting('toggle-royale')" disabled></button><span class="toggle-label">Loading</span></div><span id="toggle-royale-status" class="configuration-status" role="status">Loading settings...</span></footer></article><article class="configuration-card"><header><span class="admin-eyebrow">Assessment</span><h3>Automatic grading</h3></header><p>Grades multiple-choice answers automatically on submission.</p><div class="configuration-effect">When disabled, new submissions wait for instructor grading.</div><footer><div class="toggle-wrap"><button type="button" class="toggle" id="toggle-auto" role="switch" aria-checked="false" aria-label="Automatic grading" onclick="toggleSetting('toggle-auto')" disabled></button><span class="toggle-label">Loading</span></div><span id="toggle-auto-status" class="configuration-status" role="status">Loading settings...</span></footer></article><article class="configuration-card"><header><span class="admin-eyebrow">Platform access</span><h3>Maintenance mode</h3></header><p>Blocks new student and instructor logins and signs existing sessions out after a 60-second warning.</p><div class="configuration-effect">Admins remain signed in and can manage or cancel maintenance.</div><footer><div class="toggle-wrap"><button type="button" class="toggle" id="toggle-maint" role="switch" aria-checked="false" aria-label="Maintenance mode" onclick="toggleSetting('toggle-maint')" disabled></button><span class="toggle-label">Loading</span></div><span id="toggle-maint-status" class="configuration-status" role="status">Loading settings...</span></footer></article></div></section>
+            <section id="settings-communications" hidden>
+            <div class="settings-communications-grid">
+            <!-- Announcement Composer -->
+            <div class="a-card fade-up-2">
+                <div class="a-card-title">Send Announcement</div>
+                <div class="ann-form">
+                    <div class="form-group"><label>Title</label><input type="text" id="ann-title" placeholder="e.g. System Maintenance Notice"></div>
+                    <div class="form-group"><label>Message</label><textarea id="ann-body" placeholder="Type your announcement here..."></textarea></div>
+                    <div style="display:flex;gap:.75rem;">
+                        <div class="form-group" style="flex:1;margin:0"><label>Target</label><select id="ann-target"><option>All Users</option><option>Students Only</option><option>Instructors Only</option></select></div>
+                        <div class="form-group" style="flex:1;margin:0"><label>Priority</label><select id="ann-priority"><option>Normal</option><option>Important</option><option>Urgent</option></select></div>
+                    </div>
+                    <button class="btn-primary" style="margin-top:1rem" onclick="sendAnnouncement()">📢 Send Announcement</button>
+                </div>
+            </div>
+
+            <!-- Announcement History -->
+            <div class="a-card fade-up-3">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;">
+                    <div class="a-card-title" style="margin:0">Announcement History</div>
+                    <span id="ann-hist-count" style="font-size:.78rem;color:var(--text-muted)"></span>
+                </div>
+                <div id="ann-history-list">
+                    <div class="empty-state"><span class="emoji lucide-icon"><i data-lucide="mail-open" aria-hidden="true"></i></span>
+                        <p>No announcements sent yet.</p>
+                    </div>
+                </div>
+            </div>
+            </div>
+            </section>
+        </div>
+
+    </div>
+</div>
+
+<!-- /main -->
+
+<div class="modal-overlay" id="modal-add-user">
+
+    <div class="modal" style="max-width:560px">
+
+        <button
+            class="modal-close"
+            onclick="closeModal('modal-add-user')"
+        >
+            ✕
+        </button>
+
+        <h2 id="user-modal-title">
+            Add New User
+        </h2>
+
+
+        <div id="user-modal-body">
+
+            <!-- FIRST + LAST NAME -->
+            <div style="
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:.85rem;
+                margin-bottom:1rem;
+            ">
+
+                <div>
+
+                    <label>First Name</label>
+
+                    <input
+                        type="text"
+                        id="add-first-name"
+                        placeholder="Juan"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>Last Name</label>
+
+                    <input
+                        type="text"
+                        id="add-last-name"
+                        placeholder="Dela Cruz"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- STUDENT NUMBER -->
+            <div style="margin-bottom:1rem">
+
+                <label>
+                    Student ID
+                </label>
+
+                <input
+                    type="text"
+                    id="add-student-number"
+                    maxlength="8"
+                    placeholder="20240015"
+                >
+
+            </div>
+
+
+            <!-- EMAIL -->
+            <div style="margin-bottom:1rem">
+
+                <label>
+                    Institutional Email
+                </label>
+
+                <input
+                    type="email"
+                    id="add-email"
+                    placeholder="student@school.edu"
+                >
+
+            </div>
+
+
+            <!-- COLLEGE + PROGRAM -->
+<!-- COLLEGE + PROGRAM -->
+<div style="
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:.85rem;
+    margin-bottom:1rem;
+">
+
+    <div>
+        <label>College</label>
+
+        <select
+            id="add-college"
+            onchange="updateStudentPrograms()"
+        >
+            <option value="">Select College</option>
+            <option value="College of Engineering">College of Engineering</option>
+            <option value="College of Information Technology">
+                College of Information Technology
+            </option>
+            <option value="College of Education">College of Education</option>
+            <option value="College of Business">College of Business</option>
+            <option value="College of Arts and Sciences">
+                College of Arts and Sciences
+            </option>
+        </select>
+    </div>
+
+    <div>
+        <label>Program</label>
+
+        <select id="add-program" disabled>
+            <option value="">Select a college first</option>
+        </select>
+    </div>
+
+</div>
+
+
+
+            <!-- YEAR + BLOCK -->
+            <div style="
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:.85rem;
+                margin-bottom:1rem;
+            ">
+
+                <div>
+
+                    <label>
+                        Year Level
+                    </label>
+
+                    <select id="add-year-level">
+
+                        <option value="1">
+                            1
+                        </option>
+
+                        <option value="2">
+                            2
+                        </option>
+
+                        <option value="3">
+                            3
+                        </option>
+
+                        <option value="4">
+                            4
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Section / Block
+                    </label>
+
+                    <select id="add-block">
+
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="Z">Z</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- PASSWORD -->
+            <div style="margin-bottom:1rem">
+
+                <label>
+                    Password
+                </label>
+
+                <input
+                    type="text"
+                    id="add-password"
+                    value="password123"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                class="btn-secondary"
+                onclick="closeModal('modal-add-user')"
+            >
+                Cancel
+            </button>
+
+
+            <button
+                class="btn-primary"
+                onclick="saveUser()"
+            >
+                Add User
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+    <!-- ══ MODAL: USER DETAIL VIEW ══ -->
+    <div class="modal-overlay" id="modal-user-detail">
+        <div class="modal" style="max-width:520px">
+            <button class="modal-close" onclick="closeModal('modal-user-detail')" aria-label="Close dialog"><i data-lucide="x" aria-hidden="true"></i></button>
+            <h2 id="ud-title">Student Details</h2>
+            <div id="ud-body"></div>
+            <div class="modal-footer">
+                <button class="btn-danger-full" id="ud-deactivate-btn">Deactivate</button>
+                <button class="btn-secondary" onclick="closeModal('modal-user-detail')">Close</button>
+            </div>
+        </div>
+    </div>
+
+   <!-- ══ MODAL: ADD INSTRUCTOR ══ -->
+<div class="modal-overlay" id="modal-add-instr">
+
+    <div class="modal" style="max-width:560px">
+
+        <button
+            type="button"
+            class="modal-close"
+            onclick="closeModal('modal-add-instr')"
+        >
+            ✕
+        </button>
+
+        <h2>Add Instructor</h2>
+
+        <p style="
+            color:var(--text-muted);
+            font-size:.82rem;
+            margin-bottom:1.25rem;
+        ">
+            Create a new instructor account.
+        </p>
+
+        <!-- FIRST + LAST NAME -->
+        <div style="
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:.85rem;
+            margin-bottom:1rem;
+        ">
+
+            <div>
+                <label>First Name</label>
+
+                <input
+                    type="text"
+                    id="instr-first-name"
+                    placeholder="John"
+                >
+            </div>
+
+            <div>
+                <label>Last Name</label>
+
+                <input
+                    type="text"
+                    id="instr-last-name"
+                    placeholder="Smith"
+                >
+            </div>
+
+        </div>
+
+        <!-- INSTRUCTOR NUMBER + EMAIL -->
+        <div style="
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:.85rem;
+            margin-bottom:1rem;
+        ">
+
+            <div>
+                <label>Instructor ID</label>
+
+                <input
+                    type="text"
+                    id="instr-number"
+                    placeholder="1001"
+                >
+            </div>
+
+            <div>
+                <label>Institutional Email</label>
+
+                <input
+                    type="email"
+                    id="instr-email"
+                    placeholder="john.smith@university.edu"
+                >
+            </div>
+
+        </div>
+
+        <!-- COLLEGE + PROGRAM -->
+        <div style="
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:.85rem;
+            margin-bottom:1rem;
+        ">
+
+            <div>
+
+                <label>College</label>
+
+                <select
+                    id="instr-college"
+                    onchange="updateInstructorPrograms()"
+                >
+                    <option value="">
+                        Select College
+                    </option>
+
+                    <option value="CITCS">CITCS</option>
+                    <option value="CAS">CAS</option>
+                    <option value="CBA">CBA</option>
+                    <option value="COA">COA</option>
+                    <option value="CCJ">CCJ</option>
+                    <option value="COM">COM</option>
+                    <option value="CTE">CTE</option>
+                </select>
+
+            </div>
+
+            <div>
+
+                <label>Program</label>
+
+                <select
+                    id="instr-program"
+                    disabled
+                >
+                    <option value="">
+                        Select a college first
+                    </option>
+                </select>
+
+            </div>
+
+        </div>
+
+        <!-- PASSWORD -->
+        <div style="margin-bottom:1rem">
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                id="instr-password"
+                placeholder="Enter temporary password"
+            >
+
+        </div>
+
+        <!-- TEACHING EXP -->
+        <div style="margin-bottom:1rem">
+
+            <label>Teaching EXP</label>
+
+            <input
+                type="number"
+                id="instr-teaching-exp"
+                value="0"
+                min="0"
+                placeholder="0"
+            >
+
+            <div style="
+                margin-top:.35rem;
+                font-size:.72rem;
+                color:var(--text-muted);
+            ">
+                Starting Teaching EXP points.
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <div class="modal-footer">
+
+            <button
+                type="button"
+                class="btn-secondary"
+                onclick="closeModal('modal-add-instr')"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                class="btn-primary"
+                onclick="saveInstructor()"
+            >
+                🎓 Add Instructor
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+    <!-- ══ MODAL: ANNOUNCEMENT ══ -->
+    <div class="modal-overlay" id="modal-announce">
+        <div class="modal" style="max-width:520px">
+            <button class="modal-close" onclick="closeModal('modal-announce')" aria-label="Close dialog"><i data-lucide="x" aria-hidden="true"></i></button>
+            <h2>📢 Send Announcement</h2>
+            <div class="ann-form">
+                <div class="form-group"><label>Title</label><input type="text" id="ann-title-m" placeholder="e.g. System Maintenance Notice"></div>
+                <div class="form-group"><label>Message</label><textarea id="ann-body-m" placeholder="Type your announcement..."></textarea></div>
+                <div style="display:flex;gap:.75rem">
+                    <div class="form-group" style="flex:1;margin:0"><label>Target</label><select id="ann-target-m"><option>All Users</option><option>Students Only</option><option>Instructors Only</option></select></div>
+                    <div class="form-group" style="flex:1;margin:0"><label>Priority</label><select id="ann-priority-m"><option>Normal</option><option>Important</option><option>Urgent</option></select></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('modal-announce')">Cancel</button>
+                <button class="btn-primary" onclick="sendAnnouncementModal()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONFIRM -->
+    <div class="confirm-overlay" id="confirm-overlay">
+        <div class="confirm-box">
+            <h3 id="conf-title">Confirm</h3>
+            <p id="conf-msg">Are you sure?</p>
+            <div class="confirm-btns">
+                <button class="btn-confirm-del" id="conf-yes">Confirm</button>
+                <button class="btn-confirm-cancel" onclick="closeConfirm()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"><span id="toast-icon">✅</span>&nbsp;<span id="toast-msg"></span></div>
+
+    <!-- ══ MODAL: VIEW INSTRUCTOR ══ -->
+<div class="modal-overlay" id="modal-view-instr">
+    <div class="modal" style="max-width:520px">
+
+        <button
+            class="modal-close"
+            onclick="closeModal('modal-view-instr')"
+        >
+            ✕
+        </button>
+
+        <div id="instructor-view-content"></div>
+
+    </div>
+</div>
+
+
+<div class="modal-overlay" id="modal-remove-quiz" role="dialog" aria-modal="true" aria-labelledby="admin-remove-title"><div class="modal"><button class="modal-close" aria-label="Close" onclick="closeModal('modal-remove-quiz')">&times;</button><h2 id="admin-remove-title">Remove quiz</h2><p id="admin-remove-name" class="admin-dialog-subtitle"></p><p class="admin-detail-note">This removes the quiz from active listings. Existing records are retained.</p><label for="admin-remove-text">Type <strong>REMOVE</strong> to confirm</label><input id="admin-remove-text" autocomplete="off" spellcheck="false"><div class="modal-footer"><button class="btn-secondary" onclick="closeModal('modal-remove-quiz')">Cancel</button><button id="admin-remove-confirm" class="btn-danger-full" disabled>Remove quiz</button></div></div></div>
+<div class="modal-overlay" id="modal-profile" role="dialog" aria-modal="true" aria-labelledby="admin-profile-title"><div class="modal admin-account-dialog"><header class="admin-account-header"><div><span class="admin-eyebrow">YOUR ACCOUNT</span><h2 id="admin-profile-title">Administrator profile</h2></div><button class="modal-close" aria-label="Close profile" onclick="closeModal('modal-profile')"><i data-lucide="x" aria-hidden="true"></i></button></header><div class="admin-account-body"><div class="admin-account-identity"><span class="admin-account-avatar" aria-hidden="true">AD</span><div><h3>System administrator</h3><p>GABLE management portal</p></div></div><dl class="admin-detail-grid"><div><dt>Account role</dt><dd>Administrator</dd></div><div><dt>Permissions</dt><dd>System management</dd></div></dl><p class="admin-account-caption">Manage users, review teaching quality and configure the learning platform.</p></div><footer class="admin-account-footer"><button class="btn-secondary" onclick="closeModal('modal-profile');switchTab('settings')">Open settings</button><button class="btn-primary" onclick="closeModal('modal-profile')">Done</button></footer></div></div>
+    <script src="../assets/js/main.js?v=7"></script>
+<script src="../assets/js/academic-document.js"></script>
+    <script src="../assets/js/admin.js?v=7"></script>
+
+    <!-- AI integration -->
+    <script src="../assets/js/admin/anomaly.js"></script>
+    <script src="../assets/js/admin/anndraft.js"></script>
+    <script src="../assets/js/admin/triage.js"></script>
+    <script src="../assets/js/admin/semreport.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="../assets/js/lucide-emoji.js"></script>
+    <script src="../assets/js/admin/quiz-opening-alerts.js?v=2"></script>
+<script src="../assets/js/syllabus.js?v=14"></script>
+</body>
+
+</html>

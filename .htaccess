@@ -1,0 +1,8 @@
+Options -Indexes
+RewriteEngine On
+RewriteRule ^(?:tests|docs|tools|sql)(?:/|$) - [F,L]
+RewriteRule ^assets/sql(?:/|$) - [F,L]
+RewriteRule ^assets/php/(?:setup|test_game_connection|test_game_session|get_quiz-before-hotfix\.php)\.php$ - [F,L]
+<FilesMatch "(?i)(\.(md|sql|bak|log|env|example)$|^config\.local\.)">
+ Require all denied
+</FilesMatch>

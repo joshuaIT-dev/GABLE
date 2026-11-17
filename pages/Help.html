@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GABLE – Help</title>
+  <link rel="stylesheet" href="../assets/css/style.css?v=2">
+  <link rel="stylesheet" href="../assets/css/help.css">
+  <link rel="stylesheet" href="../assets/css/student/ai integration/chatbot.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/lucide-icons.css">
+<link rel="stylesheet" href="../assets/css/actions.css">
+</head>
+<body>
+
+  <div class="bg-blobs"></div>
+
+  <nav class="navbar">
+    <div class="logo">
+      <div class="logo-icon lucide-icon"><i data-lucide="book-open" aria-hidden="true"></i></div>
+      GABLE
+    </div>
+    <ul class="nav-links">
+      <li><a href="Index.html">Home</a></li>
+      <li><a href="Features.html">Features</a></li>
+      <li><a href="About.html">About</a></li>
+      <li><a href="Help.html">Help</a></li>
+      <li><a href="Login.html" class="btn-login">Login</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-header reveal">
+    <h1>Help Center</h1>
+    <p>Quick answers and troubleshooting guides</p>
+  </div>
+
+  <div class="quick-links">
+    <div class="quick-card reveal">
+      <div class="quick-card-icon icon-red lucide-icon"><i data-lucide="rocket" aria-hidden="true"></i></div>
+      <h3>Quick Start</h3>
+      <p>Get up and running in under 5 minutes</p>
+    </div>
+    <div class="quick-card reveal reveal-delay-1">
+      <div class="quick-card-icon icon-pink lucide-icon"><i data-lucide="circle-help" aria-hidden="true"></i></div>
+      <h3>Common Issues</h3>
+      <p>Troubleshoot typical problems</p>
+    </div>
+    <div class="quick-card reveal reveal-delay-2">
+      <div class="quick-card-icon icon-blue lucide-icon"><i data-lucide="book-open" aria-hidden="true"></i></div>
+      <h3>FAQs</h3>
+      <p>Answers about battles, XP, and accounts</p>
+    </div>
+  </div>
+
+  <section class="quick-start" id="quick-start" aria-labelledby="quick-start-title">
+    <h2 id="quick-start-title">Start playing</h2>
+    <div class="quick-start-steps">
+      <article><span>01</span><h3>Choose your role</h3><p>Sign in as a student, instructor, or admin.</p></article>
+      <article><span>02</span><h3>Join a quiz</h3><p>Pick an available quiz battle and enter the arena.</p></article>
+      <article><span>03</span><h3>Play and earn XP</h3><p>Answer questions and build your score as you go.</p></article>
+    </div>
+  </section>
+
+  <div class="help-grid">
+
+    <div class="help-card reveal" id="faq">
+      <h3>Frequently Asked Questions</h3>
+      <div class="faq-item">
+        <div class="faq-q">What happens if I lose a battle quiz?</div>
+        <div class="faq-a">Losing a battle quiz still earns you partial XP based on how many questions you answered correctly. You won't lose existing XP.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How does matchmaking work in battle modes?</div>
+        <div class="faq-a">Matchmaking pairs you with classmates in the same section or course. Team Battle matches 5 players per side, Solo is 1v1, and Battle Royale can have up to 50-60+ players.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I use XP boosts on formal quizzes?</div>
+        <div class="faq-a">XP boosts can be redeemed on both formal and informal quizzes, but grade boost redemptions apply only to formal quiz scores, subject to instructor approval.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What if my instructor's quiz has errors?</div>
+        <div class="faq-a">Use the "Report Question" button during a quiz. Your instructor will be notified and can issue score corrections. Admins review flagged content regularly.</div>
+      </div>
+    </div>
+    
+    <div class="help-card reveal reveal-delay-1">
+      <h3>Need More Help?</h3>
+      <div class="contact-list">
+        <div class="contact-item">
+          <div class="contact-icon ci-purple lucide-icon"><i data-lucide="message-circle" aria-hidden="true"></i></div>
+          <div class="contact-text">
+            <strong>AI Support Chat</strong>
+            <p>Average response: instant - 1 min</p>
+          </div>
+          <button class="btn-chat"onclick="toggleChat()">Chat Now</button>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon ci-pink lucide-icon"><i data-lucide="mail" aria-hidden="true"></i></div>
+          <div class="contact-text">
+            <strong>Email Support</strong>
+            <p>Gable@plmun.edu</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon ci-orange lucide-icon"><i data-lucide="phone" aria-hidden="true"></i></div>
+          <div class="contact-text">
+            <strong>Phone Support</strong>
+            <p>(02) 8-PLMUN-ED</p>
+            <p>Available Monday – Friday, 9AM – 5PM</p>
+          </div>
+        </div>
+      </div>
+      <div class="plmun-block">
+        <p>Need a hand? Our team is here to help! Use our <strong>live chat</strong> to get step-by-step guidance, from getting started to mastering our advanced features.</p>
+        <a href="https://www.plmun.edu.ph" target="_blank" class="btn-plmun">
+          Go to the PLMUN page &nbsp;›
+        </a>
+      </div>
+    </div>
+
+        <!-- GABLE Chatbot Window -->
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <div>
+                <span>💬 GABLE Assistant</span><br>
+                <small>AI-powered • Average response: instant</small>
+            </div>
+            <button class="close-btn" onclick="toggleChat()">✕</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-msg bot">
+                Hi! I'm the GABLE Assistant 👋<br>
+                Ask me anything about the platform —
+                quizzes, XP, badges, login issues, and more!
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input  type="text"
+                    id="chatInput"
+                    placeholder="Type your question..."
+                    onkeypress="if(event.key==='Enter') sendChat()" />
+            <button onclick="sendChat()">Send</button>
+        </div>
+    </div>
+
+    <div class="help-card reveal" id="troubleshooting">
+      <h3>Troubleshooting</h3>
+      <ul class="trouble-list">
+        <li class="trouble-item">
+          <div class="trouble-dot dot-red"></div>
+          <div>
+            <strong>Quiz won't start</strong>
+            <p>Check your internet connection and refresh the page</p>
+          </div>
+        </li>
+        <li class="trouble-item">
+          <div class="trouble-dot dot-yellow"></div>
+          <div>
+            <strong>XP not updating</strong>
+            <p>Quiz results may take 3-5 minutes to sync</p>
+          </div>
+        </li>
+        <li class="trouble-item">
+          <div class="trouble-dot dot-blue"></div>
+          <div>
+            <strong>Can't find my section</strong>
+            <p>Contact your instructor to be added to the correct section</p>
+          </div>
+        </li>
+        <li class="trouble-item">
+          <div class="trouble-dot dot-red"></div>
+          <div>
+            <strong>Login not working</strong>
+            <p>Try resetting your password or clearing browser cookies</p>
+          </div>
+        </li>
+        <li class="trouble-item">
+          <div class="trouble-dot dot-yellow"></div>
+          <div>
+            <strong>Leaderboard not loading</strong>
+            <p>Leaderboards refresh every 5 minutes — please wait and retry</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2026 GABLE. All rights reserved.</p>
+  </footer>
+  
+  <script src="../assets/js/main.js?v=7"></script>
+  <script src="../assets/js/student/ai integration/chatbot.js"></script>
+  <script>
+    document.querySelectorAll('.faq-q').forEach(q => {
+      q.addEventListener('click', () => {
+        q.parentElement.classList.toggle('open');
+      });
+    });
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="../assets/js/lucide-emoji.js"></script>
+</body>
+</html>
