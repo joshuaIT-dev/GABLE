@@ -57,7 +57,6 @@ if (!accountPasswordMatches($password, $row['password'])) {
 
 login_clear($conn,'account:'.$role.':'.$id);
 session_regenerate_id(true);
-    $_SESSION=[];
     $_SESSION['maintenance_generation']=(int)$maintenance['generation'];
     $_SESSION['student'] = $row['student_id'];
 
@@ -93,7 +92,6 @@ elseif ($role == "admin") {
 
     login_clear($conn,'account:'.$role.':'.$id);
 session_regenerate_id(true);
-    $_SESSION=[];
     $_SESSION['maintenance_generation']=(int)$maintenance['generation'];
     $_SESSION['admin'] = $row['admin_id'];
 
@@ -135,7 +133,6 @@ if (!accountPasswordMatches($password, $row['password'])) {
 
     login_clear($conn,'account:'.$role.':'.$id);
 session_regenerate_id(true);
-    $_SESSION=[];
     $_SESSION['maintenance_generation']=(int)$maintenance['generation'];
     $_SESSION['instructor'] = $row['instructor_id'];
 

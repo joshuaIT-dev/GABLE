@@ -347,7 +347,7 @@ const collegePrograms = {
         "BSEE"
     ],
 
-    "College of Information Technology": [
+    "College of Information Technology & Computer Studies": [
         "BSIT",
         "BSCS",
         "BSIS"
@@ -506,22 +506,22 @@ if (subjectFilter) {
 if (instructorFilter) {
     const selectedInstructor = instructorFilter.value;
 
-    const instructors = [...new Set(
-        adminQuizzes
-            .map(quiz => (quiz.instructor || '').trim())
-            .filter(instructor => instructor !== '')
+    const instructorNames = [...new Set(
+        [...instructors, ...adminQuizzes]
+            .map(item => (item.name || item.instructor || '').trim())
+            .filter(Boolean)
     )].sort();
 
     instructorFilter.innerHTML = '<option value="">All Instructors</option>';
 
-    instructors.forEach(instructor => {
+    instructorNames.forEach(instructor => {
         const option = document.createElement('option');
         option.value = instructor;
         option.textContent = instructor;
         instructorFilter.appendChild(option);
     });
 
-    instructorFilter.value = instructors.includes(selectedInstructor)
+    instructorFilter.value = instructorNames.includes(selectedInstructor)
         ? selectedInstructor
         : '';
 }
@@ -950,8 +950,8 @@ function renderUsers(list, page = 1) {
 
             <div>
                 <span
-                    class="lb-level-badge lb-level-sm"
-                    title="${label}"
+                    class="lb-level-badge lb-level-sm student-level student-level-${lvl}"
+                    title="Level ${lvl} - ${label}"
                 >
                     Lv.${lvl}
                 </span>
@@ -1686,234 +1686,294 @@ if (!studentsLoaded) {
 
 /* ── INSTRUCTORS ────────────────────────────────────────────── */
 function renderInstructors(list, page = 1) {
-
     const el = document.getElementById('instr-table-body');
-
     if (!el) return;
-
     const sourceRows = list;
     list = adminPageRows(list, el, page, next => renderInstructors(sourceRows, next)).rows;
     if (!list.length) {
-        el.innerHTML = `
-            <div class="empty-state">
-                <span class="emoji">🔍</span>
-                <p>No instructors found.</p>
-            </div>
-        `;
+        el.innerHTML = '<div class="empty-state"><span class="emoji">🔍</span><p>No instructors found.</p></div>';
         return;
     }
-
     el.innerHTML = list.map((r, i) => {
-
-        const initials = r.name
-            .replace(/^(Dr\.|Prof\.)\s*/i, '')
-            .split(' ')
-            .filter(Boolean)
-            .map(n => n[0])
-            .slice(0, 2)
-            .join('')
-            .toUpperCase();
-
-        /*
-         * Find the instructor's real position
-         * in the main instructors array.
-         *
-         * This prevents View/Deactivate from
-         * targeting the wrong instructor after filtering.
-         */
-        const instructorIndex = instructors.findIndex(
-            instructor =>
-                instructor.instructor_id === r.instructor_id
-        );
-
-        return `
-            <div class="a-table-row instr-row">
-
-                <!-- Instructor -->
-                <div class="cell-user">
-
-                    <div
-                        class="u-avatar"
-                        style="background:${avatarColors[i % avatarColors.length]}"
-                    >
-                        ${initials}
-                    </div>
-
-                    <div>
-                        <div class="u-name">
-                            ${r.name}
-                        </div>
-
-                        <div class="u-id">
-                            ${r.id}
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- College -->
-                <div class="cell">
-                    ${r.college || 'N/A'}
-                </div>
-
-                <!-- Teaching XP -->
-                <div class="cell xp-cell">
-                    ⭐ ${Number(
-                        r.teaching_exp || 0
-                    ).toLocaleString()} EXP
-                </div>
-
-                <!-- Instructor rank -->
-                <div class="cell instructor-rank-cell"><strong class="teaching-rank" data-rank="${lbEscape(r.grade || '')}">${lbEscape(r.grade || 'Not ranked')}</strong></div>
-
-                <!-- Status -->
-                <div>
-                    <span class="status-badge ${
-                        r.status === 'Active'
-                            ? 'sb-active'
-                            : 'sb-inactive'
-                    }">
-                        ${r.status}
-                    </span>
-                </div>
-
-                <!-- Actions -->
-                <div style="display:flex;gap:.4rem">
-
-                    <button
-                        type="button"
-                        class="btn-sm btn-sm-view"
-                        onclick="viewInstructor(${instructorIndex})"
-                    >
-                        View
-                    </button>
-
-                    <button
-                        type="button"
-                        class="btn-sm btn-sm-view"
-                        onclick="openInstructorGrade(${instructorIndex})"
-                    >
-                        Grade
-                    </button>
-
-                    <button
-                        type="button"
-                        class="btn-sm btn-sm-danger"
-                        onclick="toggleInstructorStatus(${instructorIndex})"
-                    >
-                        ${
-                            r.status === 'Active'
-                                ? 'Deactivate'
-                                : 'Activate'
-                        }
-                    </button>
-
-                </div>
-
-            </div>
-        `;
+        const instructorIndex = instructors.findIndex(item => item.instructor_id === r.instructor_id);
+        const initials = r.name.replace(/^(Dr\.|Prof\.)\s*/i, '').split(/\s+/).filter(Boolean).map(n => n[0]).slice(0,2).join('').toUpperCase();
+        return `<div class="a-table-row instr-row">
+          <div class="cell-user instructor-list-identity"><div class="u-avatar" style="background:${avatarColors[i % avatarColors.length]}">${annEscape(initials)}</div><div><div class="u-name">${annEscape(r.name)}</div><div class="u-id">${annEscape(r.id)}</div></div></div>
+          <div class="cell">${annEscape(r.college || 'N/A')}</div>
+          <div class="cell xp-cell">⭐ ${Number(r.teaching_exp || 0).toLocaleString()} XP</div>
+          <div class="cell instructor-rank-cell"><strong class="teaching-rank" data-rank="${lbEscape(r.grade || '')}">${lbEscape(r.grade || 'Not ranked')}</strong></div>
+          <div><span class="status-badge ${r.status === 'Active' ? 'sb-active' : 'sb-inactive'}">${annEscape(r.status || 'Active')}</span></div>
+          <div class="instructor-list-actions">
+            <button type="button" class="btn-sm btn-sm-view" onclick="viewInstructor(${instructorIndex})">View</button>
+            <button type="button" class="btn-sm btn-sm-view" onclick="openInstructorGrade(${instructorIndex})">Grade</button>
+            <button type="button" class="btn-sm btn-sm-danger" onclick="toggleInstructorStatus(${instructorIndex})">${r.status === 'Active' ? 'Deactivate' : 'Activate'}</button>
+          </div>
+        </div>`;
     }).join('');
 }
 
 function filterInstructors() {
-  const q       = document.getElementById('instr-search').value.toLowerCase();
+  const q = document.getElementById('instr-search').value.trim().toLowerCase();
   const college = document.getElementById('instr-college-filter').value;
+  const program = document.getElementById('instr-program-filter').value;
+  const status = document.getElementById('instr-status-filter').value;
   let list = instructors;
-  if (q)       list = list.filter(r => r.name.toLowerCase().includes(q) || r.id.toLowerCase().includes(q));
+  if (q) list = list.filter(r => r.name.toLowerCase().includes(q) || r.id.toLowerCase().includes(q));
   if (college) list = list.filter(r => r.college === college);
+  if (program) list = list.filter(r => r.program === program);
+  if (status) list = list.filter(r => r.status === status);
   renderInstructors(list);
 }
+function onInstructorCollegeFilterChange() {
+  const college = document.getElementById('instr-college-filter').value;
+  const select = document.getElementById('instr-program-filter');
+  const current = select.value; select.replaceChildren(new Option('All Programs',''));
+  [...new Set(instructors.filter(r => !college || r.college === college).map(r => r.program).filter(Boolean))].sort().forEach(value => select.add(new Option(value,value)));
+  select.value = [...select.options].some(option => option.value === current) ? current : '';
+  filterInstructors();
+}
+function clearInstructorFilters() {
+  document.getElementById('instr-search').value = '';
+  document.getElementById('instr-college-filter').value = '';
+  document.getElementById('instr-status-filter').value = '';
+  onInstructorCollegeFilterChange();
+}
 
-const instructorPrograms = {
+let instructorOptionsRequestId = 0;
+let instructorAssignments = [];
+let instructorAvailableSubjects = [];
+let instructorSubjectsLoading = false;
+let instructorAssignmentRowId = 0;
 
-    CITCS: [
-        "BSIT",
-        "BSCS",
-        "BSIS"
-    ],
-
-    CAS: [
-        "BS Psych",
-        "BA Communication"
-    ],
-
-    CBA: [
-        "BSBA",
-        "BSA"
-    ],
-
-    COA: [
-        "BS Architecture"
-    ],
-
-    CCJ: [
-        "BS Criminology"
-    ],
-
-    COM: [
-        "Doctor of Medicine"
-    ],
-
-    CTE: [
-        "BEEd",
-        "BSEd"
-    ]
-
-};
-
-
-function updateInstructorPrograms() {
-
-    const college =
-        document.getElementById('instr-college').value;
-
-    const programSelect =
-        document.getElementById('instr-program');
-
-    // Reset program dropdown
-    programSelect.innerHTML = '';
-
-    // No college selected
-    if (!college) {
-
-        programSelect.disabled = true;
-
-        programSelect.innerHTML = `
-            <option value="">
-                Select a college first
-            </option>
-        `;
-
-        return;
+async function updateInstructorPrograms() {
+    const college = document.getElementById('instr-college').value;
+    const programSelect = document.getElementById('instr-program');
+    const requestId = ++instructorOptionsRequestId;
+    programSelect.replaceChildren(new Option(college ? 'Loading programs...' : 'Select a college first', ''));
+    programSelect.disabled = !college;
+    resetInstructorAssignments();
+    if (!college) return;
+    try {
+        const data = await fetchInstructorAssignmentOptions(college);
+        if (requestId !== instructorOptionsRequestId) return;
+        programSelect.replaceChildren(new Option('Select Program',''));
+        data.programs.forEach(value => programSelect.add(new Option(value,value)));
+        programSelect.disabled = data.programs.length === 0;
+    } catch(error) {
+        if (requestId === instructorOptionsRequestId) showToast('⚠️', error.message);
     }
+}
 
-    const programs =
-        instructorPrograms[college] || [];
+async function fetchInstructorAssignmentOptions(college='', program='', subjects=[]) {
+    const params = new URLSearchParams();
+    if (college) params.set('college', college);
+    if (program) params.set('program', program);
+    subjects.forEach(subject => params.append('subjects[]', subject));
+    const response=await fetch('../assets/php/get_admin_assignment_options.php?'+params,{credentials:'include',cache:'no-store'});
+    const data=await response.json();if(!response.ok||!data.success)throw new Error(data.message||'Could not load program options.');return data;
+}
 
-    // Enable program dropdown
-    programSelect.disabled = false;
+function resetInstructorAssignments() {
+    instructorAssignments = [];
+    instructorAvailableSubjects = [];
+    instructorSubjectsLoading = false;
+    renderInstructorAssignments();
+}
 
-    // Default option
-    programSelect.innerHTML = `
-        <option value="">
-            Select Program
-        </option>
-    `;
+function renderInstructorAssignments() {
+    const container = document.getElementById('instr-assignment-rows');
+    if (!container) return;
+    const college = document.getElementById('instr-college').value;
+    const program = document.getElementById('instr-program').value;
+    container.replaceChildren();
 
-    // Add programs
-    programs.forEach(program => {
+    const createSubjectSelect = (assignment, index) => {
+        const select = document.createElement('select');
+        select.className = 'admin-assignment-select';
+        select.setAttribute('aria-label', `Subject ${index + 1}`);
+        const placeholder = !college
+            ? 'Select a college first'
+            : !program
+                ? 'Select a program first'
+                : instructorSubjectsLoading
+                    ? 'Loading subjects...'
+                    : instructorAvailableSubjects.length
+                        ? 'Select a subject'
+                        : 'No subjects available';
+        select.add(new Option(placeholder, ''));
+        instructorAvailableSubjects.forEach(subject => select.add(new Option(subject, subject)));
+        select.value = assignment?.subject || '';
+        select.disabled = !college || !program || instructorSubjectsLoading || instructorAvailableSubjects.length === 0;
+        select.addEventListener('change', () => {
+            if (!assignment) {
+                if (select.value) addInstructorSubject(select.value);
+                return;
+            }
+            if (select.value) changeInstructorSubject(assignment.id, select.value);
+            else removeInstructorSubject(assignment.id);
+        });
+        return select;
+    };
 
-        const option =
-            document.createElement('option');
+    instructorAssignments.forEach((assignment, index) => {
+        const card = document.createElement('div');
+        card.className = 'admin-assignment-card';
+        const subjectLabel = document.createElement('label');
+        subjectLabel.className = 'admin-assignment-field-label';
+        subjectLabel.textContent = `Subject ${index + 1}`;
+        subjectLabel.appendChild(createSubjectSelect(assignment, index));
+        card.appendChild(subjectLabel);
 
-        option.value = program;
-        option.textContent = program;
+        const sectionGroup = document.createElement('div');
+        sectionGroup.className = 'admin-assignment-sections';
+        const sectionLabel = document.createElement('div');
+        sectionLabel.className = 'admin-assignment-field-label';
+        sectionLabel.textContent = `Sections for ${assignment.subject}`;
+        sectionGroup.appendChild(sectionLabel);
 
-        programSelect.appendChild(option);
-
+        const sectionSelectors = document.createElement('div');
+        sectionSelectors.className = 'admin-assignment-selectors';
+        const slots = assignment.sections.length < assignment.sectionOptions.length
+            ? [...assignment.sections, '']
+            : assignment.sections;
+        if (!slots.length) slots.push('');
+        slots.forEach((section, sectionIndex) => {
+            const select = document.createElement('select');
+            select.className = 'admin-assignment-select';
+            select.setAttribute('aria-label', `Section ${sectionIndex + 1} for ${assignment.subject}`);
+            const placeholder = assignment.loading
+                ? 'Loading sections...'
+                : assignment.error
+                    ? 'Could not load sections'
+                    : assignment.sectionOptions.length
+                        ? 'Select a section'
+                        : 'No sections available for this subject';
+            select.add(new Option(placeholder, ''));
+            assignment.sectionOptions.forEach(option => select.add(new Option(option, option)));
+            select.value = section;
+            select.disabled = assignment.loading || assignment.sectionOptions.length === 0;
+            select.addEventListener('change', () => {
+                const nextSections = [...assignment.sections];
+                if (select.value) {
+                    if (sectionIndex < nextSections.length) nextSections[sectionIndex] = select.value;
+                    else nextSections.push(select.value);
+                } else {
+                    nextSections.splice(sectionIndex, 1);
+                }
+                assignment.sections = nextSections.filter(Boolean);
+                renderInstructorAssignments();
+            });
+            sectionSelectors.appendChild(select);
+        });
+        sectionGroup.appendChild(sectionSelectors);
+        card.appendChild(sectionGroup);
+        container.appendChild(card);
     });
 
+    if (!college || !program || instructorAvailableSubjects.length > 0) {
+        const card = document.createElement('div');
+        card.className = 'admin-assignment-card admin-assignment-subject-next';
+        const label = document.createElement('label');
+        label.className = 'admin-assignment-field-label';
+        label.textContent = `Subject ${instructorAssignments.length + 1}`;
+        label.appendChild(createSubjectSelect(null, instructorAssignments.length));
+        card.appendChild(label);
+        if (!instructorAssignments.length) {
+            const sectionLabel = document.createElement('label');
+            sectionLabel.className = 'admin-assignment-field-label';
+            sectionLabel.textContent = 'Sections';
+            const sectionSelect = document.createElement('select');
+            sectionSelect.className = 'admin-assignment-select';
+            sectionSelect.setAttribute('aria-label', 'Section');
+            sectionSelect.add(new Option('Select a subject first', ''));
+            sectionSelect.disabled = true;
+            sectionLabel.appendChild(sectionSelect);
+            card.appendChild(sectionLabel);
+        }
+        container.appendChild(card);
+    }
 }
+
+async function loadInstructorSubjects(college, program) {
+    const requestId = ++instructorOptionsRequestId;
+    instructorAssignments = [];
+    instructorAvailableSubjects = [];
+    instructorSubjectsLoading = Boolean(college && program);
+    renderInstructorAssignments();
+    if (!college || !program) return;
+    try {
+        const data = await fetchInstructorAssignmentOptions(college, program);
+        if (requestId !== instructorOptionsRequestId) return;
+        instructorAvailableSubjects = data.subjects;
+        instructorSubjectsLoading = false;
+        renderInstructorAssignments();
+    } catch (error) {
+        if (requestId !== instructorOptionsRequestId) return;
+        instructorSubjectsLoading = false;
+        renderInstructorAssignments();
+        showToast('⚠️', error.message);
+    }
+}
+
+function addInstructorSubject(subject) {
+    const college = document.getElementById('instr-college').value;
+    const program = document.getElementById('instr-program').value;
+    if (!college || !program || !subject) return;
+    const assignment = {
+        id: ++instructorAssignmentRowId,
+        subject,
+        sections: [],
+        sectionOptions: [],
+        loading: true,
+        error: ''
+    };
+    instructorAssignments.push(assignment);
+    renderInstructorAssignments();
+    loadInstructorSections(assignment, college, program);
+}
+
+function changeInstructorSubject(id, subject) {
+    const assignment = instructorAssignments.find(item => item.id === id);
+    if (!assignment) return;
+    assignment.subject = subject;
+    assignment.sections = [];
+    assignment.sectionOptions = [];
+    assignment.loading = true;
+    assignment.error = '';
+    const college = document.getElementById('instr-college').value;
+    const program = document.getElementById('instr-program').value;
+    renderInstructorAssignments();
+    loadInstructorSections(assignment, college, program);
+}
+
+function removeInstructorSubject(id) {
+    instructorAssignments = instructorAssignments.filter(item => item.id !== id);
+    renderInstructorAssignments();
+}
+
+async function loadInstructorSections(assignment, college, program) {
+    const subject = assignment.subject;
+    try {
+        const data = await fetchInstructorAssignmentOptions(college, program, [subject]);
+        const currentAssignment = instructorAssignments.find(item => item.id === assignment.id);
+        if (currentAssignment !== assignment || assignment.subject !== subject ||
+            document.getElementById('instr-college').value !== college ||
+            document.getElementById('instr-program').value !== program) return;
+        assignment.sectionOptions = data.sections;
+        assignment.loading = false;
+        renderInstructorAssignments();
+    } catch (error) {
+        const currentAssignment = instructorAssignments.find(item => item.id === assignment.id);
+        if (currentAssignment !== assignment || assignment.subject !== subject ||
+            document.getElementById('instr-college').value !== college ||
+            document.getElementById('instr-program').value !== program) return;
+        assignment.loading = false;
+        assignment.error = error.message;
+        renderInstructorAssignments();
+        showToast('⚠️', error.message);
+    }
+}
+
 
 async function saveInstructor() {
 
@@ -1943,6 +2003,13 @@ async function saveInstructor() {
             document.getElementById('instr-teaching-exp')?.value || 0
         );
 
+    const assignments = instructorAssignments
+        .filter(assignment => assignment.subject)
+        .map(assignment => ({
+            subject: assignment.subject,
+            sections: assignment.sections
+        }));
+
 
     // VALIDATION
     if (
@@ -1952,7 +2019,7 @@ async function saveInstructor() {
         !lastName ||
         !college ||
         !program ||
-        !password
+        !password || !assignments.length || assignments.some(assignment => !assignment.sections.length)
     ) {
 
         showToast(
@@ -2032,7 +2099,8 @@ async function saveInstructor() {
                         password,
 
                     teaching_exp:
-                        teachingExp
+                        teachingExp,
+                    assignments
 
                 })
             }
@@ -2075,6 +2143,7 @@ async function saveInstructor() {
         document.getElementById(
             'instr-college'
         ).value = '';
+        updateInstructorPrograms();
 
         document.getElementById(
             'instr-program'
@@ -3085,6 +3154,22 @@ async function loadStudentsFromDatabase() {
     }
 }
 
+function populateInstructorCollegeFilter() {
+    const select = document.getElementById('instr-college-filter'); if (!select) return;
+    const current = select.value; select.replaceChildren(new Option('All Colleges', ''));
+    [...new Set(instructors.map(item => item.college).filter(Boolean))].sort().forEach(value => select.add(new Option(value, value)));
+    select.value = [...select.options].some(option => option.value === current) ? current : '';
+    onInstructorCollegeFilterChange();
+}
+
+async function loadInstructorColleges() {
+    const response = await fetch('../assets/php/get_admin_assignment_options.php', {credentials:'include',cache:'no-store'});
+    const data = await response.json(); if (!response.ok || !data.success) throw new Error(data.message || 'Could not load assignment options.');
+    const select = document.getElementById('instr-college');
+    select.replaceChildren(new Option('Select College', ''));
+    data.colleges.forEach(value => select.add(new Option(value, value)));
+}
+
 async function loadInstructorsFromDatabase() {
 
     try {
@@ -3143,7 +3228,8 @@ course_alignment: instructor.course_alignment ?? null,
 evaluation_updated_at: instructor.evaluation_updated_at ?? null,
 
 status:
-    instructor.status || 'Active'
+    instructor.status || 'Active',
+subjects: instructor.subjects || [], sections: instructor.sections || []
         }));
 
         console.log(
@@ -3152,6 +3238,8 @@ status:
         );
 
         renderInstructors(instructors);
+        populateInstructorCollegeFilter();
+        await loadInstructorColleges().catch(error => showToast('⚠️', error.message));
 
     } catch (error) {
 
@@ -3179,6 +3267,7 @@ status:
 
 /* ── INIT ───────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', async () => {
+    resetInstructorAssignments();
     renderOverview();
     loadAdminOverview();
 

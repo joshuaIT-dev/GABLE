@@ -57,6 +57,20 @@ try {
         ];
     }
 
+    $assignmentResult = $conn->query('SELECT instructor_id, subject_name, section FROM teaching_assignments ORDER BY subject_name, section');
+    $assignmentMap = [];
+    while ($assignment = $assignmentResult->fetch_assoc()) {
+        $key = (int)$assignment['instructor_id'];
+        $assignmentMap[$key]['subjects'][$assignment['subject_name']] = true;
+        $assignmentMap[$key]['sections'][$assignment['section']] = true;
+    }
+    foreach ($instructors as &$instructor) {
+        $map = $assignmentMap[$instructor['instructor_id']] ?? [];
+        $instructor['subjects'] = array_keys($map['subjects'] ?? []);
+        $instructor['sections'] = array_keys($map['sections'] ?? []);
+    }
+    unset($instructor);
+
     echo json_encode([
         'success' => true,
         'instructors' => $instructors

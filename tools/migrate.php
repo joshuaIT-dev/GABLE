@@ -5,7 +5,14 @@ $db=getConnection(false);$name=str_replace('`','``',DB_NAME);$db->query("CREATE 
 $db->query('CREATE TABLE IF NOT EXISTS schema_migrations(name VARCHAR(255) PRIMARY KEY,applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)');
 $directory=__DIR__.'/../assets/sql/';
 function migration_run(mysqli $db,string $file): void {
- $db->multi_query(file_get_contents($file));do{if($r=$db->store_result())$r->free();}while($db->more_results()&&$db->next_result());
+ $sql=file_get_contents($file);
+ if($sql===false)throw new RuntimeException("Could not read migration: $file");
+ if(!$db->multi_query($sql))throw new RuntimeException("Could not execute migration $file: ".$db->error);
+ do {
+  if($result=$db->store_result())$result->free();
+  if(!$db->more_results())break;
+  if(!$db->next_result())throw new RuntimeException("Migration failed in $file: ".$db->error);
+ } while(true);
 }
 $baseline='00000000_baseline.sql';
 if(!$db->query("SELECT name FROM schema_migrations WHERE name='$baseline'")->num_rows){

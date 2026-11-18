@@ -43,8 +43,6 @@ try {
     $teaching_exp =
         (int)($input['teaching_exp'] ?? 0);
 
-
-    // REQUIRED FIELDS
     if (
         $instructor_number === '' ||
         $email === '' ||
@@ -54,11 +52,89 @@ try {
         $program === '' ||
         $password === ''
     ) {
-
-        throw new Exception(
-            'Please complete all required fields.'
-        );
+        throw new Exception('Please complete all required fields.');
     }
+
+    $rawAssignments = $input['assignments'] ?? null;
+    if (!is_array($rawAssignments) || !$rawAssignments) {
+        throw new Exception('Choose at least one subject and section.');
+    }
+    $assignments = [];
+    foreach ($rawAssignments as $rawAssignment) {
+        if (!is_array($rawAssignment)) {
+            throw new Exception('Each subject must have its own section selections.');
+        }
+        $subject = trim((string)($rawAssignment['subject'] ?? ''));
+        $rawSections = $rawAssignment['sections'] ?? null;
+        if ($subject === '' || !is_array($rawSections)) {
+            throw new Exception('Choose a subject and its section selections.');
+        }
+        $sections = [];
+        foreach ($rawSections as $rawSection) {
+            $section = trim((string)$rawSection);
+            if ($section !== '') $sections[] = $section;
+        }
+        if (!$sections) {
+            throw new Exception('Choose at least one section for each subject.');
+        }
+        $assignments[] = [
+            'subject' => $subject,
+            'sections' => $sections
+        ];
+    }
+
+    $programCheck=$conn->prepare('SELECT student_id FROM student WHERE college=? AND program=? LIMIT 1');
+    $programCheck->bind_param('ss',$college,$program);$programCheck->execute();
+    if(!$programCheck->get_result()->num_rows)throw new Exception('Choose a program listed under the selected college.');
+    $programCheck->close();
+    $yearCheck = $conn->prepare('SELECT DISTINCT year_level FROM student WHERE college=? AND program=? AND year_level IS NOT NULL');
+    $yearCheck->bind_param('ss', $college, $program);
+    $yearCheck->execute();
+    $validSections = [];
+    foreach ($yearCheck->get_result()->fetch_all(MYSQLI_ASSOC) as $row) {
+        foreach (range('A', 'Z') as $block) {
+            $validSections[] = trim($program) . ' ' . $row['year_level'] . $block;
+        }
+    }
+    $yearCheck->close();
+    $subjectCheck = $conn->prepare("
+        SELECT ta.assignment_id
+        FROM teaching_assignments ta
+        JOIN student s
+          ON CONVERT(TRIM(ta.section) USING utf8mb4) COLLATE utf8mb4_unicode_ci =
+             CONVERT(CONCAT(TRIM(s.program), ' ', s.year_level, TRIM(s.block)) USING utf8mb4) COLLATE utf8mb4_unicode_ci
+        WHERE s.college = ? AND s.program = ? AND ta.subject_name = ?
+        UNION
+        SELECT q.quiz_id
+        FROM quizzes q
+        JOIN student s
+          ON CONVERT(TRIM(q.section) USING utf8mb4) COLLATE utf8mb4_unicode_ci =
+             CONVERT(CONCAT(TRIM(s.program), ' ', s.year_level, TRIM(s.block)) USING utf8mb4) COLLATE utf8mb4_unicode_ci
+        WHERE s.college = ? AND s.program = ? AND q.subject = ?
+        LIMIT 1
+    ");
+    foreach ($assignments as $assignment) {
+        $subject = $assignment['subject'];
+        $subjectCheck->bind_param(
+            'ssssss',
+            $college,
+            $program,
+            $subject,
+            $college,
+            $program,
+            $subject
+        );
+        $subjectCheck->execute();
+        if (!$subjectCheck->get_result()->num_rows) {
+            throw new Exception('Choose a subject listed under the selected program.');
+        }
+        foreach ($assignment['sections'] as $section) {
+            if (!in_array($section, $validSections, true)) {
+                throw new Exception('Choose a section from A to Z for the selected program.');
+            }
+        }
+    }
+    $subjectCheck->close();
 
 
     // EMAIL
@@ -171,7 +247,8 @@ try {
         );
 
 
-    // INSERT
+    // Save the account and its initial subject-section assignments together.
+    $conn->begin_transaction();
     $stmt = $conn->prepare("
         INSERT INTO instructor (
             instructor_number,
@@ -216,11 +293,18 @@ try {
     }
 
 
-    $new_id =
-        $conn->insert_id;
-
-
+    $new_id = $conn->insert_id;
     $stmt->close();
+    $assignment = $conn->prepare("INSERT INTO teaching_assignments (instructor_id, subject_name, section, assignment_type) VALUES (?, ?, ?, 'Lecture')");
+    foreach ($assignments as $instructorAssignment) {
+        foreach ($instructorAssignment['sections'] as $section) {
+            $subject = $instructorAssignment['subject'];
+            $assignment->bind_param('iss', $new_id, $subject, $section);
+            if (!$assignment->execute()) throw new Exception($assignment->error);
+        }
+    }
+    $assignment->close();
+    $conn->commit();
     $conn->close();
 
 
@@ -234,7 +318,7 @@ try {
 
 
 } catch (Throwable $e) {
-
+    if (isset($conn) && $conn instanceof mysqli && $conn->thread_id) $conn->rollback();
     http_response_code(400);
 
     echo json_encode([

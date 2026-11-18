@@ -16,7 +16,7 @@ Reset restarts all student XP, levels, frames, unused power-ups and streaks. Qui
 
 The initial period includes existing XP because older records have no semester assignment. The first reset establishes a clean boundary. The legacy database field `student_reward_progress.lifetime_xp` now stores only current-semester progression and is cleared on reset.
 
-Run `C:\xampp\php\php.exe tools\test_student_semester.php` to validate the export and reset. This test creates and drops a separate, uniquely named database; it never resets application accounts.
+Semester reset behavior is implemented in `assets/php/student_semester_service.php` and exposed to administrators through `assets/js/admin/student-semester.js` and `assets/php/admin_student_semester.php`. The repository does not currently include a dedicated semester integration-test script; verify reset workflows against a non-production database before using them on live accounts.
 
 
 ## Roles and portals
@@ -25,6 +25,12 @@ Run `C:\xampp\php\php.exe tools\test_student_semester.php` to validate the expor
 - **Instructor** - manage quizzes and classes, review submissions and syllabus alignment, and view teaching XP and rank. Main pages: `pages/Instructor.html` and `pages/Idashboard.html`.
 - **Administrator** - manage users, quizzes, settings, reports, announcements, and instructor evaluations. Main page: `pages/Admin.html`.
 - **Public pages** - `pages/Index.html`, `pages/Features.html`, `pages/About.html`, `pages/Help.html`, and `pages/Login.html`.
+
+## Academic assignments
+
+The current college name is **College of Information Technology & Computer Studies (CITCS)**, and the Information Technology program is **BSIT**. The `20261119_normalize_citcs_bsit.sql` migration updates existing student, instructor, and administrator records; the follow-up `20261119_normalize_bsit_section_labels.sql` migration updates legacy quiz and teaching-assignment section labels so they continue matching BSIT students.
+
+Section labels use the format `<program> <year><block>`, such as `BSIT 1A`. The Add Student/User form supports block letters A–Z. When adding an instructor, select a college and program, then assign each subject its own one-or-more sections; assignments are saved as subject-section pairs.
 
 ## Technology
 
@@ -56,7 +62,7 @@ full_system.sql    Complete schema snapshot for database import
    C:\xampp\php\php.exe tools\migrate.php
    ```
 
-   This creates the database if needed, applies the baseline and any unapplied migrations in `assets/sql/`, and records them in `schema_migrations`. If you import `full_system.sql` instead, run the migration command afterward to apply newer changes, including semester XP. The snapshot contains schema, not application records.
+   This creates the database if needed, applies the baseline and any unapplied migrations in `assets/sql/`, and records them in `schema_migrations`. This includes data migrations that normalize existing college, program, and section labels. If you import `full_system.sql` instead, run the migration command afterward to apply newer changes, including semester XP. The snapshot contains schema, not application records.
 
 5. Create an administrator with the CLI tool `tools/create_admin.php`. It reads a JSON object from standard input with `admin_number`, `first_name`, `last_name`, and `password` fields. Use a unique administrator number and a password 8 to 72 bytes long.
 6. Sign in through `pages/Login.html` and choose the account role.

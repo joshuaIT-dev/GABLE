@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="../assets/css/lucide-icons.css">
 <link rel="stylesheet" href="../assets/css/actions.css">
 <link rel="stylesheet" href="../assets/css/syllabus.css?v=214">
-<link rel="stylesheet" href="../assets/css/admin/workspace.css?v=12">
+<link rel="stylesheet" href="../assets/css/admin/workspace.css?v=17">
 <link rel="stylesheet" href="../assets/css/brand-text.css?v=4">
 <link rel="stylesheet" href="../assets/css/surfaces.css?v=2">
     <script src="../cursor/cursor.js"></script>
@@ -206,19 +206,18 @@
                 <button class="btn-primary" onclick="openModal('modal-add-instr')">+ Add Instructor</button>
             </div>
             <div class="filter-row fade-up-1">
-                <div class="a-search"><span>🔍</span><input type="text" id="instr-search" aria-label="instr search" placeholder="Search instructor..." oninput="filterInstructors()"></div>
-                <select class="a-select" id="instr-college-filter" aria-label="instr college filter" onchange="filterInstructors()">
-          <option value="">All Colleges</option>
-          <option>CITCS</option><option>CAS</option><option>CBA</option>
-          <option>COA</option><option>CCJ</option><option>COM</option><option>CTE</option>
-        </select>
+                <div class="a-search"><span aria-hidden="true">?</span><input type="text" id="instr-search" aria-label="Search instructors" placeholder="Search by name or ID" oninput="filterInstructors()"></div>
+                <select class="a-select" id="instr-college-filter" aria-label="Filter instructors by college" onchange="onInstructorCollegeFilterChange()"><option value="">All Colleges</option></select>
+                <select class="a-select" id="instr-program-filter" aria-label="Filter instructors by program" onchange="filterInstructors()"><option value="">All Programs</option></select>
+                <select class="a-select" id="instr-status-filter" aria-label="Filter instructors by status" onchange="filterInstructors()"><option value="">All Status</option><option value="Active">Active</option><option value="Inactive">Inactive</option></select>
+                <button type="button" class="btn-sm btn-sm-view" onclick="clearInstructorFilters()">Clear</button>
             </div>
             <div class="a-table fade-up-2">
                 <div class="a-table-head instr-head">
                     <div>Instructor</div>
                     <div>College</div>
                     <div>Teaching XP</div>
-                    <div>Grade</div>
+                    <div>Rank</div>
                     <div>Status</div>
                     <div>Actions</div>
                 </div>
@@ -529,8 +528,8 @@
         >
             <option value="">Select College</option>
             <option value="College of Engineering">College of Engineering</option>
-            <option value="College of Information Technology">
-                College of Information Technology
+            <option value="College of Information Technology &amp; Computer Studies">
+                College of Information Technology &amp; Computer Studies
             </option>
             <option value="College of Education">College of Education</option>
             <option value="College of Business">College of Business</option>
@@ -601,6 +600,27 @@
                         <option value="B">B</option>
                         <option value="C">C</option>
                         <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                        <option value="G">G</option>
+                        <option value="H">H</option>
+                        <option value="I">I</option>
+                        <option value="J">J</option>
+                        <option value="K">K</option>
+                        <option value="L">L</option>
+                        <option value="M">M</option>
+                        <option value="N">N</option>
+                        <option value="O">O</option>
+                        <option value="P">P</option>
+                        <option value="Q">Q</option>
+                        <option value="R">R</option>
+                        <option value="S">S</option>
+                        <option value="T">T</option>
+                        <option value="U">U</option>
+                        <option value="V">V</option>
+                        <option value="W">W</option>
+                        <option value="X">X</option>
+                        <option value="Y">Y</option>
                         <option value="Z">Z</option>
 
                     </select>
@@ -767,13 +787,6 @@
                         Select College
                     </option>
 
-                    <option value="CITCS">CITCS</option>
-                    <option value="CAS">CAS</option>
-                    <option value="CBA">CBA</option>
-                    <option value="COA">COA</option>
-                    <option value="CCJ">CCJ</option>
-                    <option value="COM">COM</option>
-                    <option value="CTE">CTE</option>
                 </select>
 
             </div>
@@ -784,6 +797,7 @@
 
                 <select
                     id="instr-program"
+                    onchange="loadInstructorSubjects(document.getElementById('instr-college').value, this.value)"
                     disabled
                 >
                     <option value="">
@@ -794,6 +808,13 @@
             </div>
 
         </div>
+
+
+        <div class="admin-instructor-assignment-fields">
+            <div class="admin-instructor-assignment-label">Subject and section assignments</div>
+            <div id="instr-assignment-rows" class="admin-assignment-rows"></div>
+        </div>
+        <p class="admin-assignment-hint">Choose a college and program first. Each subject can be connected to one or more sections.</p>
 
         <!-- PASSWORD -->
         <div style="margin-bottom:1rem">
@@ -909,9 +930,9 @@
 
 <div class="modal-overlay" id="modal-remove-quiz" role="dialog" aria-modal="true" aria-labelledby="admin-remove-title"><div class="modal"><button class="modal-close" aria-label="Close" onclick="closeModal('modal-remove-quiz')">&times;</button><h2 id="admin-remove-title">Remove quiz</h2><p id="admin-remove-name" class="admin-dialog-subtitle"></p><p class="admin-detail-note">This removes the quiz from active listings. Existing records are retained.</p><label for="admin-remove-text">Type <strong>REMOVE</strong> to confirm</label><input id="admin-remove-text" autocomplete="off" spellcheck="false"><div class="modal-footer"><button class="btn-secondary" onclick="closeModal('modal-remove-quiz')">Cancel</button><button id="admin-remove-confirm" class="btn-danger-full" disabled>Remove quiz</button></div></div></div>
 <div class="modal-overlay" id="modal-profile" role="dialog" aria-modal="true" aria-labelledby="admin-profile-title"><div class="modal admin-account-dialog"><header class="admin-account-header"><div><span class="admin-eyebrow">YOUR ACCOUNT</span><h2 id="admin-profile-title">Administrator profile</h2></div><button class="modal-close" aria-label="Close profile" onclick="closeModal('modal-profile')"><i data-lucide="x" aria-hidden="true"></i></button></header><div class="admin-account-body"><div class="admin-account-identity"><span class="admin-account-avatar" aria-hidden="true">AD</span><div><h3>System administrator</h3><p>GABLE management portal</p></div></div><dl class="admin-detail-grid"><div><dt>Account role</dt><dd>Administrator</dd></div><div><dt>Permissions</dt><dd>System management</dd></div></dl><p class="admin-account-caption">Manage users, review teaching quality and configure the learning platform.</p></div><footer class="admin-account-footer"><button class="btn-secondary" onclick="closeModal('modal-profile');switchTab('settings')">Open settings</button><button class="btn-primary" onclick="closeModal('modal-profile')">Done</button></footer></div></div>
-    <script src="../assets/js/main.js?v=7"></script>
+    <script src="../assets/js/main.js?v=8"></script>
 <script src="../assets/js/academic-document.js"></script>
-    <script src="../assets/js/admin.js?v=12"></script>
+    <script src="../assets/js/admin.js?v=19"></script>
 
     <!-- AI integration -->
     <script src="../assets/js/admin/anomaly.js"></script>

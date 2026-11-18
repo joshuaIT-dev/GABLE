@@ -202,11 +202,14 @@ function navigateTo(href) {
 
 /* ── SHARED LOGOUT ───────────────────────────────────────────── */
 function logout(dest = 'Index.html') {
-  showToast('👋', 'Logging out…');
-
-  setTimeout(() => {
-    navigateTo(dest);
-  }, 900);
+  const role = document.body.classList.contains('admin-portal') ? 'admin'
+    : document.body.classList.contains('instructor-portal') ? 'instructor' : 'student';
+  showToast('??', 'Logging out?');
+  fetch('../assets/php/logout.php', {
+    method: 'POST', credentials: 'include',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({ role })
+  }).catch(() => {}).finally(() => setTimeout(() => navigateTo(dest), 300));
 }
 
 
@@ -331,10 +334,9 @@ const DEFAULT_STUDENT_PROFILE = {
 
   name: 'Student User',
 
-  college: 'College of Information Technology',
+  college: 'College of Information Technology & Computer Studies',
 
-  program:
-    'Bachelor of Science in Information Technology',
+  program: 'BSIT',
 
   programShort: 'BSIT',
 

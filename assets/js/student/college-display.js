@@ -4,7 +4,7 @@ const COLLEGE_SHORT_NAMES = {
   'College of Business Administration': 'CBA',
   'College of Criminal Justice': 'CCJ',
   'College of Engineering': 'CE',
-  'College of Information Technology': 'CIT',
+  'College of Information Technology': 'CITCS',
   'College of Information Technology & Computer Studies': 'CITCS',
   'College of Medicine': 'CM',
   'College of Teacher Education': 'CTE'
@@ -38,6 +38,7 @@ const PROGRAM_SHORT_NAMES = {
   'BSEd - MAPEH': 'BSEd-MAPEH',
   'BSEd - Math': 'BSEd-Math',
   'BSEd - Social Science': 'BSEd-SocSci',
+  'Bachelor of Science in Information Technology': 'BSIT',
   'Doctor of Medicine': 'MD'
 };
 function displayProgramName(id, fullName) {

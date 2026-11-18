@@ -1,6 +1,8 @@
--- Complete GABLE schema snapshot.
+-- GABLE schema snapshot.
 -- Run after selecting the target database; database name is configured privately by the application.
--- Includes the baseline schema and all migrations in filename order; no application records are included.
+-- This snapshot may not include all current migrations.
+-- Run tools/migrate.php after importing to apply pending schema and data changes.
+-- No application records are included.
 
 -- Source: 00000000_baseline.sql
 SET FOREIGN_KEY_CHECKS=0;
