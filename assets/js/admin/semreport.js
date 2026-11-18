@@ -43,7 +43,7 @@
   tryLoadNext();
 })();
 const SEMREPORT_API = '../assets/php/get_admin_semester_report.php';
-const SEMREPORT_PERIOD = 'AY 2025–2026, 2nd Semester';
+const SEMREPORT_PERIOD = 'Current XP semester';
 let semReportData = null;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
   card.innerHTML = `
     <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:.75rem">
       <div><div class="a-card-title" style="margin:0 0 .2rem">🏆 End-of-Semester Report Generator</div>
-      <div style="font-size:.75rem;color:rgba(255,255,255,.55)">Live database snapshot • ${SEMPERIOD_SAFE()} • Word document (.docx)</div></div>
+      <div style="font-size:.75rem;color:rgba(255,255,255,.55)">Live database snapshot • ${semPeriodHtml()} • Word document (.docx)</div></div>
       <button class="semrep-generate-btn" id="semrep-main-btn" onclick="openReportModal()">📄 Generate Report</button>
     </div>
     <div class="semrep-sections-preview">
@@ -64,11 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="semrep-section-chip">🏆 Top Students</div><div class="semrep-section-chip">🎓 Instructor Grades</div>
       <div class="semrep-section-chip">⚠️ Flagged Questions</div><div class="semrep-section-chip">📝 Data-based Narrative</div>
     </div>
-    <p style="font-size:.75rem;color:rgba(255,255,255,.48);margin:.9rem 0 0">Data is drawn from the current database. Records are not term-filtered because the database schema does not store an academic-term field.</p>`;
+    <p style="font-size:.75rem;color:rgba(255,255,255,.48);margin:.9rem 0 0">XP reflects the current semester; academic activity is historical. For university and college top 10 archives before resetting XP, use Settings ? Export semester results.</p>`;
   panel.appendChild(card);
   document.body.insertAdjacentHTML('beforeend', `<div class="modal-overlay" id="modal-semreport"><div class="modal" style="max-width:620px"><button class="modal-close" onclick="closeModal('modal-semreport')">✕</button><h2>🏆 Generate Semester Report</h2><div id="semreport-modal-body"></div></div></div>`);
 });
-function SEMPERIOD_SAFE(){ return SEMREPORT_PERIOD; }
+function semPeriodHtml(){ const span=document.createElement('span'); span.textContent=SEMPERIOD_SAFE(); return span.innerHTML; }
+function SEMPERIOD_SAFE(){ return semReportData?.meta?.academic_period || SEMREPORT_PERIOD; }
 
 async function loadSemesterReportData() {
   const res = await fetch(SEMPREPORT_API_SAFE(), { cache: 'no-store', credentials: 'same-origin' });
@@ -80,7 +81,7 @@ function SEMPREPORT_API_SAFE(){ return SEMREPORT_API; }
 
 async function openReportModal() {
   const body = document.getElementById('semreport-modal-body');
-  body.innerHTML = `<div class="semrep-config"><div class="semrep-config-title">Report Configuration</div><div class="semrep-config-row"><div class="semrep-config-label">Academic period label</div><div class="semrep-config-val">${SEMPERIOD_SAFE()}</div></div><p style="font-size:.78rem;color:rgba(255,255,255,.65)">The report will use live counts, college aggregates, student rankings, stored instructor grades, and recorded question flags. It will disclose that the data is a current snapshot rather than a term-filtered extract.</p><div id="semrep-data-status" style="font-size:.8rem;margin-top:.75rem">Loading current database summary…</div><div id="semrep-progress" style="display:none"><div class="semrep-progress-label" id="semrep-progress-label">Preparing report…</div><div class="semrep-progress-track"><div class="semrep-progress-fill" id="semrep-progress-fill" style="width:0%"></div></div><div class="semrep-progress-steps" id="semrep-progress-steps"></div></div></div><div class="modal-footer"><button class="btn-secondary" onclick="closeModal('modal-semreport')">Close</button><button class="btn-primary" id="semrep-go-btn" disabled onclick="generateSemesterReport()">📄 Generate & Download</button></div>`;
+  body.innerHTML = `<div class="semrep-config"><div class="semrep-config-title">Report Configuration</div><div class="semrep-config-row"><div class="semrep-config-label">Academic period label</div><div class="semrep-config-val">${semPeriodHtml()}</div></div><p style="font-size:.78rem;color:rgba(255,255,255,.65)">The report will use live counts, college aggregates, student rankings, stored instructor grades, and recorded question flags. It will disclose that the data is a current snapshot rather than a term-filtered extract.</p><div id="semrep-data-status" style="font-size:.8rem;margin-top:.75rem">Loading current database summary…</div><div id="semrep-progress" style="display:none"><div class="semrep-progress-label" id="semrep-progress-label">Preparing report…</div><div class="semrep-progress-track"><div class="semrep-progress-fill" id="semrep-progress-fill" style="width:0%"></div></div><div class="semrep-progress-steps" id="semrep-progress-steps"></div></div></div><div class="modal-footer"><button class="btn-secondary" onclick="closeModal('modal-semreport')">Close</button><button class="btn-primary" id="semrep-go-btn" disabled onclick="generateSemesterReport()">📄 Generate & Download</button></div>`;
   openModal('modal-semreport');
   try {
     semReportData = await loadSemesterReportData();

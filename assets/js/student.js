@@ -12,7 +12,7 @@
 /* ═══ DATA ═══ */
 let studentProfile = null;
 let studentXP = 0;
-let studentLifetimeXP = 0;
+let studentSemesterXP = 0;
 let studentQuizXP = 0;
 
 const formalQuizzes = [];
@@ -811,6 +811,7 @@ async function loadStudentData() {
       email:
         dbStudent.institutional_email || '',
 
+      subjects: dbStudent.subjects || [],
       college:
         dbStudent.college || '',
 
@@ -2145,6 +2146,7 @@ document.addEventListener('keydown', event => {
 });
 
 function renderHome() {
+  renderStudentSubjects(studentProfile?.subjects || []);
 
     // Render recently added quizzes
     renderRecentQuizActivity();
@@ -2904,6 +2906,7 @@ async function loadDatabaseLeaderboard() {
                             s.score
                         ) || 0,
 
+                    level_xp: Number(s.level_xp) || 0,
                     submissions:
                         Number(
                             s.submissions
@@ -2942,43 +2945,6 @@ async function loadDatabaseLeaderboard() {
                     index + 1;
 
             }
-        );
-
-
-        console.log(
-            'Leaderboard loaded:',
-            leaderboardData
-        );
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | DEBUG
-        |--------------------------------------------------------------------------
-        */
-
-        console.table(
-            leaderboardData.map(
-                s => ({
-                    name:
-                        s.name,
-
-                    id:
-                        s.id,
-
-                    program:
-                        s.program,
-
-                    year:
-                        s.year_level,
-
-                    block:
-                        s.block,
-
-                    section:
-                        s.section
-                })
-            )
         );
 
 
@@ -3117,7 +3083,7 @@ function normalizeLeaderboardSection(
 
 function getStudentSubjects() {
 
-    const subjects = [];
+    const subjects = [...new Set((studentProfile?.subjects || []).map(item => item.subject))];
 
 
     databaseQuizzes
@@ -3316,658 +3282,78 @@ function changeLeaderboardSubject(
 |--------------------------------------------------------------------------
 */
 
-async function renderLeaderboard(
-    filter = 'section'
-) {
-
-    const list =
-        document.getElementById(
-            'lb-list'
-        );
-
-
-    if (!list) {
-        return;
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | START WITH ALL STUDENTS
-    |--------------------------------------------------------------------------
-    */
-
-    let data =
-        [...leaderboardData];
-
-    if (
-    filter === 'subject'
-) {
-
-    if (
-        !lbSelectedSubject
-    ) {
-
-        list.innerHTML = `
-
-            <div class="empty-state">
-
-                <span class="emoji">
-                    📚
-                </span>
-
-                <p>
-                    Please select a subject.
-                </p>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | LOAD SUBJECT LEADERBOARD
-    |--------------------------------------------------------------------------
-    */
-
-    try {
-
-        const response =
-            await fetch(
-                '../assets/php/get_student_leaderboard.php?subject=' +
-                encodeURIComponent(
-                    lbSelectedSubject
-                ),
-                {
-                    method: 'GET',
-                    credentials: 'include',
-                    cache: 'no-store'
-                }
-            );
-
-
-        const data =
-            await response.json();
-
-
-        if (
-            !response.ok ||
-            !data.success
-        ) {
-
-            throw new Error(
-                data.message ||
-                'Failed to load subject leaderboard.'
-            );
-
-        }
-
-
-        const subjectStudents =
-            data.students || [];
-
-
-        if (
-            !subjectStudents.length
-        ) {
-
-            list.innerHTML = `
-
-                <div class="empty-state">
-
-                    <span class="emoji">
-                        📚
-                    </span>
-
-                    <p>
-                        No students are enrolled
-                        in ${lbSelectedSubject}
-                        yet.
-                    </p>
-
-                </div>
-
-            `;
-
+let lbRenderVersion = 0;
+async function renderLeaderboard(filter = 'section', page = 1) {
+    const list = document.getElementById('lb-list');
+    if (!list) return;
+    const version = ++lbRenderVersion;
+    let data = [...leaderboardData];
+    if (filter === 'subject') {
+        if (!lbSelectedSubject) { list.textContent = 'Please select a subject.'; return; }
+        list.textContent = 'Loading subject rankings...';
+        try {
+            const response = await fetch('../assets/php/get_student_leaderboard.php?subject=' + encodeURIComponent(lbSelectedSubject), {credentials:'include',cache:'no-store'});
+            const result = await response.json();
+            if (version !== lbRenderVersion) return;
+            if (!response.ok || !result.success) throw new Error(result.message || 'Could not load rankings.');
+            data = result.students.map(student => ({...student, isMe:String(student.id) === String(studentProfile?.id)}));
+        } catch (error) {
+            if (version === lbRenderVersion) list.textContent = error.message;
             return;
-
         }
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | CONVERT TO LEADERBOARD FORMAT
-        |--------------------------------------------------------------------------
-        */
-
-        data.students =
-            subjectStudents;
-
-
-        data.students.forEach(
-            s => {
-
-                s.isMe =
-                    String(s.id) ===
-                    String(
-                        studentProfile?.id
-                    );
-
-            }
-        );
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | SORT BY SUBJECT SCORE
-        |--------------------------------------------------------------------------
-        */
-
-        data.students.sort(
-            (a, b) =>
-
-                Number(b.score) -
-                Number(a.score)
-
-                ||
-
-                Number(b.xp) -
-                Number(a.xp)
-
-        );
-
-
-        list.innerHTML =
-
-            data.students
-                .map(
-                    (s, i) => {
-
-                        const rank =
-                            i + 1;
-
-
-                        const medal =
-
-                            rank === 1
-                                ? '🥇'
-
-                            : rank === 2
-                                ? '🥈'
-
-                            : rank === 3
-                                ? '🥉'
-
-                            : '#' + rank;
-
-
-                        const initials =
-                            initialsFromName(
-                                s.name ||
-                                s.id
-                            );
-
-
-                        return `
-
-                            <div>
-
-                                <div
-                                    class="
-                                        lb-row
-                                        ${s.isMe ? 'me' : ''}
-                                    "
-                                >
-
-                                    <div
-                                        class="lb-rank"
-                                    >
-                                        ${medal}
-                                    </div>
-
-
-                                    <div
-                                        class="lb-avatar"
-                                        style="
-                                            background:
-                                            linear-gradient(
-                                                135deg,
-                                                #4f8ef7,
-                                                #7c5cbf
-                                            )
-                                        "
-                                    >
-                                        ${initials}
-                                    </div>
-
-
-                                    <div
-                                        class="lb-info"
-                                    >
-
-                                        <strong>
-                                            ${s.name}
-                                            ${
-                                                s.isMe
-                                                    ? ' (You)'
-                                                    : ''
-                                            }
-                                        </strong>
-
-
-                                        <span>
-                                            Section
-                                            ${s.section}
-                                        </span>
-
-                                    </div>
-
-
-                                    <div
-                                        class="lb-xp"
-                                    >
-                                        ⭐
-                                        ${Number(
-                                            s.xp || 0
-                                        ).toLocaleString()}
-                                    </div>
-
-
-                                    <div
-                                        class="lb-score"
-                                    >
-                                        ${Number(
-                                            s.score || 0
-                                        ).toFixed(2)}%
-                                    </div>
-
-                                </div>
-
-
-                                ${
-                                    i <
-                                    data.students.length - 1
-                                        ? '<div class="lb-divider"></div>'
-                                        : ''
-                                }
-
-                            </div>
-
-                        `;
-
-                    }
-                )
-                .join('');
-
-
-    } catch (error) {
-
-        console.error(
-            'Subject leaderboard error:',
-            error
-        );
-
-
-        list.innerHTML = `
-
-            <div class="empty-state">
-
-                <span class="emoji">
-                    ⚠️
-                </span>
-
-                <p>
-                    Unable to load
-                    ${lbSelectedSubject}
-                    leaderboard.
-                </p>
-
-            </div>
-
-        `;
-
+    } else if (filter === 'section') {
+        const normalize = value => String(value || '').toLowerCase().replace(/\s+/g, '');
+        data = data.filter(student => normalize(student.section) === normalize(studentProfile?.section));
     }
-
-
-    return;
-
+    list.replaceChildren();
+    if (!data.length) { list.textContent = 'No students found for this leaderboard.'; return; }
+    const total = data.length;
+    const myRank = data.findIndex(student => student.isMe) + 1;
+    const pages = Math.ceil(total / 50);
+    page = Math.max(1, Math.min(page, pages));
+    const offset = (page - 1) * 50;
+    const fragment = document.createDocumentFragment();
+    data.slice(offset, offset + 50).forEach((student, index) => {
+        const row = document.createElement('div'); row.className = 'lb-row' + (student.isMe ? ' me' : '');
+        const position = offset + index + 1;
+        if (position <= 5) row.classList.add('lb-top', `lb-top-${position}`);
+        const rank = document.createElement('div'); rank.className = 'lb-rank'; rank.textContent = '#' + (offset + index + 1);
+        const avatar = document.createElement('div'); avatar.className = 'lb-avatar';
+        const level = getLevelForXP(Number(student.level_xp) || 0);
+        avatar.classList.add(getFrameTier(level.level).cls);
+        avatar.title = `Level ${level.level} - ${level.name}`;
+        avatar.style.background = 'linear-gradient(135deg,#4f8ef7,#7c5cbf)'; avatar.textContent = initialsFromName(student.name || student.id);
+        const info = document.createElement('div'); info.className = 'lb-info';
+        const name = document.createElement('strong'); name.textContent = student.name + (student.isMe ? ' (You)' : '');
+        const levelLabel = document.createElement('span'); levelLabel.className = `lb-level student-level student-level-${level.level}`;
+        levelLabel.textContent = `Level ${level.level} - ${level.name}`;
+        const section = document.createElement('span'); section.textContent = 'Section ' + student.section;
+        info.append(name, levelLabel, section);
+        const xp = document.createElement('div'); xp.className = 'lb-xp'; xp.textContent = Number(student.xp || 0).toLocaleString() + ' XP';
+        const score = document.createElement('div'); score.className = 'lb-score'; score.textContent = Number(student.score || 0).toFixed(2) + '%';
+        row.append(rank, avatar, info, xp, score); fragment.append(row);
+    });
+    const navigation = document.createElement('div'); navigation.className = 'lb-pagination';
+    const summary = document.createElement('span');
+    summary.textContent = `${offset + 1}-${Math.min(offset + 50, total)} of ${total} students${myRank ? ` | Your rank: #${myRank}` : ''}`;
+    navigation.append(summary);
+    if (pages > 1) {
+        for (const [label, target] of [['Previous', page - 1], ['Next', page + 1]]) {
+            const button = document.createElement('button'); button.type = 'button'; button.className = 'btn-secondary';
+            button.textContent = label; button.disabled = target < 1 || target > pages;
+            button.onclick = () => renderLeaderboard(filter, target); navigation.append(button);
+        }
+    }
+    fragment.append(navigation); list.append(fragment);
 }
-
-    /*
-    |--------------------------------------------------------------------------
-    | MY SECTION
-    |--------------------------------------------------------------------------
-    */
-
-    if (
-        filter === 'section'
-    ) {
-
-        /*
-        | Normalize the logged-in student's
-        | program / year / block.
-        */
-
-        const myProgram =
-            String(
-                studentProfile?.program ||
-                ''
-            )
-                .trim()
-                .toLowerCase();
-
-
-        const mySection =
-            String(
-                studentProfile?.section ||
-                ''
-            )
-                .trim()
-                .toLowerCase()
-                .replace(
-                    /\s+/g,
-                    ''
-                );
-
-
-        console.log(
-            '========== LEADERBOARD SECTION DEBUG =========='
-        );
-
-        console.log(
-            'My program:',
-            myProgram
-        );
-
-        console.log(
-            'My section:',
-            mySection
-        );
-
-
-        /*
-        | First try exact normalized section.
-        */
-
-        data =
-            leaderboardData.filter(
-                s => {
-
-                    const studentSection =
-                        String(
-                            s.section ||
-                            ''
-                        )
-                            .trim()
-                            .toLowerCase()
-                            .replace(
-                                /\s+/g,
-                                ''
-                            );
-
-
-                    console.log(
-                        'Comparing:',
-                        {
-                            student:
-                                s.name,
-
-                            studentSection:
-                                studentSection,
-
-                            mySection:
-                                mySection
-                        }
-                    );
-
-
-                    return (
-                        studentSection ===
-                        mySection
-                    );
-
-                }
-            );
-
-
-        console.log(
-            'Students found in My Section:',
-            data
-        );
-
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | BY SUBJECT
-    |--------------------------------------------------------------------------
-    */
-
-    else if (
-        filter === 'subject'
-    ) {
-
-        /*
-        | For now, rank by average score.
-        |
-        | We will connect this to the
-        | actual subject later.
-        */
-
-        data.sort(
-            (a, b) =>
-
-                b.score -
-                a.score
-
-                ||
-
-                b.xp -
-                a.xp
-
-        );
-
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | OVERALL
-    |--------------------------------------------------------------------------
-    */
-
-    else if (
-        filter === 'overall'
-    ) {
-
-        data.sort(
-            (a, b) =>
-
-                b.xp -
-                a.xp
-
-                ||
-
-                b.score -
-                a.score
-
-                ||
-
-                a.name.localeCompare(
-                    b.name
-                )
-
-        );
-
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | EMPTY STATE
-    |--------------------------------------------------------------------------
-    */
-
-    if (
-        data.length === 0
-    ) {
-
-        list.innerHTML = `
-
-            <div
-                class="empty-state"
-                style="
-                    padding:2rem;
-                    text-align:center;
-                "
-            >
-
-                <span class="emoji">
-                    🏆
-                </span>
-
-                <p>
-                    No students found
-                    for this leaderboard.
-                </p>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | RENDER
-    |--------------------------------------------------------------------------
-    */
-
-    list.innerHTML =
-
-        data
-            .map(
-                (s, i) => {
-
-                    const rank =
-                        i + 1;
-
-
-                    const medal =
-
-                        rank === 1
-                            ? '🥇'
-
-                        : rank === 2
-                            ? '🥈'
-
-                        : rank === 3
-                            ? '🥉'
-
-                        : '#' + rank;
-
-
-                    return `
-
-                        <div>
-
-                            <div
-                                class="
-                                    lb-row
-                                    ${s.isMe ? 'me' : ''}
-                                "
-                            >
-
-                                <div
-                                    class="lb-rank"
-                                >
-                                    ${medal}
-                                </div>
-
-
-                                <div
-                                    class="lb-avatar"
-                                    style="
-                                        background:${s.color}
-                                    "
-                                >
-                                    ${s.initials}
-                                </div>
-
-
-                                <div
-                                    class="lb-info"
-                                >
-
-                                    <strong>
-                                        ${s.name}
-                                        ${
-                                            s.isMe
-                                                ? ' (You)'
-                                                : ''
-                                        }
-                                    </strong>
-
-
-                                    <span>
-                                        Section
-                                        ${s.section}
-                                    </span>
-
-                                </div>
-
-
-                                <div
-                                    class="lb-xp"
-                                >
-                                    ⭐
-                                    ${s.xp.toLocaleString()}
-                                </div>
-
-
-                                <div
-                                    class="lb-score"
-                                >
-                                    ${s.score}%
-                                </div>
-
-                            </div>
-
-
-                            ${
-                                i <
-                                data.length - 1
-                                    ? '<div class="lb-divider"></div>'
-                                    : ''
-                            }
-
-                        </div>
-
-                    `;
-
-                }
-            )
-            .join('');
-
-}
-
 
 /* ═══ XP TAB ═══ */
 
 function renderXP() {
-  const info = getLevelProgressHTML(studentLifetimeXP);
+  const info = getLevelProgressHTML(studentSemesterXP);
   setText('available-xp', `${studentXP.toLocaleString()} XP`);
   setText('xp-tile-val', studentQuizXP.toLocaleString());
-  setText('main-xp-num', studentLifetimeXP.toLocaleString());
+  setText('main-xp-num', studentSemesterXP.toLocaleString());
   setText('xp-welcome', `Level ${info.levelNum} progress`);
   setText('xp-level-name', info.levelName);
   setText('xp-level-num', info.levelNum);
@@ -3979,7 +3365,7 @@ function renderXP() {
   setText('boost-quiz-list', studentXP < 350 ? `${(350 - studentXP).toLocaleString()} more XP needed for a grade boost.` : 'Select an eligible result to review and apply your boost.');
   document.getElementById('xp-rewards-wallet').innerHTML = coupons.length
     ? renderCouponsSection()
-    : '<div class="xp-reward-empty"><strong>Your first reward is ahead</strong><p>Reach Level 2 at 300 lifetime XP to unlock your Apprentice badge. Complete quizzes to begin your collection.</p></div>';
+    : '<div class="xp-reward-empty"><strong>Your first reward is ahead</strong><p>Reach Level 2 at 300 semester XP to unlock your Apprentice badge. Complete quizzes to begin your collection.</p></div>';
   document.getElementById('xp-level-roadmap').innerHTML = LEVELS.map(level => `
     <div class="level-milestone ${level.level === info.levelNum ? 'current' : ''}">
       <span class="milestone-number">${level.level}</span><div><strong>${level.name}</strong><span>${level.reward?.label || 'Your starting point'}</span></div>
@@ -4899,7 +4285,7 @@ async function finishBattle() {
     |--------------------------------------------------------------------------
     */
 
-      checkLevelUp(studentLifetimeXP);
+      checkLevelUp(studentSemesterXP);
 
 
     saveStudentXP();
@@ -5077,7 +4463,7 @@ function updateXPDisplay() {
 
   const info =
     getLevelProgressHTML(
-      studentLifetimeXP
+      studentSemesterXP
     );
 
 

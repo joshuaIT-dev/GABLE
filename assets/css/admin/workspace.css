@@ -1,3 +1,4 @@
+@import url("../student-frames.css");
 /* Admin workspace: shared spacing and surfaces, scoped to this portal. */
 .admin-portal{--bg-card:#14243a;--bg-card-border:#2b4059;--text-muted:#a6b9d0;--text-primary:#eaf1fc;background:#0b1728;color:#eaf1fc}
 .admin-portal .navbar{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:20px;padding:12px 24px;background:#101e32;border-bottom:1px solid #2b4059;position:sticky;top:0;z-index:100;height:auto;min-height:68px;box-shadow:none}
@@ -80,3 +81,27 @@
 @media(min-width:851px) and (max-width:1100px){.admin-portal .nav-account .profile-info{display:none}}
 @media(max-width:850px){.admin-portal .navbar{display:flex;flex-wrap:wrap;gap:10px;padding:10px 16px}.admin-portal .nav-right{margin-left:auto}.admin-portal .nav-tabs{order:2;flex-basis:100%;justify-content:flex-start;padding:4px 0}.admin-portal .nav-account .profile-info{display:none}}
 @media(max-width:560px){.admin-portal .navbar{padding:10px 12px}.admin-portal .nav-account{padding-left:5px}.admin-portal .nav-right{gap:5px}.admin-portal .nav-account .profile-badge{padding:4px}}
+.admin-pagination{display:flex;align-items:center;justify-content:flex-end;gap:12px;padding:16px;flex-wrap:wrap;color:#b9cbe0;font-size:13px}
+.admin-pagination span{margin-right:auto}
+.admin-pagination button:disabled,.account-status-confirm button:disabled{opacity:.45;cursor:not-allowed}
+.account-status-confirm{box-sizing:border-box;width:min(440px,calc(100vw - 32px));padding:24px;border:1px solid #4b627e;border-radius:16px;background:#203247;color:#edf3fb;box-shadow:0 24px 80px #0008;font-family:inherit}
+.account-status-confirm::backdrop{background:#081321b8}
+.account-status-confirm h2{margin:0 0 12px;font-size:21px}
+.account-status-confirm p{overflow-wrap:anywhere;color:#bacde3}
+.account-status-confirm label{display:block;margin:20px 0 8px;font-weight:600}
+.account-status-confirm input{box-sizing:border-box;width:100%;padding:12px;border:1px solid #657c98;border-radius:8px;background:#152538;color:#fff;font:inherit}
+.account-status-confirm input:focus-visible{outline:2px solid #a8d2ff;outline-offset:2px}
+.account-status-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:24px}
+
+.admin-portal .account-status-confirm{position:fixed;inset:0;margin:auto;max-height:calc(100dvh - 32px);overflow-y:auto;padding:28px}
+.account-status-confirm.is-deactivate{--status-color:#fda4af;--status-bg:#a6263b;--status-hover:#be3047}
+.account-status-confirm.is-activate{--status-color:#86efac;--status-bg:#187047;--status-hover:#208557}
+.account-status-confirm h2,.account-status-confirm label strong{color:var(--status-color)}
+.account-status-confirm input{color:var(--status-color);letter-spacing:.08em}
+.admin-portal .account-status-confirm .btn-primary{background:var(--status-bg);border-color:var(--status-color);color:#fff}
+.admin-portal .account-status-confirm .btn-primary:hover:not(:disabled){background:var(--status-hover)}
+.account-status-actions button{flex:1}
+.admin-portal .lb-row .u-avatar{animation:none}
+
+.admin-portal .instructor-rank-cell{display:flex;align-items:center;justify-content:center;text-align:center}
+.admin-portal .instr-head>div:nth-child(4){text-align:center}

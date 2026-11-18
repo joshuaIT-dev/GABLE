@@ -175,6 +175,8 @@ const gradeBadge = document.getElementById("profile-grade-badge");
 
 if (gradeBadge) {
     gradeBadge.textContent = instructor.grade || '--';
+    gradeBadge.dataset.rank = instructor.grade || '';
+    gradeBadge.classList.add('teaching-rank');
     gradeBadge.parentElement.classList.toggle('is-unranked', !instructor.grade);
     gradeBadge.parentElement.querySelector('small').textContent = instructor.grade ? 'Admin assigned' : 'Not ranked';
 }
@@ -1141,6 +1143,18 @@ function switchSubTab(id) {
 
 /* ── LEVEL HELPER ───────────────────────────────────────────── */
 function getStudentLevel(xp) {
+  const levels = [
+    [0, 'Rookie', 'lp-novice'], [300, 'Apprentice', 'lp-learner'],
+    [700, 'Scholar', 'lp-scholar'], [1200, 'Battle Ready', 'lp-expert'],
+    [2000, 'Battle Veteran', 'lp-expert'], [3000, 'Battle Master', 'lp-master'],
+    [4500, 'Champion', 'lp-master'], [6500, 'GABLE Master', 'lp-legend']
+  ];
+  let index = 0;
+  for (let i = 1; i < levels.length; i++) if (xp >= levels[i][0]) index = i;
+  return { num: index + 1, name: levels[index][1], cls: levels[index][2] };
+}
+
+function getTeachingLevel(xp) {
   if (xp >= 3000) return { num: 10, name: 'Legend',   cls: 'lp-legend'  };
   if (xp >= 2200) return { num: 8,  name: 'Master',   cls: 'lp-master'  };
   if (xp >= 1600) return { num: 6,  name: 'Expert',   cls: 'lp-expert'  };
@@ -1324,8 +1338,8 @@ function updateAnalyticsSummaryCards() {
 
     // TEACHING XP
     const xp = Number(teachingXP) || 0;
-    const level = typeof getStudentLevel === 'function'
-        ? getStudentLevel(xp)
+    const level = typeof getTeachingLevel === 'function'
+        ? getTeachingLevel(xp)
         : { num: 1, name: 'Educator' };
 
     const xpEl = getEl('analytics-teaching-xp');
@@ -1365,6 +1379,10 @@ function updateAnalyticsSummaryCards() {
 
 
 /* ── STUDENTS ───────────────────────────────────────────────── */
+function studentFrameClass(xp) {
+  return 'frame-' + ['rookie','apprentice','scholar','ready','veteran','master','champion','gable'][getStudentLevel(xp).num - 1];
+}
+
 function renderStudents(list) {
   const c = document.getElementById('students-list');
   if (!list.length) {
@@ -1373,9 +1391,9 @@ function renderStudents(list) {
   }
   c.innerHTML = list.map((s, i) => {
     return `
-    <div class="table-row" onclick="openStudentDetail(${students.indexOf(s)})">
+    <div class="table-row roster-top-${Number(s.rank) <= 3 ? Number(s.rank) : 0}" onclick="openStudentDetail(${students.indexOf(s)})">
       <div class="student-name">
-        <div class="s-avatar" style="background:${avatarColors[i % avatarColors.length]}">${s.name.split(' ').map(n => n[0]).join('').slice(0, 2)}</div>
+        <div class="s-avatar ${studentFrameClass(s.level_xp ?? s.xp)}" style="background:${avatarColors[i % avatarColors.length]}">${s.name.split(' ').map(n => n[0]).join('').slice(0, 2)}</div>
         <div><div class="s-name">${s.name}</div><div class="s-id">${s.id}</div></div>
       </div>
       <div class="cell-muted">${s.program}</div>
@@ -1518,25 +1536,21 @@ function setFilter(btn, section) {
 /* ── STUDENT DETAIL MODAL ───────────────────────────────────── */
 function openStudentDetail(idx) {
   const s = students[idx];
-  document.getElementById('sd-modal-title').textContent = s.name;
-  const quizRows = Object.entries(s.quizScores).map(([qn, sc]) => `
-    <div class="srd-quiz-row">
-      <span class="srd-quiz-name">${qn}</span>
-      <span class="srd-quiz-score" style="color:${sc >= 80 ? 'var(--green)' : 'var(--gold)'}">${sc}%</span>
-    </div>`).join('');
+  if (!s) return;
+  const escape = escapeHtml;
+  const level = getStudentLevel(Number(s.xp) || 0);
+  document.getElementById('sd-modal-title').textContent = s.name || 'Student details';
+  const scores = Object.entries(s.quizScores || {});
+  const quizRows = scores.map(([name, score]) => `<div class="srd-quiz-row"><span>${escape(name)}</span><strong>${score == null ? 'Pending' : escape(score) + '%'}</strong></div>`).join('');
   document.getElementById('sd-modal-body').innerHTML = `
-    <div class="student-report-detail">
-      <div class="srd-grid">
-        <div class="srd-box"><span class="sv" style="color:var(--gold)">⭐ ${s.xp.toLocaleString()}</span><span class="sl">Total XP</span></div>
-        <div class="srd-box"><span class="sv" style="color:var(--green)">${s.score}%</span><span class="sl">Avg Score</span></div>
-        <div class="srd-box"><span class="sv" style="color:var(--purple-light)">${s.section}</span><span class="sl">Section</span></div>
-        <div class="srd-box"><span class="sv">${s.rank <= 3 ? ['🥇','🥈','🥉'][s.rank - 1] : '#' + s.rank}</span><span class="sl">Rank</span></div>
-      </div>
-      <div style="font-size:.8rem;font-weight:700;color:rgba(255,255,255,0.7);margin-bottom:.6rem">Quiz Scores</div>
-      <div class="srd-quizzes">${quizRows}</div>
-      <div style="font-size:.72rem;color:var(--text-muted);margin-top:.85rem">Program: ${s.program}</div>
-      <div style="font-size:.72rem;color:var(--text-muted)">Student ID: ${s.id}</div>
-    </div>`;
+    <p class="student-detail-subtitle">${escape(s.id || s.student_number || '')} ? ${escape(s.program || 'Program not assigned')}</p>
+    <div class="srd-grid">
+      <div class="srd-box"><strong>${Number(s.xp || 0).toLocaleString()}</strong><span>Student XP</span></div>
+      <div class="srd-box"><strong>${Number(s.submissions) > 0 ? Number(s.score || 0).toFixed(1) + '%' : '?'}</strong><span>Average score</span></div>
+      <div class="srd-box"><strong>${Number(s.submissions || 0)}</strong><span>Submissions</span></div>
+    </div>
+    <dl class="student-detail-facts"><div><dt>Section</dt><dd>${escape(s.section || 'Not assigned')}</dd></div><div><dt>Student level</dt><dd>Level ${level.num} ? ${level.name}</dd></div></dl>
+    <h3>Quiz scores</h3><div class="srd-quizzes">${quizRows || '<p class="student-detail-empty">Individual quiz scores are available in each quiz?s Results panel.</p>'}</div>`;
   openModal('modal-student-detail');
 }
 
@@ -8368,7 +8382,7 @@ function renderInstrLeaderboard() {
                             ${crown}
 
                             <div
-                                class="podium-avatar"
+                                class="podium-avatar ${studentFrameClass(s.level_xp ?? s.xp)}"
                                 style="background:${avatarColors[i % avatarColors.length]}"
                             >
                                 ${initials}
@@ -8463,7 +8477,7 @@ function renderInstrLeaderboard() {
 
             return `
                 <div
-                    class="lb-row ${rank <= 3 ? 'lb-top' : ''}"
+                    class="lb-row ${rank <= 5 ? 'lb-top lb-top-' + rank : ''}"
                     onclick="openStudentDetail(${students.indexOf(s)})"
                 >
 
@@ -8475,7 +8489,7 @@ function renderInstrLeaderboard() {
                     <div class="lb-student">
 
                         <div
-                            class="lb-s-avatar"
+                            class="lb-s-avatar ${studentFrameClass(s.level_xp ?? s.xp)}"
                             style="background:${avatarColors[i % avatarColors.length]}"
                         >
                             ${initials}
@@ -9037,7 +9051,7 @@ function renderTeachingSections() {
                                         class="subject-analytics-btn"
                                         onclick="openSubjectAnalytics(
                                             ${JSON.stringify(subject)},
-                                            ${JSON.stringify(section)},
+                                            ${escapeHtml(JSON.stringify(section))},
                                             ${classAverage},
                                             ${totalStudents},
                                             ${totalQuizzes},
@@ -9153,7 +9167,7 @@ function renderTeachingSections() {
                     <button
                         class="btn-view-students"
                         onclick="viewStudentsForSection(
-                            ${JSON.stringify(section)}
+                            ${escapeHtml(JSON.stringify(section))}
                         )"
                     >
                         View Students
@@ -9561,7 +9575,7 @@ function renderAnalyticsReferencePanels() {
     }
 
     const xp = num(typeof teachingXP !== 'undefined' ? teachingXP : 0);
-    const xpLevel = typeof getStudentLevel === 'function' ? getStudentLevel(xp) : {num: Math.max(1, Math.floor(xp / 500) + 1), name:'Educator'};
+    const xpLevel = typeof getTeachingLevel === 'function' ? getTeachingLevel(xp) : {num: Math.max(1, Math.floor(xp / 500) + 1), name:'Educator'};
     const xpMilestones = [0, 500, 1000, 1600, 2200, 3000];
     const nextMilestone = xpMilestones.find(value => value > xp) || xp + 500;
     const progress = Math.min(100, Math.max(0, (xp / nextMilestone) * 100));

@@ -2792,6 +2792,8 @@ async function loadIdbTeachingQualityAnalytics() {
   const labels={'SSS+':'Pinnacle','SSS':'Exceptional','SS':'Master','S':'Elite','A':'Excellent','B':'Proficient','C':'Developing','F':'Needs improvement'};
   const grade=labels[instructor.grade]?instructor.grade:null;
   document.getElementById('idb-quality-rank').textContent=grade||'--';
+  document.getElementById('idb-quality-rank').dataset.rank=grade||'';
+  document.getElementById('idb-quality-rank').classList.add('teaching-rank');
   document.getElementById('idb-quality-rank-label').textContent=grade?labels[grade]:'Not ranked';
   document.querySelector('.tq-grade-badge')?.classList.toggle('is-unranked',!grade);
   document.getElementById('idb-quality-rank-note').textContent=grade?'Rank assigned by your administrator.':'Your administrator has not assigned a grading rank yet.';

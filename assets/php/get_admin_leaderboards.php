@@ -11,19 +11,23 @@ try {
                    TRIM(COALESCE(s.college, '')) AS college,
                    TRIM(COALESCE(s.program, '')) AS program,
                    s.year_level, TRIM(COALESCE(s.block, '')) AS block, s.status,
-                   COALESCE(x.xp, 0) AS xp,
+                   COALESCE(sxp.semester_xp,0) AS xp,
+                   COALESCE(progress.lifetime_xp,0) AS level_xp,
                    COALESCE(x.attempts, 0) AS attempts,
                    x.average_score
             FROM student s
+            LEFT JOIN current_student_xp sxp ON sxp.student_id=s.student_id
+            LEFT JOIN student_reward_progress progress ON progress.student_id=s.student_id
             LEFT JOIN (
                 SELECT student_id,
                        SUM(CASE WHEN status IN ('submitted','graded') THEN COALESCE(xp_earned,0) ELSE 0 END) AS xp,
                        SUM(CASE WHEN status IN ('submitted','graded') THEN 1 ELSE 0 END) AS attempts,
                        AVG(CASE WHEN status IN ('submitted','graded') AND score IS NOT NULL THEN score ELSE NULL END) AS average_score
                 FROM quiz_idsubmissions
+                WHERE submission_id > (SELECT submission_cutoff FROM current_xp_semester)
                 GROUP BY student_id
             ) x ON x.student_id = s.student_id
-            ORDER BY xp DESC, average_score DESC, s.last_name ASC, s.first_name ASC";
+            ORDER BY xp DESC, s.last_name ASC, s.first_name ASC, s.student_id ASC";
     $result = $conn->query($sql);
     if (!$result) throw new Exception($conn->error);
     while ($row = $result->fetch_assoc()) {
@@ -33,6 +37,7 @@ try {
         $row['name'] = trim(($row['first_name'] ?? '') . ' ' . ($row['last_name'] ?? ''));
         $row['section'] = trim($program . ' ' . $year . $block);
         $row['xp'] = (int)$row['xp'];
+        $row['level_xp'] = (int)$row['level_xp'];
         $row['attempts'] = (int)$row['attempts'];
         $row['average_score'] = $row['average_score'] === null ? null : (float)$row['average_score'];
         $students[] = $row;
@@ -91,7 +96,7 @@ try {
                         COUNT(DISTINCT s.student_id) AS students,
                         COUNT(CASE WHEN qs.status IN ('submitted','graded') AND qs.score IS NOT NULL THEN qs.submission_id END) AS scored_attempts,
                         AVG(CASE WHEN qs.status IN ('submitted','graded') AND qs.score IS NOT NULL THEN qs.score ELSE NULL END) AS average_score,
-                        COALESCE(SUM(CASE WHEN qs.status IN ('submitted','graded') THEN COALESCE(qs.xp_earned,0) ELSE 0 END),0) AS total_xp
+                        (SELECT COALESCE(SUM(x.semester_xp),0) FROM current_student_xp x JOIN student sx ON sx.student_id=x.student_id WHERE TRIM(COALESCE(sx.college,''))=TRIM(COALESCE(s.college,''))) AS total_xp
                  FROM student s
                  LEFT JOIN quiz_idsubmissions qs ON qs.student_id = s.student_id
                  WHERE TRIM(COALESCE(s.college,'')) <> ''

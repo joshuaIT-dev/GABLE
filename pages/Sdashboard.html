@@ -6,10 +6,12 @@
   <title>GABLE | Student Dashboard</title>
   <link rel="stylesheet" href="../assets/css/style.css?v=2">
   <link rel="stylesheet" href="../assets/css/student.css">
-  <link rel="stylesheet" href="../assets/css/student/levelup.css">
+  <link rel="stylesheet" href="../assets/css/student/levelup.css?v=2">
   <link rel="stylesheet" href="../assets/css/lucide-icons.css">
   <link rel="stylesheet" href="../assets/css/brand-text.css?v=5">
   <link rel="stylesheet" href="../assets/css/student/sdashboard.css?v=2">
+    <script src="../cursor/cursor.js"></script>
+    <script src="../assets/js/student/subjects.js"></script>
 </head>
 <body class="student-portal student-dashboard-page">
   <div class="bg-blobs"></div>
@@ -27,6 +29,7 @@
       </section>
       <section class="sdash-stats" aria-label="Learning statistics"><article><span>Average score</span><strong id="sdash-accuracy">--</strong><small>from graded quizzes</small></article><article><span>Submissions</span><strong id="sdash-submissions">0</strong><small>submitted or graded</small></article><article><span>Current balance</span><strong id="sdash-balance">0 XP</strong><small>available to spend</small></article><article><span>Rewards unlocked</span><strong id="sdash-reward-count">0</strong><small>level milestones</small></article></section>
       <div class="sdash-grid">
+        <section class="sdash-card"><header><div><span class="card-eyebrow">YOUR ENROLLMENT</span><h2>My subjects</h2></div></header><div id="student-subjects-list"></div></section>
         <section class="sdash-card"><header><div><span class="card-eyebrow">ACADEMIC PROFILE</span><h2>Your details</h2></div><i data-lucide="graduation-cap" aria-hidden="true"></i></header><dl class="sdash-details"><div><dt>College</dt><dd id="sdash-college">—</dd></div><div><dt>Program</dt><dd id="sdash-program-full">—</dd></div><div><dt>Year level</dt><dd id="sdash-year-full">—</dd></div><div><dt>Section</dt><dd id="sdash-section-full">—</dd></div></dl></section>
         <section class="sdash-card"><header><div><span class="card-eyebrow">COSMETIC PROGRESS</span><h2>Profile frames</h2></div><i data-lucide="frame" aria-hidden="true"></i></header><p class="sdash-card-note">Frames unlock as you level up and update your avatar automatically.</p><div id="sdash-frames" class="sdash-frames"></div></section>
         <section class="sdash-card sdash-rewards"><header><div><span class="card-eyebrow">MILESTONES</span><h2>Earned rewards</h2></div><a href="Student.html#xp">XP &amp; Rewards <span aria-hidden="true">›</span></a></header><div id="sdash-reward-list"></div></section>

@@ -23,16 +23,13 @@ function pu_levels(): array {
     ];
 }
 function pu_balance(mysqli $db, int $student): array {
-    $earned = (int)pu_row($db, "SELECT COALESCE(SUM(xp_earned),0) n FROM quiz_idsubmissions WHERE student_id=? AND status IN ('submitted','graded')", [$student])['n'];
-    $bonus = (int)pu_row($db, 'SELECT COALESCE(SUM(bonus),0) n FROM student_powerup_grants WHERE student_id=?', [$student])['n'];
-    $spent = (int)pu_row($db, 'SELECT COALESCE(SUM(xp_cost),0) n FROM grade_boost_redemptions WHERE student_id=?', [$student])['n'];
-    $spent += (int)pu_row($db, 'SELECT COALESCE(SUM(xp_cost),0) n FROM student_powerup_uses WHERE student_id=?', [$student])['n'];
-    return ['xp'=>max(0,$earned+$bonus-$spent), 'earned_xp'=>$earned, 'bonus_xp'=>$bonus, 'spent_xp'=>$spent];
+    return array_map('intval',pu_row($db,'SELECT xp,earned_xp,bonus_xp,spent_xp,semester_xp FROM current_student_xp WHERE student_id=?',[$student]));
 }
 function pu_sync(mysqli $db, int $student): array {
     pu_query($db, 'INSERT IGNORE INTO student_reward_progress(student_id) VALUES (?)', [$student]);
     $balance = pu_balance($db,$student);
     $progress = pu_row($db, 'SELECT * FROM student_reward_progress WHERE student_id=?', [$student]);
+    // The legacy column name stores progression for the current semester only.
     $lifetime = max((int)$progress['lifetime_xp'], $balance['earned_xp']+$balance['bonus_xp']);
     // Level bonuses may cross another threshold; each grant has a unique student/level key.
     foreach (pu_levels() as [$level,$threshold,$type,$uses,$permanent,$bonus]) {
@@ -42,7 +39,7 @@ function pu_sync(mysqli $db, int $student): array {
     }
     pu_query($db, 'UPDATE student_reward_progress SET lifetime_xp=? WHERE student_id=?', [$lifetime,$student]);
     $grants = pu_query($db, 'SELECT level,type,remaining,permanent FROM student_powerup_grants WHERE student_id=? ORDER BY level', [$student])->get_result()->fetch_all(MYSQLI_ASSOC);
-    return pu_balance($db,$student) + ['lifetime_xp'=>$lifetime, 'streak'=>($progress['last_activity']&&$progress['last_activity']<date('Y-m-d',strtotime('-1 day'))&&!(($progress['last_activity']===date('Y-m-d',strtotime('-2 days')))&&pu_owned($db,$student,'streak_freeze'))?0:min(7,(int)$progress['streak'])), 'last_activity'=>$progress['last_activity'], 'grants'=>$grants];
+    return ['semester_xp'=>$lifetime] + pu_balance($db,$student) + [ 'streak'=>($progress['last_activity']&&$progress['last_activity']<date('Y-m-d',strtotime('-1 day'))&&!(($progress['last_activity']===date('Y-m-d',strtotime('-2 days')))&&pu_owned($db,$student,'streak_freeze'))?0:min(7,(int)$progress['streak'])), 'last_activity'=>$progress['last_activity'], 'grants'=>$grants];
 }
 function pu_owned(mysqli $db, int $student, string $type): bool {
     return (bool)pu_row($db, 'SELECT type FROM student_powerup_grants WHERE student_id=? AND type=? AND (remaining>0 OR permanent=1)', [$student,$type]);
@@ -74,6 +71,8 @@ function pu_award(mysqli $db,int $student,int $submission,int $base): int {
         pu_query($db,'UPDATE student_xp_awards SET base_xp=?,final_xp=? WHERE submission_id=?',[$base,$final,$submission]);
         return $final;
     }
+    // Late grading of an earlier semester must not consume this semester's rewards.
+    if ($submission <= (int)pu_row($db,'SELECT submission_cutoff FROM current_xp_semester')['submission_cutoff']) return $base;
     pu_sync($db,$student);
     $multiplier=1;
     if ($base>0 && pu_owned($db,$student,'xp_multiplier')) { pu_consume($db,$student,'xp_multiplier'); $multiplier=1.5; }

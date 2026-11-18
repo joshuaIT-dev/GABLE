@@ -35,7 +35,7 @@ const LEVELS = [
     reward: { type: 'free_boost', label: 'Free Grade Boost', desc: 'Add 1 percentage point to one eligible graded formal quiz without spending XP', icon: '🎁', uses: 1, permanent: false } },
 
   { level: 8, xpRequired: 6500, name: 'GABLE Master',  bonus: 250,
-    reward: { type: 'crown', label: 'GABLE Master Crown', desc: 'Exclusive crown title, golden profile frame, and permanent +10 bonus XP on every quiz forever', icon: '👑', uses: null, permanent: true } },
+    reward: { type: 'crown', label: 'GABLE Master Crown', desc: 'Exclusive crown title, golden profile frame, and semester-long +10 bonus XP on every quiz this semester', icon: '👑', uses: null, permanent: true } },
 ];
 
 /* ═══ COUPON WALLET ═══
@@ -147,7 +147,7 @@ function showLevelUpPopup(level, bonus, rewards, multiLevel) {
             <div class="lu-reward-label">${r.label}</div>
             <div class="lu-reward-desc">${r.desc}</div>
             ${r.permanent
-              ? `<div class="lu-perm-badge">♾️ Permanent — never expires</div>`
+              ? `<div class="lu-perm-badge">♾️ This semester — until semester reset</div>`
               : r.uses > 1 ? `<div class="lu-uses-badge">${r.uses} uses</div>` : ''}
           </div>
         </div>`).join('')
@@ -256,10 +256,10 @@ function renderCouponsSection() {
         const isManual = c.type === 'free_boost' && c.remaining > 0;
         const isCrown  = c.type === 'crown';
         const usesHTML = c.permanent
-          ? `<div class="coupon-uses" style="background:rgba(251,191,36,.15);color:#fbbf24;border-color:rgba(251,191,36,.3)">♾️ Permanent — never expires</div>`
+          ? `<div class="coupon-uses" style="background:rgba(251,191,36,.15);color:#fbbf24;border-color:rgba(251,191,36,.3)">♾️ This semester — until semester reset</div>`
           : `<div class="coupon-uses">${c.remaining} use${c.remaining !== 1 ? 's' : ''} remaining</div>`;
         const actionHTML = c.permanent
-          ? `<div class="coupon-auto-badge">Permanent</div>`
+          ? `<div class="coupon-auto-badge">This semester</div>`
           : isManual
           ? `<button class="btn-coupon-use" onclick="useFreeBoostCoupon()">Use Now</button>`
           : `<div class="coupon-auto-badge">${c.remaining <= 0 ? 'Used up' : c.type === 'fifty_fifty' ? 'Use before answering' : 'Automatic when eligible'}</div>`;
@@ -346,7 +346,7 @@ function getFrameTier(level) {
 
 /* Call after any XP change — updates every avatar on page */
 function applyProfileFrame() {
-  const level = getLevelForXP(studentLifetimeXP).level;
+  const level = getLevelForXP(studentSemesterXP).level;
   const tier  = getFrameTier(level);
 
   // Remove all old frame classes first
@@ -373,7 +373,7 @@ function applyProfileFrame() {
 function renderProfileFrameCollection(containerId = 'profile-frame-collection') {
   const container = document.getElementById(containerId);
   if (!container) return;
-  const level = getLevelForXP(studentLifetimeXP).level;
+  const level = getLevelForXP(studentSemesterXP).level;
   const current = getFrameTier(level);
   container.replaceChildren();
   [...FRAME_TIERS].reverse().forEach(tier => {
@@ -397,7 +397,7 @@ function renderProfileRewards(containerId = 'profile-rewards-list') {
   const container = document.getElementById(containerId);
   if (!container) return;
 
-  const level    = getLevelForXP(studentLifetimeXP);
+  const level    = getLevelForXP(studentSemesterXP);
   const allEarned = LEVELS.filter(l => l.level <= level.level && l.reward);
 
   if (!allEarned.length) {
@@ -410,7 +410,7 @@ function renderProfileRewards(containerId = 'profile-rewards-list') {
     // Check if coupon still active in wallet
     const active = coupons.find(c => c.type === r.type && (c.permanent || c.remaining > 0));
     const statusHTML = r.permanent
-      ? `<span class="pr-status pr-status-perm">♾️ Permanent</span>`
+      ? `<span class="pr-status pr-status-perm">♾️ This semester</span>`
       : active
       ? `<span class="pr-status pr-status-active">${active.remaining} use${active.remaining !== 1 ? 's' : ''} left</span>`
       : `<span class="pr-status pr-status-used">Used</span>`;

@@ -21,17 +21,12 @@ try {
     s.block,
     s.status,
 
-    COALESCE(
-        (
-            SELECT SUM(q.xp_earned)
-            FROM quiz_idsubmissions q
-            WHERE q.student_id = s.student_id
-            AND q.status IN ('submitted', 'graded')
-        ),
-        0
-    ) AS xp
+    COALESCE(x.semester_xp, 0) AS xp,
+    GREATEST(COALESCE(p.lifetime_xp,0),COALESCE(x.semester_xp,0)) AS level_xp
 
         FROM student s
+        LEFT JOIN current_student_xp x ON x.student_id=s.student_id
+        LEFT JOIN student_reward_progress p ON p.student_id=s.student_id
 
         ORDER BY s.student_id ASC
     ";
@@ -57,6 +52,7 @@ try {
             'year_level'          => $row['year_level'],
             'block'               => $row['block'],
             'status'              => $row['status'],
+            'level_xp'            => (int)$row['level_xp'],
             'xp'                  => (int)$row['xp']
         ];
     }

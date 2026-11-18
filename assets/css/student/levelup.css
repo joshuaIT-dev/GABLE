@@ -1,3 +1,4 @@
+@import url("../student-frames.css");
 /* ═══════════════════════════════════════════════
    levelup.css  —  Level-Up Popup, Coupon Wallet
                    & Level-Progress Enhancements
@@ -435,58 +436,6 @@
 }
 
 /* Level 2 — Apprentice: soft purple ring */
-.frame-apprentice {
-  outline: 2.5px solid rgba(165, 127, 224, .7);
-  box-shadow: 0 0 10px rgba(165, 127, 224, .35);
-}
-
-/* Level 3 — Scholar: blue ring */
-.frame-scholar {
-  outline: 2.5px solid rgba(126, 179, 255, .75);
-  box-shadow: 0 0 10px rgba(126, 179, 255, .35);
-}
-
-/* Level 4 — Battle Ready: green ring */
-.frame-ready {
-  outline: 2.5px solid rgba(74, 222, 128, .75);
-  box-shadow: 0 0 12px rgba(74, 222, 128, .35);
-}
-
-/* Level 5 — Battle Veteran: cyan ring */
-.frame-veteran {
-  outline: 2.5px solid rgba(34, 211, 238, .8);
-  box-shadow: 0 0 14px rgba(34, 211, 238, .4);
-}
-
-/* Level 6 — Battle Master: gold ring */
-.frame-master {
-  outline: 2.5px solid rgba(245, 158, 11, .85);
-  box-shadow: 0 0 16px rgba(245, 158, 11, .4);
-}
-
-/* Level 7 — Champion: pink/red ring with pulse */
-.frame-champion {
-  outline: 3px solid rgba(224, 92, 160, .9);
-  box-shadow: 0 0 18px rgba(224, 92, 160, .45);
-  animation: frame-pulse-champion 2.5s ease-in-out infinite;
-}
-@keyframes frame-pulse-champion {
-  0%, 100% { box-shadow: 0 0 18px rgba(224, 92, 160, .45); }
-  50%       { box-shadow: 0 0 28px rgba(224, 92, 160, .7); }
-}
-
-/* Level 8 — GABLE Master: animated gold crown ring */
-.frame-gable {
-  outline: 3px solid rgba(251, 191, 36, 1);
-  box-shadow: 0 0 20px rgba(251, 191, 36, .55),
-              0 0 40px rgba(251, 191, 36, .2);
-  animation: frame-pulse-gable 2s ease-in-out infinite;
-}
-@keyframes frame-pulse-gable {
-  0%, 100% { box-shadow: 0 0 20px rgba(251,191,36,.55), 0 0 40px rgba(251,191,36,.2); }
-  50%       { box-shadow: 0 0 32px rgba(251,191,36,.8),  0 0 60px rgba(251,191,36,.35); }
-}
-
 /* Frame label badge (shown under avatar in profile modal) */
 .profile-frame-label {
   font-size: .62rem; font-weight: 700;

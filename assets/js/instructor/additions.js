@@ -13,12 +13,14 @@
    LEVEL SYSTEM HELPERS
 ────────────────────────────────────── */
 const LEVELS = [
-    { min: 0, name: 'Novice', cls: 'lp-novice' },
-    { min: 500, name: 'Learner', cls: 'lp-learner' },
-    { min: 1000, name: 'Scholar', cls: 'lp-scholar' },
-    { min: 1500, name: 'Expert', cls: 'lp-expert' },
-    { min: 2000, name: 'Master', cls: 'lp-master' },
-    { min: 2500, name: 'Legend', cls: 'lp-legend' },
+    { min: 0, name: 'Rookie', cls: 'lp-novice' },
+    { min: 300, name: 'Apprentice', cls: 'lp-learner' },
+    { min: 700, name: 'Scholar', cls: 'lp-scholar' },
+    { min: 1200, name: 'Battle Ready', cls: 'lp-expert' },
+    { min: 2000, name: 'Battle Veteran', cls: 'lp-expert' },
+    { min: 3000, name: 'Battle Master', cls: 'lp-master' },
+    { min: 4500, name: 'Champion', cls: 'lp-master' },
+    { min: 6500, name: 'GABLE Master', cls: 'lp-legend' }
 ];
 
 function getLevelInfo(xp) {

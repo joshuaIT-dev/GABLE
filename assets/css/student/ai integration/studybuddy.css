@@ -17,6 +17,14 @@
 .sb-msg { display: flex; flex-direction: column; max-width: 90%; align-self: flex-start; }
 .sb-msg-user { align-self: flex-end; }
 .sb-msg-bubble { background: #243b53; color: #dbe7f5; border: 1px solid #354d67; border-radius: 12px 12px 12px 3px; padding: .8rem 1rem; font-size: .8rem; line-height: 1.75; white-space: pre-wrap; overflow-wrap: anywhere; }
+.sb-msg-bot .sb-msg-bubble { white-space: normal; font-size: .9rem; line-height: 1.7; }
+.sb-msg-bubble p { margin: 0 0 .75rem; }
+.sb-msg-bubble ul, .sb-msg-bubble ol { margin: .5rem 0 .85rem; padding-left: 1.35rem; }
+.sb-msg-bubble li + li { margin-top: .5rem; }
+.sb-msg-bubble strong { color: #fff; font-weight: 650; }
+.sb-msg-bubble > :last-child { margin-bottom: 0; }
+.sb-input { caret-color: #f2bd91; }
+.sb-input:focus-visible { outline: 2px solid #a3c8eb; outline-offset: 2px; }
 .sb-msg-user .sb-msg-bubble { background: #355477; border-color: #4a6a8d; border-radius: 12px 12px 3px 12px; }
 .sb-msg-time { color: #91a7c1; font-size: .6rem; margin-top: .25rem; }
 .sb-msg-user .sb-msg-time { text-align: right; }

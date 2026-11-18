@@ -1,0 +1,254 @@
+[
+    {
+        "college": "College of Accountancy",
+        "program": "BS in Accountancy",
+        "subjects": [
+            "Accounting Information Systems",
+            "Auditing Fundamentals",
+            "Business Law",
+            "Cost Accounting",
+            "Financial Accounting",
+            "Taxation"
+        ]
+    },
+    {
+        "college": "College of Accountancy",
+        "program": "BS in Management Accounting",
+        "subjects": [
+            "Budgeting and Forecasting",
+            "Business Finance",
+            "Financial Reporting",
+            "Management Accounting",
+            "Performance Management",
+            "Strategic Cost Management"
+        ]
+    },
+    {
+        "college": "College of Arts and Sciences",
+        "program": "BA in Communication",
+        "subjects": [
+            "Communication Theory",
+            "Digital Journalism",
+            "Media Ethics",
+            "Media Writing",
+            "Public Speaking",
+            "Visual Communication"
+        ]
+    },
+    {
+        "college": "College of Arts and Sciences",
+        "program": "BS in Psychology",
+        "subjects": [
+            "Cognitive Psychology",
+            "Developmental Psychology",
+            "General Psychology",
+            "Psychological Statistics",
+            "Research Methods",
+            "Social Psychology"
+        ]
+    },
+    {
+        "college": "College of Business Administration",
+        "program": "BSBA - HRDM",
+        "subjects": [
+            "Compensation Management",
+            "Human Resource Planning",
+            "Labor Relations",
+            "Organizational Behavior",
+            "Recruitment and Selection",
+            "Training and Development"
+        ]
+    },
+    {
+        "college": "College of Business Administration",
+        "program": "BSBA - Marketing",
+        "subjects": [
+            "Brand Management",
+            "Consumer Behavior",
+            "Digital Marketing",
+            "Market Research",
+            "Marketing Principles",
+            "Sales Management"
+        ]
+    },
+    {
+        "college": "College of Business Administration",
+        "program": "BSBA - Operations",
+        "subjects": [
+            "Business Analytics",
+            "Inventory Control",
+            "Operations Management",
+            "Project Management",
+            "Quality Management",
+            "Supply Chain Management"
+        ]
+    },
+    {
+        "college": "College of Criminal Justice",
+        "program": "BS in Criminology",
+        "subjects": [
+            "Correctional Administration",
+            "Criminal Investigation",
+            "Criminal Law",
+            "Forensic Science",
+            "Introduction to Criminology",
+            "Law Enforcement Organization"
+        ]
+    },
+    {
+        "college": "College of Information Technology & Computer Studies",
+        "program": "Associate in Computer Technology",
+        "subjects": [
+            "Computer Hardware",
+            "Computer Systems Servicing",
+            "Networking Fundamentals",
+            "Operating Systems",
+            "Programming Fundamentals",
+            "Technical Support"
+        ]
+    },
+    {
+        "college": "College of Information Technology & Computer Studies",
+        "program": "BS in Computer Science",
+        "subjects": [
+            "Algorithms",
+            "Computer Organization",
+            "Computer Programming",
+            "Data Structures",
+            "Discrete Mathematics",
+            "Software Engineering"
+        ]
+    },
+    {
+        "college": "College of Information Technology & Computer Studies",
+        "program": "BS in IT",
+        "subjects": [
+            "Application Development",
+            "Computer Networks",
+            "Database Management",
+            "Information Security",
+            "Systems Analysis",
+            "Web Development"
+        ]
+    },
+    {
+        "college": "College of Medicine",
+        "program": "Doctor of Medicine",
+        "subjects": [
+            "Histology",
+            "Human Anatomy",
+            "Human Physiology",
+            "Introduction to Clinical Medicine",
+            "Medical Biochemistry",
+            "Medical Ethics"
+        ]
+    },
+    {
+        "college": "College of Teacher Education",
+        "program": "BEEd - ECED",
+        "subjects": [
+            "Child Health and Nutrition",
+            "Early Childhood Development",
+            "Early Literacy",
+            "Family and Community Partnerships",
+            "Play Based Learning",
+            "Preschool Curriculum"
+        ]
+    },
+    {
+        "college": "College of Teacher Education",
+        "program": "BEEd - General Elementary",
+        "subjects": [
+            "Assessment of Learning",
+            "Child Development",
+            "Curriculum Development",
+            "Literacy Instruction",
+            "Teaching Mathematics",
+            "Teaching Science"
+        ]
+    },
+    {
+        "college": "College of Teacher Education",
+        "program": "BEEd - SPED",
+        "subjects": [
+            "Assistive Technology",
+            "Behavior Support",
+            "Foundations of Special Education",
+            "Inclusive Education",
+            "Individualized Education Planning",
+            "Special Education Assessment"
+        ]
+    },
+    {
+        "college": "College of Teacher Education",
+        "program": "BSEd - Biological Science",
+        "subjects": [
+            "Biology Teaching Methods",
+            "Cell Biology",
+            "Ecology",
+            "Genetics",
+            "Microbiology",
+            "Science Laboratory Management"
+        ]
+    },
+    {
+        "college": "College of Teacher Education",
+        "program": "BSEd - English",
+        "subjects": [
+            "Creative Writing",
+            "English Grammar",
+            "Language and Linguistics",
+            "Language Assessment",
+            "Literary Studies",
+            "Teaching Reading"
+        ]
+    },
+    {
+        "college": "College of Teacher Education",
+        "program": "BSEd - Filipino",
+        "subjects": [
+            "Estruktura ng Wikang Filipino",
+            "Introduksyon sa Lingguwistika",
+            "Malikhaing Pagsulat",
+            "Pagtataya sa Wika",
+            "Pagtuturo ng Pagbasa",
+            "Panitikang Filipino"
+        ]
+    },
+    {
+        "college": "College of Teacher Education",
+        "program": "BSEd - MAPEH",
+        "subjects": [
+            "Dance and Movement",
+            "Health Education",
+            "Music Theory",
+            "Physical Education",
+            "Sports and Recreation",
+            "Visual Arts"
+        ]
+    },
+    {
+        "college": "College of Teacher Education",
+        "program": "BSEd - Math",
+        "subjects": [
+            "Calculus",
+            "College Algebra",
+            "Mathematics Teaching Methods",
+            "Plane Geometry",
+            "Statistics and Probability",
+            "Trigonometry"
+        ]
+    },
+    {
+        "college": "College of Teacher Education",
+        "program": "BSEd - Social Science",
+        "subjects": [
+            "Economics",
+            "Human Geography",
+            "Philippine History",
+            "Political Science",
+            "Social Studies Teaching Methods",
+            "World History"
+        ]
+    }
+]

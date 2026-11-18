@@ -2,6 +2,23 @@
 
 GABLE (Gamified Academic-Based Learning Environment) is a web application for managing quizzes and coursework with game-inspired progression. Students take quizzes and earn XP, instructors manage classes and review outcomes, and administrators manage the platform.
 
+## Student XP semesters
+
+Student XP progression belongs to a six-month semester. Spending reduces available XP but does not lower the student's level within the semester. The scheduled end is a reminder; only an administrator can close the period.
+
+In **Admin → Settings → Platform & rewards**, use **Close a semester and restart student XP**:
+
+1. Export and save the HTML report. It includes the university top 10, the top 10 per recorded college, and the complete student XP register. Open it offline or use your browser's Print → Save as PDF. Ranking uses earned semester XP including bonuses before spending; ties use last name, first name, then student ID. All student accounts are included.
+2. Enter the next semester name, confirm that the report is saved, and type `RESET STUDENT XP`.
+3. Start the next semester. Changed student records require a fresh export. Active quiz attempts must finish first. Saved exports remain available in admin history.
+
+Reset restarts all student XP, levels, frames, unused power-ups and streaks. Quiz grades, historical awards and instructor XP remain intact. Earlier submissions cannot earn XP or consume rewards in the new semester, even when graded later. Grade boosts apply only to current-semester submissions. Students can earn level rewards again in the new semester. Refresh open student pages after reset.
+
+The initial period includes existing XP because older records have no semester assignment. The first reset establishes a clean boundary. The legacy database field `student_reward_progress.lifetime_xp` now stores only current-semester progression and is cleared on reset.
+
+Run `C:\xampp\php\php.exe tools\test_student_semester.php` to validate the export and reset. This test creates and drops a separate, uniquely named database; it never resets application accounts.
+
+
 ## Roles and portals
 
 - **Student** - take formal and informal quizzes, review results, use learning tools, earn XP, and view rankings. Main pages: `pages/Student.html`, `pages/Sdashboard.html`, and `pages/Game.html`.
@@ -39,7 +56,7 @@ full_system.sql    Complete schema snapshot for database import
    C:\xampp\php\php.exe tools\migrate.php
    ```
 
-   This creates the database if needed, applies the baseline and any unapplied migrations in `assets/sql/`, and records them in `schema_migrations`. Alternatively, import `full_system.sql` into the configured database with a database client. The snapshot contains schema, not application records.
+   This creates the database if needed, applies the baseline and any unapplied migrations in `assets/sql/`, and records them in `schema_migrations`. If you import `full_system.sql` instead, run the migration command afterward to apply newer changes, including semester XP. The snapshot contains schema, not application records.
 
 5. Create an administrator with the CLI tool `tools/create_admin.php`. It reads a JSON object from standard input with `admin_number`, `first_name`, `last_name`, and `password` fields. Use a unique administrator number and a password 8 to 72 bytes long.
 6. Sign in through `pages/Login.html` and choose the account role.
@@ -61,3 +78,12 @@ Run without `--dry-run` to process them. The utility is CLI-only; it is not a we
 - PHP endpoints are under `assets/php/`; browser pages call them with session-based role checks.
 - SQL migration files and the complete SQL snapshot are blocked from direct web access by `.htaccess`.
 - The repository does not include local database credentials or a default administrator password.
+
+
+## Create demonstration accounts on XAMPP
+
+After configuring the private database config described under Local setup, start MySQL in XAMPP and double-click `create_demo_accounts.bat` in the project root. The command applies migrations and creates 105 instructors, 2,730 students, 126 subjects and 546 Year 1 sections (A-Z for each of 21 programs). Each instructor teaches 2-3 subjects; each section has 2-3 subjects and five students. Accounts receive random XP and corresponding student rewards.
+
+Login IDs continue the existing eight-digit format for each role. Passwords start at `12345` and increase in account-list order. These predictable passwords are for demonstration accounts only. Login details are saved as a CSV under `C:\xampp\gable-private` in the standard XAMPP layout, outside the repository. The script preserves existing accounts, including the demo student and Alex, and skips a complete existing demo batch. A partial batch stops setup for review.
+
+Commit `create_demo_accounts.bat`, `tools/seed_demo_accounts.php`, `tools/demo-catalog.json`, and the SQL migrations with the application. Keep private configuration, API keys and generated credential lists out of GitHub. Creating all password hashes can take several minutes.

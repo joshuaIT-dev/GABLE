@@ -21,6 +21,13 @@ $type   = $data["type"] ?? "";
 $id     = $data["id"] ?? "";
 $status = $data["status"] ?? "";
 
+$required = $status === 'Active' ? 'ACTIVATE' : 'DEACTIVATE';
+if (($data['confirmation'] ?? '') !== $required) {
+    http_response_code(422);
+    echo json_encode(['success'=>false,'message'=>'Type '.$required.' to continue.']);
+    exit;
+}
+
 if (
     !$type ||
     !$id ||

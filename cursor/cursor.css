@@ -1,0 +1,31 @@
+.gable-loading-cursor { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  body { cursor: url('./gable-arrow.svg') 4 4, auto; }
+  a[href], button, summary, select, label[for], [role="button"],
+  input[type="button"], input[type="submit"], input[type="reset"],
+  input[type="checkbox"], input[type="radio"], [onclick] {
+    cursor: url('./gable-pointer.svg') 12 4, pointer !important;
+  }
+  input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]),
+  textarea, [contenteditable="true"], [contenteditable="true"] * { cursor: url('./gable-text.svg') 16 16, text !important; }
+  :disabled, [aria-disabled="true"] { cursor: url('./gable-disabled.svg') 12 12, not-allowed !important; }
+  [aria-busy="true"] { cursor: url('./gable-loading.svg') 12 12, progress !important; }
+  html.gable-pressing, html.gable-pressing * {
+    cursor: url('./gable-click.svg') 12 4, pointer !important;
+  }
+  html.gable-loading.gable-mouse-visible, html.gable-loading.gable-mouse-visible * { cursor: none !important; }
+  .gable-loading-cursor {
+    display: none; position: fixed; left: 0; top: 0;
+    width: 24px; height: 24px; margin: -12px 0 0 -12px;
+    pointer-events: none; z-index: 2147483647;
+  }
+  .gable-loading.gable-mouse-visible .gable-loading-cursor { display: block; }
+  .gable-loading-cursor::before {
+    content: ''; display: block; box-sizing: border-box; width: 100%; height: 100%;
+    background: url('./gable-loading.svg') center / 24px 24px no-repeat;
+    image-rendering: pixelated;
+    animation: gable-cursor-spin .8s steps(4, end) infinite;
+  }
+}
+@keyframes gable-cursor-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .gable-loading-cursor::before { animation: none; } }

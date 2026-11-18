@@ -1,0 +1,59 @@
+.frame-apprentice {
+  outline: 2.5px solid rgba(165, 127, 224, .7);
+  box-shadow: 0 0 10px rgba(165, 127, 224, .35);
+}
+
+/* Level 3 — Scholar: blue ring */
+.frame-scholar {
+  outline: 2.5px solid rgba(126, 179, 255, .75);
+  box-shadow: 0 0 10px rgba(126, 179, 255, .35);
+}
+
+/* Level 4 — Battle Ready: green ring */
+.frame-ready {
+  outline: 2.5px solid rgba(74, 222, 128, .75);
+  box-shadow: 0 0 12px rgba(74, 222, 128, .35);
+}
+
+/* Level 5 — Battle Veteran: cyan ring */
+.frame-veteran {
+  outline: 2.5px solid rgba(34, 211, 238, .8);
+  box-shadow: 0 0 14px rgba(34, 211, 238, .4);
+}
+
+/* Level 6 — Battle Master: gold ring */
+.frame-master {
+  outline: 2.5px solid rgba(245, 158, 11, .85);
+  box-shadow: 0 0 16px rgba(245, 158, 11, .4);
+}
+
+/* Level 7 — Champion: pink/red ring with pulse */
+.frame-champion {
+  outline: 3px solid rgba(224, 92, 160, .9);
+  box-shadow: 0 0 18px rgba(224, 92, 160, .45);
+  animation: frame-pulse-champion 2.5s ease-in-out infinite;
+}
+@keyframes frame-pulse-champion {
+  0%, 100% { box-shadow: 0 0 18px rgba(224, 92, 160, .45); }
+  50%       { box-shadow: 0 0 28px rgba(224, 92, 160, .7); }
+}
+
+/* Level 8 — GABLE Master: animated gold crown ring */
+.frame-gable {
+  outline: 3px solid rgba(251, 191, 36, 1);
+  box-shadow: 0 0 20px rgba(251, 191, 36, .55),
+              0 0 40px rgba(251, 191, 36, .2);
+  animation: frame-pulse-gable 2s ease-in-out infinite;
+}
+@keyframes frame-pulse-gable {
+  0%, 100% { box-shadow: 0 0 20px rgba(251,191,36,.55), 0 0 40px rgba(251,191,36,.2); }
+  50%       { box-shadow: 0 0 32px rgba(251,191,36,.8),  0 0 60px rgba(251,191,36,.35); }
+}
+
+
+.student-level{color:var(--student-level-color,#a6b9d0)!important;font-size:11px}
+.student-level-2{--student-level-color:#a57fe0}.student-level-3{--student-level-color:#7eb3ff}.student-level-4{--student-level-color:#4ade80}.student-level-5{--student-level-color:#22d3ee}.student-level-6{--student-level-color:#f59e0b}.student-level-7{--student-level-color:#e05ca0}.student-level-8{--student-level-color:#fbbf24}
+
+/* Keep profile rings visible inside clipped tables and compact roster cells. */
+.frame-apprentice{--frame-ring:#a57fe0}.frame-scholar{--frame-ring:#7eb3ff}.frame-ready{--frame-ring:#4ade80}.frame-veteran{--frame-ring:#22d3ee}.frame-master{--frame-ring:#f59e0b}.frame-champion{--frame-ring:#e05ca0}.frame-gable{--frame-ring:#fbbf24}
+:is(.u-avatar,.s-avatar,.lb-s-avatar,.podium-avatar)[class*="frame-"]{box-sizing:border-box;border:3px solid var(--frame-ring,transparent);outline:none;animation:none;flex-shrink:0}

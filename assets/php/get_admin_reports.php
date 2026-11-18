@@ -25,13 +25,7 @@ try {
           (SELECT COALESCE(AVG(score), 0) FROM quiz_idsubmissions WHERE LOWER(TRIM(status)) IN ('submitted','graded') AND score IS NOT NULL) AS average_score
     ")[0];
 
-    $xpRows = reportRows($conn, "
-        SELECT COALESCE(SUM(q.xp_earned), 0) AS total_xp
-        FROM student s
-        LEFT JOIN quiz_idsubmissions q ON q.student_id = s.student_id
-          AND LOWER(TRIM(q.status)) IN ('submitted','graded')
-        WHERE LOWER(TRIM(s.status)) = 'active'
-    ")[0];
+    $xpRows = reportRows($conn, "SELECT COALESCE(SUM(x.semester_xp),0) total_xp FROM current_student_xp x JOIN student s ON s.student_id=x.student_id WHERE LOWER(TRIM(s.status))='active'")[0];
     $activeStudents = (int)$counts['active_students'];
     $totalXp = (int)$xpRows['total_xp'];
 
@@ -71,7 +65,7 @@ try {
 
     $topStudents = reportRows($conn, "
         SELECT s.student_id, s.first_name, s.last_name, s.college, s.program,
-               s.year_level, s.block, COALESCE(SUM(q.xp_earned),0) AS xp
+               s.year_level, s.block, (SELECT semester_xp FROM current_student_xp WHERE student_id=s.student_id) AS xp
         FROM student s
         LEFT JOIN quiz_idsubmissions q ON q.student_id = s.student_id
           AND LOWER(TRIM(q.status)) IN ('submitted','graded')

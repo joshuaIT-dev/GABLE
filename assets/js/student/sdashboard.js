@@ -1,4 +1,4 @@
-var studentLifetimeXP = 0;
+var studentSemesterXP = 0;
 var studentXP = 0;
 
 const sdashText = (id, value) => { const node = document.getElementById(id); if (node) node.textContent = value ?? ''; };
@@ -18,13 +18,14 @@ async function loadStudentDashboard() {
     const submissionData = submissionResult.status === 'fulfilled' ? submissionResult.value : {submissions:[]};
     const quizData = quizResult.status === 'fulfilled' ? quizResult.value : {quizzes:[]};
     const student = profileData.student;
+    renderStudentSubjects(student.subjects || []);
     const name = [student.first_name, student.last_name].filter(Boolean).join(' ');
-    studentLifetimeXP = Number(xpData.lifetime_xp) || Number(xpData.earned_xp) || 0;
+    studentSemesterXP = Number(xpData.semester_xp) || Number(xpData.earned_xp) || 0;
     studentXP = Number(xpData.xp) || 0;
     coupons = (xpData.grants || []).map(g => ({type:g.type,remaining:Number(g.remaining)||0,permanent:Number(g.permanent)===1}));
-    const level = getLevelForXP(studentLifetimeXP);
+    const level = getLevelForXP(studentSemesterXP);
     const next = LEVELS.find(item => item.level === level.level + 1);
-    const progress = next ? Math.max(0,Math.min(100,Math.round((studentLifetimeXP-level.xpRequired)/(next.xpRequired-level.xpRequired)*100))) : 100;
+    const progress = next ? Math.max(0,Math.min(100,Math.round((studentSemesterXP-level.xpRequired)/(next.xpRequired-level.xpRequired)*100))) : 100;
     const submissions = submissionData.submissions || [];
     const scored = submissions.filter(s => s.score !== null && s.score !== '' && ['submitted','graded'].includes(String(s.status).toLowerCase()));
     const accuracy = scored.length ? Math.round(scored.reduce((sum,s)=>sum+(Number(s.score)||0),0)/scored.length) : null;
@@ -41,10 +42,10 @@ async function loadStudentDashboard() {
     sdashText('sdash-program-full', student.program || 'Not assigned');
     sdashText('sdash-year-full', student.year_level || 'Not assigned');
     sdashText('sdash-section-full', student.block || 'Not assigned');
-    sdashText('sdash-xp', studentLifetimeXP.toLocaleString());
+    sdashText('sdash-xp', studentSemesterXP.toLocaleString());
     sdashText('sdash-level', `Level ${level.level} · ${level.name}`);
-    sdashText('sdash-next-level', next ? `${(next.xpRequired-studentLifetimeXP).toLocaleString()} XP to ${next.name}` : 'Max level');
-    sdashText('sdash-xp-note', next ? `${studentLifetimeXP.toLocaleString()} / ${next.xpRequired.toLocaleString()} lifetime XP` : 'You reached the highest level.');
+    sdashText('sdash-next-level', next ? `${(next.xpRequired-studentSemesterXP).toLocaleString()} XP to ${next.name}` : 'Max level');
+    sdashText('sdash-xp-note', next ? `${studentSemesterXP.toLocaleString()} / ${next.xpRequired.toLocaleString()} semester XP` : 'You reached the highest level.');
     document.getElementById('sdash-xp-fill').style.width = `${progress}%`;
     sdashText('sdash-accuracy', accuracy === null ? '—' : `${accuracy}%`);
     sdashText('sdash-submissions', submissions.length);

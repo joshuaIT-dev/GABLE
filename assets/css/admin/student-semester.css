@@ -1,0 +1,14 @@
+.semester-control { margin-top: 1.5rem; }
+.semester-control p { line-height: 1.65; }
+.semester-steps { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1.5rem; margin: 1rem 0; }
+.semester-steps section { border-top: 1px solid var(--border, #475569); padding-top: 1rem; min-width: 0; }
+.semester-steps label { display: block; margin: 1rem 0 .5rem; }
+.semester-steps input:not([type="checkbox"]) { box-sizing: border-box; width: 100%; padding: .8rem; border: 1px solid #64748b; border-radius: 8px; background: #162336; color: #f1f5f9; font: inherit; }
+.semester-steps input:focus-visible { outline: 2px solid #93c5fd; outline-offset: 2px; }
+.semester-steps .semester-check { display: flex; gap: .65rem; align-items: flex-start; line-height: 1.5; }
+.semester-check input { margin-top: .3rem; flex-shrink: 0; }
+.semester-steps button { margin-top: .75rem; white-space: normal; }
+.semester-control button:disabled { opacity: .5; cursor: not-allowed; }
+.semester-control summary { cursor: pointer; padding: .75rem 0; }
+#student-semester-history a { display: block; padding: .65rem 0; color: #b9d8f5; }
+@media(max-width:760px) { .semester-steps { grid-template-columns: 1fr; } }

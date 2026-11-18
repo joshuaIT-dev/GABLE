@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../assets/css/student.css">
     <link rel="stylesheet" href="../assets/css/style.css?v=2">
 
-    <link rel="stylesheet" href="../assets/css/student/levelup.css">
+    <link rel="stylesheet" href="../assets/css/student/levelup.css?v=2">
     <link rel="stylesheet" href="../assets/css/student/fiftyfifty.css">
     <link rel="stylesheet" href="../assets/css/student/powerups.css?v=2">
     <link rel="stylesheet" href="../assets/css/student/notifications.css">
@@ -27,6 +27,8 @@
 <link rel="stylesheet" href="../assets/css/review-library.css?v=3">
   <link rel="stylesheet" href="../assets/css/brand-text.css?v=5">
 <link rel="stylesheet" href="../assets/css/surfaces.css?v=2">
+    <script src="../cursor/cursor.js"></script>
+    <script src="../assets/js/student/subjects.js"></script>
 </head>
 
 <body class="student-portal">
@@ -62,6 +64,8 @@
                 <div class="hero-text"><div class="card-eyebrow">YOUR STUDENT WORKSPACE</div><h2 id="home-welcome"></h2><p id="home-summary"></p><div class="hero-streak"><button class="btn-join" onclick="switchTab('quizzes')">Continue to my quizzes <span aria-hidden="true">&rarr;</span></button><span class="streak-chip" id="home-streak"></span></div></div>
                 <div class="home-quick-actions"><span class="card-eyebrow">MAKE YOUR NEXT STEP COUNT</span><button onclick="switchTab('studybuddy')"><span><strong>Review a topic</strong><small>Work through it with Study Buddy</small></span><span aria-hidden="true">&rarr;</span></button><button onclick="switchTab('scores')"><span><strong>Check your progress</strong><small>See your results across subjects</small></span><span aria-hidden="true">&rarr;</span></button></div>
             </div>
+
+            <section class="student-subjects-card"><div class="card-eyebrow">YOUR ENROLLMENT</div><h3>My subjects</h3><p class="metric-caption">Subjects and instructors assigned to your section.</p><div id="student-subjects-list"></div></section>
 
             <div class="stats-overview fade-up-1">
 
@@ -360,9 +364,10 @@
                     </button>
 
                     <button class="lb-filter-btn" onclick="setLbFilter(this,'overall')">
-                        Overall
+                        My College
                     </button>
                 </div>
+                <p class="metric-caption">Rankings include students in your college only.</p>
                 <div id="lb-subject-selector"></div>
                 <div id="lb-list"></div>
             </div>
@@ -410,7 +415,7 @@
                 <section class="xp-progress-card xp-progress-panel">
                     <div class="card-eyebrow">YOUR PROGRESS</div><h3 id="xp-welcome">Keep building your progress</h3><p id="xp-level-sub" class="metric-caption"></p>
                     <div class="xp-level-block"><div class="xp-level-num" id="xp-level-num"></div><div class="xp-level-info"><div class="lvl-name" id="xp-level-name"></div><div class="lvl-prog" id="xp-next-reward"></div><div class="xp-bar-track"><div class="xp-bar-fill" id="xp-bar-fill-main" style="width:0%"></div></div><div id="next-level-chip" class="next-level-chip"></div></div></div>
-                    <p class="xp-lifetime-note"><strong id="main-xp-num">0</strong> lifetime XP. Spending XP never lowers your level.</p>
+                    <p class="xp-lifetime-note"><strong id="main-xp-num">0</strong> semester XP. Spending does not lower your level. Every six-month semester restarts when the administrator closes it; XP, levels, frames, power-ups and streaks reset.</p>
                     <div class="xp-stat-tiles"><div class="xp-stat-tile"><div class="xst-val" id="xp-tile-val">0</div><div class="xst-label">Quiz XP earned</div></div><div class="xp-stat-tile"><div class="xst-val" id="xp-perfect-streak">0</div><div class="xst-label">Perfect streak</div></div><div class="xp-stat-tile"><div class="xst-val" id="xp-completed">0</div><div class="xst-label">Quizzes submitted</div></div></div>
                 </section>
                 <section class="redeem-card xp-balance-panel">
@@ -465,9 +470,9 @@
                 <div class="help-topic-grid">
                     <article><span class="help-topic-number">01</span><h3>Take a quiz</h3><p>Open My Quizzes to see formal and informal activities assigned to your section. Choose a card to read the instructions and start.</p><button onclick="closeModal('modal-help');switchTab('quizzes')">My quizzes &rarr;</button></article>
                     <article><span class="help-topic-number">02</span><h3>Understand your results</h3><p>Multiple-choice answers can be graded automatically. Identification answers wait for instructor review. Performance shows your graded scores and completion.</p><button onclick="closeModal('modal-help');switchTab('scores')">View performance &rarr;</button></article>
-                    <article><span class="help-topic-number">03</span><h3>Use XP and rewards</h3><p>Earn XP from quiz results to unlock rewards. Spend 350 XP for a +1 point boost on an eligible graded formal quiz. Spending does not lower your level.</p><button onclick="closeModal('modal-help');switchTab('xp')">XP &amp; rewards &rarr;</button></article>
+                    <article><span class="help-topic-number">03</span><h3>Unlock and use power-ups</h3><p>Complete assigned quizzes to earn semester XP. Rewards unlock once at these milestones: 300 XP: profile frame; 700: Streak Freeze; 1,200: 50/50; 2,000: 1.5x XP; 3,000: discounted hints; 4,500: free grade boost; 6,500: Master Crown. Spending XP does not lower your level.</p><p>Open Power-Ups for your remaining XP, saved uses and exact steps. Use 50/50 before answering a four-choice question. XP boosts apply to results earning base XP above zero. A grade boost needs a graded formal result below 100% with no previous boost, plus a token or 350 XP and enabled administrator settings.</p><button onclick="closeModal('modal-help');switchTab('powerups')">Check my power-ups &rarr;</button></article>
                     <article><span class="help-topic-number">04</span><h3>Get help studying</h3><p>Ask Study Buddy to explain a concept or guide your review. Open the full tab for more space, or use the floating chat while browsing.</p><button onclick="closeModal('modal-help');switchTab('studybuddy')">Open Study Buddy &rarr;</button></article>
-                </div><div class="help-review-note"><strong>Waiting for a grade?</strong><p>A result marked ?Awaiting review? needs your instructor's feedback. Your final score and XP will appear after grading.</p></div>
+                </div><div class="help-review-note"><strong>Already own a reward? These three apply automatically.</strong><ul><li><strong>1.5× XP:</strong> Finish a quiz that earns more than zero base XP. One use applies when the result receives its XP award; pending results wait for grading.</li><li><strong>50% off hints:</strong> Choose Hint before answering a question. You need 25 spendable XP and a remaining discount. One successful hint uses both; it is not free.</li><li><strong>Streak Freeze:</strong> Miss one day, then submit a quiz the following day. One freeze protects that missed day. Logging in alone does not count; longer gaps are not covered.</li></ul><p>No activation button is needed. Check <strong>Power-Ups → Your Power-Up Inventory</strong> for uses left. Used-up rewards stop applying.</p><button class="btn-secondary" onclick="closeModal('modal-help');switchTab('powerups')">Check my remaining uses</button></div><div class="help-review-note"><strong>Waiting for a grade?</strong><p>A result marked Awaiting review needs your instructor's feedback. Your final score and XP will appear after grading.</p></div>
             </div>
             <footer class="account-dialog-footer"><button class="btn-secondary" onclick="closeModal('modal-help')">Got it</button></footer>
         </section>
@@ -636,7 +641,7 @@
 
 
     <script src="../assets/js/main.js?v=7"></script>
-    <script src="../assets/js/student.js?v=7"></script>
+    <script src="../assets/js/student.js?v=8"></script>
 
     <!-- Level-Up — must load AFTER student.js -->
     <script src="../assets/js/student/levelup.js?v=4"></script>

@@ -51,11 +51,10 @@ try {
           (SELECT COUNT(*) FROM quizzes WHERE status = 'active' AND mode = 'informal') AS informal_quizzes,
           (SELECT COUNT(*) FROM quizzes WHERE status = 'active'
              AND created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)) AS quizzes_week,
-          (SELECT COALESCE(SUM(xp_earned), 0) FROM quiz_idsubmissions
-             WHERE status IN ('submitted','graded')) AS total_xp,
+          (SELECT COALESCE(SUM(semester_xp),0) FROM current_student_xp) AS total_xp,
           (SELECT COALESCE(SUM(xp_earned), 0) FROM quiz_idsubmissions
              WHERE status IN ('submitted','graded')
-             AND submitted_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)) AS xp_week
+             AND submission_id > (SELECT submission_cutoff FROM current_xp_semester) AND submitted_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)) AS xp_week
     ")[0];
 
     /* ----------------------------------------- college performance */
@@ -63,7 +62,7 @@ try {
     $colleges = ov_rows($conn, "
         SELECT c.college,
                ROUND(AVG(qs.score)) AS avg_score,
-               COALESCE(SUM(qs.xp_earned), 0) AS xp,
+               (SELECT COALESCE(SUM(x.semester_xp),0) FROM current_student_xp x JOIN student sx ON sx.student_id=x.student_id WHERE TRIM(sx.college)=c.college) AS xp,
                COUNT(qs.submission_id) AS attempts
         FROM (
             SELECT TRIM(college) AS college FROM student

@@ -79,7 +79,7 @@ function sbMinimize() {
 }
 function sbRenderSubjects() {
   const select = document.getElementById('sb-subject-select');
-  const subjects = [...new Set([...formalQuizzes, ...informalQuizzes].map(quiz => quiz.subject).filter(Boolean))].sort();
+  const subjects = getStudentSubjects();
   select.replaceChildren(new Option('Any subject', ''), ...subjects.map(subject => new Option(subject, subject)));
   select.value = subjects.includes(sbCurrentSubject) ? sbCurrentSubject : '';
 }
@@ -232,12 +232,37 @@ async function sbSend() {
     if (sbRequest === controller) { sbRequest = null; sbSetTyping(false); }
   }
 }
+function sbFormatReply(bubble, text) {
+  let list = null;
+  for (const line of String(text).split('\n')) {
+    if (!line.trim()) { list = null; continue; }
+    const bullet = line.match(/^\s*(?:[-*•]|\d+[.)])\s+(.+)/);
+    let block;
+    if (bullet) {
+      const tag = /^\s*\d/.test(line) ? 'ol' : 'ul';
+      if (!list || list.tagName.toLowerCase() !== tag) {
+        list = document.createElement(tag); bubble.append(list);
+      }
+      block = document.createElement('li'); list.append(block);
+    } else {
+      list = null; block = document.createElement('p'); bubble.append(block);
+    }
+    const content = bullet ? bullet[1] : line.replace(/^#{1,6}\s+/, '');
+    for (const part of content.split(/(\*\*[^*]+\*\*)/g)) {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        const strong = document.createElement('strong'); strong.textContent = part.slice(2, -2); block.append(strong);
+      } else block.append(document.createTextNode(part));
+    }
+  }
+}
+
 function sbAddMessage(role, text, timestamp = null) {
   const row = document.createElement('div');
   row.className = `sb-msg sb-msg-${role === 'user' ? 'user' : 'bot'}`;
   const bubble = document.createElement('div');
   bubble.className = 'sb-msg-bubble';
-  bubble.textContent = text;
+  if (role === 'user') bubble.textContent = text;
+  else sbFormatReply(bubble, text);
   const time = document.createElement('div');
   time.className = 'sb-msg-time';
   time.textContent = (timestamp ? new Date(timestamp.replace(' ', 'T')) : new Date()).toLocaleTimeString('en-PH', { hour: '2-digit', minute: '2-digit' });

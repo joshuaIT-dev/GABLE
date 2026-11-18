@@ -19,19 +19,19 @@ try {
       (SELECT COUNT(*) FROM quiz_idsubmissions WHERE LOWER(TRIM(status)) IN ('submitted','graded')) completed_submissions,
       (SELECT COUNT(*) FROM quiz_idsubmissions WHERE LOWER(TRIM(status)) IN ('submitted','graded') AND score IS NOT NULL) scored_submissions,
       (SELECT ROUND(AVG(score),2) FROM quiz_idsubmissions WHERE LOWER(TRIM(status)) IN ('submitted','graded') AND score IS NOT NULL) average_score,
-      (SELECT COALESCE(SUM(xp_earned),0) FROM quiz_idsubmissions WHERE LOWER(TRIM(status)) IN ('submitted','graded')) total_xp,
+      (SELECT COALESCE(SUM(semester_xp),0) FROM current_student_xp) total_xp,
       (SELECT COUNT(*) FROM flags WHERE status='pending') pending_flags,
       (SELECT COUNT(*) FROM flags WHERE status='resolved') resolved_flags")[0];
     $colleges = semRows($conn, "SELECT s.college,
       COUNT(DISTINCT s.student_id) students,
       COUNT(DISTINCT qs.submission_id) submissions,
       ROUND(AVG(qs.score),2) average_score,
-      COALESCE(SUM(qs.xp_earned),0) total_xp
+      (SELECT COALESCE(SUM(x.semester_xp),0) FROM current_student_xp x JOIN student sx ON sx.student_id=x.student_id WHERE sx.college=s.college AND LOWER(TRIM(sx.status))='active') total_xp
       FROM student s LEFT JOIN quiz_idsubmissions qs ON qs.student_id=s.student_id AND LOWER(TRIM(qs.status)) IN ('submitted','graded')
       WHERE LOWER(TRIM(s.status))='active'
       GROUP BY s.college ORDER BY s.college");
     $students = semRows($conn, "SELECT s.student_id, CONCAT_WS(' ',s.first_name,s.last_name) name, s.college,s.program,s.year_level,s.block,
-      COALESCE(SUM(qs.xp_earned),0) xp, ROUND(AVG(qs.score),2) average_score, COUNT(qs.submission_id) submissions
+      (SELECT semester_xp FROM current_student_xp WHERE student_id=s.student_id) xp, ROUND(AVG(qs.score),2) average_score, COUNT(qs.submission_id) submissions
       FROM student s LEFT JOIN quiz_idsubmissions qs ON qs.student_id=s.student_id AND LOWER(TRIM(qs.status)) IN ('submitted','graded')
       WHERE LOWER(TRIM(s.status))='active' GROUP BY s.student_id,s.first_name,s.last_name,s.college,s.program,s.year_level,s.block
       ORDER BY xp DESC, average_score DESC, name ASC LIMIT 10");
@@ -49,7 +49,7 @@ try {
       SELECT MAX(submitted_at) dt FROM quiz_idsubmissions UNION ALL SELECT MAX(created_at) dt FROM quizzes
     ) activity_dates")[0]['latest_activity'] ?? null;
     echo json_encode(['success'=>true,'metrics'=>$metrics,'colleges'=>$colleges,'top_students'=>$students,'instructors'=>$instructors,'flags'=>$flags,
-      'meta'=>['academic_period'=>'AY 2025–2026, 2nd Semester','data_scope'=>'Current database snapshot; source tables do not identify academic year/semester per record.','latest_activity'=>$latest,'instructor_grade_source'=>'Stored instructor.grade field; average score and quiz/submission counts are separate activity measures.']], JSON_UNESCAPED_UNICODE|JSON_INVALID_UTF8_SUBSTITUTE);
+      'meta'=>['academic_period'=>$conn->query('SELECT label FROM current_xp_semester')->fetch_assoc()['label'],'data_scope'=>'XP totals cover the current XP semester. Other academic metrics are historical. For closing rankings use Settings > Export semester results.','latest_activity'=>$latest,'instructor_grade_source'=>'Stored instructor.grade field; average score and quiz/submission counts are separate activity measures.']], JSON_UNESCAPED_UNICODE|JSON_INVALID_UTF8_SUBSTITUTE);
     $conn->close();
 } catch (Throwable $e) {
     http_response_code(500);

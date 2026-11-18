@@ -54,6 +54,7 @@ try {
          INNER JOIN quizzes q ON q.quiz_id = s.quiz_id
          LEFT JOIN grade_boost_redemptions r ON r.submission_id = s.submission_id
          WHERE s.student_id = ?
+           AND s.submission_id > (SELECT submission_cutoff FROM current_xp_semester)
            AND LOWER(q.mode) = 'formal'
            AND s.status IN ('submitted', 'graded')
            AND s.score < 100

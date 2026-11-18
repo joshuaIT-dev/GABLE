@@ -3,7 +3,7 @@ let powerupBusy = false;
 
 function applyPowerupState(state) {
   studentXP = Number(state.xp);
-  studentLifetimeXP = Number(state.lifetime_xp);
+  studentSemesterXP = Number(state.semester_xp);
   studentQuizXP = Number(state.earned_xp) || 0;
   coupons = state.grants.map(grant => {
     const reward = LEVELS.find(level => level.level === Number(grant.level))?.reward;
@@ -15,7 +15,7 @@ function applyPowerupState(state) {
   }
   const streakHost=document.getElementById('weekly-streak-reward');
   if(streakHost){streakHost.replaceChildren();const title=document.createElement('h3');title.textContent='Seven-day study reward';const copy=document.createElement('p');copy.textContent=`${state.streak} / 7 days. Submit a quiz each day to earn 100 XP. Each new cycle starts at day 1; a missed day resets progress unless a freeze applies.`;const claim=document.createElement('button');claim.className='btn-secondary';const ready=state.grants.some(g=>g.type==='weekly_streak'&&Number(g.remaining)>0);claim.textContent=ready?'Claim 100 XP':'Complete 7 days to claim';claim.disabled=!ready;claim.onclick=async()=>{claim.disabled=true;try{await powerupRequest('claim_streak');renderXP();showToast('Reward','100 streak XP claimed.');}catch(e){showToast('System',e.message);claim.disabled=false;}};streakHost.append(title,copy,claim);}
-  checkLevelUp(studentLifetimeXP);
+  checkLevelUp(studentSemesterXP);
   updateXPDisplay();
   applyProfileFrame();
 }

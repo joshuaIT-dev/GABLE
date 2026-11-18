@@ -134,9 +134,10 @@ try {
             */
 
             COALESCE(
-                SUM(qs.xp_earned),
+                SUM(CASE WHEN qs.submission_id > (SELECT submission_cutoff FROM current_xp_semester) AND qs.status IN ('submitted','graded') THEN qs.xp_earned ELSE 0 END),
                 0
             ) + (SELECT COALESCE(SUM(g.bonus),0) FROM student_powerup_grants g WHERE g.student_id=s.student_id) AS total_xp,
+            (SELECT lifetime_xp FROM student_reward_progress WHERE student_id=s.student_id) AS level_xp,
 
 
             /*
@@ -365,6 +366,8 @@ try {
 
                 ),
 
+
+            'level_xp' => (int)$row['level_xp'],
 
             'xp' =>
 

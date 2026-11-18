@@ -89,6 +89,7 @@ try {
         "SELECT submission_id, quiz_id, score, status
          FROM quiz_idsubmissions
          WHERE submission_id = ? AND student_id = ?
+           AND submission_id > (SELECT submission_cutoff FROM current_xp_semester)
          LIMIT 1
          FOR UPDATE"
     );

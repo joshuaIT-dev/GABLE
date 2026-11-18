@@ -439,6 +439,7 @@ togglePw.addEventListener("click", () => {
 /* ── LOGIN BUTTON ── */
 
 const loginBtn = document.getElementById("loginBtn");
+document.getElementById("login-form").addEventListener("submit", e => e.preventDefault());
 
 loginBtn.addEventListener("click", function(e) {
 
@@ -547,7 +548,6 @@ function handleLogin() {
 
     console.log("Role:", role);
     console.log("ID:", id);
-    console.log("Password:", password);
 
 
     /* Check ID */

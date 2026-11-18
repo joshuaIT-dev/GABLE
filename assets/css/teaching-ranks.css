@@ -1,0 +1,10 @@
+/* Shared administrator-assigned teaching ranks. */
+.teaching-rank[data-rank]{display:inline-block;color:var(--rank-color,#a6b9d0)!important;background:color-mix(in srgb,var(--rank-color,#a6b9d0) 12%,#14243a)!important;border:1px solid var(--rank-color,#a6b9d0);border-radius:8px;padding:.18em .5em;font-weight:800;line-height:1.4}
+.teaching-rank[data-rank="SSS+"]{--rank-color:#fbbf24}
+.teaching-rank[data-rank="SSS"]{--rank-color:#f0abfc}
+.teaching-rank[data-rank="SS"]{--rank-color:#c4b5fd}
+.teaching-rank[data-rank="S"]{--rank-color:#7dd3fc}
+.teaching-rank[data-rank="A"]{--rank-color:#6ee7b7}
+.teaching-rank[data-rank="B"]{--rank-color:#67e8f9}
+.teaching-rank[data-rank="C"]{--rank-color:#fdba74}
+.teaching-rank[data-rank="F"]{--rank-color:#fda4af}

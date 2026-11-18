@@ -61,6 +61,17 @@ if ($result->num_rows === 0) {
 
 $student = $result->fetch_assoc();
 
+$section=trim($student['program'].' '.$student['year_level'].$student['block']);
+$subjects=$conn->prepare("SELECT DISTINCT TRIM(t.subject_name) subject,
+    CONCAT_WS(' ',i.first_name,i.last_name) instructor
+    FROM teaching_assignments t JOIN instructor i ON i.instructor_id=t.instructor_id
+    WHERE LOWER(TRIM(t.section))=LOWER(TRIM(?)) AND i.status='Active'
+    ORDER BY subject,instructor");
+$subjects->bind_param('s',$section);
+$subjects->execute();
+$student['subjects']=$subjects->get_result()->fetch_all(MYSQLI_ASSOC);
+$subjects->close();
+
 echo json_encode([
     "success" => true,
     "student" => $student

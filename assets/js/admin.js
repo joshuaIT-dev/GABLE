@@ -1,3 +1,36 @@
+function adminPageRows(list, host, page, render) {
+    const id = host.id + '-pagination';
+    document.getElementById(id)?.remove();
+    const total = list.length, pages = Math.max(1, Math.ceil(total / 50));
+    page = Math.max(1, Math.min(page, pages));
+    const offset = (page - 1) * 50;
+    const nav = document.createElement('nav'); nav.id = id; nav.className = 'admin-pagination'; nav.setAttribute('aria-label','Table pages');
+    const label = document.createElement('span'); label.textContent = total ? `${offset + 1}-${Math.min(offset + 50,total)} of ${total}` : '0 results'; nav.append(label);
+    if (pages > 1) for (const [text,target] of [['Previous',page-1],['Next',page+1]]) {
+        const button = document.createElement('button'); button.type='button';button.className='btn-secondary';button.textContent=text;button.disabled=target<1||target>pages;button.onclick=()=>render(target);nav.append(button);
+    }
+    host.after(nav);
+    return {rows:list.slice(offset,offset+50),offset};
+}
+
+function confirmAccountStatus(name, status) {
+    const word = status === 'Active' ? 'ACTIVATE' : 'DEACTIVATE';
+    return new Promise(resolve => {
+        const dialog = document.createElement('dialog'); dialog.className='account-status-confirm ' + (status === 'Active' ? 'is-activate' : 'is-deactivate');
+        dialog.innerHTML='<form method="dialog"><h2></h2><p></p><label for="account-status-word"></label><input id="account-status-word" autocomplete="off" spellcheck="false"><div class="account-status-actions"><button type="button" class="btn-secondary">Cancel</button><button type="submit" class="btn-primary" disabled>Continue</button></div></form>';
+        dialog.querySelector('h2').textContent = word === 'ACTIVATE' ? 'Activate account' : 'Deactivate account';
+        dialog.querySelector('p').textContent=name;
+        dialog.querySelector('label').innerHTML=`Type <strong>${word}</strong> to continue`;
+        dialog.querySelector('[type="submit"]').textContent = status === 'Active' ? 'Activate' : 'Deactivate';
+        const input=dialog.querySelector('input'),submit=dialog.querySelector('[type="submit"]');
+        input.oninput=()=>{submit.disabled=input.value!==word;};
+        dialog.querySelector('[type="button"]').onclick=()=>dialog.close();
+        dialog.querySelector('form').onsubmit=event=>{event.preventDefault();if(input.value===word)dialog.close(word);};
+        dialog.onclose=()=>{const confirmed=dialog.returnValue===word;dialog.remove();resolve(confirmed?word:null);};
+        document.body.append(dialog);dialog.showModal();input.focus();
+    });
+}
+
 /* ═══════════════════════════════════════════════════════════════
    admin.js — Admin dashboard data & rendering
    Depends on: main.js  (showToast, showConfirm, closeConfirm,
@@ -6,7 +39,7 @@
 
 
 /* ── LEVEL SYSTEM ───────────────────────────────────────────── */
-const XP_THRESHOLDS = [0, 500, 1000, 1600, 2200, 3000, 4000, 5200, 6600, 8200, 10000];
+const XP_THRESHOLDS = [0, 300, 700, 1200, 2000, 3000, 4500, 6500];
 
 function getLevel(xp) {
     let lvl = 1;
@@ -19,10 +52,8 @@ function getLevel(xp) {
 
 function getLevelLabel(xp) {
     const lvl = getLevel(xp);
-    const labels = ['', 'Novice', 'Learner', 'Explorer', 'Seeker', 'Scholar',
-        'Adept', 'Expert', 'Master', 'Sage', 'Legend'
-    ];
-    return { lvl, label: labels[lvl] || 'Legend+' };
+    const labels = ['', 'Rookie', 'Apprentice', 'Scholar', 'Battle Ready', 'Battle Veteran', 'Battle Master', 'Champion', 'GABLE Master'];
+    return { lvl, label: labels[lvl] };
 }
 
 
@@ -636,7 +667,7 @@ function setLbView(view, btn) {
     renderLeaderboard();
 }
 
-function renderLeaderboard() {
+function renderLeaderboard(page = 1) {
     const el = document.getElementById('leaderboard-content');
     if (!el) return;
     if (!lbLoaded) { loadLeaderboardData(); return; }
@@ -647,22 +678,27 @@ function renderLeaderboard() {
         ? `<i data-lucide="medal" aria-label="Rank ${i + 1}"></i>`
         : `#${i + 1}`;
 
+    document.getElementById(el.id + '-pagination')?.remove();
     if (lbView === 'students') {
         let list = lbData.students.filter(s => (!collegeFilter || s.college === collegeFilter) && (!sectionFilter || s.section === sectionFilter));
         list.sort((a,b) => Number(b.xp)-Number(a.xp) || (Number(b.average_score ?? -1)-Number(a.average_score ?? -1)) || String(a.name).localeCompare(String(b.name)));
+        const paged = adminPageRows(list, el, page, renderLeaderboard); list = paged.rows;
         el.innerHTML = `<div class="lb-header-row"><span class="lb-col-rank">Rank</span><span class="lb-col-name">Student</span><span class="lb-col-mid">College</span><span class="lb-col-mid">Section</span><span class="lb-col-xp">XP</span></div>` +
             (list.length ? list.map((s,i) => {
-                const {lvl,label} = getLevelLabel(Number(s.xp)||0);
+                i += paged.offset;
+                const {lvl,label} = getLevelLabel(Number(s.level_xp)||0);
                 const initials = String(s.name||'?').split(/\s+/).filter(Boolean).map(n=>n[0]).slice(0,2).join('').toUpperCase();
-                return `<div class="lb-row ${i<3?'lb-row-top':''} ${i===0?'lb-row-gold':i===1?'lb-row-silver':i===2?'lb-row-bronze':''}"><span class="lb-col-rank lb-rank">${rankMark(i)}</span><div class="lb-col-name cell-user"><div class="u-avatar" style="background:${avatarColors[i%avatarColors.length]};width:36px;height:36px;font-size:.78rem">${lbEscape(initials)}</div><div><div class="u-name">${lbEscape(s.name)}</div><div class="u-id">${lbEscape(s.student_number || s.student_id)}</div></div></div><span class="lb-col-mid" style="font-size:.82rem;color:var(--text-muted)">${lbEscape(s.college||'—')}</span><span class="lb-col-mid">${lbEscape(s.section||'Unassigned')}</span><span class="lb-col-xp xp-cell">⭐${(Number(s.xp)||0).toLocaleString()}<br><small>${lbEscape(lvl)} ${lbEscape(label)}</small></span></div>`;
+                return `<div class="lb-row ${i<3?'lb-row-top':''} ${i===0?'lb-row-gold':i===1?'lb-row-silver':i===2?'lb-row-bronze':''}"><span class="lb-col-rank lb-rank">${rankMark(i)}</span><div class="lb-col-name cell-user"><div class="u-avatar" title="Level ${lvl} - ${label}" style="background:linear-gradient(135deg,#4f8ef7,#7c5cbf);width:36px;height:36px;font-size:.78rem">${lbEscape(initials)}</div><div><div class="u-name">${lbEscape(s.name)}</div><div class="u-id">${lbEscape(s.student_number || s.student_id)}</div></div></div><span class="lb-col-mid" style="font-size:.82rem;color:var(--text-muted)">${lbEscape(s.college||'—')}</span><span class="lb-col-mid">${lbEscape(s.section||'Unassigned')}</span><span class="lb-col-xp xp-cell">⭐${(Number(s.xp)||0).toLocaleString()}<br><small class="student-level student-level-${lvl}">Level ${lbEscape(lvl)} - ${lbEscape(label)}</small></span></div>`;
             }).join('') : '<div class="empty-state"><span class="emoji">🏆</span><p>No students match these filters.</p></div>');
     } else if (lbView === 'instructors') {
         let list = lbData.instructors.filter(i => (!collegeFilter || i.college === collegeFilter) && (!sectionFilter || (i.sections||[]).includes(sectionFilter)));
         list.sort((a,b) => Number(b.teaching_exp)-Number(a.teaching_exp) || String(a.name).localeCompare(String(b.name)));
+        const paged = adminPageRows(list, el, page, renderLeaderboard); list = paged.rows;
         el.innerHTML = `<div class="lb-header-row"><span class="lb-col-rank">Rank</span><span class="lb-col-name">Instructor</span><span class="lb-col-mid">College</span><span class="lb-col-mid">Section(s)</span><span class="lb-col-xp">Teaching EXP</span></div>` +
             (list.length ? list.map((i,n) => {
+                n += paged.offset;
                 const initials = String(i.name||'?').replace(/^(Dr\.|Prof\.)\s*/i,'').split(/\s+/).filter(Boolean).map(x=>x[0]).slice(0,2).join('').toUpperCase();
-                return `<div class="lb-row ${n<3?'lb-row-top':''} ${n===0?'lb-row-gold':n===1?'lb-row-silver':n===2?'lb-row-bronze':''}"><span class="lb-col-rank lb-rank">${rankMark(n)}</span><div class="lb-col-name cell-user"><div class="u-avatar" style="background:${avatarColors[n%avatarColors.length]};width:36px;height:36px;font-size:.78rem">${lbEscape(initials)}</div><div><div class="u-name">${lbEscape(i.name)}</div><div class="u-id">${lbEscape(i.instructor_number || i.instructor_id)}</div></div></div><span class="lb-col-mid" style="font-size:.82rem;color:var(--text-muted)">${lbEscape(i.college||'—')}</span><span class="lb-col-mid">${lbEscape((i.sections||[]).join(', ') || 'No section assigned')}</span><span class="lb-col-xp xp-cell">⭐${(Number(i.teaching_exp)||0).toLocaleString()} EXP</span></div>`;
+                return `<div class="lb-row ${n<3?'lb-row-top':''} ${n===0?'lb-row-gold':n===1?'lb-row-silver':n===2?'lb-row-bronze':''}"><span class="lb-col-rank lb-rank">${rankMark(n)}</span><div class="lb-col-name cell-user"><div class="u-avatar" style="background:${avatarColors[n%avatarColors.length]};width:36px;height:36px;font-size:.78rem">${lbEscape(initials)}</div><div><div class="u-name">${lbEscape(i.name)}</div><div class="u-id">${lbEscape(i.instructor_number || i.instructor_id)} ? <span class="teaching-rank" data-rank="${lbEscape(i.grade || '')}">${lbEscape(i.grade || 'Not ranked')}</span></div></div></div><span class="lb-col-mid" style="font-size:.82rem;color:var(--text-muted)">${lbEscape(i.college||'—')}</span><span class="lb-col-mid">${lbEscape((i.sections||[]).join(', ') || 'No section assigned')}</span><span class="lb-col-xp xp-cell">⭐${(Number(i.teaching_exp)||0).toLocaleString()} EXP</span></div>`;
             }).join('') : '<div class="empty-state"><span class="emoji">🎓</span><p>No instructors match these filters.</p></div>');
     } else {
         let list = lbData.colleges.filter(c => !collegeFilter || c.college === collegeFilter);
@@ -856,11 +892,13 @@ async function resolveFlagged(i) {
 
 
 /* ── USERS ──────────────────────────────────────────────────── */
-function renderUsers(list) {
+function renderUsers(list, page = 1) {
     const el = document.getElementById('users-table-body');
 
     if (!el) return;
 
+    const sourceRows = list;
+    list = adminPageRows(list, el, page, next => renderUsers(sourceRows, next)).rows;
     if (!list.length) {
         el.innerHTML = `
             <div class="empty-state">
@@ -872,7 +910,7 @@ function renderUsers(list) {
     }
 
     el.innerHTML = list.map((u, i) => {
-        const { lvl, label } = getLevelLabel(u.xp);
+        const { lvl, label } = getLevelLabel(u.level_xp ?? u.xp);
 
         // Find the student's actual position in the master users array
         const userIndex = users.findIndex(
@@ -1346,12 +1384,12 @@ function clearUserFilters() {
 
 function viewUser(i) {
   const u = users[i];
-  const { lvl, label } = getLevelLabel(u.xp);
+  const { lvl, label } = getLevelLabel(u.level_xp ?? u.xp);
   const nextThresh = XP_THRESHOLDS[lvl] || XP_THRESHOLDS[XP_THRESHOLDS.length - 1];
   const prevThresh = XP_THRESHOLDS[lvl - 1] || 0;
-  const prog = Math.min(100, Math.round((u.xp - prevThresh) / (nextThresh - prevThresh) * 100));
+  const prog = lvl === XP_THRESHOLDS.length ? 100 : Math.min(100, Math.round((u.xp - prevThresh) / (nextThresh - prevThresh) * 100));
   document.getElementById('ud-title').textContent = u.name;
-  document.getElementById('ud-body').innerHTML = adminDetails([['Student ID',u.id],['College',u.college],['Program',u.program],['Section',u.section],['Total XP',Number(u.xp).toLocaleString()],['Level',lvl+' / '+label],['Status',u.status]])+`<section class="admin-detail-note"><strong>Level progress</strong><div class="prog-track"><div class="prog-fill pf-blue" style="width:${prog}%"></div></div><p>${prog}% toward the next level</p></section>`;
+  document.getElementById('ud-body').innerHTML = adminDetails([['Student ID',u.id],['College',u.college],['Program',u.program],['Section',u.section],['Total XP',Number(u.xp).toLocaleString()],['Level',lvl+' / '+label],['Status',u.status]])+`<section class="admin-detail-note"><strong>Level progress</strong><div class="prog-track"><div class="prog-fill pf-blue" style="width:${prog}%"></div></div><p>${lvl === XP_THRESHOLDS.length ? 'Highest student level reached' : prog + '% toward the next level'}</p></section>`;
   document.getElementById('ud-deactivate-btn').textContent = u.status === 'Active' ? 'Deactivate User' : 'Activate User';
   document.getElementById('ud-deactivate-btn').onclick = () => { toggleUserStatus(i); closeModal('modal-user-detail'); };
   openModal('modal-user-detail');
@@ -1364,6 +1402,9 @@ async function toggleUserStatus(i) {
         user.status === 'Active'
             ? 'Inactive'
             : 'Active';
+
+    const confirmation = await confirmAccountStatus(user.name, newStatus);
+    if (!confirmation) return;
 
     try {
 
@@ -1381,7 +1422,7 @@ async function toggleUserStatus(i) {
                 body: JSON.stringify({
                     type: 'student',
                     id: user.student_id,
-                    status: newStatus
+                    status: newStatus, confirmation
                 })
             }
         );
@@ -1644,12 +1685,14 @@ if (!studentsLoaded) {
 
 
 /* ── INSTRUCTORS ────────────────────────────────────────────── */
-function renderInstructors(list) {
+function renderInstructors(list, page = 1) {
 
     const el = document.getElementById('instr-table-body');
 
     if (!el) return;
 
+    const sourceRows = list;
+    list = adminPageRows(list, el, page, next => renderInstructors(sourceRows, next)).rows;
     if (!list.length) {
         el.innerHTML = `
             <div class="empty-state">
@@ -1720,19 +1763,8 @@ function renderInstructors(list) {
                     ).toLocaleString()} EXP
                 </div>
 
-                <!-- Overall Evaluation -->
-<div class="cell">
-    <strong>${r.grade || 'Not Yet Graded'}</strong>
-    <br>
-    <small>
-        ${
-            r.course_alignment !== null &&
-            r.course_alignment !== undefined
-                ? `${r.course_alignment}% Course Alignment`
-                : 'Not Yet Evaluated'
-        }
-    </small>
-</div>
+                <!-- Instructor rank -->
+                <div class="cell instructor-rank-cell"><strong class="teaching-rank" data-rank="${lbEscape(r.grade || '')}">${lbEscape(r.grade || 'Not ranked')}</strong></div>
 
                 <!-- Status -->
                 <div>
@@ -2094,8 +2126,10 @@ async function saveInstructor() {
 
 
 /* ── ADMIN QUIZZES ──────────────────────────────────────────── */
-function renderAdminQuizzes(list) {
+function renderAdminQuizzes(list, page = 1) {
   const el = document.getElementById('quizzes-table-body');
+    const sourceRows = list;
+    list = adminPageRows(list, el, page, next => renderAdminQuizzes(sourceRows, next)).rows;
   if (!list.length) {
     el.innerHTML = '<div class="empty-state"><span class="emoji">📭</span><p>No quizzes found.</p></div>';
     return;
@@ -2558,7 +2592,7 @@ function onSectionChange(el) {
 }
 
 function adminDetails(entries){return '<dl class="admin-detail-grid">'+entries.map(([label,value])=>'<div><dt>'+lbEscape(label)+'</dt><dd>'+lbEscape(value==null||value===''?'Not specified':String(value))+'</dd></div>').join('')+'</dl>';}
-function viewInstructor(i){const r=instructors[i];if(!r)return;document.getElementById('instructor-view-content').innerHTML='<h2>'+lbEscape(r.name)+'</h2><p class="admin-dialog-subtitle">Instructor account & teaching record</p>'+adminDetails([['Email',r.email],['College',r.college],['Program',r.program],['Teaching XP',r.teaching_exp??r.xp??0],['Grade',r.grade],['Status',r.status],['Course alignment',r.course_alignment==null?'Not evaluated':r.course_alignment+'%']]);openModal('modal-view-instr');}
+function viewInstructor(i){const r=instructors[i];if(!r)return;document.getElementById('instructor-view-content').innerHTML='<h2>'+lbEscape(r.name)+'</h2><span class="teaching-rank" data-rank="'+lbEscape(r.grade||'')+'">'+lbEscape(r.grade||'Not ranked')+'</span><p class="admin-dialog-subtitle">Instructor account & teaching record</p>'+adminDetails([['Email',r.email],['College',r.college],['Program',r.program],['Teaching XP',r.teaching_exp??r.xp??0],['Grade',r.grade],['Status',r.status],['Course alignment',r.course_alignment==null?'Not evaluated':r.course_alignment+'%']]);openModal('modal-view-instr');}
 
 function openInstructorGrade(instructorIndex) {
 
@@ -2828,6 +2862,9 @@ async function toggleInstructorStatus(i) {
             ? 'Inactive'
             : 'Active';
 
+    const confirmation = await confirmAccountStatus(instructor.name, newStatus);
+    if (!confirmation) return;
+
     try {
 
         const response = await fetch(
@@ -2841,7 +2878,7 @@ async function toggleInstructorStatus(i) {
                 body: JSON.stringify({
                     type: 'instructor',
                     id: instructor.instructor_id,
-                    status: newStatus
+                    status: newStatus, confirmation
                 })
             }
         );
@@ -3007,6 +3044,7 @@ async function loadStudentsFromDatabase() {
 
             xp:
                 Number(student.xp) || 0,
+            level_xp: Number(student.level_xp) || 0,
 
             status: student.status || 'Active'
         }));
