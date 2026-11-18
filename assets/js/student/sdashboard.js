@@ -38,7 +38,7 @@ async function loadStudentDashboard() {
     sdashText('sdash-program', student.program || 'Program not assigned');
     sdashText('sdash-year', student.year_level ? `Year ${student.year_level}` : 'Year not assigned');
     sdashText('sdash-section', student.block ? `Section ${student.program} ${student.year_level}${student.block}` : 'Section not assigned');
-    sdashText('sdash-college', student.college || 'Not assigned');
+    displayCollegeName('sdash-college', student.college);
     sdashText('sdash-program-full', student.program || 'Not assigned');
     sdashText('sdash-year-full', student.year_level || 'Not assigned');
     sdashText('sdash-section-full', student.block || 'Not assigned');

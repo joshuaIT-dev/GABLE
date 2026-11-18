@@ -1381,10 +1381,7 @@ function updateProfileUI() {
   setText('profile-completed', scores.length);
 
 
-  setText(
-    'profile-college',
-    studentProfile.college
-  );
+  displayCollegeName('profile-college', studentProfile.college);
 
   setText(
     'profile-program-full',
@@ -1398,11 +1395,7 @@ function updateProfileUI() {
     studentProfile.name
   );
 
-  setText(
-    'nav-student-program',
-    studentProfile.programShort ||
-    studentProfile.program
-  );
+  displayProgramName('nav-student-program', studentProfile.programShort || studentProfile.program);
 
 
   /* Home */
