@@ -104,15 +104,27 @@
     ['\u{1F9D1}\u{200D}\u{1F3EB}', 'graduation-cap']
   ]);
 
-  function convert(root) {
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-    const nodes = [];
-    while (walker.nextNode()) {
-      const node = walker.currentNode;
-      if (emojiPattern.test(node.nodeValue)) { nodes.push(node); emojiPattern.lastIndex = 0; }
-      else emojiPattern.lastIndex = 0;
-    }
-    let changed = false;
+function convert(root) {
+  if (!root || !(root instanceof Node)) return;
+
+  // Text nodes can't be walked; handle them directly by walking their parent
+  if (root.nodeType === Node.TEXT_NODE) {
+    root = root.parentNode;
+    if (!root) return;
+  }
+  // Only elements, documents, and fragments are valid walker roots
+  if (root.nodeType !== Node.ELEMENT_NODE &&
+      root.nodeType !== Node.DOCUMENT_NODE &&
+      root.nodeType !== Node.DOCUMENT_FRAGMENT_NODE) return;
+
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+const nodes = [];
+while (walker.nextNode()) {
+  const node = walker.currentNode;
+  if (emojiPattern.test(node.nodeValue)) nodes.push(node);
+  emojiPattern.lastIndex = 0;
+}
+let changed = false;;
     for (const node of nodes) {
       if (!node.parentElement || node.parentElement.closest('script,style,textarea,code,pre,svg')) continue;
       if (!emojiPattern.test(node.nodeValue.replace(/\s/g, ''))) emojiPattern.lastIndex = 0;

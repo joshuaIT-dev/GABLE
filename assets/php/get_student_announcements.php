@@ -20,7 +20,7 @@ try {
 
     $sql = "
         SELECT a.announcement_id, a.title, a.message, a.target, a.priority, a.created_at,
-               COALESCE(r.is_read, 0) AS is_read
+               (r.announcement_id IS NOT NULL) AS is_read
         FROM announcements a
         LEFT JOIN student_announcement_notification_reads r
             ON r.student_id = ? AND r.announcement_id = a.announcement_id
