@@ -1,0 +1,1013 @@
+/* Theme overrides for the instructor workspace and dashboard. */
+html[data-theme="light"] :is(body.instructor-portal, body.instructor-dashboard) {
+  --text: #172033;
+  --text-muted: #667085;
+  --bg-card: #fff;
+  --bg-card-border: #dfe5ee;
+  --purple-light: #6741a5;
+  --blue: #315f9d;
+  --gold: #8a6416;
+  --green: #18734d;
+  background: #f4f6fa;
+  color: #172033;
+}
+
+html[data-theme="dark"] :is(body.instructor-portal, body.instructor-dashboard) {
+  --text: #f4f4f5;
+  --text-muted: #b2b5bc;
+  --bg-card: #1b1d21;
+  --bg-card-border: #383c43;
+  --purple-light: #c4adf0;
+  --blue: #9bc2fa;
+  --gold: #e8c779;
+  --green: #87d4b5;
+  background: #111214;
+  color: #f4f4f5;
+}
+
+html[data-theme="light"] body.instructor-portal,
+html[data-theme="light"] body.instructor-dashboard,
+html[data-theme="dark"] body.instructor-portal,
+html[data-theme="dark"] body.instructor-dashboard { background-image: none; }
+
+html[data-theme="light"] body.instructor-portal .navbar,
+html[data-theme="light"] body.instructor-dashboard .dash-nav,
+html[data-theme="dark"] body.instructor-portal .navbar,
+html[data-theme="dark"] body.instructor-dashboard .dash-nav {
+  background: var(--navbar-bg);
+  border-color: var(--divider);
+  color: var(--text);
+  backdrop-filter: blur(16px);
+}
+
+html[data-theme="light"] body.instructor-portal .nav-brand,
+html[data-theme="light"] body.instructor-dashboard .dash-nav-brand,
+html[data-theme="dark"] body.instructor-portal .nav-brand,
+html[data-theme="dark"] body.instructor-dashboard .dash-nav-brand { color: var(--text); }
+html[data-theme="light"] body.instructor-portal .brand-wordmark,
+html[data-theme="light"] body.instructor-dashboard .brand-wordmark,
+html[data-theme="dark"] body.instructor-portal .brand-wordmark,
+html[data-theme="dark"] body.instructor-dashboard .brand-wordmark { color: var(--text); -webkit-text-fill-color: currentColor; }
+html[data-theme="light"] body.instructor-portal .brand-wordmark small,
+html[data-theme="light"] body.instructor-dashboard .brand-wordmark small,
+html[data-theme="dark"] body.instructor-portal .brand-wordmark small,
+html[data-theme="dark"] body.instructor-dashboard .brand-wordmark small { color: var(--text-muted); }
+html[data-theme="light"] body.instructor-portal .nav-brand .brand-mark,
+html[data-theme="light"] body.instructor-dashboard .dash-nav-brand .brand-mark {
+  color: #315f91;
+  background: #e8f1fb;
+  border-color: #b5cbe3;
+  -webkit-text-fill-color: currentColor;
+}
+
+html[data-theme="light"] body.instructor-portal .theme-mount,
+html[data-theme="light"] body.instructor-dashboard .theme-mount,
+html[data-theme="dark"] body.instructor-portal .theme-mount,
+html[data-theme="dark"] body.instructor-dashboard .theme-mount { display: flex; align-items: center; }
+body.instructor-portal .theme-mount,
+body.instructor-dashboard .theme-mount { display: flex; align-items: center; }
+body.instructor-portal .theme-toggle-group,
+body.instructor-dashboard .theme-toggle-group { border-color: var(--theme-toggle-group-border); }
+body.instructor-portal .instructor-settings,
+body.instructor-dashboard .instructor-settings { position: relative; flex: 0 0 auto; }
+body.instructor-portal .instructor-settings > summary,
+body.instructor-dashboard .instructor-settings > summary { display: grid; place-items: center; width: 40px; height: 44px; border: 1px solid transparent; border-radius: 10px; background:transparent; color: var(--text-muted); cursor: pointer; list-style: none; }
+body.instructor-portal .instructor-settings > summary::-webkit-details-marker,
+body.instructor-dashboard .instructor-settings > summary::-webkit-details-marker { display: none; }
+body.instructor-portal .instructor-settings > summary:hover,
+body.instructor-portal .instructor-settings[open] > summary,
+body.instructor-dashboard .instructor-settings > summary:hover,
+body.instructor-dashboard .instructor-settings[open] > summary { background: var(--surface-hover); color: var(--text); }
+body.instructor-portal .instructor-settings-popover,
+body.instructor-dashboard .instructor-settings-popover { display: none; position: absolute; z-index: 500; top: calc(100% + 10px); right: 0; gap: 12px; width: 244px; max-width: calc(100vw - 24px); box-sizing: border-box; padding: 14px; border: 1px solid var(--public-card-border,#425b76); border-radius: 14px; background: var(--public-card,#1b2b40); color: var(--text,#eaf1fc); box-shadow: 0 16px 42px #0004; }
+body.instructor-portal .instructor-settings[open] > .instructor-settings-popover,
+body.instructor-portal .instructor-settings:hover > .instructor-settings-popover,
+body.instructor-portal .instructor-settings:focus-within > .instructor-settings-popover,
+body.instructor-dashboard .instructor-settings[open] > .instructor-settings-popover,
+body.instructor-dashboard .instructor-settings:hover > .instructor-settings-popover,
+body.instructor-dashboard .instructor-settings:focus-within > .instructor-settings-popover { display: grid; }
+body.instructor-portal .instructor-settings-popover > span,
+body.instructor-dashboard .instructor-settings-popover > span { color: var(--text-muted); font-size: 12px; font-weight: 600; }
+body.instructor-portal .instructor-settings-popover .theme-toggle-group,
+body.instructor-dashboard .instructor-settings-popover .theme-toggle-group { justify-content: space-between; }
+body.instructor-portal .instructor-settings-popover .settings-appearance,
+body.instructor-dashboard .instructor-settings-popover .settings-appearance { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 12px; }
+body.instructor-portal .instructor-settings-popover .settings-appearance > span,
+body.instructor-dashboard .instructor-settings-popover .settings-appearance > span { color:var(--text); font:inherit; font-size:12px; }
+body.instructor-portal .instructor-settings-popover .theme-mount,
+body.instructor-dashboard .instructor-settings-popover .theme-mount { display: flex; align-items: center; flex: 0 0 auto; }
+body.instructor-portal .instructor-settings-popover .theme-toggle-group,
+body.instructor-dashboard .instructor-settings-popover .theme-toggle-group { flex: 0 0 auto; }
+html[data-theme="light"] :is(body.instructor-portal,body.instructor-dashboard) .instructor-settings-popover { background: var(--public-card); border-color: var(--public-card-border); color: var(--text); }
+html[data-theme="light"] :is(body.instructor-portal,body.instructor-dashboard) .instructor-settings-popover .settings-appearance { color: var(--text); font: inherit; font-size: 12px; }
+html[data-theme="light"] :is(body.instructor-portal,body.instructor-dashboard) .instructor-settings-popover .theme-toggle-group { background:var(--theme-toggle-group-bg); border-color:var(--theme-toggle-group-border); }
+
+html[data-theme="light"] body.instructor-portal #confirm-overlay { background:rgba(16,24,40,.34); }
+html[data-theme="light"] body.instructor-portal #confirm-overlay .confirm-box { color:#172033 !important; background:#fff !important; border-color:#dfe5ee !important; box-shadow:0 24px 70px rgba(16,24,40,.2); }
+html[data-theme="light"] body.instructor-portal #confirm-overlay h3 { color:#172033 !important; }
+html[data-theme="light"] body.instructor-portal #confirm-overlay p { color:#667085 !important; }
+html[data-theme="light"] body.instructor-portal #confirm-overlay .btn-confirm-cancel { color:#344054 !important; background:#f1f4f8 !important; border-color:#d5dde8 !important; }
+
+html[data-theme="light"] body.instructor-portal .nav-tab,
+html[data-theme="light"] body.instructor-portal :is(.sub-tab,.filter-btn,.lb-sec-tab,.flag-status-tab),
+html[data-theme="light"] body.instructor-dashboard :is(.idb-lb-sec-tab,.idb-lb-subj-select),
+html[data-theme="dark"] body.instructor-portal .nav-tab,
+html[data-theme="dark"] body.instructor-portal :is(.sub-tab,.filter-btn,.lb-sec-tab,.flag-status-tab),
+html[data-theme="dark"] body.instructor-dashboard :is(.idb-lb-sec-tab,.idb-lb-subj-select) {
+  color: var(--text-muted);
+  background: var(--public-card-raised);
+  border-color: var(--control-border);
+}
+html[data-theme="light"] body.instructor-portal .nav-tab,
+html[data-theme="dark"] body.instructor-portal .nav-tab { background: transparent; border-color: transparent; }
+html[data-theme="light"] body.instructor-portal :is(.nav-tab.active,.sub-tab.active,.filter-btn.active,.lb-sec-tab.active,.flag-status-tab.active),
+html[data-theme="light"] body.instructor-dashboard .idb-lb-sec-tab.active,
+html[data-theme="dark"] body.instructor-portal :is(.nav-tab.active,.sub-tab.active,.filter-btn.active,.lb-sec-tab.active,.flag-status-tab.active),
+html[data-theme="dark"] body.instructor-dashboard .idb-lb-sec-tab.active {
+  color: var(--text);
+  background: var(--surface-strong);
+  border-color: var(--control-border);
+}
+html[data-theme="light"] body.instructor-portal .quiz-mode-btn,
+html[data-theme="dark"] body.instructor-portal .quiz-mode-btn { background: rgba(var(--mode-rgb,124,92,191),.12); border-color: rgba(var(--mode-rgb,124,92,191),.4); color: var(--text); }
+html[data-theme="light"] body.instructor-portal .quiz-mode-btn.active,
+html[data-theme="dark"] body.instructor-portal .quiz-mode-btn.active { background: rgba(var(--mode-rgb,124,92,191),.22); border-color: rgba(var(--mode-rgb,124,92,191),.75); color: var(--text); }
+
+html[data-theme="light"] body.instructor-portal :is(.hero-banner,.my-students-hero,.lb-hero,.flagged-hero,.workspace-heading,.quick-card,.draft-card,.teaching-load-card,.metric-card,.analytics-panel-card,.analytics-section-card,.subject-card,.flagged-card,.submission-card,.profile-dept-card,.profile-modal-card,.team-game-question-card,.students-table,.lb-table,.section-block-header,.subject-cards,.tl-item,.analytics-empty,.analytics-activity-stat,.analytics-xp-level,.modal,.notif-dropdown,.xp-popup,.workspace-dialog,.quality-rank-guide),
+html[data-theme="light"] body.instructor-dashboard :is(.dash-stat-card,.tq-card,.tq-metric,.assign-section,.students-section,.assign-card,.section-block,.sb-header,.quick-sidebar,.qs-btn,.modal,.xp-popup,.idb-notif-dropdown,.idb-report-stat,.idb-report-filter-panel,.idb-report-list .report-row,.idb-mode-card,.xp-section,.xp-rules-card,.syl-card,.idb-student-profile-card,.idb-student-section,.idb-leaderboard-modal,.idb-lb-filters,.idb-lb-table,.idb-lb-summary>*,.idb-lb-podium>*),
+html[data-theme="dark"] body.instructor-portal :is(.hero-banner,.my-students-hero,.lb-hero,.flagged-hero,.workspace-heading,.quick-card,.draft-card,.teaching-load-card,.metric-card,.analytics-panel-card,.analytics-section-card,.subject-card,.flagged-card,.submission-card,.profile-dept-card,.profile-modal-card,.team-game-question-card,.students-table,.lb-table,.section-block-header,.subject-cards,.tl-item,.analytics-empty,.analytics-activity-stat,.analytics-xp-level,.modal,.notif-dropdown,.xp-popup,.workspace-dialog,.quality-rank-guide),
+html[data-theme="dark"] body.instructor-dashboard :is(.dash-stat-card,.tq-card,.tq-metric,.assign-section,.students-section,.assign-card,.section-block,.sb-header,.quick-sidebar,.qs-btn,.modal,.xp-popup,.idb-notif-dropdown,.idb-report-stat,.idb-report-filter-panel,.idb-report-list .report-row,.idb-mode-card,.xp-section,.xp-rules-card,.syl-card,.idb-student-profile-card,.idb-student-section,.idb-leaderboard-modal,.idb-lb-filters,.idb-lb-table,.idb-lb-summary>*,.idb-lb-podium>*) {
+  color: var(--text);
+  background: var(--public-card);
+  border-color: var(--public-card-border);
+  box-shadow: var(--shadow-card);
+}
+
+html[data-theme="light"] body.instructor-portal :is(.hero-banner,.my-students-hero,.lb-hero,.flagged-hero,.workspace-heading,.section-block-header,.subject-cards,.table-head,.lb-table-head,.analytics-activity-stat,.tl-item),
+html[data-theme="light"] body.instructor-dashboard :is(.tq-card,.sb-header,.idb-announce-banner,.idb-lb-filters,.idb-lb-thead),
+html[data-theme="dark"] body.instructor-portal :is(.hero-banner,.my-students-hero,.lb-hero,.flagged-hero,.workspace-heading,.section-block-header,.subject-cards,.table-head,.lb-table-head,.analytics-activity-stat,.tl-item),
+html[data-theme="dark"] body.instructor-dashboard :is(.tq-card,.sb-header,.idb-announce-banner,.idb-lb-filters,.idb-lb-thead) { background: var(--public-card-raised); }
+
+html[data-theme="light"] body.instructor-portal :is(.nav-right,.profile-badge,.xp-badge,.nav-tab,.sub-tab,.filter-btn,.lb-sec-tab,.flag-status-tab,.quiz-mode-btn,.quick-card,.btn-logout,.notif-bell-btn,.modal-close,.workspace-dialog button,.workspace-dialog a,.profile-info,.notif-dropdown,.xp-popup,.modal,.analytics-grid,.analytics-reference-grid,.students-table,.lb-table,.section-block,.subject-card,.quiz-card,.draft-card,.metric-card,.flagged-card,.analytics-panel-card,.analytics-activity-stat,.analytics-xp-level) :is(h1,h2,h3,h4,h5,h6,p,span,small,label,strong,td,th,li,dt,dd):not([class*="badge"]):not([class*="tag"]):not([class*="rank"]):not([class*="status"]):not([class*="icon"]):not([class*="xp"]),
+html[data-theme="light"] body.instructor-dashboard :is(.dash-nav,.dash-main,.dash-header-row,.dash-stat-card,.tq-card,.tq-metric,.assign-section,.students-section,.assign-card,.section-block,.quick-sidebar,.qs-btn,.modal,.xp-popup,.idb-notif-dropdown,.idb-report-stat,.idb-report-filter-panel,.idb-report-list,.xp-section,.xp-rules-card,.syl-card,.idb-student-profile-card,.idb-leaderboard-modal,.idb-lb-table) :is(h1,h2,h3,h4,h5,h6,p,span,small,label,strong,td,th,li,dt,dd):not([class*="badge"]):not([class*="tag"]):not([class*="rank"]):not([class*="status"]):not([class*="icon"]):not([class*="xp"]),
+html[data-theme="dark"] body.instructor-portal :is(.nav-right,.profile-badge,.xp-badge,.nav-tab,.sub-tab,.filter-btn,.lb-sec-tab,.flag-status-tab,.quiz-mode-btn,.quick-card,.btn-logout,.notif-bell-btn,.modal-close,.workspace-dialog button,.workspace-dialog a,.profile-info,.notif-dropdown,.xp-popup,.modal,.analytics-grid,.analytics-reference-grid,.students-table,.lb-table,.section-block,.subject-card,.quiz-card,.draft-card,.metric-card,.flagged-card,.analytics-panel-card,.analytics-activity-stat,.analytics-xp-level) :is(h1,h2,h3,h4,h5,h6,p,span,small,label,strong,td,th,li,dt,dd):not([class*="badge"]):not([class*="tag"]):not([class*="rank"]):not([class*="status"]):not([class*="icon"]):not([class*="xp"]),
+html[data-theme="dark"] body.instructor-dashboard :is(.dash-nav,.dash-main,.dash-header-row,.dash-stat-card,.tq-card,.tq-metric,.assign-section,.students-section,.assign-card,.section-block,.quick-sidebar,.qs-btn,.modal,.xp-popup,.idb-notif-dropdown,.idb-report-stat,.idb-report-filter-panel,.idb-report-list,.xp-section,.xp-rules-card,.syl-card,.idb-student-profile-card,.idb-leaderboard-modal,.idb-lb-table) :is(h1,h2,h3,h4,h5,h6,p,span,small,label,strong,td,th,li,dt,dd):not([class*="badge"]):not([class*="tag"]):not([class*="rank"]):not([class*="status"]):not([class*="icon"]):not([class*="xp"]) { color: var(--text); }
+
+html[data-theme="light"] :is(body.instructor-portal,body.instructor-dashboard) :is(.text-muted,.nav-xp-copy small,.nav-xp-copy .xp-val,.profile-info span,.card-eyebrow,.quiz-meta,.ac-students,.ac-program,.empty-state-hint,.analytics-tip,.analytics-overall,.analytics-subject-meta,.analytics-section-head small,.analytics-section-substat span,.qs-sub,.qs-text p,.tq-top-left p,.tq-metric-sub,.tq-xp-row-left p,.tq-tip,.dsc-sub,.sm-lbl,.sb-header-left p,.syl-monthly-xp,.idb-student-card-stats span) { color: var(--text-muted); }
+html[data-theme="dark"] :is(body.instructor-portal,body.instructor-dashboard) :is(.text-muted,.nav-xp-copy small,.nav-xp-copy .xp-val,.profile-info span,.card-eyebrow,.quiz-meta,.ac-students,.ac-program,.empty-state-hint,.analytics-tip,.analytics-overall,.analytics-subject-meta,.analytics-section-head small,.analytics-section-substat span,.qs-sub,.qs-text p,.tq-top-left p,.tq-metric-sub,.tq-xp-row-left p,.tq-tip,.dsc-sub,.sm-lbl,.sb-header-left p,.syl-monthly-xp,.idb-student-card-stats span) { color: var(--text-muted); }
+
+html[data-theme="light"] :is(body.instructor-portal,body.instructor-dashboard) :is(input,select,textarea,.idb-lb-subj-select) { color: var(--text); background: var(--control-bg); border-color: var(--control-border); }
+html[data-theme="dark"] :is(body.instructor-portal,body.instructor-dashboard) :is(input,select,textarea,.idb-lb-subj-select) { color: var(--text); background: var(--control-bg); border-color: var(--control-border); }
+html[data-theme="light"] :is(body.instructor-portal,body.instructor-dashboard) select option { color: var(--text); background: var(--public-card); }
+html[data-theme="dark"] :is(body.instructor-portal,body.instructor-dashboard) select option { color: var(--text); background: var(--public-card); }
+
+html[data-theme="light"] body.instructor-portal :is(.profile-badge,.xp-badge,.nav-utilities,.profile-info,.quick-card,.quiz-mode-btn,.workspace-dialog,.notif-dropdown,.xp-popup,.modal) { color: var(--text); }
+html[data-theme="light"] body.instructor-portal #xp-popup { color: #172033 !important; background: #fff !important; border-color: #dfe5ee !important; }
+html[data-theme="light"] body.instructor-portal #xp-popup :is(.xp-popup-label,.xp-popup-title,.xp-popup-sub,.xp-progress-needed) { color: #172033 !important; -webkit-text-fill-color: #172033 !important; }
+html[data-theme="light"] body.instructor-portal #xp-popup .xp-popup-label,
+html[data-theme="light"] body.instructor-portal #xp-popup .xp-progress-needed { color: #667085 !important; -webkit-text-fill-color: #667085 !important; }
+html[data-theme="light"] body.instructor-portal #xp-popup .btn-xp-close { color: #172033 !important; background: #fff !important; border-color: #496b92 !important; }
+html[data-theme="light"] body.instructor-dashboard :is(.idb-announce-btn,.idb-bell-btn,.xp-badge,.dash-back,.btn-primary,.idb-lb-trigger-btn,.btn-save,.modal-close,.qs-btn) { color: var(--text); background: var(--public-card-raised); border-color: var(--control-border); }
+html[data-theme="light"] body.instructor-dashboard :is(.dash-stat-card,.tq-card,.tq-metric,.assign-section,.students-section,.assign-card,.section-block,.sb-header,.quick-sidebar,.qs-btn,.modal,.xp-popup,.idb-notif-dropdown,.idb-report-stat,.idb-report-filter-panel,.idb-report-list .report-row,.idb-mode-card,.xp-section,.xp-rules-card,.syl-card,.idb-student-profile-card,.idb-student-section,.idb-leaderboard-modal,.idb-lb-filters,.idb-lb-table,.idb-lb-summary>*,.idb-lb-podium>*) :is(h1,h2,h3,h4,h5,h6,p,span,small,label,strong,td,th,li,dt,dd) { color: var(--text); }
+
+html[data-theme="light"] body.instructor-portal :is(.hero-banner,.my-students-hero,.lb-hero,.flagged-hero,.workspace-heading) { background: var(--public-card-raised); }
+html[data-theme="light"] body.instructor-portal :is(.modal,.notif-dropdown,.xp-popup,.workspace-dialog) { box-shadow: var(--shadow-elevated); }
+html[data-theme="light"] body.instructor-portal :is(.quick-card,.quiz-card,.draft-card,.teaching-load-card,.metric-card,.analytics-panel-card,.subject-card,.flagged-card,.students-table,.lb-table,.section-block-header,.subject-cards,.tl-item,.analytics-empty,.analytics-activity-stat,.analytics-xp-level) :is(h1,h2,h3,h4,h5,h6,p,span,small,label,strong,td,th,li,dt,dd) { color: var(--text); }
+html[data-theme="light"] body.instructor-portal .teaching-load-card .tl-title { color: #172033 !important; }
+html[data-theme="light"] body.instructor-portal :is(.btn-create,.btn-view,.btn-edit,.btn-danger,.btn-continue,.btn-delete,.btn-post-draft,.btn-primary,.btn-xp-dash,.btn-save,.btn-approve,.green-btn,.team-game-footer-btn,.team-game-launch-btn) { color: #fff; }
+html[data-theme="light"] body.instructor-portal :is(.live-badge,.tag,.quiz-tags,.pbadge,.notif-badge,.notif-badge-inline,.profile-rank-display,.lb-cell-xp,.podium-xp,.analytics-xp-source strong) { color: revert; }
+html[data-theme="light"] body.instructor-portal .live-badge { color: #fff !important; background: #d92d3f !important; border-color: #c52235 !important; }
+html[data-theme="light"] body.instructor-portal .notif-badge,
+html[data-theme="light"] body.instructor-portal .notif-badge-inline { color: #fff !important; -webkit-text-fill-color: #fff !important; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-xp-level-icon { color: #fff !important; -webkit-text-fill-color: #fff !important; }
+html[data-theme="light"] body.instructor-portal :is(.rp-avatar,.s-avatar,.sc-avatar,.avatar,.lb-s-avatar) { color: #fff !important; -webkit-text-fill-color: #fff !important; }
+html[data-theme="light"] body.instructor-dashboard :is(.dsc-badge,.assign-badge,.ac-type-tag,.ac-pct,.sm-val,.tq-grade-badge,.xp-num,.tq-xp-row-right .xp-num,.tq-xp-row-right .xp-lvl,.dsc-trend,.syl-row-xp,.idb-rank-badge,.idb-student-rank) { color: revert; }
+
+html[data-theme="dark"] body.instructor-portal :is(.modal,.notif-dropdown,.xp-popup,.workspace-dialog) { box-shadow: var(--shadow-elevated); }
+html[data-theme="dark"] body.instructor-portal :is(.btn-create,.btn-view,.btn-edit,.btn-danger,.btn-continue,.btn-delete,.btn-post-draft,.btn-primary,.btn-xp-dash,.btn-save,.btn-approve,.green-btn,.team-game-footer-btn,.team-game-launch-btn) { color: #fff; }
+
+/* Keep body copy, headings and utility labels readable on every instructor tab. */
+html[data-theme="light"] :is(body.instructor-portal,body.instructor-dashboard) :is(h1,h2,h3,h4,h5,h6,p,span,small,label,strong,em,b,i,a,li,dt,dd,td,th,legend,summary,figcaption),
+html[data-theme="dark"] :is(body.instructor-portal,body.instructor-dashboard) :is(h1,h2,h3,h4,h5,h6,p,span,small,label,strong,em,b,i,a,li,dt,dd,td,th,legend,summary,figcaption) { color: var(--text); }
+html[data-theme="light"] :is(body.instructor-portal,body.instructor-dashboard) button:not([class*="btn"]):not([class*="badge"]):not([class*="tag"]):not(.theme-toggle-option),
+html[data-theme="dark"] :is(body.instructor-portal,body.instructor-dashboard) button:not([class*="btn"]):not([class*="badge"]):not([class*="tag"]):not(.theme-toggle-option) { color: var(--text); }
+html[data-theme="light"] :is(body.instructor-portal,body.instructor-dashboard) :is(.tag,.pbadge,.live-badge,.notif-badge,.notif-badge-inline,.rank-badge,.profile-rank-display,.tq-grade-badge,.dsc-badge,.assign-badge,.ac-type-tag,.ac-pct,.sm-val,.dsc-trend,.syl-row-xp,.lb-cell-xp,.podium-xp,.xp-num,.analytics-xp-source strong,.idb-rank-badge,.idb-student-rank) { color: var(--text); }
+html[data-theme="light"] :is(body.instructor-portal,body.instructor-dashboard) :is(.profile-rank-display,.tq-grade-badge,.tag,.pbadge,.live-badge,.notif-badge,.notif-badge-inline,.rank-badge,.dsc-badge,.assign-badge,.ac-type-tag) * { color: inherit; }
+html[data-theme="light"] :is(body.instructor-portal,body.instructor-dashboard) :is(.btn-create,.btn-view,.btn-edit,.btn-danger,.btn-continue,.btn-delete,.btn-post-draft,.btn-primary,.btn-xp-dash,.btn-save,.btn-approve,.green-btn,.team-game-footer-btn,.team-game-launch-btn,.idb-lb-trigger-btn,.dash-back) :is(span,small,strong,i) { color: inherit; }
+html[data-theme="dark"] :is(body.instructor-portal,body.instructor-dashboard) :is(.btn-create,.btn-view,.btn-edit,.btn-danger,.btn-continue,.btn-delete,.btn-post-draft,.btn-primary,.btn-xp-dash,.btn-save,.btn-approve,.green-btn,.team-game-footer-btn,.team-game-launch-btn,.idb-lb-trigger-btn,.dash-back) :is(span,small,strong,i) { color: inherit; }
+
+/* Instructor workspace: the older page styles use fixed pale text values. */
+html[data-theme="light"] body.instructor-portal .quiz-card :is(h3,.quiz-meta,.quiz-meta span,.quiz-meta small,.qxp-label,.quiz-qtypes) { color: #45546a !important; }
+/* The dark XP strip is part of the quiz card palette, so keep its text light. */
+html[data-theme="light"] body.instructor-portal .quiz-card .quiz-xp-row .qxp-label { color: #e1e8f0 !important; }
+html[data-theme="light"] body.instructor-portal .quiz-card .quiz-xp-row .qxp-val { color: #f2cb73 !important; }
+html[data-theme="light"] body.instructor-portal #panel-leaderboard .lb-hero { background: var(--public-card-raised) !important; border-color: var(--public-card-border); }
+html[data-theme="light"] body.instructor-portal #panel-leaderboard .lb-table-head { background: var(--public-card-raised) !important; color: var(--text); }
+html[data-theme="light"] body.instructor-portal #panel-leaderboard .lb-table-head span { color: var(--text) !important; }
+html[data-theme="light"] body.instructor-portal #panel-leaderboard .podium-base { background: var(--public-card-raised) !important; color: var(--text) !important; }
+html[data-theme="light"] body.instructor-portal #panel-leaderboard .lb-top-1 { --lb-accent: #8a5a00; --lb-tint: rgba(138,90,0,.08); }
+html[data-theme="light"] body.instructor-portal #panel-leaderboard .lb-top-2 { --lb-accent: #526173; --lb-tint: rgba(82,97,115,.08); }
+html[data-theme="light"] body.instructor-portal #panel-leaderboard .lb-top-3 { --lb-accent: #8a4b22; --lb-tint: rgba(138,75,34,.08); }
+html[data-theme="light"] body.instructor-portal #panel-leaderboard .lb-top-4 { --lb-accent: #594083; --lb-tint: rgba(89,64,131,.08); }
+html[data-theme="light"] body.instructor-portal #panel-leaderboard .lb-top-5 { --lb-accent: #146356; --lb-tint: rgba(20,99,86,.08); }
+html[data-theme="light"] body.instructor-portal #panel-leaderboard .lb-row.lb-top { background: var(--lb-tint) !important; border-color: var(--lb-accent) !important; }
+html[data-theme="light"] body.instructor-portal #panel-leaderboard .lb-top .lb-rank-num { color: var(--lb-accent) !important; }
+html[data-theme="light"] body.instructor-portal #panel-leaderboard .p1-base { color: #765000 !important; background: #fff0bd !important; }
+html[data-theme="light"] body.instructor-portal #panel-leaderboard .p2-base { color: #46566a !important; background: #e8eef4 !important; }
+html[data-theme="light"] body.instructor-portal #panel-leaderboard .p3-base { color: #854a28 !important; background: #f6e4d8 !important; }
+html[data-theme="light"] body.instructor-portal #students-list .roster-top-1 { --roster-accent: #8a5a00; --roster-tint: rgba(138,90,0,.08); }
+html[data-theme="light"] body.instructor-portal #students-list .roster-top-2 { --roster-accent: #526173; --roster-tint: rgba(82,97,115,.08); }
+html[data-theme="light"] body.instructor-portal #students-list .roster-top-3 { --roster-accent: #8a4b22; --roster-tint: rgba(138,75,34,.08); }
+html[data-theme="light"] body.instructor-portal #students-list .roster-top-4 { --roster-accent: #594083; --roster-tint: rgba(89,64,131,.08); }
+html[data-theme="light"] body.instructor-portal #students-list .roster-top-5 { --roster-accent: #146356; --roster-tint: rgba(20,99,86,.08); }
+html[data-theme="light"] body.instructor-portal #students-list :is(.roster-top-1,.roster-top-2,.roster-top-3,.roster-top-4,.roster-top-5) { background: var(--roster-tint) !important; border-color: var(--roster-accent) !important; }
+html[data-theme="light"] body.instructor-portal #flagged-questions-full > .instructor-empty-state { background: var(--public-card-raised); border-color: var(--public-card-border); color: var(--text); }
+html[data-theme="light"] body.instructor-portal #flagged-questions-full > .instructor-empty-state :is(p,small) { color: var(--text-muted) !important; }
+html[data-theme="light"] body.instructor-portal #panel-teaching-xp .teaching-xp-stats .syllabus-review { background: var(--public-card-raised); border-color: var(--public-card-border); color: var(--text); }
+html[data-theme="light"] body.instructor-portal #panel-teaching-xp .teaching-xp-sources>div { background: var(--public-card-raised) !important; border-color: var(--public-card-border); }
+html[data-theme="light"] body.instructor-portal #panel-teaching-xp .teaching-xp-sources :is(span,strong) { color: var(--text) !important; }
+html[data-theme="light"] body.instructor-portal #panel-teaching-xp .teaching-xp-table :is(caption,th) { background: var(--public-card-raised) !important; color: var(--text) !important; }
+html[data-theme="light"] body.instructor-portal #panel-teaching-xp .teaching-xp-table td { color: var(--text) !important; border-color: var(--divider); }
+html[data-theme="light"] body.instructor-portal .nav-right :is(.xp-badge,.profile-badge) { background: var(--public-card-raised); border-color: var(--control-border); color: var(--text); }
+html[data-theme="light"] body.instructor-portal .nav-right .profile-info :is(strong,span) { color: var(--text) !important; }
+html[data-theme="light"] body.instructor-portal .nav-right :is(.nav-xp-copy small,.nav-xp-copy .xp-val) { color: var(--text-muted) !important; }
+html[data-theme="light"] body.instructor-portal #modal-profile :is(.profile-dialog-header,.profile-dialog-body,.profile-modal-info,.profile-dept-card,.profile-xp) { background: var(--public-card); border-color: var(--public-card-border); color: var(--text); }
+html[data-theme="light"] body.instructor-portal #modal-profile :is(h2,h3,.fac-id,.pdc-label,.pdi-label,.pdi-val,.pdi-sub,.pxp-val,.pxp-lbl) { color: var(--text) !important; }
+html[data-theme="light"] body.instructor-portal #modal-profile .profile-rank-display { color: #765510; background: #fbf3df; border-color: #e8d49c; }
+html[data-theme="light"] body.instructor-portal #modal-profile .profile-rank-display * { color: inherit !important; }
+html[data-theme="light"] body.instructor-portal #modal-profile .profile-modal-avatar { color: #fff !important; -webkit-text-fill-color: #fff !important; }
+html[data-theme="light"] body.instructor-portal #modal-profile .profile-badges .pbadge { color: #29435c !important; background: #e8eef6 !important; border-color: #b8c8da !important; -webkit-text-fill-color: #29435c !important; }
+html[data-theme="light"] body.instructor-portal #modal-profile .profile-rank-display .teaching-rank { color: color-mix(in srgb,var(--rank-color,#a67a12) 68%,#172033) !important; background: color-mix(in srgb,var(--rank-color,#a67a12) 16%,#fff) !important; border-color: var(--rank-color,#a67a12) !important; -webkit-text-fill-color: color-mix(in srgb,var(--rank-color,#a67a12) 68%,#172033) !important; }
+html[data-theme="light"] body.instructor-portal #modal-profile .profile-rank-display { min-height: 0 !important; padding: 10px !important; gap: 0 !important; background: #fff8e6 !important; border-color: #e8d49c !important; }
+html[data-theme="light"] body.instructor-portal #modal-profile .profile-rank-display > :is(span,small) { display: none !important; }
+html[data-theme="light"] body.instructor-portal #modal-profile #profile-grade-badge.teaching-rank { display: block !important; color: #765100 !important; background: #fff0bd !important; border: 1px solid #d9a514 !important; -webkit-text-fill-color: #765100 !important; }
+html[data-theme="light"] body.instructor-portal #panel-students .students-table { background: var(--public-card); border-color: var(--public-card-border); }
+html[data-theme="light"] body.instructor-portal #panel-students .table-head { background: var(--public-card-raised); color: var(--text); }
+html[data-theme="light"] body.instructor-portal #panel-students .table-row { background: var(--public-card); border-color: var(--divider); color: var(--text); }
+html[data-theme="light"] body.instructor-portal #panel-students :is(.table-head,.table-row) :is(span,strong,small,div) { color: var(--text) !important; }
+html[data-theme="light"] body.instructor-portal #panel-leaderboard :is(.lb-hero-left h2,.lb-hero-left p,.lb-table-head,.lb-s-name,.lb-cell,.lb-s-level,.podium-name,.podium-base) { color: var(--text) !important; }
+html[data-theme="light"] body.instructor-portal #panel-leaderboard :is(.podium-slot,.lb-table,.lb-row) { background-color: var(--public-card); border-color: var(--public-card-border); }
+html[data-theme="light"] body.instructor-portal #panel-flagged :is(.flagged-info h4,.flagged-info p,.flagged-time,.empty-state-hint) { color: var(--text) !important; }
+html[data-theme="light"] body.instructor-portal #panel-analytics :is(.analytics-panel-title,.analytics-xp-level-info strong,.analytics-xp-level-info span,.analytics-xp-source span,.analytics-section-head strong,.analytics-section-head small,.analytics-section-substat strong,.analytics-section-substat span,.analytics-subject-top,.analytics-subject-meta,.analytics-overall,.analytics-tip) { color: var(--text) !important; }
+html[data-theme="light"] body.instructor-portal #panel-analytics :is(.analytics-xp-level,.analytics-section-card,.analytics-section-substat,.analytics-tip) { background: var(--public-card-raised); border-color: var(--public-card-border); }
+html[data-theme="light"] body.instructor-portal #panel-analytics :is(.analytics-section-score.is-passing,.analytics-overall .is-passing) { color: #18734d !important; }
+html[data-theme="light"] body.instructor-portal #panel-analytics :is(.analytics-section-score.is-needs-support,.analytics-overall .is-needs-support) { color: #8a6416 !important; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-xp-source strong { color: #765510 !important; background: #fbf3df; border-color: #e8d49c; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-progress-track { background: var(--divider); }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-year-badge,
+html[data-theme="light"] body.instructor-portal #panel-analytics #analytics-year-badge,
+html[data-theme="light"] body.instructor-portal #panel-analytics #analytics-section-year-badge { color: #765510 !important; }
+
+html[data-theme="dark"] body.instructor-portal .nav-right :is(.profile-info strong,.nav-xp-copy .xp-val),
+html[data-theme="dark"] body.instructor-portal #modal-profile :is(h2,h3,.fac-id,.pdi-label,.pdi-val,.pdi-sub,.pxp-val,.pxp-lbl),
+html[data-theme="dark"] body.instructor-portal #panel-students :is(.table-head,.table-row) :is(span,strong,small,div),
+html[data-theme="dark"] body.instructor-portal #panel-leaderboard :is(.lb-hero-left h2,.lb-hero-left p,.lb-table-head,.lb-s-name,.lb-cell,.lb-s-level,.podium-name,.podium-base),
+html[data-theme="dark"] body.instructor-portal #panel-analytics :is(.analytics-panel-title,.analytics-xp-level-info strong,.analytics-xp-level-info span,.analytics-xp-source span,.analytics-section-head strong,.analytics-section-head small,.analytics-section-substat strong,.analytics-section-substat span,.analytics-subject-top,.analytics-subject-meta,.analytics-overall,.analytics-tip) { color: var(--text) !important; }
+html[data-theme="dark"] body.instructor-portal #panel-analytics :is(.analytics-xp-level,.analytics-section-card,.analytics-section-substat,.analytics-tip) { background: var(--public-card-raised); border-color: var(--public-card-border); }
+html[data-theme="dark"] body.instructor-portal #panel-analytics :is(.analytics-section-score.is-passing,.analytics-overall .is-passing) { color: #87d4b5 !important; }
+html[data-theme="dark"] body.instructor-portal #panel-analytics :is(.analytics-section-score.is-needs-support,.analytics-overall .is-needs-support) { color: #e8c779 !important; }
+html[data-theme="dark"] body.instructor-portal #panel-analytics .analytics-progress-track { background: #30343b; }
+html[data-theme="light"] body.instructor-portal #panel-analytics :is(.analytics-section-score,.analytics-overall strong) { color: var(--text) !important; }
+
+/* Syllabi, alignment review and XP & Rewards are mounted as tabs at runtime. */
+html[data-theme="light"] body.instructor-portal .syllabus-panel,
+html[data-theme="dark"] body.instructor-portal .syllabus-panel { --sy-surface: var(--public-card); --sy-line: var(--public-card-border); --sy-muted: var(--text-muted); color: var(--text); }
+html[data-theme="light"] body.instructor-portal .syllabus-panel :is(.syllabus-upload,.syllabus-library,.syllabus-review,.syllabus-tiers,.syllabus-notices,.syllabus-status,.syllabus-finding,.alignment-question,.syllabus-reward-receipt,.syllabus-document-decision,.syllabus-source-text,.teaching-xp-sources>div,.teaching-xp-table-scroll,.xp-earning-card,.alignment-source),
+html[data-theme="dark"] body.instructor-portal .syllabus-panel :is(.syllabus-upload,.syllabus-library,.syllabus-review,.syllabus-tiers,.syllabus-notices,.syllabus-status,.syllabus-finding,.alignment-question,.syllabus-reward-receipt,.syllabus-document-decision,.syllabus-source-text,.teaching-xp-sources>div,.teaching-xp-table-scroll,.xp-earning-card,.alignment-source) { background: var(--public-card); border-color: var(--public-card-border); color: var(--text); }
+html[data-theme="light"] body.instructor-portal .alignment-review-dialog,
+html[data-theme="light"] body.instructor-portal .alignment-review-dialog .syllabus-document-decision,
+html[data-theme="dark"] body.instructor-portal .alignment-review-dialog,
+html[data-theme="dark"] body.instructor-portal .alignment-review-dialog .syllabus-document-decision { background: var(--public-card); border-color: var(--public-card-border); color: var(--text); }
+html[data-theme="light"] body.instructor-portal .syllabus-document-dialog>.alignment-dialog-heading,
+html[data-theme="dark"] body.instructor-portal .syllabus-document-dialog>.alignment-dialog-heading { background: var(--public-card-raised); border-color: var(--divider); }
+html[data-theme="light"] body.instructor-portal .syllabus-panel :is(.syllabus-status:not(:empty),.syllabus-document-decision .syllabus-text-confirm,.teaching-xp-table caption,.teaching-xp-table th) { background: var(--public-card-raised); border-color: var(--public-card-border); color: var(--text); }
+html[data-theme="dark"] body.instructor-portal .syllabus-panel :is(.syllabus-status:not(:empty),.syllabus-document-decision .syllabus-text-confirm,.teaching-xp-table caption,.teaching-xp-table th) { background: var(--public-card-raised); border-color: var(--public-card-border); color: var(--text); }
+html[data-theme="light"] body.instructor-portal .syllabus-panel :is(.syllabus-heading h2,.syllabus-heading p,.syllabus-muted,.syllabus-help,.syllabus-panel label,.syllabus-panel summary,.syllabus-empty strong,.syllabus-empty p,.syllabus-review h4,.syllabus-score span,.syllabus-summary,.syllabus-finding p,.syllabus-finding small,.syllabus-notices h4,.syllabus-notices p,.syllabus-notice-item strong,.syllabus-notice-item p,.syllabus-notice-item small,.alignment-pagination>span,.alignment-dialog-heading h2,.alignment-source strong,.alignment-source p,.teaching-xp-stats p,.teaching-xp-row,.teaching-xp-row p,.teaching-xp-row small,.teaching-xp-history h3,.teaching-xp-history p,.teaching-xp-table caption,.teaching-xp-table th,.teaching-xp-table td,.teaching-xp-table small,.xp-earning-card h4,.xp-earning-card p,.xp-earning-card li,.xp-earning-tiers dt,.xp-earning-tiers dd) { color: var(--text) !important; }
+html[data-theme="dark"] body.instructor-portal .syllabus-panel :is(.syllabus-heading h2,.syllabus-heading p,.syllabus-muted,.syllabus-help,.syllabus-panel label,.syllabus-panel summary,.syllabus-empty strong,.syllabus-empty p,.syllabus-review h4,.syllabus-score span,.syllabus-summary,.syllabus-finding p,.syllabus-finding small,.syllabus-notices h4,.syllabus-notices p,.syllabus-notice-item strong,.syllabus-notice-item p,.syllabus-notice-item small,.alignment-pagination>span,.alignment-dialog-heading h2,.alignment-source strong,.alignment-source p,.teaching-xp-stats p,.teaching-xp-row,.teaching-xp-row p,.teaching-xp-row small,.teaching-xp-history h3,.teaching-xp-history p,.teaching-xp-table caption,.teaching-xp-table th,.teaching-xp-table td,.teaching-xp-table small,.xp-earning-card h4,.xp-earning-card p,.xp-earning-card li,.xp-earning-tiers dt,.xp-earning-tiers dd) { color: var(--text) !important; }
+html[data-theme="light"] body.instructor-portal .syllabus-panel :is(input,select,textarea,.syllabus-source-text,.alignment-detail-body textarea,.syllabus-correction textarea) { color: var(--text); background: var(--control-bg); border-color: var(--control-border); }
+html[data-theme="dark"] body.instructor-portal .syllabus-panel :is(input,select,textarea,.syllabus-source-text,.alignment-detail-body textarea,.syllabus-correction textarea) { color: var(--text); background: var(--control-bg); border-color: var(--control-border); }
+html[data-theme="light"] body.instructor-portal .syllabus-panel :is(.syllabus-primary,.syllabus-secondary) { color: var(--action-button-color); background: var(--action-button-bg); border-color: transparent; }
+html[data-theme="light"] body.instructor-portal .syllabus-panel :is(button,a).syllabus-secondary,
+html[data-theme="light"] body.instructor-portal .syllabus-panel button.syllabus-primary { color: var(--action-button-color) !important; }
+html[data-theme="dark"] body.instructor-portal .syllabus-panel :is(.syllabus-primary,.syllabus-secondary) { color: var(--action-button-color); background: var(--action-button-bg); border-color: transparent; }
+html[data-theme="light"] body.instructor-portal .syllabus-panel :is(.syllabus-badge,.xp-source) { color: #334155; background: #edf1f6; border-color: #d8dee8; }
+html[data-theme="light"] body.instructor-portal .syllabus-panel .syllabus-badge.is-approved,
+html[data-theme="light"] body.instructor-portal .syllabus-panel .xp-source.is-system { color: #17643f; background: #e7f5ed; border-color: #b8dec8; }
+html[data-theme="light"] body.instructor-portal .syllabus-panel :is(.syllabus-badge.is-review,.syllabus-badge.is-stale,.syllabus-badge.is-missing,.syllabus-badge.is-revision_requested,.xp-source.is-admin) { color: #765510; background: #fbf3df; border-color: #e8d49c; }
+html[data-theme="light"] body.instructor-portal .syllabus-panel .syllabus-badge.is-failed { color: #923c43; background: #fae9ea; border-color: #ecc2c5; }
+html[data-theme="light"] body.instructor-portal .syllabus-panel .syllabus-score strong,
+html[data-theme="light"] body.instructor-portal .syllabus-panel .teaching-xp-stats strong,
+html[data-theme="light"] body.instructor-portal .syllabus-panel .teaching-xp-table .xp-amount { color: #315f9d !important; }
+html[data-theme="dark"] body.instructor-portal .syllabus-panel :is(.syllabus-badge,.xp-source) { color: #dbe6f3; background: #24272c; border-color: #454951; }
+html[data-theme="dark"] body.instructor-portal .syllabus-panel .syllabus-badge.is-approved,
+html[data-theme="dark"] body.instructor-portal .syllabus-panel .xp-source.is-system { color: #a7e3c7; background: #18362c; border-color: #396b56; }
+html[data-theme="dark"] body.instructor-portal .syllabus-panel :is(.syllabus-badge.is-review,.syllabus-badge.is-stale,.syllabus-badge.is-missing,.syllabus-badge.is-revision_requested,.xp-source.is-admin) { color: #f0d49a; background: #342d20; border-color: #705a31; }
+html[data-theme="dark"] body.instructor-portal .syllabus-panel .syllabus-badge.is-failed { color: #f1b4b4; background: #3b252d; border-color: #71434d; }
+html[data-theme="light"] body.instructor-portal #panel-teaching-xp :is(.teaching-xp-row>strong,.xp-earning-amount,.xp-earning-tiers dd) { color: #315f9d !important; }
+html[data-theme="dark"] body.instructor-portal #panel-teaching-xp :is(.teaching-xp-row>strong,.xp-earning-amount,.xp-earning-tiers dd) { color: #9bc2fa !important; }
+
+/* Class Insight report, XP progress and all dashboard leaderboards. */
+html[data-theme="light"] body.instructor-portal :is(.ci-card,.ci-report-section,.ci-ai-box,.ci-ai-detail-box,.ci-quiz-row,.ci-weak-row) { background: var(--public-card); border-color: var(--public-card-border); color: var(--text); }
+html[data-theme="light"] body.instructor-portal :is(.ci-title,.ci-subtitle,.ci-refresh-time,.ci-stat-lbl,.ci-weak-label,.ci-ai-text,.ci-report-title,.ci-dist-lbl,.ci-subject-name,.ci-subject-meta,.ci-quiz-name,.ci-quiz-subject,.ci-quiz-done) { color: var(--text) !important; }
+html[data-theme="dark"] body.instructor-portal :is(.ci-card,.ci-report-section,.ci-ai-box,.ci-ai-detail-box,.ci-quiz-row,.ci-weak-row) { background: var(--public-card); border-color: var(--public-card-border); color: var(--text); }
+html[data-theme="dark"] body.instructor-portal :is(.ci-title,.ci-subtitle,.ci-refresh-time,.ci-stat-lbl,.ci-weak-label,.ci-ai-text,.ci-report-title,.ci-dist-lbl,.ci-subject-name,.ci-subject-meta,.ci-quiz-name,.ci-quiz-subject,.ci-quiz-done) { color: var(--text) !important; }
+body.instructor-portal .ci-ai-body { display: grid; gap: 8px; }
+body.instructor-portal .ci-finding { display:grid;gap:4px;padding:11px 13px;border:1px solid rgba(255,255,255,.1);border-radius:10px;background:rgba(255,255,255,.035); }
+body.instructor-portal .ci-finding-label { color:#8db4dc;font-size:.55rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase; }
+body.instructor-portal .ci-finding-title { color:var(--text);font-size:.8rem;line-height:1.35; }
+body.instructor-portal .ci-ai-text.ci-ai-sentence { margin: 0; padding: 0; border: 0; font-size: .76rem; line-height: 1.5; text-wrap: pretty; }
+body.instructor-portal .ci-ai-heading { margin: 8px 0 0; color: var(--text); font-size: .9rem; }
+html[data-theme="light"] body.instructor-portal .ci-btn-detail { color: var(--action-button-color); background: var(--action-button-bg); border-color: var(--control-border); }
+html[data-theme="dark"] body.instructor-portal .ci-btn-detail { color: var(--action-button-color); background: var(--action-button-bg); border-color: var(--control-border); }
+html[data-theme="light"] body.instructor-portal #ci-container .ci-ai-error { color: #9b4046 !important; }
+html[data-theme="dark"] body.instructor-portal #ci-container .ci-ai-error { color: #f2a8ad !important; }
+html[data-theme="light"] body.instructor-dashboard #modal-idb-leaderboard :is(h2,h3,h4,p,span,small,strong,td,th,li,button) { color: var(--text) !important; }
+html[data-theme="dark"] body.instructor-dashboard #modal-idb-leaderboard :is(h2,h3,h4,p,span,small,strong,td,th,li,button) { color: var(--text) !important; }
+html[data-theme="light"] body.instructor-dashboard .tq-grade-badge { color: #765510; background: #fbf3df; border-color: #e8d49c; }
+html[data-theme="light"] body.instructor-dashboard .tq-grade-badge * { color: inherit !important; }
+html[data-theme="light"] body.instructor-dashboard :is(.tq-bar-track,.tq-xp-track,.analytics-progress-track) { background: var(--divider); }
+html[data-theme="dark"] body.instructor-dashboard :is(.tq-bar-track,.tq-xp-track,.analytics-progress-track) { background: #383b41; }
+html[data-theme="light"] body.instructor-dashboard #modal-idb-leaderboard :is(.idb-lb-filters,.idb-lb-summary>*,.idb-lb-podium>*,.idb-lb-table,.idb-lb-thead) { background: var(--public-card-raised); border-color: var(--public-card-border); }
+html[data-theme="dark"] body.instructor-dashboard #modal-idb-leaderboard :is(.idb-lb-filters,.idb-lb-summary>*,.idb-lb-podium>*,.idb-lb-table,.idb-lb-thead) { background: var(--public-card-raised); border-color: var(--public-card-border); }
+html[data-theme="light"] body.instructor-dashboard :is(.idb-student-section,.idb-student-profile-card,.idb-report-list .report-row,.idb-report-stat,.idb-report-filter-panel,.idb-mode-card,.xp-rules-card,.syl-card,.xp-section) { color: var(--text); background: var(--public-card); border-color: var(--public-card-border); }
+html[data-theme="dark"] body.instructor-dashboard :is(.idb-student-section,.idb-student-profile-card,.idb-report-list .report-row,.idb-report-stat,.idb-report-filter-panel,.idb-mode-card,.xp-rules-card,.syl-card,.xp-section) { color: var(--text); background: var(--public-card); border-color: var(--public-card-border); }
+html[data-theme="light"] body.instructor-portal #panel-leaderboard .p1-base { color: #ffe0a1 !important; }
+html[data-theme="light"] body.instructor-portal #panel-leaderboard .p2-base { color: #d9e8fa !important; }
+html[data-theme="light"] body.instructor-portal #panel-leaderboard .p3-base { color: #f3c8aa !important; }
+html[data-theme="light"] body.instructor-dashboard .quality-rank-guide { background: var(--public-card-raised); border-color: var(--public-card-border); }
+html[data-theme="light"] body.instructor-dashboard .quality-rank-guide :is(strong,p) { color: var(--text) !important; }
+html[data-theme="light"] body.instructor-dashboard #xp-popup { color: #172033 !important; background: #fff !important; border-color: #d6dfeb !important; box-shadow: 0 20px 56px rgba(32,48,76,.2) !important; }
+html[data-theme="light"] body.instructor-dashboard #xp-popup :is(.xp-popup-title,.xp-progress-labels,.xp-progress-needed) { color: #344054 !important; -webkit-text-fill-color: #344054 !important; }
+html[data-theme="light"] body.instructor-dashboard #xp-popup .xp-popup-label { color: #6741a5 !important; -webkit-text-fill-color: #6741a5 !important; }
+html[data-theme="light"] body.instructor-dashboard #xp-popup .xp-popup-sub { color: #667085 !important; -webkit-text-fill-color: #667085 !important; }
+html[data-theme="light"] body.instructor-dashboard #xp-popup .xp-progress-bar-track { background: #e3e8f0 !important; }
+html[data-theme="light"] body.instructor-dashboard #xp-popup .xp-progress-bar-fill { background: #88a9d8 !important; }
+html[data-theme="light"] body.instructor-dashboard #xp-popup .btn-xp-close { color: #172033 !important; background: #f1f5fa !important; border-color: #cbd5e1 !important; }
+html[data-theme="light"] body.instructor-dashboard .dash-avatar { color: #fff !important; -webkit-text-fill-color: #fff !important; }
+html[data-theme="light"] body.instructor-dashboard .idb-bell-badge { color: #fff !important; -webkit-text-fill-color: #fff !important; }
+html[data-theme="light"] body.instructor-dashboard :is(.xp-num,.tq-xp-row-right .xp-num,.tq-xp-row-right .xp-lvl) { color: #315f9d !important; }
+html[data-theme="light"] body.instructor-portal #ci-container :is(.ci-stat-val,.ci-dist-val,.ci-quiz-avg,.ci-avg-ok,.ci-avg-weak,.ci-needs-attn,.ci-on-track,.ci-quiz-align) { color: #334155 !important; }
+html[data-theme="light"] body.instructor-portal #ci-container :is(.ci-stat-green .ci-stat-val,.ci-dist-green .ci-dist-val,.ci-avg-ok,.ci-on-track) { color: #18734d !important; }
+html[data-theme="light"] body.instructor-portal #ci-container :is(.ci-stat-yellow .ci-stat-val,.ci-dist-yellow .ci-dist-val,.ci-avg-weak,.ci-needs-attn) { color: #8a6416 !important; }
+html[data-theme="light"] body.instructor-portal #ci-container :is(.ci-stat-red .ci-stat-val,.ci-dist-red .ci-dist-val) { color: #a23e43 !important; }
+html[data-theme="light"] body.instructor-portal #ci-container :is(.ci-stat-blue .ci-stat-val,.ci-dist-blue .ci-dist-val,.ci-quiz-align) { color: #315f9d !important; }
+html[data-theme="light"] body.instructor-dashboard #modal-idb-leaderboard .idb-lb-sec-tab.active { background: var(--public-card-raised); border-color: var(--control-border); color: var(--text) !important; }
+html[data-theme="light"] body.instructor-dashboard #modal-idb-leaderboard .idb-lb-row { background: var(--public-card); border-color: var(--divider); }
+html[data-theme="light"] body.instructor-dashboard #modal-idb-leaderboard .idb-lb-row:hover { background: var(--public-card-raised); }
+html[data-theme="light"] body.instructor-dashboard #modal-idb-leaderboard :is(.idb-lb-rank,.idb-lb-s-sec,.idb-lb-student-info strong,.idb-lb-student-info small,.idb-lb-summ-label,.idb-lb-summ-sub) { color: var(--text-muted) !important; }
+html[data-theme="light"] body.instructor-dashboard #modal-idb-leaderboard .idb-lb-rank.r1 { color: #9b6500 !important; }
+html[data-theme="light"] body.instructor-dashboard #modal-idb-leaderboard .idb-lb-rank.r2 { color: #566879 !important; }
+html[data-theme="light"] body.instructor-dashboard #modal-idb-leaderboard .idb-lb-rank.r3 { color: #9e5220 !important; }
+html[data-theme="light"] body.instructor-dashboard #modal-idb-leaderboard .idb-lb-xp { color: #765510 !important; }
+html[data-theme="light"] body.instructor-dashboard #modal-idb-leaderboard .idb-lb-score { color: #18734d !important; }
+html[data-theme="light"] body.instructor-dashboard #modal-idb-leaderboard .idb-lb-streak { color: #a34a12 !important; }
+
+/* Keep the supplied navy palette in dark mode; repair legacy fixed-dark pieces
+   only in light mode so both themes share the same card hierarchy. */
+html[data-theme="light"] body.instructor-portal .quiz-card {
+  --quiz-accent: #6741a5;
+  background: #fff;
+  border: 1px solid rgba(var(--quiz-rgb), .42);
+  box-shadow: 0 8px 22px rgba(23, 32, 51, .08);
+  color: #172033;
+}
+html[data-theme="light"] body.instructor-portal .quiz-card:has(.tag-team) {
+  --quiz-rgb: 124, 92, 191;
+  --quiz-accent: #6741a5;
+  background: linear-gradient(145deg, #fbf8ff, #f4efff);
+  border-color: #d8c8f6;
+}
+html[data-theme="light"] body.instructor-portal .quiz-card.solo {
+  --quiz-rgb: 49, 115, 190;
+  --quiz-accent: #315f9d;
+  background: linear-gradient(145deg, #f7fbff, #edf5ff);
+  border-color: #bfd8f6;
+}
+html[data-theme="light"] body.instructor-portal .quiz-card:has(.tag-hw) {
+  --quiz-rgb: 35, 145, 99;
+  --quiz-accent: #18734d;
+  background: linear-gradient(145deg, #f7fdf9, #edfaf2);
+  border-color: #bce8ce;
+}
+html[data-theme="light"] body.instructor-portal .quiz-card:hover,
+html[data-theme="light"] body.instructor-portal .quiz-card:focus-within {
+  box-shadow: 0 12px 26px rgba(var(--quiz-rgb), .16);
+  border-color: rgba(var(--quiz-rgb), .62);
+}
+html[data-theme="light"] body.instructor-portal .quiz-card :is(h3,.quiz-meta,.quiz-qtypes) { color: #344054 !important; }
+html[data-theme="light"] body.instructor-portal .quiz-card .quiz-xp-row { background: #22374d; border-color: #384e65; }
+html[data-theme="light"] body.instructor-portal .quiz-card .quiz-xp-row .qxp-label { color: #e1e8f0 !important; }
+html[data-theme="light"] body.instructor-portal .quiz-card .quiz-xp-row .qxp-val { color: #f2cb73 !important; }
+html[data-theme="light"] body.instructor-portal .quiz-card .stat-box {
+  background: #eef2f7 !important;
+  border: 1px solid #dce3ed !important;
+  color: #253248 !important;
+}
+html[data-theme="light"] body.instructor-portal .quiz-card .stat-box .val { color: #172033 !important; }
+html[data-theme="light"] body.instructor-portal .quiz-card .stat-box .val-yellow { color: #a66a00 !important; }
+html[data-theme="light"] body.instructor-portal .quiz-card .stat-box .val-green { color: #18734d !important; }
+html[data-theme="light"] body.instructor-portal .quiz-card .stat-box .lbl { color: #667085 !important; }
+html[data-theme="light"] body.instructor-portal .quiz-card .btn-secondary {
+  color: #344054; background: #f1f4f8; border-color: #d5dde8;
+}
+html[data-theme="light"] body.instructor-portal .quiz-card .btn-danger,
+html[data-theme="light"] body.instructor-portal .quiz-card .btn-remove {
+  color: #fff !important;
+  background: #c93643 !important;
+  border-color: #b42332 !important;
+}
+html[data-theme="light"] body.instructor-portal .quiz-card .btn-edit {
+  color: #fff !important;
+  background: #218454 !important;
+  border-color: #176b43 !important;
+}
+html[data-theme="light"] body.instructor-portal .quiz-card .btn-edit:hover {
+  background: #176b43 !important;
+  border-color: #125735 !important;
+}
+html[data-theme="light"] body.instructor-portal .quiz-card :is(.btn-danger,.btn-remove):hover {
+  background: #a91f2d !important;
+  border-color: #921a27 !important;
+}
+html:is([data-theme="dark"],[data-theme="current"]) body.instructor-portal .quiz-card .btn-edit {
+  color: #fff !important; background: #218454 !important; border-color: #176b43 !important;
+}
+html:is([data-theme="dark"],[data-theme="current"]) body.instructor-portal .quiz-card .btn-edit:hover {
+  background: #176b43 !important; border-color: #125735 !important;
+}
+html:is([data-theme="dark"],[data-theme="current"]) body.instructor-portal .quiz-card :is(.btn-danger,.btn-remove) {
+  color: #fff !important; background: #c93643 !important; border-color: #b42332 !important;
+}
+html:is([data-theme="dark"],[data-theme="current"]) body.instructor-portal .quiz-card :is(.btn-danger,.btn-remove):hover {
+  background: #a91f2d !important; border-color: #921a27 !important;
+}
+
+html[data-theme="light"] body.instructor-portal #panel-students .section-block { background: #fff; border-color: #d6dfeb; }
+html[data-theme="light"] body.instructor-portal #panel-students .section-block-header {
+  background: #edf3fa; border-color: #d6dfeb;
+}
+html[data-theme="light"] body.instructor-portal #panel-students .section-block-header :is(h2,h3,p,span,small,strong) { color: #172033 !important; }
+html[data-theme="light"] body.instructor-portal #panel-students .subject-cards { background: #f5f7fb; border-color: #d6dfeb; }
+html[data-theme="light"] body.instructor-portal #panel-students .subject-card { background: #fff; border-color: #d6dfeb; }
+html[data-theme="light"] body.instructor-portal #panel-students .subject-card :is(h3,p,span,small,strong) { color: #344054 !important; }
+html[data-theme="light"] body.instructor-portal #panel-students .subject-card-name { color: #172033 !important; }
+html[data-theme="light"] body.instructor-portal #panel-students .subject-card-type,
+html[data-theme="light"] body.instructor-portal #panel-students .class-avg-label,
+html[data-theme="light"] body.instructor-portal #panel-students .subject-stat span { color: #667085 !important; }
+html[data-theme="light"] body.instructor-portal #panel-students .subject-stat {
+  background: #eef2f7 !important;
+  border: 1px solid #dce3ed !important;
+}
+html[data-theme="light"] body.instructor-portal #panel-students .subject-stat strong { color: #253248 !important; }
+html[data-theme="light"] body.instructor-portal #panel-students .subject-analytics-btn {
+  color: #315f9d !important; background: #edf5ff !important; border-color: #c8dcf5 !important;
+}
+
+/* Student section tiles in My Students. */
+html[data-theme="light"] body.instructor-portal #panel-students :is(.class-avg,.class-avg-label,.class-avg-value) { color: #344054; }
+html[data-theme="light"] body.instructor-portal #panel-students .class-avg-value { color: #8a6416 !important; }
+html[data-theme="light"] body.instructor-portal #panel-students .section-block :is(.sm-box,.sm-stat,.section-stat,.stat-box) {
+  color: #253248; background: #eef2f7; border-color: #dce3ed;
+}
+
+/* Profile modal assignment rows and footer use the same light surfaces. */
+html[data-theme="light"] body.instructor-portal #modal-profile :is(.profile-assignment,.profile-assignment-card,.profile-assignment-item,.assignment-row,.teaching-assignment) {
+  color: #172033 !important; background: #f1f5fa !important; border-color: #dce3ed !important;
+}
+html[data-theme="light"] body.instructor-portal #modal-profile .profile-dialog-footer { background: #eef2f7 !important; border-color: #dce3ed !important; }
+html[data-theme="light"] body.instructor-portal #modal-profile .modal-footer { background: #eef2f7 !important; border-top: 1px solid #dce3ed !important; }
+html[data-theme="light"] body.instructor-portal #modal-profile .profile-dialog-header .modal-close { color: #344054 !important; background: #fff !important; border-color: #cbd5e1 !important; }
+html[data-theme="light"] body.instructor-portal #modal-profile .profile-dialog-header .modal-close :is(svg,i) { color: inherit !important; }
+html[data-theme="light"] body.instructor-portal #modal-profile .modal-footer .btn-secondary { color: #fff !important; background: #2c4865 !important; border-color: #52708f !important; }
+
+/* Instructor dialogs and the quiz editor had older navy-only component colors. */
+html[data-theme="light"] body.instructor-portal :is(#modal-grade,#modal-reports,#modal-edit,#modal-team-games) .workspace-dialog,
+html[data-theme="light"] body.instructor-portal #modal-team-games .team-game-modal {
+  color: #172033 !important; background: #fff !important; border-color: #d6dfeb !important;
+}
+html[data-theme="light"] body.instructor-portal :is(#modal-grade,#modal-reports,#modal-edit) .workspace-dialog-header,
+html[data-theme="light"] body.instructor-portal #modal-team-games .team-game-dialog-header {
+  color: #172033 !important; background: #f1f5fa !important; border-color: #d6dfeb !important;
+}
+html[data-theme="light"] body.instructor-portal :is(#modal-grade,#modal-reports,#modal-edit) .workspace-dialog-header :is(h1,h2,h3,p,span),
+html[data-theme="light"] body.instructor-portal #modal-team-games .team-game-dialog-header :is(h1,h2,h3,p,span) { color: #172033 !important; }
+html[data-theme="light"] body.instructor-portal :is(#modal-grade,#modal-reports,#modal-edit) .workspace-dialog > .modal-footer {
+  color: #344054 !important; background: #f1f5fa !important; border-color: #d6dfeb !important;
+}
+html[data-theme="light"] body.instructor-portal #modal-edit .workspace-dialog-header .modal-close {
+  color: #344054 !important;
+  background: #fff !important;
+  border-color: #cbd5e1 !important;
+}
+html[data-theme="light"] body.instructor-portal #modal-edit .workspace-dialog-header .modal-close :is(svg,i) { color: inherit !important; }
+
+html[data-theme="light"] body.instructor-portal #modal-grade :is(.submission-card,.sub-grade),
+html[data-theme="light"] body.instructor-portal #modal-reports :is(.report-stat,.report-row,.report-filters,.student-report-detail,.srd-box,.srd-quiz-row),
+html[data-theme="light"] body.instructor-portal #modal-edit :is(.questions-section,.q-item),
+html[data-theme="light"] body.instructor-portal #modal-team-games :is(.team-game-mode-tabs,.team-game-mode,.team-game-mode-content,.team-game-mode-panel-head,.q-item) {
+  color: #172033 !important; background: #f6f8fb !important; border-color: #d6dfeb !important;
+}
+html[data-theme="light"] body.instructor-portal :is(#modal-grade,#modal-reports,#modal-edit,#modal-team-games) :is(.submission-card,.report-stat,.report-row,.report-filters,.student-report-detail,.srd-box,.srd-quiz-row,.questions-section,.q-item,.team-game-mode,.team-game-mode-content,.team-game-mode-panel-head) :is(h1,h2,h3,h4,p,span,strong,small,label,div) {
+  color: #344054;
+}
+html[data-theme="light"] body.instructor-portal #modal-grade :is(.sub-quiz,.sub-grade .g-lbl,.sub-tag.time),
+html[data-theme="light"] body.instructor-portal #modal-reports :is(.rs-lbl,.rp-info span,.rp-lbl,.srd-quiz-name),
+html[data-theme="light"] body.instructor-portal #modal-edit :is(.questions-section p,.q-input::placeholder),
+html[data-theme="light"] body.instructor-portal #modal-team-games :is(.team-game-modal-subtitle,.team-game-mode-description,.team-game-mode-panel-subtitle) { color: #667085 !important; }
+html[data-theme="light"] body.instructor-portal #modal-grade .sub-grade { background: #eef2f7 !important; }
+html[data-theme="light"] body.instructor-portal #modal-grade .g-pct { color: #8a6416 !important; }
+html[data-theme="light"] body.instructor-portal #modal-reports .report-filters { background: #edf2f8 !important; }
+html[data-theme="light"] body.instructor-portal #modal-reports .report-select,
+html[data-theme="light"] body.instructor-portal #modal-edit .q-input,
+html[data-theme="light"] body.instructor-portal #modal-team-games :is(select,input,textarea) {
+  color: #172033 !important; background: #fff !important; border-color: #cbd5e1 !important;
+}
+html[data-theme="light"] body.instructor-portal #modal-edit .q-input::placeholder { color: #667085 !important; }
+html[data-theme="light"] body.instructor-portal #modal-edit .form-group label,
+html[data-theme="light"] body.instructor-portal #modal-team-games :is(label,.team-game-modal-subtitle,.team-game-mode-title) { color: #344054 !important; }
+html[data-theme="light"] body.instructor-portal #modal-team-games .team-game-mode.active {
+  color: #234f7d !important; background: #e8f1fb !important; border-color: #7ea6d2 !important;
+}
+html[data-theme="light"] body.instructor-portal #modal-team-games .team-game-mode.active * { color: inherit !important; }
+
+/* High-specificity fixes for the review, reports detail, and game editor dialogs. */
+html[data-theme="light"] body.instructor-portal :is(#modal-grade,#modal-reports) .workspace-dialog-header .modal-close,
+html[data-theme="light"] body.instructor-portal #modal-student-detail .modal-close,
+html[data-theme="light"] body.instructor-portal #modal-team-games > .team-game-modal > .modal-close {
+  color: #344054 !important; background: #fff !important; border: 1px solid #cbd5e1 !important;
+}
+html[data-theme="light"] body.instructor-portal :is(#modal-grade,#modal-reports) .workspace-dialog-header .modal-close :is(svg,i),
+html[data-theme="light"] body.instructor-portal #modal-team-games > .team-game-modal > .modal-close :is(svg,i) { color: inherit !important; }
+
+html[data-theme="light"] body.instructor-portal #modal-student-detail > .modal {
+  color: #172033 !important; background: #fff !important; border: 1px solid #cfd8e5 !important;
+}
+html[data-theme="light"] body.instructor-portal #modal-student-detail #sd-modal-title { color: #172033 !important; }
+html[data-theme="light"] body.instructor-portal #modal-student-detail :is(.student-detail-subtitle,.student-detail-facts dt,.student-detail-empty) { color: #667085 !important; }
+html[data-theme="light"] body.instructor-portal #modal-student-detail .student-detail-facts { border-color: #d6dfeb !important; }
+html[data-theme="light"] body.instructor-portal #modal-student-detail .student-detail-facts :is(dt,dd) { color: #344054 !important; }
+html[data-theme="light"] body.instructor-portal #modal-student-detail .student-detail-facts dd { color: #344054 !important; }
+html[data-theme="light"] body.instructor-portal #modal-student-detail h3 { color: #172033 !important; }
+html[data-theme="light"] body.instructor-portal #modal-student-detail .student-detail-empty { color: #667085 !important; background: #f1f5fa !important; border: 1px solid #e0e7f0 !important; }
+html[data-theme="light"] body.instructor-portal #modal-student-detail .srd-box {
+  color: #253248 !important; background: #f1f5fa !important; border-color: #d6dfeb !important;
+}
+html[data-theme="light"] body.instructor-portal #modal-student-detail .srd-box :is(strong,span) { color: #253248 !important; }
+
+html[data-theme="light"] body.instructor-portal #modal-flag-detail > .modal { color: #172033 !important; background: #fff !important; border-color: #d6dfeb !important; }
+html[data-theme="light"] body.instructor-portal #modal-flag-detail > .modal > h2 { color: #172033 !important; }
+html[data-theme="light"] body.instructor-portal #modal-flag-detail #flag-detail-body > div:first-child { color: #344054 !important; background: #f6f8fb !important; border-color: #d6dfeb !important; }
+html[data-theme="light"] body.instructor-portal #modal-flag-detail #flag-detail-body > div:last-child { color: #344054 !important; background: #fff8eb !important; border-color: #f0d7a8 !important; }
+html[data-theme="light"] body.instructor-portal #modal-flag-detail #flag-detail-body :is(div,span,strong) { color: #344054 !important; }
+html[data-theme="light"] body.instructor-portal #modal-flag-detail #flag-detail-body [style*="text-muted"] { color: #667085 !important; }
+html[data-theme="light"] body.instructor-portal #modal-flag-detail #flag-detail-body [style*="--gold"] { color: #8a6416 !important; }
+html[data-theme="light"] body.instructor-portal #modal-flag-detail #flag-detail-body [style*="rgba(255,255,255,.8)"] { color: #475467 !important; }
+html[data-theme="light"] body.instructor-portal #modal-flag-detail #flag-detail-body [style*="--green"] { color: #18734d !important; }
+html[data-theme="light"] body.instructor-portal #modal-flag-detail .modal-footer .btn-cancel { color: #344054 !important; background: #f1f5fa !important; border-color: #cbd5e1 !important; }
+
+html[data-theme="light"] body.instructor-portal #modal-team-games :is(.team-game-mode-panel,.team-game-mode-panel-head,#team-game-mode-content,.team-game-mode-content,.team-game-how,.team-game-how-it-works,.team-game-info,.team-game-description) {
+  color: #344054 !important; background: #f4f7fb !important; border-color: #d6dfeb !important;
+}
+html[data-theme="light"] body.instructor-portal #modal-team-games :is(.team-game-mode-panel-head,.team-game-mode-content,#team-game-mode-content) :is(h1,h2,h3,h4,p,span,strong,small,label,div) { color: #344054 !important; }
+html[data-theme="light"] body.instructor-portal #modal-team-games .team-game-mode-panel-head { background: #f1f5fa !important; }
+html[data-theme="light"] body.instructor-portal #modal-team-games .team-game-footer { background: #f1f5fa !important; border-color: #d6dfeb !important; }
+html[data-theme="light"] body.instructor-portal #modal-team-games .team-game-footer .btn-cancel { color: #344054 !important; background: #fff !important; border-color: #cbd5e1 !important; }
+html[data-theme="light"] body.instructor-portal #modal-team-games .team-game-save-btn { color: #fff !important; background: #2f4b69 !important; border-color: #496b8d !important; box-shadow: none !important; }
+html[data-theme="light"] body.instructor-portal #modal-team-games .team-game-launch-btn { color: #fff !important; background: #23764f !important; border-color: #1b6542 !important; box-shadow: none !important; }
+html[data-theme="light"] body.instructor-portal #modal-team-games .team-game-footer-btn :is(svg,i) { color: #fff !important; stroke: currentColor; }
+html[data-theme="light"] body.instructor-portal #modal-team-games .q-item :is(.btn-delete,.btn-danger) { color: #a82436 !important; background: #fdebed !important; border-color: #efb8c0 !important; }
+html[data-theme="light"] body.instructor-portal #modal-team-games .q-item :is(.btn-delete,.btn-danger) :is(svg,i) { color: #a82436 !important; stroke: currentColor; }
+html[data-theme="light"] body.instructor-portal #modal-team-games .q-item :is(.q-edit-btn,.btn-edit,.edit-question-btn) :is(svg,i) { color: #6741a5 !important; stroke: currentColor; }
+
+/* Expanded submission answers use inline white text in the legacy renderer. */
+html[data-theme="light"] body.instructor-portal :is(#modal-results,#modal-grade) .student-detail-panel {
+  color: #172033 !important; background: #f8fafd !important; border-color: #d6dfeb !important;
+}
+html[data-theme="light"] body.instructor-portal :is(#modal-results,#modal-grade) .student-detail-panel :is(.sdp-ans-row,.sdp-ans-row > span,.sdp-ans-row > div) {
+  color: #344054 !important;
+}
+html[data-theme="light"] body.instructor-portal :is(#modal-results,#modal-grade) .student-detail-panel .sdp-id-row {
+  background: #f0f7fc !important; border-color: #c9e2f2 !important;
+}
+html[data-theme="light"] body.instructor-portal :is(#modal-results,#modal-grade) .student-detail-panel .sdp-id-answer {
+  color: #253248 !important; background: #fff !important; border-color: #d6dfeb !important;
+}
+html[data-theme="light"] body.instructor-portal :is(#modal-results,#modal-grade) .student-detail-panel .sdp-pending { color: #8a6416 !important; }
+html[data-theme="light"] body.instructor-portal :is(#modal-results,#modal-grade) .student-detail-panel .sdp-correct { color: #18734d !important; }
+html[data-theme="light"] body.instructor-portal :is(#modal-results,#modal-grade) .student-detail-panel .sdp-incorrect { color: #b42332 !important; }
+html[data-theme="light"] body.instructor-portal :is(#modal-results,#modal-grade) .student-detail-panel .btn-id-correct { color: #176b43 !important; background: #e7f5ed !important; border-color: #a9d8bc !important; }
+html[data-theme="light"] body.instructor-portal :is(#modal-results,#modal-grade) .student-detail-panel .btn-id-wrong { color: #a12b63 !important; background: #fbeaf2 !important; border-color: #edb8d1 !important; }
+html[data-theme="light"] body.instructor-portal #modal-grade .workspace-dialog .btn-adjust:disabled {
+  color: #667085 !important; background: #eef2f7 !important; border-color: #cbd5e1 !important; opacity: 1;
+}
+html[data-theme="light"] body.instructor-portal #modal-grade .workspace-dialog .btn-adjust { color: #111827 !important; }
+html[data-theme="light"] body.instructor-portal :is(#modal-results,#modal-grade) .student-detail-panel .sdp-ans-row :is(span,div)[style*="rgba(255,255,255"] { color: #344054 !important; }
+
+/* Instructor quiz creation, draft, result, and XP popup actions. */
+html[data-theme] body.instructor-portal .hero-text .btn-create,
+html[data-theme] body.instructor-portal .quiz-card .quiz-btns .btn-view,
+html[data-theme] body.instructor-portal .draft-btns .btn-continue,
+html[data-theme] body.instructor-portal #modal-edit #save-draft-btn,
+html[data-theme] body.instructor-portal #xp-popup .btn-xp-dash { color: #fff !important; background: #244a73 !important; border-color: #3b6593 !important; }
+html[data-theme] body.instructor-portal :is(.hero-text .btn-create,.quiz-card .quiz-btns .btn-view,.draft-btns .btn-continue,#modal-edit #save-draft-btn,#xp-popup .btn-xp-dash):hover { background: #315f91 !important; }
+html[data-theme="light"] body.instructor-portal #modal-edit .btn-cancel { color: #344054 !important; background: #f1f5fa !important; border-color: #cbd5e1 !important; }
+html[data-theme="light"] body.instructor-portal #toast { color: #172033 !important; background: #fff !important; border-color: #cfd8e5 !important; box-shadow: 0 12px 32px rgba(23,32,51,.18) !important; }
+html[data-theme="light"] body.instructor-portal #toast :is(#toast-icon,#toast-msg) { color: #172033 !important; }
+
+html[data-theme] body.instructor-portal #review-dialog .btn-primary,
+html[data-theme] body.instructor-portal .btn-view-det { color: #fff !important; background: #244a73 !important; border-color: #3b6593 !important; }
+html[data-theme] body.instructor-portal #review-dialog .btn-primary:hover,
+html[data-theme] body.instructor-portal .btn-view-det:hover { background: #315f91 !important; }
+html[data-theme] body.instructor-portal #modal-edit #save-draft-btn :is(.emoji-lucide,svg) { color: #fff !important; stroke: #fff !important; }
+
+/* Quiz-list empty panels follow the selected theme instead of retaining the navy card. */
+html[data-theme="light"] body.instructor-portal .quiz-grid > .empty-state {
+  min-height: 154px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #172033;
+  background: #f7f8fb;
+  border: 1px dashed #d6dde8;
+}
+html[data-theme="light"] body.instructor-portal .quiz-grid > .empty-state p { color: #344054 !important; }
+html[data-theme="light"] body.instructor-portal .quiz-grid > .empty-state .emoji { color: #7045c0 !important; background: transparent; }
+
+html[data-theme="dark"] body.instructor-portal .quiz-grid > .empty-state {
+  min-height: 154px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #f4f4f5;
+  background: #1b1d21;
+  border: 1px dashed #42464e;
+}
+html[data-theme="dark"] body.instructor-portal .quiz-grid > .empty-state p { color: #d5d7dc !important; }
+html[data-theme="dark"] body.instructor-portal .quiz-grid > .empty-state .emoji { color: #b99ae8 !important; background: transparent; }
+
+html[data-theme="current"] body.instructor-portal .quiz-grid > .empty-state {
+  min-height: 154px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #f4f5fb;
+  background: #1f2d41;
+  border: 1px dashed #405874;
+}
+html[data-theme="current"] body.instructor-portal .quiz-grid > .empty-state p { color: #d5e2f1 !important; }
+html[data-theme="current"] body.instructor-portal .quiz-grid > .empty-state .emoji { color: #a57fe0 !important; background: transparent; }
+
+/* Teaching-load empty panels need the same theme-aware surface as quiz placeholders. */
+html[data-theme="light"] body.instructor-portal :is(.tl-grid,#teaching-sections-container) > .instructor-empty-state {
+  color: #172033;
+  background: #f7f8fb;
+  border-color: #d6dde8;
+}
+html[data-theme="light"] body.instructor-portal :is(.tl-grid,#teaching-sections-container) > .instructor-empty-state :is(p,small) { color: #475467 !important; }
+html[data-theme="light"] body.instructor-portal :is(.tl-grid,#teaching-sections-container) > .instructor-empty-state .emoji { color: #7045c0 !important; background: transparent; }
+
+html[data-theme="dark"] body.instructor-portal :is(.tl-grid,#teaching-sections-container) > .instructor-empty-state {
+  color: #f4f4f5;
+  background: #1b1d21;
+  border-color: #42464e;
+}
+html[data-theme="dark"] body.instructor-portal :is(.tl-grid,#teaching-sections-container) > .instructor-empty-state :is(p,small) { color: #c6c8ce !important; }
+html[data-theme="dark"] body.instructor-portal :is(.tl-grid,#teaching-sections-container) > .instructor-empty-state .emoji { color: #b99ae8 !important; background: transparent; }
+
+html[data-theme="current"] body.instructor-portal :is(.tl-grid,#teaching-sections-container) > .instructor-empty-state {
+  color: #f4f5fb;
+  background: #172a40;
+  border-color: #49627e;
+}
+html[data-theme="current"] body.instructor-portal :is(.tl-grid,#teaching-sections-container) > .instructor-empty-state :is(p,small) { color: #d5e2f1 !important; }
+html[data-theme="current"] body.instructor-portal :is(.tl-grid,#teaching-sections-container) > .instructor-empty-state .emoji { color: #a57fe0 !important; background: transparent; }
+
+/* Use the same full-width header component as Student Performance Reports. */
+body.instructor-portal #modal-team-games .team-game-dialog-header {
+  flex: 0 0 auto;
+  min-height: 90px;
+  box-sizing: border-box;
+}
+body.instructor-portal #modal-team-games .team-game-dialog-heading { min-width: 0; }
+body.instructor-portal #modal-team-games .team-game-dialog-heading h2 {
+  margin: 0;
+  line-height: 1.3;
+}
+body.instructor-portal #modal-team-games .team-game-dialog-heading .team-game-modal-subtitle {
+  margin: 4px 0 0;
+  color: #c7d3e2;
+  font-size: 13px;
+  line-height: 1.45;
+}
+body.instructor-portal #modal-team-games .team-game-dialog-header .modal-close {
+  position: static;
+  order: 1;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+}
+html[data-theme="light"] body.instructor-portal #modal-team-games .team-game-dialog-heading .team-game-modal-subtitle {
+  color: #475467 !important;
+}
+html[data-theme="light"] body.instructor-portal #modal-team-games .team-game-dialog-header .modal-close {
+  color: #344054 !important;
+  background: #fff !important;
+  border: 1px solid #cbd5e1 !important;
+}
+html[data-theme="light"] body.instructor-portal #modal-team-games .team-game-dialog-header .modal-close:hover {
+  color: #172033 !important;
+  background: #f8fafc !important;
+}
+@media (max-width: 650px) {
+  body.instructor-portal #modal-team-games .team-game-dialog-header { padding: 14px 16px; gap: 12px; }
+  body.instructor-portal #modal-team-games .team-game-dialog-heading .team-game-modal-subtitle { font-size: 12px; }
+}
+/* Keep hover feedback legible on the light instructor headers. */
+html[data-theme="light"] body.instructor-portal .search-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(100%, 308px);
+  min-height: 48px;
+  box-sizing: border-box;
+  padding: 0 14px;
+  background: #fff !important;
+  border: 1px solid #d6dfeb !important;
+  border-radius: 12px;
+  transition: border-color .16s ease, box-shadow .16s ease;
+}
+html[data-theme="light"] body.instructor-portal .search-bar:focus-within {
+  border-color: #7eafff !important;
+  box-shadow: 0 0 0 3px rgba(79, 142, 247, .14);
+}
+html[data-theme="light"] body.instructor-portal .search-bar > span {
+  flex: 0 0 auto;
+  color: #6741a5;
+}
+html[data-theme="light"] body.instructor-portal .search-bar input#student-search {
+  flex: 1 1 auto;
+  width: auto;
+  min-width: 0;
+  padding: 0;
+  color: #172033 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0;
+  outline: none !important;
+  box-shadow: none !important;
+}
+html[data-theme="light"] body.instructor-portal .search-bar input#student-search::placeholder {
+  color: #667085 !important;
+  opacity: 1;
+}
+/* Keep the team question list and inline editor readable on the light surface. */
+html[data-theme="light"] body.instructor-portal #modal-team-games .team-game-question-card {
+  color: #172033 !important;
+  background: #fff !important;
+  border-color: #d6dfeb !important;
+}
+html[data-theme="light"] body.instructor-portal #modal-team-games .team-game-question-text {
+  color: #172033 !important;
+}
+html[data-theme="light"] body.instructor-portal #modal-team-games .team-game-question-type {
+  color: #667085 !important;
+}
+html[data-theme="light"] body.instructor-portal #modal-team-games .team-game-question-editor {
+  color: #172033 !important;
+  background: #f6f8fb !important;
+  border-color: #d6dfeb !important;
+}
+html[data-theme="light"] body.instructor-portal #modal-team-games .team-game-editor-header h3 {
+  color: #172033 !important;
+}
+html[data-theme="light"] body.instructor-portal #modal-team-games .team-game-form-group label {
+  color: #344054 !important;
+}
+html[data-theme="light"] body.instructor-portal #modal-team-games .team-game-form-group :is(input,textarea,select) {
+  color: #172033 !important;
+  background: #fff !important;
+  border-color: #cbd5e1 !important;
+}
+html[data-theme="light"] body.instructor-portal #modal-team-games .team-game-editor-close {
+  color: #344054 !important;
+  background: #fff !important;
+  border: 1px solid #cbd5e1 !important;
+}
+html[data-theme="light"] body.instructor-portal #modal-team-games .team-game-editor-actions .btn-secondary {
+  color: #344054 !important;
+  background: #fff !important;
+  border: 1px solid #cbd5e1 !important;
+}
+html[data-theme="light"] body.instructor-portal .notif-bell-btn:hover {
+  color: #315f91;
+  background: #e8f1fb;
+  border-color: #bcd1e8;
+  transform: none;
+}
+html[data-theme="light"] body.instructor-portal .btn-logout:hover {
+  color: #a33b4b;
+  background: #fff0f2;
+  border-color: #ecc8cf;
+}
+html[data-theme] body.instructor-portal .btn-logout { color:#b42332 !important; }
+html[data-theme] body.instructor-portal .btn-logout:hover { color:#941d2a !important; background:rgba(180,35,50,.12) !important; border-color:transparent !important; }
+html[data-theme] body.instructor-portal .btn-logout > :is(svg,.lucide) { color:#173a5e !important; stroke:#173a5e !important; }
+html[data-theme="light"] body.instructor-dashboard :is(.idb-bell-btn,.idb-announce-btn):hover {
+  color: #315f91;
+  background: #e8f1fb;
+  border-color: #bcd1e8;
+  transform: none;
+}
+
+/* The profile shows the instructor's rank letters without nested badge cards. */
+html[data-theme] body.instructor-portal #modal-profile .profile-rank-display {
+  min-height: 0 !important;
+  padding: 0 !important;
+  gap: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+html[data-theme] body.instructor-portal #modal-profile .profile-rank-display > :is(span,small) {
+  display: none !important;
+}
+html[data-theme] body.instructor-portal #modal-profile #profile-grade-badge.teaching-rank {
+  display: inline-block !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  font-size: 38px !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+  -webkit-text-fill-color: currentColor;
+}
+html[data-theme] body.instructor-portal #modal-profile #profile-grade-badge.teaching-rank[data-rank] {
+  color: var(--rank-color) !important;
+  -webkit-text-fill-color: var(--rank-color) !important;
+}
+html[data-theme] body.instructor-portal #modal-profile #profile-grade-badge.teaching-rank:not([data-rank]) {
+  color: var(--text-muted) !important;
+  -webkit-text-fill-color: var(--text-muted) !important;
+}
+
+
+/* Instructor dashboard rank: show the rank text only, retaining its rank color. */
+html[data-theme] body.instructor-dashboard .tq-card .tq-grade-badge {
+  width: auto !important;
+  height: auto !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  gap: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+html[data-theme] body.instructor-dashboard .tq-card .tq-grade-badge::before,
+html[data-theme] body.instructor-dashboard .tq-card .tq-grade-badge .gb-label {
+  display: none !important;
+  content: none !important;
+}
+html[data-theme] body.instructor-dashboard .tq-card .tq-grade-badge .gb-letter {
+  display: inline-block !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  -webkit-text-fill-color: currentColor;
+}
+html[data-theme] body.instructor-dashboard .tq-card .tq-grade-badge #idb-quality-rank.teaching-rank[data-rank] {
+  color: var(--rank-color) !important;
+  -webkit-text-fill-color: var(--rank-color) !important;
+}
+/* Keep any rank badge rendered elsewhere in the instructor views text-only too. */
+html[data-theme] body.instructor-portal .teaching-rank[data-rank],
+html[data-theme] body.instructor-dashboard .teaching-rank[data-rank] {
+  color: var(--rank-color) !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  -webkit-text-fill-color: var(--rank-color) !important;
+}
+html[data-theme] body.instructor-dashboard .tq-grade-badge .gb-label,
+html[data-theme] body.instructor-portal .profile-rank-display > :is(span,small) {
+  display: none !important;
+}
+
+/* Keep clickable leaderboard rows light while hovered or pressed. */
+html[data-theme="light"] body.instructor-portal #panel-leaderboard .lb-row:not(.lb-top):is(:hover,:active,:focus),
+html[data-theme="light"] body.instructor-portal #panel-leaderboard .lb-row:not(.lb-top):focus-visible {
+  background: #eef2f7 !important;
+  border-color: #d6dfeb !important;
+}
+html[data-theme="light"] body.instructor-portal #panel-leaderboard .lb-row.lb-top:is(:hover,:active,:focus),
+html[data-theme="light"] body.instructor-portal #panel-leaderboard .lb-row.lb-top:focus-visible {
+  background: color-mix(in srgb, var(--lb-accent) 10%, #fff) !important;
+  border-color: var(--lb-accent) !important;
+}
+html[data-theme="light"] body.instructor-portal #panel-leaderboard .lb-row:is(:hover,:active,:focus,:focus-visible) :is(.lb-s-name,.lb-cell,.lb-s-level,.lb-cell-xp) {
+  color: #172033 !important;
+}
+
+html[data-theme] body.instructor-portal #panel-analytics :is(.metric-icon,.analytics-panel-title,.ci-card) :is(svg,.lucide,[data-lucide]) { color: #173a5e !important; stroke: #173a5e !important; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-activity-donut::before { background: #fff; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-activity-footer > div { background: #f7f9fc; border-color: #dce3ed; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-activity-footer span { color: #667085; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-subject-track { background: #e8edf3; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-subject-meta { color: #667085 !important; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-subject-value { color: #344054 !important; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-subject-row { background: #fbfcfe; border-color: #dfe5ed; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-subject-status.is-strong { color: #176b4a; background: #e7f5ed; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-subject-status.is-watch { color: #8a6416; background: #fbf3df; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-subject-status.is-low { color: #a3313b; background: #fdebed; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-subject-status.is-no-data { color: #667085; background: #eef2f6; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-trend-axis { fill: #667085; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-trend-grid { stroke: #dfe5ed; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-trend-point { fill: #fff; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-trend-caption { color: #667085; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-trend-caption strong { color: #344054; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-trend-caption .is-rising { color: #18734d; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-trend-caption .is-falling { color: #b42332; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-total-students { color: #244a73 !important; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-class-score.is-low { color: #b42332 !important; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-class-score.is-watch { color: #a16207 !important; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-class-score.is-strong { color: #16804a !important; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-class-score.is-empty { color: #667085 !important; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-teaching-xp { color: #8a5a00 !important; }
+html[data-theme="light"] body.instructor-portal #panel-analytics .analytics-completion { color: #16804a !important; }
+html[data-theme="light"] body.instructor-portal #ci-container .ci-finding { background: var(--public-card-raised); border-color: var(--public-card-border); }
+html[data-theme="light"] body.instructor-portal #ci-container .ci-finding-label { color: #244a73 !important; }
+html[data-theme="light"] body.instructor-portal #ci-container .ci-finding-title,
+html[data-theme="light"] body.instructor-portal #ci-container .ci-finding .ci-ai-text { color: var(--text) !important; }
+html[data-theme="dark"] body.instructor-portal #panel-analytics .analytics-activity-donut::before { background: var(--public-card); }
+html[data-theme="dark"] body.instructor-portal #panel-analytics .analytics-activity-footer > div { background: var(--public-card-raised); border-color: var(--public-card-border); }
+html[data-theme="dark"] body.instructor-portal #panel-analytics .analytics-subject-track { background: #333b47; }
+html[data-theme="dark"] body.instructor-portal #panel-analytics .analytics-subject-row { background: var(--public-card-raised); border-color: var(--public-card-border); }
+html[data-theme="dark"] body.instructor-portal #panel-analytics .analytics-total-students { color: #f5f7fa !important; }
+html[data-theme="dark"] body.instructor-portal #panel-analytics .analytics-class-score.is-low { color: #fb7185 !important; }
+html[data-theme="dark"] body.instructor-portal #panel-analytics .analytics-class-score.is-watch { color: #f3c969 !important; }
+html[data-theme="dark"] body.instructor-portal #panel-analytics .analytics-class-score.is-strong { color: #60d394 !important; }
+html[data-theme="dark"] body.instructor-portal #panel-analytics .analytics-class-score.is-empty { color: var(--text-muted) !important; }
+html[data-theme="dark"] body.instructor-portal #panel-analytics .analytics-teaching-xp { color: #f5c45e !important; }
+html[data-theme="dark"] body.instructor-portal #panel-analytics .analytics-completion { color: #60d394 !important; }
+html[data-theme="dark"] body.instructor-portal #ci-container .ci-finding { background: var(--public-card-raised); border-color: var(--public-card-border); }
+html[data-theme="dark"] body.instructor-portal #ci-container .ci-finding-title,
+html[data-theme="dark"] body.instructor-portal #ci-container .ci-finding .ci-ai-text { color: var(--text) !important; }
+html[data-theme="current"] body.instructor-portal #panel-analytics .analytics-total-students { color: #fff !important; }
+html[data-theme="current"] body.instructor-portal #panel-analytics .analytics-class-score.is-low { color: #fb7185 !important; }
+html[data-theme="current"] body.instructor-portal #panel-analytics .analytics-class-score.is-watch { color: #f3c969 !important; }
+html[data-theme="current"] body.instructor-portal #panel-analytics .analytics-class-score.is-strong { color: #60d394 !important; }
+html[data-theme="current"] body.instructor-portal #panel-analytics .analytics-class-score.is-empty { color: #b7c4d6 !important; }
+html[data-theme="current"] body.instructor-portal #panel-analytics .analytics-teaching-xp { color: #f5c45e !important; }
+html[data-theme="current"] body.instructor-portal #panel-analytics .analytics-completion { color: #60d394 !important; }
+
+/* Keep syllabus and alignment actions legible and consistent across themes. */
+body.instructor-portal .syllabus-panel :is(button,a.syllabus-secondary,button.syllabus-primary) { background:#173a5e !important; border:1px solid #315f91 !important; color:#fff !important; }
+body.instructor-portal .syllabus-panel :is(button,a.syllabus-secondary,button.syllabus-primary):hover:not(:disabled) { background:#214e7d !important; border-color:#4779aa !important; }
+body.instructor-portal .syllabus-panel :is(button,a.syllabus-secondary,button.syllabus-primary):focus-visible { outline-color:#83b9f1; }
+html[data-theme="light"] body.instructor-portal .syllabus-panel :is(button,a).syllabus-secondary,
+html[data-theme="light"] body.instructor-portal .syllabus-panel button.syllabus-primary,
+html[data-theme="dark"] body.instructor-portal .syllabus-panel :is(button,a).syllabus-secondary,
+html[data-theme="dark"] body.instructor-portal .syllabus-panel button.syllabus-primary,
+html[data-theme="current"] body.instructor-portal .syllabus-panel :is(button,a).syllabus-secondary,
+html[data-theme="current"] body.instructor-portal .syllabus-panel button.syllabus-primary { color:#fff !important; }
+html[data-theme="light"] body.instructor-portal #panel-teaching-xp .teaching-xp-table tbody tr:hover { background:var(--public-card-raised) !important; }
+html[data-theme="light"] body.instructor-portal #modal-profile .profile-rank-display > small,
+html[data-theme="dark"] body.instructor-portal #modal-profile .profile-rank-display > small,
+html[data-theme="current"] body.instructor-portal #modal-profile .profile-rank-display > small { display:block !important; font-size:9px !important; line-height:1.4 !important; color:inherit !important; }
+html[data-theme="light"] body.instructor-portal #modal-award-student-xp .syllabus-muted { color:var(--text-muted) !important; }
+html[data-theme="light"] body.instructor-portal #modal-award-student-xp .syllabus-status:not(:empty) { background:var(--public-card-raised); border-color:var(--public-card-border); color:var(--text); }
+html[data-theme] body.instructor-portal #modal-award-student-xp .student-xp-award-form button.btn-primary { background:#173a5e !important; border:1px solid #315f91 !important; color:#fff !important; }
+html[data-theme] body.instructor-portal #modal-award-student-xp .student-xp-award-form button.btn-primary:hover:not(:disabled) { background:#214e7d !important; border-color:#4779aa !important; }
+html[data-theme="light"] body.instructor-portal #modal-award-student-xp .xp-award-eyebrow { color:#173a5e; }
+html[data-theme="light"] body.instructor-portal #modal-award-student-xp .student-xp-award-form .xp-award-field { background:var(--public-card-raised); border-color:var(--public-card-border); }
+html[data-theme="light"] body.instructor-portal #modal-award-student-xp .xp-award-select-wrap > .lucide { color:#173a5e; }
+html[data-theme] body.instructor-portal #modal-award-student-xp .student-xp-award-form .xp-award-field:focus-within { border-color:#5b82b0; box-shadow:0 0 0 3px rgba(49,95,145,.12); }
+html[data-theme="light"] body.instructor-portal #modal-award-student-xp .xp-award-multi-select > summary { color:var(--text); background:var(--control-bg); border-color:var(--control-border); }
+html[data-theme="light"] body.instructor-portal #modal-award-student-xp .xp-award-student-options { color:var(--text); background:var(--public-card); border-color:var(--public-card-border); }
+html[data-theme="light"] body.instructor-portal #modal-award-student-xp .xp-award-options-heading { background:var(--public-card); border-color:var(--public-card-border); }
+html[data-theme="light"] body.instructor-portal #modal-award-student-xp .xp-award-student-option:is(:hover,.is-selected) { background:var(--public-card-raised); border-color:var(--public-card-border); }
+html[data-theme="dark"] body.instructor-portal #modal-award-student-xp .xp-award-multi-select > summary { color:var(--text); background:var(--control-bg); border-color:var(--control-border); }
+html[data-theme="dark"] body.instructor-portal #modal-award-student-xp .xp-award-student-options { color:var(--text); background:var(--public-card); border-color:var(--public-card-border); }
+html[data-theme="dark"] body.instructor-portal #modal-award-student-xp .xp-award-options-heading { background:var(--public-card); border-color:var(--public-card-border); }
+html[data-theme="dark"] body.instructor-portal #modal-award-student-xp .xp-award-student-option:is(:hover,.is-selected) { background:var(--public-card-raised); border-color:var(--public-card-border); }
+html[data-theme] body.instructor-portal .quick-icon-deep-blue { background:transparent !important; }
+html[data-theme="light"] body.instructor-portal .quick-icon-deep-blue,
+html[data-theme="light"] body.instructor-portal .quick-icon-deep-blue > .lucide { color:#173a5e !important; stroke:#173a5e !important; }
+html[data-theme="dark"] body.instructor-portal .quick-icon-deep-blue,
+html[data-theme="dark"] body.instructor-portal .quick-icon-deep-blue > .lucide,
+html[data-theme="current"] body.instructor-portal .quick-icon-deep-blue,
+html[data-theme="current"] body.instructor-portal .quick-icon-deep-blue > .lucide { color:#fff !important; stroke:#fff !important; }

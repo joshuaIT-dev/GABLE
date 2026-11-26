@@ -1,0 +1,874 @@
+/* Student portal theme colors. Layout and quiz/reward accents remain unchanged. */
+:root[data-theme="light"] body.student-portal,
+:root[data-theme="dark"] body.student-portal {
+  /* Student semantic colors: neutral surfaces theme; status and reward hues stay semantic. */
+  --student-page-bg: var(--bg-deep);
+  --student-card-bg: var(--public-card);
+  --student-summary-bg: var(--public-card-raised);
+  --student-row-bg: transparent;
+  --student-ink: var(--text);
+  --student-muted: var(--text-muted);
+  --student-border: var(--public-card-border);
+  --student-action-bg: var(--action-button-bg);
+  --student-action-ink: var(--action-button-color);
+  --surface-content: var(--public-card);
+  --surface-summary: var(--public-card-raised);
+  --surface-inset: var(--bg-mid);
+  --surface-edge: var(--public-card-border);
+  --text-primary: var(--text);
+  --border: var(--control-border);
+  background-color: var(--student-page-bg);
+  background-image: var(--page-grid);
+  background-attachment: fixed;
+  color: var(--student-ink);
+  color-scheme: light;
+}
+:root[data-theme="dark"] body.student-portal { color-scheme: dark; }
+
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .student-navbar { color: var(--text); background: var(--navbar-bg); border-color: var(--divider); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-navbar :is(.nav-brand,.brand-wordmark,.profile-info strong) { color: var(--text); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-navbar .brand-wordmark small,
+:root:is([data-theme="light"],[data-theme="dark"]) .student-navbar .profile-info>span { color: var(--text-muted); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-navbar .brand-mark { color: var(--text); background: var(--public-card-raised); border-color: var(--control-border); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-navbar .nav-tabs { border-color: var(--divider); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-navbar .nav-tab { color: var(--text-muted); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-navbar .nav-tab:hover { color: var(--text); background: var(--surface-hover); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-navbar .nav-tab.active { color: var(--text); background: var(--pill-bg); border-color: var(--control-border); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-navbar :is(.xp-nav-trigger,.profile-badge,.btn-logout,.btn-help,.btn-settings,.btn-notif-bell) { color: var(--text); background: var(--public-card-raised); border-color: var(--control-border); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-navbar :is(.btn-logout,.btn-settings):hover { background: var(--surface-strong); }
+
+.student-settings { position: relative; }
+.student-settings summary { list-style: none; cursor: pointer; }
+.student-settings summary::-webkit-details-marker { display: none; }
+.student-settings .btn-settings { display: grid; place-items: center; width: 40px; height: 44px; border: 1px solid transparent; border-radius: 10px; background: transparent; color: #becde0; }
+.student-settings-popover { position: absolute; z-index: 500; top: calc(100% + 10px); right: 0; display: grid; gap: 12px; width: 244px; padding: 14px; border: 1px solid #405874; border-radius: 14px; background: #1b2b40; color: #eaf1fc; box-shadow: 0 16px 42px #0004; }
+.settings-appearance { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 12px; }
+.student-settings .theme-toggle-group { flex: 0 0 auto; }
+.settings-help { display: flex; align-items: center; gap: 8px; min-height: 40px; padding: 8px 10px; border: 1px solid #405874; border-radius: 9px; background: #263d55; color: #eaf1fc; font: inherit; cursor: pointer; }
+
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal :is(.stat-overview-card,.student-subjects-card,.activity-card,.perf-card,.subject-perf-card,.leaderboard-card,.accuracy-card,.xp-progress-card,.xp-dashboard>section,.redeem-card,.xp-streak-card,.pu-inv-card,.pu-cat-card,.studybuddy-guide,.sb-window,.sb-full-view) { color: var(--text); background: var(--surface-content); border-color: var(--surface-edge); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal :is(.stat-overview-card,.pu-hero-stats>div,#panel-xp .xp-stat-tile,#panel-xp .xp-level-block,#panel-xp .acc-overall,.home-quick-actions button,.quiz-hero-banner .streak-block,.subject-result-card,.os-item,.pc-metric,.sb-history-item.selected,.sb-study-options button) { color: var(--text); background: var(--surface-summary); border-color: var(--surface-edge); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal :is(.student-home-hero,.quiz-hero-banner,.pu-hero) { color: var(--text); background: linear-gradient(115deg,var(--public-card),var(--public-card-raised)); border-color: var(--surface-edge); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal :is(.home-quick-actions button,.pu-hero-stats>div,.student-subject-row,.subject-score-split,.activity-row,.perf-row,.lb-divider) { border-color: var(--surface-edge); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal #panel-xp :is(.xp-level-block,.xp-stat-tile,.acc-overall,.xp-reward-empty,.level-milestone.current) { color: var(--text); background: var(--surface-summary); border-color: var(--surface-edge); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal #panel-xp .xp-level-num { color: var(--action-button-color); background: var(--action-button-bg); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal :is(.card-eyebrow,.metric-caption,.soc-label,.hero-text p,.pu-hero-left p,.home-quick-actions small,.home-activity-tabs button,.qhb-eyebrow,.qhb-left p,.quiz-hero-banner .sb-label,.quiz-hero-banner .sb-val,.pu-hero-stats span,.student-subject-row span,.student-panel-heading p,.subject-section-heading p,.activity-meta,.aa-meta,.perf-caption,.perf-row-label,.bc-meta-item .bcm-label,.battle-card-sub,.bc-xp-label,.bc-desc-label,.bc-desc-text,.lb-filter-btn,.lb-info span,.xp-level-info .lvl-prog,.next-level-chip,.xst-label,.rb-label,.rb-caption,.acc-overall-label,.sb-header-sub,.sb-history-heading h3,.sb-history-empty,.sb-history-open span,.sb-study-options label,.sb-msg-time,.sb-typing,.sb-composer-note,.pu-inv-desc,.pu-inv-hint,.pu-cat-desc,.pu-dd-desc,.xp-lifetime-note,.redemption-details span,.xp-reward-empty p,.level-milestone div>span,.pr-empty) { color: var(--text-muted); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal :is(.home-quick-actions strong,.student-panel-heading h2,.subject-perf-card h3,.leaderboard-card h3,.xp-dashboard h3,.battle-card-title,.pu-inv-label,.pu-cat-label,.sb-msg-bubble,.sb-header-title,.sb-history-open strong,.sb-study-options summary,.powerup-grade-dialog,.xp-streak-card) { color: var(--text); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .home-activity-tabs button[aria-selected="true"] { color: var(--text); background: var(--surface-summary); border-color: var(--surface-edge); }
+
+/* Theme neutral controls while preserving colored quiz, status and reward accents. */
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal :is(input,select,textarea,.sb-input,.sb-rename-form input,.sb-study-options select) { color: var(--text); background: var(--control-bg); border-color: var(--control-border); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal :is(input,textarea)::placeholder { color: var(--text-muted); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal :is(.xp-popup,.student-settings-popover,.account-dialog,.powerup-grade-dialog,.sb-header,.sb-study-options,.sb-input-row,.student-notification-panel,.notif-panel) { color: var(--text); background: var(--public-card); border-color: var(--public-card-border); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal :is(.xp-popup-dismiss,.np-close-btn,.modal-close,.settings-help,.btn-xp-dash,.btn-xp-close) { color: var(--text); background: var(--public-card-raised); border-color: var(--control-border); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .sb-header { background: var(--public-card-raised); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .sb-messages { background: var(--bg-deep); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .sb-msg-bubble { color: var(--text); background: var(--public-card-raised); border-color: var(--public-card-border); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .sb-msg-bubble strong { color: var(--text); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .sb-msg-user .sb-msg-bubble { color: var(--action-button-color); background: var(--action-button-bg); border-color: transparent; }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal :is(.sb-history-item:hover,.sb-history-actions button:hover,.sb-history-heading button:hover) { color: var(--text); background: var(--surface-hover); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .sb-history-item.selected { background: var(--surface-summary); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal :is(.sb-header-right button,.sb-history-heading button,.sb-history-actions button) { color: var(--text); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal :is(.sb-input-row,.sb-study-options) { border-color: var(--divider); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal :is(.powerup-grade-dialog p,.xp-streak-card p,.student-subject-row span,.subject-card-footer,.subject-score span,.os-label,.pc-bar-name,.profile-stat-grid span,.profile-academic-details dt,.pr-from) { color: var(--text-muted); }
+
+/* Home, quizzes, performance and subjects: dark fixed text becomes theme ink. */
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal :is(.student-subject-item h4,.student-subjects-empty,.student-subjects-empty strong,.os-val,.pc-bar-val,.subject-score strong,.subject-completion-label,.subject-status,.ad-title) { color: var(--student-ink); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal :is(.activity-completed-title,.aa-meta,.student-subjects-empty span,.student-subject-label,.student-subject-teacher,.student-subject-unassigned) { color: var(--student-muted); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal :is(.activity-done:not(.perfect),.student-subject-item,.student-subjects-empty) { color: var(--student-ink); background: var(--student-row-bg); border-color: var(--student-border); }
+:root[data-theme="light"] .student-portal #panel-scores :is(.formal,.subject-status) { color: #365e93; }
+:root[data-theme="light"] .student-portal #panel-scores .informal { color: #1b725c; }
+:root[data-theme="dark"] .student-portal #panel-scores .formal { color: #9eb8df; }
+:root[data-theme="dark"] .student-portal #panel-scores .informal { color: #99c9bf; }
+:root[data-theme="light"] .student-portal #panel-scores .subject-status { background: #eef1f6; border-color: #d6dde8; }
+:root[data-theme="light"] .student-portal .grade-boost-choice span { color: #14634b; }
+
+/* XP page numbers and coupons use ink; only explicit reward/status accents stay colored. */
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal #panel-xp :is(.xst-val,.rb-val,.next-level-chip,.lvl-prog,.coupon-desc,.nlc-label,.lsb-lvl,.lsb-name,.lsb-xp,.pr-from,.pr-status-used,.xp-reward-empty strong) { color: var(--student-ink); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal #panel-xp .milestone-number { color: var(--student-ink); background: var(--surface-hover); }
+:root[data-theme="light"] .student-portal #panel-xp .pr-status-used { color: #667085; }
+
+/* Notifications stay outside Settings and use the same neutral surface roles. */
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .notif-panel :is(.np-title,.np-item-title) { color: var(--student-ink); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .notif-panel :is(.np-item-preview,.np-item-meta,.np-empty,.np-tab) { color: var(--student-muted); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .notif-panel :is(.np-header,.np-tabs,.np-item + .np-item) { border-color: var(--student-border); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .notif-panel .np-tab.active { color: var(--student-ink); border-bottom-color: var(--purple-light); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .notif-panel .np-item:hover { background: var(--surface-hover); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .notif-badge { border-color: var(--navbar-bg); }
+
+:root[data-theme="light"] .student-portal :is(.lb-filter-btn,.lb-filter-btn.active) { color: #594083; background: #f1ebfc; border-color: #d8c9f1; }
+:root[data-theme="light"] .student-portal .lb-row.me { background: #f1ebfc; border-color: #d8c9f1; }
+:root[data-theme="light"] .student-portal .lb-xp { color: #8a5a00; }
+:root[data-theme="light"] .student-portal .lb-score { color: #16704f; }
+:root[data-theme="light"] .student-portal #panel-quizzes :is(.bc-badge,.btn-battle) { color: color-mix(in srgb,rgb(var(--quiz-rgb)) 55%,#172033); }
+:root[data-theme="light"] .student-portal #panel-quizzes .bc-xp-val { color: #8a5a00; }
+:root[data-theme="light"] .student-portal #panel-quizzes .btn-battle.done { color: #14634b; background: #e5f5ef; border-color: #91cbb5; }
+:root[data-theme="dark"] .student-portal #panel-quizzes .btn-battle.done { color: #c1efdf; background: #245047; border-color: #548d7d; }
+:root[data-theme="light"] .student-portal .student-home-hero .btn-join { color: #fff; background: #315f91; border-color: #315f91; }
+:root[data-theme="light"] .student-portal .btn-pu-use-grant { color: #533986; background: #f1ebfc; border-color: #c7b5e7; }
+:root[data-theme="light"] .student-portal :is(.pu-inv-hint,.pu-cat-unlock) { color: #6844a1; }
+:root[data-theme="light"] .student-portal :is(.pu-status-used,.pu-status-locked) { color: #667085; background: #eef1f6; border-color: #d6dde8; }
+:root[data-theme="dark"] .student-portal :is(.pu-status-used,.pu-status-locked) { color: #b2b5bc; background: #24272c; border-color: #42464e; }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .pu-cat-card.pu-cat-locked { opacity: 1; }
+:root[data-theme="light"] .student-portal .pu-cat-card.pu-cat-locked .pu-cat-label { color: #667085; }
+:root[data-theme="dark"] .student-portal .pu-cat-card.pu-cat-locked .pu-cat-label { color: #b2b5bc; }
+:root[data-theme="light"] .student-portal #panel-home .soc-val,
+:root[data-theme="dark"] .student-portal #panel-home .soc-val { color: var(--text) !important; }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal :is(.btn-join,.btn-use-xp,.btn-pu-use,.sb-send-btn) { color: var(--action-button-color); background: var(--action-button-bg); border-color: transparent; }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal :is(.btn-join,.btn-use-xp,.btn-pu-use,.sb-send-btn):hover:not(:disabled) { background: var(--action-button-hover); }
+:root[data-theme="light"] .student-portal #panel-xp .btn-use-xp,
+:root[data-theme="dark"] .student-portal #panel-xp .btn-use-xp { color: var(--action-button-color); background: var(--action-button-bg); border-color: transparent; }
+:root[data-theme="light"] .student-portal #panel-xp .btn-use-xp:disabled { color: #667085; background: #e9edf2; border-color: #d6dde8; }
+:root[data-theme="dark"] .student-portal #panel-xp .btn-use-xp:disabled { color: #92959d; background: #303238; border-color: #42464e; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .sb-bubble { color: #fff; background: linear-gradient(135deg,#4f8ef7,#7c5cbf) !important; border-color: #ffffff20; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .sb-bubble:hover { opacity: .88; }
+:root[data-theme="current"] .student-portal .student-navbar .nav-tab[data-panel="studybuddy"],
+:root[data-theme="current"] .student-portal .student-navbar .nav-tab[data-panel="studybuddy"]:is(:hover,.active) { color: #fff; background: linear-gradient(135deg,#7c5cbf,#9b6fd4); border-color: transparent; }
+:root[data-theme="light"] .student-portal .student-navbar .nav-tab[data-panel="studybuddy"],
+:root[data-theme="light"] .student-portal .student-navbar .nav-tab[data-panel="studybuddy"]:is(:hover,.active) { color: #fff; background: #315f91; border-color: transparent; }
+:root[data-theme="dark"] .student-portal .student-navbar .nav-tab[data-panel="studybuddy"],
+:root[data-theme="dark"] .student-portal .student-navbar .nav-tab[data-panel="studybuddy"]:is(:hover,.active) { color: var(--action-button-color); background: var(--action-button-bg); border-color: transparent; }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal :is(.btn-secondary,.lb-pagination button,.history-header button,.grade-boost-actions button) { color: var(--text); background: var(--public-card-raised); border-color: var(--control-border); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal :is(.battle-card-title,.bc-meta-item .bcm-val,.soc-val,.xp-level-info .lvl-name,.xst-val,.rb-val,.pu-hero-stats strong,.profile-stat-grid strong) { color: var(--text); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal :is(.xp-popup-label,.xp-popup-level,.xp-popup-sub,.pr-label,.pr-from,.pr-status,.account-dialog-header h2,.account-dialog-body,.help-dialog article h3,.help-dialog article p) { color: var(--text); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal :is(.quiz-hero-banner .streak-block,.home-quick-actions button,.pu-hero-stats>div,.sb-history-item,.sb-study-options button) { background: var(--surface-summary); border-color: var(--surface-edge); }
+:root[data-theme="light"] .student-portal .sb-msg-user .sb-msg-bubble { color: #fff; background: #315f91; }
+:root[data-theme="dark"] .student-portal .sb-msg-user .sb-msg-bubble { color: #fff; background: #4b3a70; }
+
+/* Some tab widgets set their own pale text colors. Give all other tab text a readable light-mode default. */
+:root[data-theme="light"] .student-portal .panel:not(#panel-quizzes) :is(h1,h2,h3,h4,p,span,strong,em,small,label,li,dt,dd,div) { color: var(--text); }
+:root[data-theme="light"] .student-portal .panel :is(.card-eyebrow,.metric-caption,.soc-label,.hero-text p,.home-quick-actions small,.student-panel-heading p,.activity-meta,.aa-meta,.perf-caption,.perf-row-label,.os-label,.pc-bar-name,.subject-section-heading p,.subject-card-footer,.subject-score span,.lb-info span,.rb-label,.rb-caption,.xst-label,.acc-overall-label,.sb-header-sub,.sb-history-heading h3,.sb-history-empty,.sb-history-open span,.sb-study-options label,.sb-msg-time,.sb-typing,.sb-composer-note,.pu-inv-desc,.pu-inv-hint,.pu-cat-desc,.pu-dd-desc,.xp-lifetime-note,.redemption-details span,.xp-reward-empty p,.level-milestone div>span,.pr-empty) { color: var(--text-muted); }
+:root[data-theme="light"] .student-portal .panel :is(.soc-icon,.student-subject-icon) { color: #315f91; background: #e8f1fb; border-color: #b5cbe3; }
+:root[data-theme="light"] .student-portal #panel-home .perf-card { background: #fff; border: 1px solid #cfd8e5; box-shadow: 0 8px 22px rgba(32,48,76,.08); }
+:root[data-theme="light"] .student-portal #panel-home .perf-section { background: #f7f8fb; border-color: #dfe5ee; }
+:root[data-theme="light"] .student-portal #panel-home .perf-section :is(.perf-section-title,.perf-row-label) { color: var(--text); }
+:root[data-theme="light"] .student-portal #panel-home .perf-section-desc { color: var(--text-muted); }
+:root[data-theme="light"] .student-portal #panel-home .perf-section-icon { color: #315f91; }
+:root[data-theme="light"] .student-portal #panel-home .perf-bar-track { background: #e6eaf0; }
+:root[data-theme="light"] .student-portal #panel-home .perf-row-pct { color: #315f91 !important; }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .student-subject-label,
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .student-subject-unassigned { color: var(--text-muted); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .student-subject-teacher { color: var(--text); background: var(--public-card-raised); border-color: var(--public-card-border); }
+:root[data-theme="light"] .student-portal .student-subject-enrolled { color: #14634b; background: #e5f5ef; border-color: #91cbb5; }
+:root[data-theme="light"] .student-portal .panel :is(.formal,.subject-status) { color: #365e93; }
+:root[data-theme="light"] .student-portal .panel .informal { color: #1b725c; }
+:root[data-theme="light"] .student-portal .panel .lb-top .lb-rank { color: var(--lb-accent); }
+:root[data-theme="light"] .student-portal .panel .lb-xp,
+:root[data-theme="light"] .student-portal .panel :is(.ad-xp,.ci-xp,.xst-sub,.pu-inv-uses,.pu-inv-uses.pu-inv-perm,.pr-status-perm) { color: #8a5a00; }
+:root[data-theme="light"] .student-portal .panel :is(.lb-score,.acc-overall-val,.adb-perfect,.cib-perfect,.pu-status-active,.pr-status-active,.student-subject-enrolled) { color: #14634b; }
+:root[data-theme="light"] .student-portal .panel :is(.adb-excellent,.cib-excellent,.pu-cat-unlock) { color: #594083; }
+:root[data-theme="light"] .student-portal .panel :is(.pr-status-used,.pu-status-used,.pu-status-locked) { color: #667085; }
+:root[data-theme="light"] .student-portal .panel :is(.adb-good,.cib-good,.pu-inv-hint) { color: #315f91; }
+:root[data-theme="light"] .student-portal .panel :is(.aa-badge,.pu-status-active,.pr-status-active) { color: #14634b; }
+:root[data-theme="light"] .student-portal .panel :is(.pu-status-used,.pu-status-locked,.pr-status-used) { background: #eef1f6; border-color: #d6dde8; }
+:root[data-theme="light"] .student-portal .panel .pr-status-perm { background: #fff6dc; border-color: #d9b96f; }
+
+/* Saved Reviews is a native dialog and sits outside the student portal tree. */
+:root[data-theme="light"] #review-dialog.review-overlay { color: #172033; color-scheme: light; }
+:root[data-theme="light"] #review-dialog .review-dialog { color: #172033; background: #fff; border-color: #cfd8e5; }
+:root[data-theme="light"] #review-dialog .review-dialog-header { background: #f1f5fa; border-color: #d6dfeb; }
+:root[data-theme="light"] #review-dialog h2,
+:root[data-theme="light"] #review-dialog .saved-review-card h3 { color: #172033 !important; }
+:root[data-theme="light"] #review-dialog .review-close { color: #344054; background: #fff; border-color: #cbd5e1; }
+:root[data-theme="light"] #review-dialog .review-dialog-body { scrollbar-color: #aab7c8 #edf1f6; }
+:root[data-theme="light"] #review-dialog .review-muted,
+:root[data-theme="light"] #review-dialog .review-check small { color: #667085 !important; }
+:root[data-theme="light"] #review-dialog .review-filters,
+:root[data-theme="light"] #review-dialog .review-check { color: #344054; background: #f4f7fb; border-color: #d6dfeb; }
+:root[data-theme="light"] #review-dialog :is(input:not([type=checkbox]),select) { color: #172033; background: #fff; border-color: #cbd5e1; color-scheme: light; }
+:root[data-theme="light"] #review-dialog input::placeholder { color: #667085; }
+:root[data-theme="light"] #review-dialog .saved-review-card { color: #253248; background: #f8fafd; border-color: #d6dfeb; }
+:root[data-theme="light"] #review-dialog .saved-review-text { color: #253248; background: #fff; border-color: #d6dfeb; }
+:root[data-theme="light"] #review-dialog .review-check strong { color: #172033; }
+:root[data-theme="light"] #review-dialog .review-dialog-actions { border-color: #d6dfeb; }
+:root[data-theme="light"] #review-dialog .btn-secondary { color: #344054; background: #f1f5fa; border-color: #cbd5e1; }
+:root[data-theme="light"] #review-dialog .review-delete { color: #a61b29; background: #fff0f1; border-color: #e7a8ae; }
+:root[data-theme="light"] #review-dialog .review-export-message { color: #344054; }
+
+/* Notification tabs and quick-guide cards use light surfaces in light mode. */
+:root[data-theme="light"] .student-portal .notif-panel .np-tabs { background: #f1f5fa; }
+:root[data-theme="light"] .student-portal .notif-panel .np-tab { color: #536176; }
+:root[data-theme="light"] .student-portal .notif-panel .np-tab.active { color: #234f7d; background: #e8f1fb; border-color: #bcd1e8; }
+:root[data-theme="light"] .student-portal .notif-panel .np-mark-all { color: #315f91; }
+:root[data-theme="light"] .student-portal .notif-panel .np-body { background: #fff; }
+:root[data-theme="light"] .student-portal .notif-panel .np-item { color: #172033; background: #fff; }
+:root[data-theme="light"] .student-portal .notif-panel .np-item:hover { background: #f4f7fb; }
+:root[data-theme="light"] .student-portal .notif-panel .np-item-icon { color: #315f91; background: #edf3fa; }
+:root[data-theme="light"] .student-portal .notif-panel .np-unread { background: #f7f3ff; }
+:root[data-theme="light"] .student-portal #modal-announcement .announcement-dialog { color: #172033; background: #fff; border-color: #cfd8e5; }
+:root[data-theme="light"] .student-portal #modal-announcement #ann-modal-title { color: #172033 !important; }
+:root[data-theme="light"] .student-portal #modal-announcement .modal-close { color: #344054; background: #f1f5fa; border-color: #cbd5e1; }
+:root[data-theme="light"] .student-portal #modal-announcement .announcement-message {
+  color: #344054; background: #f4f7fb; border: 1px solid #d6dfeb;
+  border-radius: 14px; padding: 1.1rem 1.25rem; font-size: .88rem; line-height: 1.7;
+}
+:root[data-theme="light"] .student-portal #modal-announcement .announcement-target { color: #667085; font-size: .72rem; margin-top: .75rem; }
+:root[data-theme="light"] .student-portal #modal-announcement .modal-footer { border-color: #d6dfeb; }
+:root[data-theme="light"] .student-portal #modal-announcement .modal-footer .btn-secondary { color: #fff; background: #315f91; border-color: #315f91; }
+:root[data-theme="light"] .student-portal .help-dialog .account-dialog-body { color: #344054; background: #fff; }
+:root[data-theme="light"] .student-portal .help-dialog .account-dialog-header { color: #172033; background: #f1f5fa; border-color: #d6dfeb; }
+:root[data-theme="light"] .student-portal .help-dialog .account-dialog-header :is(h2,.card-eyebrow) { color: #172033 !important; }
+:root[data-theme="light"] .student-portal .help-dialog .account-dialog-header .card-eyebrow { color: #536176 !important; }
+:root[data-theme="light"] .student-portal .help-dialog .account-dialog-header .modal-close { color: #344054; background: #fff; border-color: #cbd5e1; }
+:root[data-theme="light"] .student-portal .help-dialog .account-dialog-footer { background: #f1f5fa; border-color: #d6dfeb; }
+:root[data-theme="light"] .student-portal .help-dialog .account-dialog-footer button { color: #fff; background: #315f91; border-color: #315f91; }
+:root[data-theme="light"] .student-portal .help-dialog .dialog-intro { color: #536176 !important; }
+:root[data-theme="light"] .student-portal .help-dialog .help-topic-grid article { color: #172033; background: #f7f9fc; border-color: #d6dfeb; }
+:root[data-theme="light"] .student-portal .help-dialog .help-topic-number { color: #536176; }
+:root[data-theme="light"] .student-portal .help-dialog .help-topic-grid :is(h3,p) { color: #344054 !important; }
+:root[data-theme="light"] .student-portal .help-dialog .help-topic-grid button { color: #315f91; }
+:root[data-theme="light"] .student-portal .help-dialog .help-review-note { border-color: #cbd5e1; }
+:root[data-theme="light"] .student-portal .help-dialog .help-rewards-note { color: #344054; background: #f4f7fb; border-color: #d6dfeb; }
+:root[data-theme="light"] .student-portal .help-dialog .help-reward-list li { color: #344054; background: #fff; border-color: #d6dfeb; }
+:root[data-theme="light"] .student-portal .help-dialog .help-reward-list li :is(strong,span) { color: #344054; }
+
+/* Grade redemption dialog is a native dialog with hard-coded navy defaults. */
+:root[data-theme="light"] .student-portal #powerup-grade-dialog {
+  color: #172033; background: #fff; border-color: #cfd8e5; color-scheme: light;
+}
+:root[data-theme="light"] .student-portal #powerup-grade-dialog h2 { color: #172033; }
+:root[data-theme="light"] .student-portal #powerup-grade-dialog > p { color: #536176; }
+:root[data-theme="light"] .student-portal #powerup-grade-dialog .grade-boost-choice {
+  color: #172033; background: #f7f9fc; border-color: #cbd5e1;
+}
+:root[data-theme="light"] .student-portal #powerup-grade-dialog .grade-boost-choice strong { color: #253248; }
+:root[data-theme="light"] .student-portal #powerup-grade-dialog .grade-boost-choice span { color: #18734d; }
+:root[data-theme="light"] .student-portal #powerup-grade-dialog .grade-boost-choice[aria-pressed="true"] {
+  background: #edf5ff; border-color: #6d9dd0; outline-color: #6d9dd0;
+}
+:root[data-theme="light"] .student-portal #powerup-grade-dialog .grade-boost-actions { border-color: #d6dfeb; }
+:root[data-theme="light"] .student-portal #powerup-grade-dialog .grade-boost-actions button:first-child {
+  color: #344054; background: #f1f5fa; border: 1px solid #cbd5e1;
+}
+:root[data-theme="light"] .student-portal #powerup-grade-dialog .grade-boost-actions button:last-child {
+  color: #fff; background: linear-gradient(135deg,#4f8ef7,#7959c9); border: 1px solid transparent;
+}
+
+/* Quiz result and AI explanation share #modal-battle; fix its legacy navy text. */
+:root[data-theme="light"] .student-portal #modal-battle .modal-battle-wide { color: #172033; background: #fff; border-color: #cfd8e5; }
+:root[data-theme="light"] .student-portal #modal-battle :is(.battle-score-result,.expl-review) { color: #172033; }
+:root[data-theme="light"] .student-portal #modal-battle :is(.bsr-summary>div,.expl-card) { color: #253248; background: #f4f7fb; border-color: #d6dfeb; }
+:root[data-theme="light"] .student-portal #modal-battle :is(.bsr-label,.expl-count,.expl-note,.expl-attempt-count) { color: #667085 !important; }
+:root[data-theme="light"] .student-portal #modal-battle :is(.bsr-description,.expl-question,.expl-text,.expl-body,.expl-correct-row) { color: #344054 !important; }
+:root[data-theme="light"] .student-portal #modal-battle .expl-card { background: #f4f7fb; }
+:root[data-theme="light"] .student-portal #modal-battle .expl-card-header { border-color: #d6dfeb; }
+:root[data-theme="light"] .student-portal #modal-battle .expl-q-num { color: #594083; background: #eee8f8; }
+:root[data-theme="light"] .student-portal #modal-battle .expl-wrong-badge { color: #923c43; background: #fae9ea; border-color: #ecc2c5; }
+:root[data-theme="light"] .student-portal #modal-battle :is(.expl-error,.bsr-pending) { color: #a23e43; }
+:root[data-theme="light"] .student-portal #modal-battle .modal-close { color: #344054; background: #f1f5fa; border-color: #cbd5e1; }
+:root[data-theme="light"] .student-portal #modal-battle #battle-title { color: #172033 !important; }
+:root[data-theme="light"] .student-portal #modal-battle :is(.bsr-navigation .btn-secondary,.expl-toolbar .btn-secondary,.expl-regenerate-actions .btn-secondary) { color: #344054; background: #f1f5fa; border-color: #cbd5e1; }
+
+/* Keep My Quizzes copy readable while retaining each mode's colored card and button. */
+:root[data-theme="light"] .student-portal #panel-quizzes .battle-card :is(h1,h2,h3,h4,p,span,strong,small,label,div) { color: var(--text); }
+:root[data-theme="light"] .student-portal #panel-quizzes .battle-card :is(.bc-desc-label,.bc-desc-text,.bc-meta-item .bcm-label,.battle-card-sub) { color: var(--text-muted); }
+:root[data-theme="light"] .student-portal #panel-quizzes .battle-card :is(.bc-xp-val,.lb-xp) { color: #8a5a00; }
+:root[data-theme="light"] .student-portal #panel-quizzes .battle-card .bc-badge { color: color-mix(in srgb,rgb(var(--quiz-rgb)) 55%,#172033); }
+
+/* The first-place treatment remains gold in Light mode, with darker readable text. */
+:root[data-theme="light"] .student-portal #panel-leaderboard .lb-top-1 { --lb-accent: #8a5a00; --lb-tint: rgba(138,90,0,.08); }
+:root[data-theme="light"] .student-portal #panel-leaderboard .lb-top-2 { --lb-accent: #526173; --lb-tint: rgba(82,97,115,.08); }
+:root[data-theme="light"] .student-portal #panel-leaderboard .lb-top-3 { --lb-accent: #8a4b22; --lb-tint: rgba(138,75,34,.08); }
+:root[data-theme="light"] .student-portal #panel-leaderboard .lb-top-4 { --lb-accent: #594083; --lb-tint: rgba(89,64,131,.08); }
+:root[data-theme="light"] .student-portal #panel-leaderboard .lb-top-5 { --lb-accent: #146356; --lb-tint: rgba(20,99,86,.08); }
+:root[data-theme="light"] .student-portal #panel-leaderboard .lb-top-6 { --lb-accent: #35722e; --lb-tint: rgba(53,114,46,.08); }
+:root[data-theme="light"] .student-portal #panel-leaderboard .lb-top-7 { --lb-accent: #245c91; --lb-tint: rgba(36,92,145,.08); }
+:root[data-theme="light"] .student-portal #panel-leaderboard .lb-top-8 { --lb-accent: #963b73; --lb-tint: rgba(150,59,115,.08); }
+:root[data-theme="light"] .student-portal #panel-leaderboard .lb-top-9 { --lb-accent: #875415; --lb-tint: rgba(135,84,21,.08); }
+:root[data-theme="light"] .student-portal #panel-leaderboard .lb-top-10 { --lb-accent: #465db1; --lb-tint: rgba(70,93,177,.08); }
+
+/* GAIA keeps its robot mark and send action clearly visible in neutral themes. */
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .sb-avatar { color: #fff; background: #315f91; }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .sb-send-btn { color: #fff; background: #315f91; border-color: #315f91; }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .sb-send-btn:hover:not(:disabled) { background: #274b73; }
+:root[data-theme="light"] .student-portal #panel-xp :is(.xp-score-bands>div,.coupon-item,.level-milestone) { color: var(--text); background: var(--surface-summary); border-color: var(--surface-edge); }
+:root[data-theme="light"] .student-portal #panel-xp .xp-score-bands span { color: var(--text-muted); }
+
+/* Profile popup surfaces and its embedded reward rows follow the selected theme. */
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .account-dialog :is(.profile-identity-copy,.profile-balance-strip,.profile-stat-grid>div,.profile-academic-details>div,.profile-rewards-section) { color: var(--text); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .account-dialog :is(.profile-balance-strip,.profile-stat-grid>div,.profile-academic-details>div) { background: var(--public-card-raised); border-color: var(--public-card-border); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .account-dialog :is(.profile-identity-copy h3,.profile-balance-strip strong,.profile-stat-grid strong,.profile-academic-details dd,.prs-title,.pr-label) { color: var(--text); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .account-dialog :is(.profile-identity-copy p,.profile-balance-strip>span,.profile-stat-grid span,.profile-academic-details dt,.pr-from,.pr-empty) { color: var(--text-muted); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .account-dialog .profile-meta-pills span { color: var(--text-muted); background: var(--public-card-raised); border-color: var(--control-border); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .account-dialog .pr-item { color: var(--text); background: var(--public-card-raised); border-color: var(--public-card-border); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .account-dialog .pr-status-active { color: #14634b; background: #e5f5ef; border-color: #91cbb5; }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .account-dialog .pr-status-perm { color: #8a5a00; background: #fff6dc; border-color: #d9b96f; }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal .account-dialog .pr-status-used { color: var(--text-muted); background: var(--bg-mid); border-color: var(--control-border); }
+
+/* The floating profile dialog includes its own header, footer, and nested surfaces. */
+:root[data-theme="light"] .student-portal #modal-profile.account-overlay { background: rgba(23,32,51,.48); }
+:root[data-theme="light"] .student-portal #modal-profile .account-dialog { color: #172033; background: #fff; border-color: #dfe5ee; }
+:root[data-theme="light"] .student-portal #modal-profile :is(.account-dialog-header,.account-dialog-footer) { background: #f7f8fb; border-color: #dfe5ee; }
+:root[data-theme="light"] .student-portal #modal-profile .account-dialog-header .modal-close { color: #172033; background: #fff; border-color: #d6dde8; }
+:root[data-theme="light"] .student-portal #modal-profile :is(.profile-meta-pills span,.profile-balance-strip,.profile-stat-grid>div,.profile-academic-details>div,.pr-empty) { color: #172033; background: #f7f8fb; border-color: #dfe5ee; }
+:root[data-theme="light"] .student-portal #modal-profile :is(.profile-balance-strip button,.account-dialog-footer button) { color: #315f91; background: #e8f1fb; border-color: #b5cbe3; }
+:root[data-theme="light"] .student-portal #modal-profile :is(.profile-identity-copy h3,.profile-balance-strip strong,.profile-stat-grid strong,.profile-academic-details dd,.prs-title,.pr-label) { color: #172033; }
+:root[data-theme="light"] .student-portal #modal-profile :is(.profile-identity-copy p,.profile-balance-strip>span,.profile-stat-grid span,.profile-academic-details dt,.pr-from,.pr-empty) { color: #667085; }
+:root[data-theme="light"] .student-portal #modal-profile .profile-academic-details {
+  gap: 8px;
+  margin: 14px 0 18px;
+  padding: 0;
+  border: 0;
+}
+:root[data-theme="light"] .student-portal #modal-profile .profile-academic-details > div {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) auto;
+  align-items: center;
+  gap: 16px;
+  min-height: 48px;
+  box-sizing: border-box;
+  padding: 12px 16px;
+  border: 1px solid #dfe5ee;
+  border-radius: 12px;
+  background: #fff;
+}
+:root[data-theme="light"] .student-portal #modal-profile .profile-academic-details dt {
+  margin: 0;
+  color: #667085;
+  font-size: 12px;
+  font-weight: 600;
+}
+:root[data-theme="light"] .student-portal #modal-profile .profile-academic-details dd {
+  color: #172033;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+:root[data-theme="dark"] .student-portal #modal-profile .account-dialog { color: #f4f4f5; background: #1b1d21; border-color: #383c43; }
+:root[data-theme="dark"] .student-portal #modal-profile :is(.account-dialog-header,.account-dialog-footer) { color: #f4f4f5; background: #24272c; border-color: #383c43; }
+:root[data-theme="dark"] .student-portal #modal-profile .account-dialog-header .modal-close { color: #f4f4f5; background: #303238; border-color: #50545b; }
+:root[data-theme="dark"] .student-portal #modal-profile :is(.profile-meta-pills span,.profile-balance-strip,.profile-stat-grid>div,.profile-academic-details>div,.pr-empty) { color: #f4f4f5; background: #24272c; border-color: #383c43; }
+:root[data-theme="dark"] .student-portal #modal-profile :is(.profile-balance-strip button,.account-dialog-footer button) { color: #f4f4f5; background: #303238; border-color: #50545b; }
+:root[data-theme="dark"] .student-portal #modal-profile :is(.profile-identity-copy h3,.profile-balance-strip strong,.profile-stat-grid strong,.profile-academic-details dd,.prs-title,.pr-label) { color: #f4f4f5; }
+:root[data-theme="dark"] .student-portal #modal-profile :is(.profile-identity-copy p,.profile-balance-strip>span,.profile-stat-grid span,.profile-academic-details dt,.pr-from,.pr-empty) { color: #b2b5bc; }
+
+:root[data-theme="current"] .student-portal #modal-profile .account-dialog { color: #eaf1fc; background: #192b40; border-color: #425b76; }
+:root[data-theme="current"] .student-portal #modal-profile :is(.account-dialog-header,.account-dialog-footer) { color: #eaf1fc; background: #1f344c; border-color: #354c65; }
+:root[data-theme="current"] .student-portal #modal-profile .account-dialog-header .modal-close { color: #dce8f5; background: #2b425b; border-color: #4a627d; }
+:root[data-theme="current"] .student-portal #modal-profile :is(.profile-meta-pills span,.profile-balance-strip,.profile-stat-grid>div,.profile-academic-details>div,.pr-empty) { color: #dbe7f5; background: #243d56; border-color: #425e7c; }
+:root[data-theme="current"] .student-portal #modal-profile :is(.profile-identity-copy h3,.profile-balance-strip strong,.profile-stat-grid strong,.profile-academic-details dd,.prs-title,.pr-label) { color: #eaf1fc; }
+:root[data-theme="current"] .student-portal #modal-profile :is(.profile-identity-copy p,.profile-balance-strip>span,.profile-stat-grid span,.profile-academic-details dt,.pr-from,.pr-empty) { color: #a9bed5; }
+
+/* Sdashboard shares the same theme tokens, enrollment rows, and profile-frame accents. */
+:root:is([data-theme="light"],[data-theme="dark"]) .student-dashboard-page { background: var(--bg-deep); color: var(--text); }
+:root:is([data-theme="light"],[data-theme="dark"]) .sdash-nav { background: var(--navbar-bg); border-color: var(--divider); }
+:root:is([data-theme="light"],[data-theme="dark"]) .sdash-nav :is(.sdash-brand,.sdash-brand .brand-wordmark,.sdash-heading h1,.sdash-identity-copy h2,.sdash-card h2) { color: var(--text); }
+:root:is([data-theme="light"],[data-theme="dark"]) .sdash-nav .sdash-brand small,
+:root:is([data-theme="light"],[data-theme="dark"]) .student-dashboard-page :is(.sdash-heading p,.sdash-greeting,.sdash-identity-copy p,.sdash-xp-top span,.sdash-level-line,.sdash-xp-card p,.sdash-stats article span,.sdash-stats article small,.sdash-card-note,.sdash-details dt,.sdash-frames .profile-frame-copy small,.sdash-result-copy small,.sdash-empty,.sdash-loading) { color: var(--text-muted); }
+:root:is([data-theme="light"],[data-theme="dark"]) .sdash-nav-actions > :is(a,button) { color: var(--text); background: var(--public-card-raised); border-color: var(--control-border); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-dashboard-page :is(.sdash-card,.sdash-stats article,.sdash-xp-card) { color: var(--text); background: var(--public-card); border-color: var(--public-card-border); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-dashboard-page .sdash-hero { background: linear-gradient(120deg,var(--public-card),var(--public-card-raised)); border-color: var(--public-card-border); box-shadow: var(--shadow-card); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-dashboard-page :is(.sdash-stats article strong,.sdash-details dd,.sdash-xp-top strong,.sdash-identity-copy h2,.sdash-result-copy strong) { color: var(--text); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-dashboard-page :is(.sdash-meta span,.sdash-details div,.sdash-frames .profile-frame-option,.sdash-result) { color: var(--text); background: var(--public-card-raised); border-color: var(--public-card-border); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-dashboard-page :is(.sdash-card header a,.sdash-return,.sdash-login-link) { color: #315f91; }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-dashboard-page .sdash-rewards .pr-item { color: var(--text); background: var(--public-card-raised); border-color: var(--public-card-border); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-dashboard-page .sdash-rewards .pr-label { color: var(--text); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-dashboard-page .sdash-rewards .pr-from { color: var(--text-muted); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-dashboard-page .sdash-frames .profile-frame-option.locked { opacity: .8; }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-dashboard-page .sdash-result-score { color: var(--text); background: var(--surface-hover); }
+:root[data-theme="light"] .student-dashboard-page .sdash-xp-track { background: #dfe5ee; }
+:root[data-theme="light"] .student-dashboard-page .sdash-xp-track div { background: linear-gradient(90deg,#315f91,#7c5cbf); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-dashboard-page .student-subject-item { background: var(--public-card-raised); border-color: var(--public-card-border); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-dashboard-page .student-subject-item h4 { color: var(--text); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-dashboard-page .student-subject-label,
+:root:is([data-theme="light"],[data-theme="dark"]) .student-dashboard-page .student-subject-unassigned { color: var(--text-muted); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-dashboard-page .student-subject-teacher { color: var(--text-muted); background: var(--bg-mid); border-color: var(--control-border); }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-dashboard-page .student-subject-icon { color: #315f91; background: #e8f1fb; border-color: #b5cbe3; }
+:root[data-theme="light"] .student-dashboard-page .student-subject-enrolled { color: #14634b; background: #e5f5ef; border-color: #91cbb5; }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-dashboard-page .sdash-nav .theme-mount { display: flex; align-items: center; }
+
+@media(max-width:600px){.student-settings-popover{right:0;max-width:calc(100vw - 24px)}}
+
+/* Student dashboard theme text, surfaces, and semantic accents for all modes. */
+:root:is([data-theme="light"],[data-theme="dark"],[data-theme="current"]) .student-dashboard-page { background: var(--bg-deep); color: var(--text); }
+:root:is([data-theme="light"],[data-theme="dark"],[data-theme="current"]) .student-dashboard-page :is(h1,h2,h3,h4,p,span,strong,small,dt,dd) { color: var(--text); }
+:root:is([data-theme="light"],[data-theme="dark"],[data-theme="current"]) .student-dashboard-page :is(.sdash-heading p,.sdash-greeting,.sdash-identity-copy p,.sdash-xp-top span,.sdash-level-line,.sdash-xp-card p,.sdash-stats article span,.sdash-stats article small,.sdash-card-note,.sdash-details dt,.sdash-frames .profile-frame-copy small,.sdash-result-copy small,.sdash-empty,.sdash-loading) { color: var(--text-muted); }
+:root:is([data-theme="light"],[data-theme="dark"],[data-theme="current"]) .student-dashboard-page :is(.sdash-nav,.sdash-card,.sdash-stats article,.sdash-xp-card,.sdash-details div,.sdash-result,.sdash-frames .profile-frame-option) { background: var(--public-card); border-color: var(--public-card-border); }
+:root:is([data-theme="light"],[data-theme="dark"],[data-theme="current"]) .student-dashboard-page :is(.sdash-nav-actions .sdash-back,.sdash-meta span,.sdash-details div,.sdash-result,.sdash-frames .profile-frame-option) { color: var(--text); background: var(--public-card-raised); border-color: var(--public-card-border); }
+:root:is([data-theme="light"],[data-theme="dark"],[data-theme="current"]) .student-dashboard-page .sdash-nav-divider { color: var(--text-muted); }
+:root[data-theme="light"] .student-dashboard-page :is(.sdash-card header a,.sdash-login-link) { color: #315f91; }
+:root[data-theme="dark"] .student-dashboard-page :is(.sdash-card header a,.sdash-login-link) { color: #a9c7ea; }
+:root[data-theme="current"] .student-dashboard-page :is(.sdash-card header a,.sdash-login-link) { color: #bed7f0; }
+:root[data-theme="light"] .student-dashboard-page .sdash-return { color: #315f91; background: #e8f1fb; border-color: #b5cbe3; }
+:root[data-theme="dark"] .student-dashboard-page .sdash-return { color: #a9c7ea; background: #24272c; border-color: #383c43; }
+:root[data-theme="current"] .student-dashboard-page .sdash-return { color: #c9def4; background: #20354c; border-color: #3c5874; }
+:root[data-theme="light"] .student-dashboard-page .sdash-logout { color: #8c3949; background: #fff0f2; border-color: #ecc7cf; }
+:root[data-theme="dark"] .student-dashboard-page .sdash-logout { color: #f0bcc5; background: #302632; border-color: #604453; }
+:root[data-theme="current"] .student-dashboard-page .sdash-logout { color: #e8bdc9; background: #302632; border-color: #604453; }
+:root:is([data-theme="light"],[data-theme="dark"],[data-theme="current"]) .student-dashboard-page .student-subject-enrolled { color: #14634b; background: #e5f5ef; border-color: #91cbb5; }
+:root[data-theme="light"] .student-dashboard-page .sdash-recent .sdash-result-score { color: #172033; }
+:root[data-theme="light"] .student-dashboard-page .sdash-frames .profile-frame-option {
+  color: #172033; background: #f7f9fc; border-color: #d6dfeb;
+}
+:root[data-theme="light"] .student-dashboard-page .sdash-frames .profile-frame-option.current {
+  background: #fffaf0; border-color: #e2b84f; box-shadow: 0 0 0 1px rgba(226,184,79,.2);
+}
+:root[data-theme="light"] .student-dashboard-page .sdash-frames .profile-frame-copy strong { color: #172033 !important; }
+:root[data-theme="light"] .student-dashboard-page .sdash-frames .profile-frame-copy small { color: #667085 !important; }
+:root[data-theme="light"] .student-dashboard-page .sdash-frames .profile-frame-swatch {
+  color: #fff !important; background: #31506f; border-color: #54718f;
+}
+:root[data-theme="light"] .student-dashboard-page .sdash-frames .profile-frame-swatch.frame-apprentice { border-color: #8b5cf6; }
+:root[data-theme="light"] .student-dashboard-page .sdash-frames .profile-frame-swatch.frame-scholar { border-color: #3b82f6; }
+:root[data-theme="light"] .student-dashboard-page .sdash-frames .profile-frame-swatch.frame-ready { border-color: #0891b2; }
+:root[data-theme="light"] .student-dashboard-page .sdash-frames .profile-frame-swatch.frame-veteran { border-color: #16a34a; }
+:root[data-theme="light"] .student-dashboard-page .sdash-frames .profile-frame-swatch.frame-master { border-color: #d97706; }
+:root[data-theme="light"] .student-dashboard-page .sdash-frames .profile-frame-swatch.frame-champion { border-color: #db2777; }
+:root[data-theme="light"] .student-dashboard-page .sdash-frames .profile-frame-swatch.frame-gable { border-color: #eab308; }
+:root[data-theme="dark"] .student-dashboard-page .sdash-recent .sdash-result-score { color: #f4f4f5; }
+:root[data-theme="current"] .student-dashboard-page .sdash-recent .sdash-result-score { color: #d7e9fb; }
+.sdash-nav-divider { display: block; align-self: center; width: 1px; height: 26px; margin: 0 2px; background: var(--text-muted); }
+
+/* GABLE brand lockup follows the selected mode on both student views. */
+:root[data-theme="light"] .student-portal :is(.student-navbar .brand-mark,.sdash-brand .brand-mark) { color: #315f91; background: #e8f1fb; border-color: #b5cbe3; -webkit-text-fill-color: currentColor; }
+:root[data-theme="dark"] .student-portal :is(.student-navbar .brand-mark,.sdash-brand .brand-mark) { color: #c5b0ff; background: #24272c; border-color: #50545b; -webkit-text-fill-color: currentColor; }
+:root[data-theme="current"] .student-portal :is(.student-navbar .brand-mark,.sdash-brand .brand-mark) { color: #dce9f8; background: #253c55; border-color: #57718f; -webkit-text-fill-color: currentColor; }
+:root[data-theme="light"] .student-portal :is(.student-navbar .brand-wordmark,.sdash-brand .brand-wordmark) { color: #172033; -webkit-text-fill-color: currentColor; }
+:root[data-theme="dark"] .student-portal :is(.student-navbar .brand-wordmark,.sdash-brand .brand-wordmark) { color: #f4f4f5; -webkit-text-fill-color: currentColor; }
+:root[data-theme="current"] .student-portal :is(.student-navbar .brand-wordmark,.sdash-brand .brand-wordmark) { color: #edf4fc; -webkit-text-fill-color: currentColor; }
+:root[data-theme="light"] .student-portal :is(.student-navbar .brand-wordmark small,.sdash-brand .brand-wordmark small) { color: #667085; }
+:root[data-theme="dark"] .student-portal :is(.student-navbar .brand-wordmark small,.sdash-brand .brand-wordmark small) { color: #b2b5bc; }
+:root[data-theme="current"] .student-portal :is(.student-navbar .brand-wordmark small,.sdash-brand .brand-wordmark small) { color: #a6bdd6; }
+
+/* Center the frame title and keep its tier text readable in each theme. */
+.student-portal :is(.profile-avatar-wrap,.sdash-avatar-wrap) .profile-frame-label { align-self: center; max-width: 100%; text-align: center; }
+:root[data-theme="light"] .student-portal .profile-avatar-large.frame-apprentice + .profile-frame-label { color: #594083; }
+:root[data-theme="light"] .student-portal .profile-avatar-large.frame-scholar + .profile-frame-label { color: #315f91; }
+:root[data-theme="light"] .student-portal .profile-avatar-large.frame-ready + .profile-frame-label { color: #087990; }
+:root[data-theme="light"] .student-portal .profile-avatar-large.frame-veteran + .profile-frame-label { color: #247346; }
+:root[data-theme="light"] .student-portal .profile-avatar-large.frame-master + .profile-frame-label { color: #8a4b00; }
+:root[data-theme="light"] .student-portal .profile-avatar-large.frame-champion + .profile-frame-label { color: #a02b70; }
+:root[data-theme="light"] .student-portal .profile-avatar-large.frame-gable + .profile-frame-label { color: #805b00; }
+:root[data-theme="dark"] .student-portal .profile-avatar-large.frame-apprentice + .profile-frame-label { color: #c7b5e7; }
+:root[data-theme="dark"] .student-portal .profile-avatar-large.frame-scholar + .profile-frame-label { color: #a9c7ea; }
+:root[data-theme="dark"] .student-portal .profile-avatar-large.frame-ready + .profile-frame-label { color: #8fe3f1; }
+:root[data-theme="dark"] .student-portal .profile-avatar-large.frame-veteran + .profile-frame-label { color: #9addad; }
+:root[data-theme="dark"] .student-portal .profile-avatar-large.frame-master + .profile-frame-label { color: #ffc266; }
+:root[data-theme="dark"] .student-portal .profile-avatar-large.frame-champion + .profile-frame-label { color: #f3a2cc; }
+:root[data-theme="dark"] .student-portal .profile-avatar-large.frame-gable + .profile-frame-label { color: #f7cf64; }
+:root[data-theme="current"] .student-portal :is(.profile-avatar-wrap,.sdash-avatar-wrap) .profile-frame-label { color: rgba(255,255,255,.75); }
+
+/* Student toast and formal-quiz risk marker keep readable semantic colors. */
+:root[data-theme="light"] .student-portal .toast { color: #172033; background: #fff; border-color: #dfe5ee; box-shadow: 0 12px 32px rgba(23,32,51,.18); }
+:root[data-theme="light"] body.student-portal #toast { color: #172033 !important; background: #fff !important; background-image: none !important; border-color: #dfe5ee !important; box-shadow: 0 12px 32px rgba(23,32,51,.18) !important; }
+:root[data-theme="light"] body.student-portal #toast :is(#toast-icon,#toast-msg) { color: #172033 !important; background: transparent !important; }
+:root[data-theme="dark"] .student-portal .toast { color: #f4f4f5; background: #1b1d21; border-color: #383c43; box-shadow: 0 12px 32px rgba(0,0,0,.38); }
+:root[data-theme="current"] .student-portal .toast { color: #fff; background: #1a1740; border-color: rgba(255,255,255,.16); }
+:root[data-theme="light"] .student-portal .section-tag { color: #b42332; background: #fff0f2; border-color: #ecc7cf; }
+:root[data-theme="dark"] .student-portal .section-tag { color: #ff9aa5; background: rgba(190,45,61,.16); border-color: rgba(255,114,130,.4); }
+:root[data-theme="current"] .student-portal .section-tag { color: #fca5a5; background: rgba(239,68,68,.2); border-color: rgba(239,68,68,.45); }
+
+/* All three modes give quiz challenge copy explicit contrast over its colored card. */
+:root:is([data-theme="light"],[data-theme="dark"],[data-theme="current"]) .student-portal #panel-quizzes .battle-card :is(.battle-card-title,.battle-card-sub,.bc-desc-label,.bc-desc-text,.bc-meta-item .bcm-label,.bc-meta-item .bcm-val) { color: var(--text); }
+:root:is([data-theme="light"],[data-theme="dark"],[data-theme="current"]) .student-portal #panel-quizzes .battle-card :is(.bc-desc-label,.bc-meta-item .bcm-label) { color: var(--text-muted); }
+:root[data-theme="light"] .student-portal #panel-quizzes .battle-card .bc-desc-box,
+:root[data-theme="light"] .student-portal #panel-quizzes .battle-card .bc-xp-box { background: rgba(23,32,51,.045); }
+:root[data-theme="dark"] .student-portal #panel-quizzes .battle-card :is(.bc-desc-box,.bc-xp-box) { background: rgba(255,255,255,.055); }
+:root[data-theme="current"] .student-portal #panel-quizzes .battle-card :is(.bc-desc-box,.bc-xp-box) { background: rgba(0,0,0,.2); }
+
+/* GAIA chat surfaces and controls follow Light and Dark themes; Current keeps the navy design. */
+:root[data-theme="light"] .student-portal :is(.studybuddy-guide,.sb-window) { color: #172033; background: #fff; border-color: #dfe5ee; }
+:root[data-theme="light"] .student-portal :is(.studybuddy-guide h2,.sb-history-heading h3,.sb-history-open strong,.sb-header-title,.sb-header-right button,.sb-study-options summary) { color: #172033; }
+:root[data-theme="light"] .student-portal :is(.sb-header,.sb-study-options,.sb-input-row,.sb-composer-note) { background: #f7f8fb; border-color: #dfe5ee; }
+:root[data-theme="light"] .student-portal .sb-messages { background: #fff; }
+:root[data-theme="light"] .student-portal :is(.sb-msg-bot .sb-msg-bubble,.sb-history-item,.sb-study-options button) { color: #172033; background: #f7f8fb; border-color: #dfe5ee; }
+:root[data-theme="light"] .student-portal :is(.sb-history-open span,.sb-history-empty,.sb-header-sub,.sb-msg-time,.sb-typing,.sb-composer-note,.sb-study-options label) { color: #667085; }
+:root[data-theme="light"] .student-portal :is(.sb-history-actions button,.sb-rename-form button,.sb-history-heading button) { color: #172033; }
+:root[data-theme="light"] .student-portal .sb-new-chat { color: #fff; background: #315f91; border-color: #315f91; }
+:root[data-theme="light"] .student-portal .sb-msg-user .sb-msg-bubble { color: #203b5b; background: #e8f1fb; border-color: #b5cbe3; }
+:root[data-theme="light"] .student-portal .sb-msg-bubble strong { color: #172033; }
+:root[data-theme="dark"] .student-portal :is(.studybuddy-guide,.sb-window,.sb-messages) { color: #f4f4f5; background: #1b1d21; border-color: #383c43; }
+:root[data-theme="dark"] .student-portal :is(.sb-header,.sb-study-options,.sb-input-row,.sb-composer-note) { color: #f4f4f5; background: #24272c; border-color: #383c43; }
+:root[data-theme="dark"] .student-portal :is(.studybuddy-guide h2,.sb-history-heading h3,.sb-history-open strong,.sb-header-title,.sb-header-right button,.sb-study-options summary,.sb-msg-bubble) { color: #f4f4f5; }
+:root[data-theme="dark"] .student-portal :is(.sb-history-item,.sb-study-options button,.sb-msg-bot .sb-msg-bubble) { color: #f4f4f5; background: #24272c; border-color: #383c43; }
+:root[data-theme="dark"] .student-portal :is(.sb-history-open span,.sb-history-empty,.sb-header-sub,.sb-msg-time,.sb-typing,.sb-composer-note,.sb-study-options label) { color: #b2b5bc; }
+:root[data-theme="dark"] .student-portal :is(.sb-history-actions button,.sb-rename-form button,.sb-history-heading button) { color: #f4f4f5; }
+:root[data-theme="dark"] .student-portal .sb-new-chat { color: #f4f4f5; background: #383a42; border-color: #555963; }
+:root[data-theme="dark"] .student-portal .sb-msg-user .sb-msg-bubble { color: #fff; background: #4b3a70; border-color: #705998; }
+:root[data-theme="dark"] .student-portal .sb-msg-bubble strong { color: #fff; }
+:root:is([data-theme="light"],[data-theme="dark"]) .student-portal :is(.sb-history-item:hover,.sb-study-options button:hover,.sb-header-right button:hover,.sb-history-heading button:hover,.sb-history-actions button:hover) { background: var(--surface-hover); }
+:root[data-theme="dark"] .student-portal .sb-send-btn { color: #17191d; background: #e1e8f0; border-color: #e1e8f0; }
+
+/* Current keeps GAIA's original navy chat treatment. */
+:root[data-theme="current"] .student-portal :is(.studybuddy-guide,.sb-window,.sb-messages) { color: #edf4fc; background: #18283d; border-color: #48617e; }
+:root[data-theme="current"] .student-portal :is(.sb-header,.sb-study-options,.sb-input-row) { color: #e4eef9; background: #20354c; border-color: #364c65; }
+:root[data-theme="current"] .student-portal :is(.sb-msg-bot .sb-msg-bubble,.sb-history-item,.sb-study-options button) { color: #dbe7f5; background: #243b53; border-color: #354d67; }
+:root[data-theme="current"] .student-portal :is(.sb-header-title,.sb-header-right button,.sb-history-heading h3,.sb-history-open strong,.sb-study-options summary) { color: #e4eef9; }
+:root[data-theme="current"] .student-portal :is(.sb-header-sub,.sb-history-open span,.sb-history-empty,.sb-msg-time,.sb-typing,.sb-composer-note,.sb-study-options label) { color: #a8bdd4; }
+:root[data-theme="current"] .student-portal :is(.sb-new-chat,.sb-msg-user .sb-msg-bubble,.sb-send-btn) { color: #fff; background: #355477; border-color: #4a6a8d; }
+:root[data-theme="current"] .student-portal .sb-msg-bubble strong { color: #fff; }
+
+/* Quick help links are distinct, tappable actions in the study guide. */
+:root[data-theme="light"] .student-portal .sb-study-options {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  max-height: none;
+  margin: .8rem 0 0;
+  padding: .7rem 0 0;
+  border-top: 1px solid #e5e9f0;
+  overflow-x: clip;
+}
+:root[data-theme="light"] .student-portal .sb-study-options summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 48px;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 8px 13px;
+  border: 1px solid #e2d9f1;
+  border-radius: 12px;
+  background: #f7f3fc;
+  color: #34264d;
+  font-size: .8rem;
+  font-weight: 700;
+  list-style: none;
+  cursor: pointer;
+  transition: background .16s ease, border-color .16s ease, box-shadow .16s ease;
+}
+:root[data-theme="light"] .student-portal .sb-study-options summary:hover {
+  background: #f1eafb;
+  border-color: #d3c2eb;
+}
+:root[data-theme="light"] .student-portal .sb-study-options summary:focus-visible {
+  outline: 3px solid rgba(112,69,192,.2);
+  outline-offset: 2px;
+}
+:root[data-theme="light"] .student-portal .sb-study-options .sb-help-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+:root[data-theme="light"] .student-portal .sb-study-options .sb-help-title > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+:root[data-theme="light"] .student-portal .sb-study-options .sb-help-title > :is(i,svg) {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  border-radius: 9px;
+  color: #7045c0;
+  background: #ece4f7;
+}
+:root[data-theme="light"] .student-portal .sb-study-options .sb-help-title svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2;
+}
+:root[data-theme="light"] .student-portal .sb-study-options summary::-webkit-details-marker { display: none; }
+:root[data-theme="light"] .student-portal .sb-study-options summary::after {
+  content: '';
+  width: 7px;
+  height: 7px;
+  margin-right: 4px;
+  border-right: 1.5px solid #7045c0;
+  border-bottom: 1.5px solid #7045c0;
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform .16s ease;
+}
+:root[data-theme="light"] .student-portal .sb-study-options[open] summary::after { transform: rotate(225deg) translateY(-2px); }
+:root[data-theme="light"] .student-portal .sb-study-options button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  margin: 7px 0 0;
+  padding: 10px 12px;
+  border: 1px solid #dfe5ee;
+  border-radius: 10px;
+  background: #fff;
+  color: #344054;
+  font-size: .74rem;
+  font-weight: 500;
+  transition: background .16s ease, border-color .16s ease, color .16s ease, transform .16s ease;
+}
+:root[data-theme="light"] .student-portal .sb-study-options button::after {
+  content: "\2192";
+  color: #7045c0;
+  font-size: 1rem;
+  line-height: 1;
+}
+:root[data-theme="light"] .student-portal .sb-study-options button:hover,
+:root[data-theme="light"] .student-portal .sb-study-options button:focus-visible {
+  color: #4e3482;
+  background: #f5f1fc;
+  border-color: #c7b7e9;
+  outline: none;
+}
+:root[data-theme="light"] .student-portal .sb-study-options button:active { transform: translateY(1px); }
+
+/* Reached levels keep their green status tint in Light mode. */
+:root[data-theme="light"] .student-portal #panel-xp .level-milestone.reached:not(.current) { color: #176b3b; background: #e8f6ed; border-color: #8ac9a1; }
+:root[data-theme="light"] .student-portal #panel-xp .level-milestone.reached:not(.current) :is(.milestone-number,strong,span) { color: inherit; }
+
+/* Keep the current GABLE palette explicit, while making the XP level visible in every mode. */
+:root:is([data-theme="light"],[data-theme="dark"],[data-theme="current"]) .student-portal #panel-xp .xp-level-info .lvl-name { color: var(--text); font-weight: 800; }
+:root[data-theme="light"] .student-portal #panel-xp .xp-level-num { color: #fff !important; background: #315f91; }
+:root[data-theme="dark"] .student-portal #panel-xp .xp-level-num { color: #fff; background: #4b3a70; }
+:root[data-theme="current"] .student-portal #panel-xp .xp-level-num { color: #e3edf8; background: #304a67; }
+
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal :is(.sb-bubble,.sb-new-chat,.sb-send-btn,.student-navbar .nav-tab[data-panel="studybuddy"]) { color: #fff !important; background: #244a73 !important; border-color: #3b6593 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal :is(.sb-bubble,.sb-new-chat,.sb-send-btn,.student-navbar .nav-tab[data-panel="studybuddy"]):hover:not(:disabled) { background: #315f91 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .sb-bubble > :is(svg,.lucide,[data-lucide="bot"]) { box-sizing: content-box; padding: 4px; border: 1px solid #3b6593; border-radius: 7px; color: #fff !important; background: #173a5e; stroke: #fff !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .sb-avatar { color: #fff !important; background: #173a5e !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .sb-avatar :is(svg,.lucide,[data-lucide="bot"]) { color: #fff !important; stroke: #fff !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .sb-msg-user .sb-msg-bubble { color: #fff !important; background: #173a5e !important; border-color: #315f91 !important; }
+
+/* Student navigation and rewards actions use the shared deep blue. */
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal :is(#panel-home .hero-streak .btn-join,#panel-powerups .pu-hero .btn-secondary,#panel-xp .xp-owned-panel > .btn-secondary,#panel-xp #btn-use-xp-main,#panel-quizzes .btn-battle.done,.ws-study-btn,.review-toolbar button,#modal-battle .bsr-actions .btn-secondary) { color: #fff !important; background: #244a73 !important; border-color: #3b6593 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal :is(#panel-home .hero-streak .btn-join,#panel-powerups .pu-hero .btn-secondary,#panel-xp .xp-owned-panel > .btn-secondary,#panel-xp #btn-use-xp-main,#panel-quizzes .btn-battle.done,.ws-study-btn,.review-toolbar button,#modal-battle .bsr-actions .btn-secondary):hover:not(:disabled) { background: #315f91 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) #review-dialog .review-filters .btn-primary { color: #fff !important; background: #244a73 !important; border-color: #3b6593 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) #review-dialog .review-filters .btn-primary:hover:not(:disabled) { background: #315f91 !important; }
+
+/* Keep the active student quiz readable when the light theme is selected. */
+:root[data-theme="light"] .student-portal #modal-battle { background: rgba(23,32,51,.48); }
+:root[data-theme="light"] .student-portal #modal-battle .modal-battle-wide { color: #172033; background: #fff; border-color: #cfd8e5; }
+:root[data-theme="light"] .student-portal #modal-battle #battle-title { color: #172033; }
+:root[data-theme="light"] .student-portal #modal-battle .modal-close { color: #344054; background: #f1f5fa; border-color: #cbd5e1; }
+:root[data-theme="light"] .student-portal #modal-battle .battle-info { background: #f4f7fb; border-color: #d5deea; }
+:root[data-theme="light"] .student-portal #modal-battle .battle-info h3 { color: #172033; }
+:root[data-theme="light"] .student-portal #modal-battle .battle-info p { color: #475467; }
+:root[data-theme="light"] .student-portal #modal-battle .bm-item { color: #344054; background: #fff; border-color: #d5deea; }
+:root[data-theme="light"] .student-portal #modal-battle #quiz-countdown { color: #176b50; }
+:root[data-theme="light"] .student-portal #modal-battle #quiz-countdown.urgent { color: #b42332; }
+:root[data-theme="light"] .student-portal #modal-battle .battle-progress { background: #e5eaf0; }
+:root[data-theme="light"] .student-portal #modal-battle .battle-progress-fill { background: linear-gradient(90deg,#315f91,#4f8ef7); }
+:root[data-theme="light"] .student-portal #modal-battle .battle-question { color: #172033; background: #fff; border-color: #d5deea; }
+:root[data-theme="light"] .student-portal #modal-battle .bq-num { color: #244a73; }
+:root[data-theme="light"] .student-portal #modal-battle .bq-text { color: #172033; }
+:root[data-theme="light"] .student-portal #modal-battle .bq-option { color: #253248; background: #f4f7fb; border-color: #cbd5e1; }
+:root[data-theme="light"] .student-portal #modal-battle .bq-option:hover { background: #e8f1fb; border-color: #7298bf; }
+:root[data-theme="light"] .student-portal #modal-battle .bq-option.selected { color: #173a5e; background: #dbeafe; border-color: #315f91; }
+:root[data-theme="light"] .student-portal #modal-battle .bq-option.correct { color: #176b3b; background: #e8f6ed; border-color: #8ac9a1; }
+:root[data-theme="light"] .student-portal #modal-battle .bq-option.wrong { color: #a63241; background: #fdecee; border-color: #e4a1a8; }
+:root[data-theme="light"] .student-portal #modal-battle textarea { color: #172033 !important; background: #fff !important; border-color: #b8c4d3 !important; }
+:root[data-theme="light"] .student-portal #modal-battle .quiz-session-note,
+:root[data-theme="light"] .student-portal #modal-battle .battle-hint-text { color: #667085; }
+:root[data-theme="light"] .student-portal #modal-battle .battle-actions { background: #fff; border-color: #d5deea; }
+:root[data-theme="light"] .student-portal #modal-battle .xp-boost-banner { color: #155e75; background: #ecfeff; border-color: #a5f3fc; }
+:root[data-theme="light"] .student-portal #modal-battle .hint-card { color: #344054; background: #fffbeb; border-color: #f3d58b; }
+:root[data-theme="light"] .student-portal #modal-battle :is(.hint-card-title,.hint-card-text,.hint-card-footer,.hint-card-cost,.hint-used-badge,.hint-quote) { color: #694b13; }
+:root[data-theme="light"] .student-portal #modal-battle :is(.hint-card-cost,.hint-used-badge) { background: #fff4cf; border-color: #ecd18a; }
+:root[data-theme="light"] .student-portal #modal-battle .hint-quote { border-color: #c79a39; }
+:root[data-theme="light"] .student-portal #modal-battle .btn-flag-question { color: #a63241; background: #fff1f2; border-color: #e9a5ad; }
+:root[data-theme="light"] .student-portal #modal-battle .flag-used-badge { color: #7f2732; background: #fdecee; border-color: #e4a1a8; }
+:root[data-theme="light"] body.student-portal #modal-battle:has(.battle-layout) #quiz-loadout { color: #172033 !important; background: #f4f7fb !important; border-color: #cfd8e5 !important; box-shadow: 0 12px 36px rgba(16,24,40,.12); }
+:root[data-theme="light"] #quiz-loadout .btn-fifty-fifty { color: #244a73; background: #e8f1fb; border-color: #a9c4e2; }
+:root[data-theme="light"] #quiz-loadout .btn-fifty-fifty:hover { background: #dbeafe; }
+:root[data-theme="light"] #quiz-loadout .ff-uses { color: #244a73; background: #dbe8f5; border-color: #b7cce0; }
+:root[data-theme="light"] #quiz-loadout .powerup-tool summary { color: #244a73; background: #e8f1fb; border-color: #b7cce0; }
+:root[data-theme="light"] #quiz-loadout .powerup-tooltip { color: #253248; background: #fff; border-color: #cbd5e1; box-shadow: 0 12px 32px rgba(16,24,40,.16); }
+:root[data-theme="light"] #quiz-loadout .powerup-tooltip p { color: #475467; }
+:root[data-theme="light"] .student-portal #modal-battle .btn-hint { color: #805b19; background: #fff6dc; border-color: #e6c56d; }
+:root[data-theme="light"] .student-portal #modal-battle .btn-hint:hover:not(:disabled) { background: #ffefbd; }
+:root[data-theme="light"] .student-portal #modal-battle .hint-xp-cost { color: #805b19; background: #fff1c2; border-color: #e6c56d; }
+:root[data-theme="light"] .student-portal #modal-battle .hint-discount-badge { color: #176b3b; background: #e8f6ed; border-color: #8ac9a1; }
+:root[data-theme="light"] .student-portal #modal-battle .hint-spinner { border-color: #cbd5e1; border-top-color: #805b19; }
+:root[data-theme="light"] body.student-portal #modal-battle .battle-info :is(h3,p) { color: #172033 !important; }
+:root[data-theme="light"] body.student-portal #modal-battle .battle-info p { color: #475467 !important; }
+:root[data-theme="light"] body.student-portal #modal-battle .bm-item,
+:root[data-theme="light"] body.student-portal #modal-battle .bm-item * { color: #344054 !important; }
+:root[data-theme="light"] body.student-portal #modal-battle #quiz-countdown { color: #176b50 !important; }
+:root[data-theme="light"] body.student-portal #modal-battle #quiz-countdown.urgent { color: #b42332 !important; }
+:root[data-theme="light"] body.student-portal #modal-battle .battle-question :is(.bq-num,.bq-text,.identification-answer-box,.identification-answer-box *) { color: #172033 !important; }
+:root[data-theme="light"] body.student-portal #modal-battle .battle-question .bq-option,
+:root[data-theme="light"] body.student-portal #modal-battle .battle-question .bq-option * { color: #253248 !important; }
+:root[data-theme="light"] body.student-portal #modal-battle .battle-question .bq-option.selected,
+:root[data-theme="light"] body.student-portal #modal-battle .battle-question .bq-option.selected * { color: #173a5e !important; }
+:root[data-theme="light"] body.student-portal #modal-battle .battle-question .bq-option.correct,
+:root[data-theme="light"] body.student-portal #modal-battle .battle-question .bq-option.correct * { color: #176b3b !important; }
+:root[data-theme="light"] body.student-portal #modal-battle .battle-question .bq-option.wrong,
+:root[data-theme="light"] body.student-portal #modal-battle .battle-question .bq-option.wrong * { color: #a63241 !important; }
+:root[data-theme="light"] body.student-portal #modal-battle .quiz-session-note,
+:root[data-theme="light"] body.student-portal #modal-battle .battle-hint-text { color: #667085 !important; }
+:root[data-theme="light"] body.student-portal #modal-battle .hint-card :is(.hint-card-title,.hint-card-text,.hint-card-footer,.hint-card-cost,.hint-used-badge,.hint-quote) { color: #694b13 !important; }
+:root[data-theme="light"] body.student-portal #modal-battle .modal-battle-wide #battle-title { color: #172033 !important; }
+:root[data-theme="light"] body.student-portal #modal-battle .identification-answer-box textarea::placeholder { color: #667085 !important; }
+
+/* Give the quiz hint, flag, and submit controls equal sizing with distinct intent colors. */
+#modal-battle .battle-actions :is(#hint-action-slot .btn-hint,.btn-flag-question,#next-btn.quiz-submit-button) { box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 14px; border: 1px solid transparent; border-radius: 9px; font: inherit; font-size: .78rem; font-weight: 700; line-height: 1.2; white-space: nowrap; }
+#modal-battle .battle-actions #hint-action-slot .btn-hint { color: #fff !important; background: #9a6700 !important; border-color: #bd8b26 !important; }
+#modal-battle .battle-actions #hint-action-slot .btn-hint:hover:not(:disabled) { background: #805500 !important; }
+#modal-battle .battle-actions .btn-flag-question { color: #fff !important; background: #b42332 !important; border-color: #cf5360 !important; }
+#modal-battle .battle-actions .btn-flag-question:hover { background: #941d2a !important; }
+#modal-battle .battle-actions #next-btn.quiz-submit-button { color: #fff !important; background: #244a73 !important; border-color: #3b6593 !important; }
+#modal-battle .battle-actions #next-btn.quiz-submit-button:hover:not(:disabled) { background: #315f91 !important; border-color: #527ba7 !important; }
+#modal-battle .battle-actions :is(.hint-used-badge,.flag-used-badge) { box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 12px; border-radius: 9px; line-height: 1.25; }
+#modal-battle .battle-actions .btn-hint.hint-discounted { gap: .45rem; padding-inline: 12px; }
+#modal-battle .battle-actions .btn-hint .hint-xp-cost { display: inline-flex; align-items: center; gap: .25rem; padding: .2rem .45rem; border: 1px solid #f3d58b; border-radius: 6px; color: #694b13; background: #fff4cf; font-size: .67rem; line-height: 1.2; white-space: nowrap; }
+#modal-battle .battle-actions .btn-hint .hint-xp-cost s { color: #806f4e; font-size: .62rem; opacity: .85 !important; }
+#modal-battle .battle-actions .btn-hint .hint-discount-badge { display: inline-flex; align-items: center; justify-content: center; min-height: 20px; padding: 0 .42rem; border: 1px solid #8ac9a1; border-radius: 999px; color: #176b3b; background: #e8f6ed; font-size: .64rem; font-weight: 800; letter-spacing: .02em; line-height: 1; white-space: nowrap; }
+
+:root[data-theme="light"] body.student-portal #confirm-overlay { background: rgba(23,32,51,.42); }
+:root[data-theme="light"] body.student-portal #confirm-overlay .confirm-box { color: #172033; background: #fff; border-color: #cfd8e5; box-shadow: 0 24px 64px rgba(32,48,76,.2); }
+:root[data-theme="light"] body.student-portal #confirm-overlay .confirm-box h3 { color: #172033; }
+:root[data-theme="light"] body.student-portal #confirm-overlay .confirm-box p { color: #475467; }
+:root[data-theme="light"] body.student-portal #confirm-overlay .btn-confirm-cancel { color: #344054; background: #f1f5fa; border-color: #cbd5e1; }
+:root[data-theme="light"] body.student-portal #confirm-overlay.quiz-leave-confirm #confirm-yes { color: #fff !important; background: #b42332 !important; border-color: #cf5360 !important; box-shadow: none; }
+:root[data-theme="light"] body.student-portal #confirm-overlay.quiz-leave-confirm #confirm-yes:hover { background: #941d2a !important; }
+:root[data-theme="light"] body.student-portal #flag-overlay { background: rgba(23,32,51,.42); }
+:root[data-theme="light"] body.student-portal #flag-overlay .flag-report-box { color: #172033; background: #fff; border-color: #cfd8e5; box-shadow: 0 24px 64px rgba(32,48,76,.2); }
+:root[data-theme="light"] body.student-portal #flag-overlay .flag-report-box h3 { color: #172033; }
+:root[data-theme="light"] body.student-portal #flag-overlay .flag-report-box p { color: #475467; }
+:root[data-theme="light"] body.student-portal #flag-overlay .flag-reason-option { color: #253248; background: #f4f7fb; border-color: #d5deea; }
+:root[data-theme="light"] body.student-portal #flag-overlay .flag-reason-option:hover { background: #eaf1f9; border-color: #b8c9dd; }
+:root[data-theme="light"] body.student-portal #flag-overlay .flag-reason-option:has(input:checked) { background: #fff1f2; border-color: #e9a5ad; }
+:root[data-theme="light"] body.student-portal #flag-overlay .flag-reason-option span { color: #253248; }
+:root[data-theme="light"] body.student-portal #flag-overlay .flag-reason-option input { accent-color: #b42332; }
+:root[data-theme="light"] body.student-portal #flag-overlay #flag-other-container label { color: #475467 !important; }
+:root[data-theme="light"] body.student-portal #flag-overlay #flag-other-text { color: #172033 !important; background: #fff !important; border-color: #b8c4d3 !important; }
+:root[data-theme="light"] body.student-portal #flag-overlay #flag-other-text::placeholder { color: #667085; }
+:root[data-theme="light"] body.student-portal #flag-overlay #flag-submit { color: #fff !important; background: #b42332 !important; border-color: #cf5360 !important; }
+:root[data-theme="light"] body.student-portal #flag-overlay #flag-submit:hover { background: #941d2a !important; }
+:root[data-theme="light"] body.student-portal #flag-overlay .btn-confirm-cancel { color: #344054; background: #f1f5fa; border-color: #cbd5e1; }
+#confirm-overlay.hint-confirm #confirm-yes { color: #fff !important; background: #244a73 !important; border-color: #3b6593 !important; box-shadow: none; }
+#confirm-overlay.hint-confirm #confirm-yes:hover { background: #315f91 !important; }
+#flag-overlay .flag-report-box .confirm-btns { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .75rem; margin-top: 1rem; }
+#flag-overlay .flag-report-box .confirm-btns button { box-sizing: border-box; width: 100%; min-height: 44px; margin: 0; padding: 0 1rem; }
+#modal-battle .bsr-actions .btn-primary { color: #fff !important; background: #244a73 !important; border-color: #3b6593 !important; }
+#modal-battle .bsr-actions .btn-primary:hover { background: #315f91 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal #modal-battle .bsr-actions .btn-explain { color: #dceaff; background: rgba(36,74,115,.2); border: 1px solid rgba(82,123,167,.65); }
+:root[data-theme="light"] .student-portal #modal-battle .bsr-actions .btn-explain { color: #173a5e; background: rgba(36,74,115,.1); border-color: rgba(49,95,145,.45); }
+#modal-battle .bsr-actions .btn-explain:hover { background: rgba(36,74,115,.32); }
+:root[data-theme="light"] .student-portal #modal-battle .bsr-actions .btn-explain:hover { background: rgba(36,74,115,.18); }
+
+/* Deep-blue emphasis for student guidance and report actions. */
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .help-rewards-footer p { padding: .7rem .85rem; border: 1px solid #3b6593; border-radius: 9px; color: #fff !important; background: #244a73 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .help-rewards-footer p strong { color: #fff !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .help-grade-note { color: #fff !important; background: #244a73 !important; border-color: #3b6593 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .help-grade-note :is(strong,p) { color: #fff !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .ws-see-all { padding: .45rem .7rem; border: 1px solid #3b6593; border-radius: 8px; color: #fff !important; background: #244a73 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .ws-see-all:hover { background: #315f91 !important; opacity: 1; }
+
+/* GAIA icon glyphs stay deep blue on pale surfaces in the launcher, chat, and tab. */
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .student-navbar .nav-tab[data-panel="studybuddy"] { display: inline-flex; align-items: center; justify-content: center; gap: .45rem; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .student-navbar .nav-tab[data-panel="studybuddy"] > :is(svg,.lucide,[data-lucide="bot"]) { box-sizing: content-box; padding: 3px; border-radius: 6px; color: #173a5e !important; background: #eaf1fc; stroke: #173a5e !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .sb-bubble > :is(svg,.lucide,[data-lucide="bot"]),
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .sb-avatar :is(svg,.lucide,[data-lucide="bot"]) { color: #173a5e !important; background: #eaf1fc !important; stroke: #173a5e !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .sb-avatar { color: #173a5e !important; background: #eaf1fc !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .sb-window .sb-header-right button,
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .studybuddy-guide .sb-history-heading button { color: #173a5e !important; background: #eaf1fc !important; border: 1px solid #b7cce0 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .sb-window .sb-header-right button :is(svg,.lucide),
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .studybuddy-guide .sb-history-heading button :is(svg,.lucide) { color: #173a5e !important; stroke: currentColor; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .sb-window .sb-send-btn > :is(svg,.lucide) { box-sizing: content-box; padding: 3px; border-radius: 5px; color: #173a5e !important; background: #eaf1fc; stroke: currentColor; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .studybuddy-guide .sb-help-title > :is(svg,.lucide) { box-sizing: content-box; padding: 3px; border-radius: 5px; color: #173a5e !important; background: #eaf1fc; stroke: currentColor; }
+
+/* Keep Quick GABLE help as one dropdown card, with flat links inside it. */
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .sb-study-options { background: transparent !important; border: 0 !important; box-shadow: none !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .sb-study-options summary { color: var(--text) !important; background: var(--surface-summary) !important; border: 1px solid var(--surface-edge) !important; border-radius: 12px; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .sb-study-options > button { color: var(--text) !important; background: transparent !important; border: 0 !important; border-bottom: 1px solid var(--surface-edge) !important; border-radius: 0; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .sb-study-options > button:hover { background: var(--surface-hover) !important; }
+
+/* Keep redemption controls fixed while only the quiz list scrolls. */
+#powerup-grade-dialog { display: flex; flex-direction: column; overflow: hidden; }
+#powerup-grade-dialog h2,
+#powerup-grade-dialog > p,
+#powerup-grade-dialog .grade-boost-actions { flex-shrink: 0; }
+#powerup-grade-dialog .grade-boost-choices { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 2px 5px 2px 0; }
+#powerup-grade-dialog .grade-boost-actions button { width: auto; margin: 0; }
+#powerup-grade-dialog .grade-boost-actions .btn-primary { color: #fff !important; background: #244a73 !important; border-color: #3b6593 !important; }
+#powerup-grade-dialog .grade-boost-actions .btn-primary:hover:not(:disabled) { background: #315f91 !important; }
+#powerup-grade-dialog .grade-boost-choice[aria-pressed="true"] { border-color: #244a73 !important; outline: 2px solid #244a73; outline-offset: 1px; box-shadow: 0 0 0 4px rgba(36,74,115,.12); }
+
+/* The weekly reward reads as one compact progress card with a clear action. */
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal #weekly-streak-reward { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 4px 20px; border-left: 4px solid #244a73; }
+.student-portal #weekly-streak-reward h3 { grid-column: 1; margin: 0 0 2px; }
+.student-portal #weekly-streak-reward p { grid-column: 1; margin: 0; line-height: 1.6; }
+.student-portal #weekly-streak-reward button { grid-column: 2; grid-row: 1 / span 2; color: #fff !important; background: #244a73 !important; border: 1px solid #3b6593 !important; border-radius: 9px; padding: 10px 14px; }
+.student-portal #weekly-streak-reward button:hover:not(:disabled) { background: #315f91 !important; }
+.student-portal #weekly-streak-reward button:disabled { opacity: .72; }
+@media(max-width:520px) {
+  .student-portal #weekly-streak-reward { grid-template-columns: 1fr; gap: 8px; }
+  .student-portal #weekly-streak-reward button { grid-column: 1; grid-row: auto; width: 100%; }
+}
+
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .subject-section-heading > .btn-secondary { color: #fff !important; background: #244a73 !important; border-color: #3b6593 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .subject-section-heading > .btn-secondary:hover { background: #315f91 !important; }
+
+/* “See full report” is a text link, not a filled button. */
+:root[data-theme="light"] .student-portal .ws-see-all { color: #244a73 !important; background: transparent !important; border: 0 !important; padding: 0 !important; border-radius: 0; }
+:root:is([data-theme="dark"],[data-theme="current"]) .student-portal .ws-see-all { color: #a9c8eb !important; background: transparent !important; border: 0 !important; padding: 0 !important; border-radius: 0; }
+:root:is([data-theme="light"],[data-theme="dark"],[data-theme="current"]) .student-portal .ws-see-all:hover { text-decoration: underline; opacity: .85; }
+
+/* Keep help and answer-review actions visibly actionable in every theme. */
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal #modal-help .account-dialog-footer button { color: #fff !important; background: #244a73 !important; border-color: #3b6593 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal #modal-help .account-dialog-footer button:hover { background: #315f91 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal #modal-battle .expl-toolbar button,
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal #modal-battle .expl-regenerate-actions button,
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal #modal-battle .expl-body > button { color: #fff !important; background: #244a73 !important; border-color: #3b6593 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal #modal-battle :is(.expl-toolbar button,.expl-regenerate-actions button,.expl-body > button):hover:not(:disabled) { background: #315f91 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal #modal-battle .expl-subject { color: #fff !important; background: #244a73 !important; border-color: #3b6593 !important; }
+
+/* Deep-blue emphasis for leaderboard filters, XP, notifications, and help. */
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .lb-filter .lb-filter-btn { color: #fff !important; background: #244a73 !important; border-color: #3b6593 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .lb-filter .lb-filter-btn:hover { background: #315f91 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal #xp-popup .btn-xp-dash,
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal #xp-popup .btn-xp-dash:hover { background: #315f91 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .help-rewards-heading { padding: .65rem .8rem; border-radius: 9px; color: #fff !important; background: #244a73 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .help-rewards-heading :is(h3,.help-topic-number) { color: #fff !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal #modal-help .account-dialog-header .modal-close { color: #fff !important; background: #244a73 !important; border-color: #3b6593 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal #modal-help .account-dialog-header .modal-close:hover { background: #315f91 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal #modal-help .account-dialog-header .modal-close :is(svg,.lucide) { color: currentColor !important; stroke: currentColor; }
+
+/* Profile actions, student dashboard navigation, and icon-only accents. */
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal #modal-profile .account-dialog-footer button,
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal #modal-profile .profile-balance-strip button { color: #fff !important; background: #244a73 !important; border-color: #3b6593 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal #modal-profile .account-dialog-footer button:hover,
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal #modal-profile .profile-balance-strip button:hover { background: #315f91 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-dashboard-page .sdash-nav-actions .sdash-back,
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-dashboard-page .sdash-return { color: #fff !important; background: #244a73 !important; border-color: #3b6593 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-dashboard-page .sdash-nav-actions .sdash-back:hover,
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-dashboard-page .sdash-return:hover { background: #315f91 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-dashboard-page .sdash-nav-actions .sdash-logout { width: 40px; height: 44px; min-height: 44px; padding: 0; justify-content: center; color: #b42332 !important; background: transparent !important; border: 1px solid transparent !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-dashboard-page .sdash-nav-actions .sdash-logout:hover { color: #941d2a !important; background: rgba(180,35,50,.12) !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-dashboard-page .sdash-nav-actions .sdash-logout > span { display: none; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .student-subject-icon > :is(svg,.lucide) { color: #244a73 !important; stroke: #244a73 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-dashboard-page .sdash-card > header > :is(i,svg) { color: #244a73 !important; stroke: #244a73 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .student-navbar .nav-account .btn-logout { color: #b42332 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .student-navbar .nav-account .btn-logout:hover { color: #941d2a !important; background: rgba(180,35,50,.12) !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .student-navbar .nav-account .btn-logout > :is(svg,.lucide),
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-dashboard-page .sdash-logout > :is(svg,.lucide) { color:#173a5e !important; stroke:#173a5e !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .student-navbar .nav-account .btn-logout { background:transparent !important; border-color:transparent !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .np-mark-all { padding: 0 !important; border: 0 !important; color: #244a73 !important; background: transparent !important; font: inherit; font-weight: 700; text-decoration: none; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .np-mark-all:hover { color: #315f91 !important; background: transparent !important; text-decoration: underline; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-dashboard-page .sdash-nav-actions .sdash-back,
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-dashboard-page .sdash-nav-actions .sdash-back * { color: #fff !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .notif-panel .np-mark-all { font: 600 .68rem Poppins,sans-serif !important; padding: .2rem .5rem !important; }
+:root[data-theme="light"] .student-portal .notif-panel .np-mark-all { color: #244a73 !important; }
+:root:is([data-theme="dark"],[data-theme="current"]) .student-portal .notif-panel .np-mark-all { color: #a9c8eb !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .np-delete-read { display: inline-grid; place-items: center; flex: 0 0 28px; width: 28px; height: 28px; margin-left: auto; padding: 0; border: 0; border-radius: 7px; color: #b42332 !important; background: transparent !important; cursor: pointer; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .np-delete-read:hover { color: #941d2a !important; background: rgba(180,35,50,.12) !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .np-delete-read svg { width: 15px; height: 15px; stroke: currentColor; }
+
+/* GAIA launcher stays a single control; its header tools remain icon-only. */
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .sb-bubble > :is(svg,.lucide,[data-lucide="bot"]) { padding: 0 !important; border: 0 !important; border-radius: 0 !important; color: #173a5e !important; background: transparent !important; stroke: currentColor !important; filter: drop-shadow(0 0 1px rgba(255,255,255,.9)); }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .sb-bubble-label { color: #fff !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .sb-window .sb-send-btn > :is(svg,.lucide) { padding: 0 !important; border: 0 !important; border-radius: 0 !important; color: #fff !important; background: transparent !important; stroke: currentColor !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .sb-window .sb-header-right button { padding: 0 !important; border: 0 !important; color: #fff !important; background: transparent !important; box-shadow: none !important; }
+:root[data-theme="light"] .student-portal .sb-window .sb-header-right button { color: #244a73 !important; }
+:root:is([data-theme="current"],[data-theme="dark"]) .student-portal .sb-window .sb-header-right button { color: #fff !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .sb-window .sb-header-right button:hover { color: inherit !important; background: transparent !important; opacity: .72; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .sb-window .sb-header-right button :is(svg,.lucide) { color: currentColor !important; background: transparent !important; stroke: currentColor !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .sb-bubble > :is(svg,.lucide,[data-lucide="bot"]),
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .student-portal .student-navbar .nav-tab[data-panel="studybuddy"] > :is(svg,.lucide,[data-lucide="bot"]) { padding: 0 !important; border: 0 !important; border-radius: 0 !important; color: #fff !important; background: transparent !important; stroke: currentColor !important; filter: none; }
+
+:root[data-theme="light"] .student-portal #panel-home .perf-section-icon > :is(svg,.lucide,[data-lucide]) { color: #244a73 !important; stroke: #244a73 !important; }
+
+body.student-portal #panel-leaderboard .leaderboard-card .lb-row.lb-top { background: var(--lb-tint) !important; border-color: var(--lb-accent) !important; border-left-width: 4px !important; }

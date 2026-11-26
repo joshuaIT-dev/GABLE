@@ -4,24 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GABLE – Help</title>
+  <script src="../assets/js/color-theme.js?v=7"></script>
   <link rel="stylesheet" href="../assets/css/style.css?v=2">
   <link rel="stylesheet" href="../assets/css/help.css">
-  <link rel="stylesheet" href="../assets/css/student/ai integration/chatbot.css">
+  <link rel="stylesheet" href="../assets/css/student/ai integration/chatbot.css?v=10">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/lucide-icons.css">
 <link rel="stylesheet" href="../assets/css/actions.css">
-    <script src="../cursor/cursor.js"></script>
+  <link rel="stylesheet" href="../assets/css/brand-text.css?v=4">
+  <link rel="stylesheet" href="../assets/css/color-modes.css?v=18">
+  <link rel="stylesheet" href="../assets/css/navbar.css?v=1">
+      <script src="../cursor/cursor.js"></script>
 </head>
-<body>
+<body class="color-mode-page">
 
   <div class="bg-blobs"></div>
 
   <nav class="navbar">
-    <div class="logo">
-      <div class="logo-icon lucide-icon"><i data-lucide="book-open" aria-hidden="true"></i></div>
-      GABLE
-    </div>
+    <div class="logo"><span class="brand-mark">G</span><span class="brand-wordmark">GABLE</span></div>
     <ul class="nav-links">
       <li><a href="Index.html">Home</a></li>
       <li><a href="Features.html">Features</a></li>
@@ -57,9 +58,9 @@
   <section class="quick-start" id="quick-start" aria-labelledby="quick-start-title">
     <h2 id="quick-start-title">Start playing</h2>
     <div class="quick-start-steps">
-      <article><span>01</span><h3>Choose your role</h3><p>Sign in as a student, instructor, or admin.</p></article>
-      <article><span>02</span><h3>Join a quiz</h3><p>Pick an available quiz battle and enter the arena.</p></article>
-      <article><span>03</span><h3>Play and earn XP</h3><p>Answer questions and build your score as you go.</p></article>
+      <article><span>01</span><h3>Sign in as a student</h3><p>Select Student, then enter your student number and password.</p></article>
+      <article><span>02</span><h3>Open My Quizzes</h3><p>Choose an assigned formal or informal quiz and review its instructions.</p></article>
+      <article><span>03</span><h3>Submit and review</h3><p>Complete the quiz, then check your score and progress in Performance after grading.</p></article>
     </div>
   </section>
 
@@ -73,15 +74,15 @@
       </div>
       <div class="faq-item">
         <div class="faq-q">How does matchmaking work in battle modes?</div>
-        <div class="faq-a">Matchmaking pairs you with classmates in the same section or course. Team Battle matches 5 players per side, Solo is 1v1, and Battle Royale can have up to 50-60+ players.</div>
+        <div class="faq-a">GABLE's public feature guide describes matchmaking with classmates. Team Battle is 5v5, Solo Duel is 1v1 (on-class), and Battle Royale supports up to 50-60+ players. The available mode depends on the quiz assigned to your section; check its instructions or ask your instructor.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q">Can I use XP boosts on formal quizzes?</div>
-        <div class="faq-a">XP boosts can be redeemed on both formal and informal quizzes, but grade boost redemptions apply only to formal quiz scores, subject to instructor approval.</div>
+        <div class="faq-a">Grade boosts apply to fully graded formal quiz results below 100%. Each boost costs 150 XP and adds 1 percentage point; you can boost the same result repeatedly up to 100%. You may also use an available free grade-boost token. Grade boosts must be enabled by the administrator.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q">What if my instructor's quiz has errors?</div>
-        <div class="faq-a">Use the "Report Question" button during a quiz. Your instructor will be notified and can issue score corrections. Admins review flagged content regularly.</div>
+        <div class="faq-a">Use the "Report Question" option during a quiz to tell your instructor about the issue. If you have a concern about your score, contact your instructor for help.</div>
       </div>
     </div>
     
@@ -92,9 +93,9 @@
           <div class="contact-icon ci-purple lucide-icon"><i data-lucide="message-circle" aria-hidden="true"></i></div>
           <div class="contact-text">
             <strong>AI Support Chat</strong>
-            <p>Average response: instant - 1 min</p>
+            <p>Ask about student features, quizzes, results, XP, and Power-Ups.</p>
           </div>
-          <button class="btn-chat"onclick="toggleChat()">Chat Now</button>
+          <button class="btn-chat" type="button" aria-controls="chatWindow" aria-expanded="false" onclick="toggleChat()">Chat Now</button>
         </div>
         <div class="contact-item">
           <div class="contact-icon ci-pink lucide-icon"><i data-lucide="mail" aria-hidden="true"></i></div>
@@ -120,31 +121,6 @@
       </div>
     </div>
 
-        <!-- GABLE Chatbot Window -->
-    <div class="chat-window" id="chatWindow">
-        <div class="chat-header">
-            <div>
-                <span>💬 GABLE Assistant</span><br>
-                <small>AI-powered • Average response: instant</small>
-            </div>
-            <button class="close-btn" onclick="toggleChat()">✕</button>
-        </div>
-        <div class="chat-messages" id="chatMessages">
-            <div class="chat-msg bot">
-                Hi! I'm the GABLE Assistant 👋<br>
-                Ask me anything about the platform —
-                quizzes, XP, badges, login issues, and more!
-            </div>
-        </div>
-        <div class="chat-input-area">
-            <input  type="text"
-                    id="chatInput"
-                    placeholder="Type your question..."
-                    onkeypress="if(event.key==='Enter') sendChat()" />
-            <button onclick="sendChat()">Send</button>
-        </div>
-    </div>
-
     <div class="help-card reveal" id="troubleshooting">
       <h3>Troubleshooting</h3>
       <ul class="trouble-list">
@@ -152,14 +128,14 @@
           <div class="trouble-dot dot-red"></div>
           <div>
             <strong>Quiz won't start</strong>
-            <p>Check your internet connection and refresh the page</p>
+            <p>Check your connection and quiz availability. If an active quiz is open, avoid refreshing because it uses another opening and the timer keeps running.</p>
           </div>
         </li>
         <li class="trouble-item">
           <div class="trouble-dot dot-yellow"></div>
           <div>
             <strong>XP not updating</strong>
-            <p>Quiz results may take 3-5 minutes to sync</p>
+            <p>XP is awarded after grading is complete. Identification answers may need instructor review.</p>
           </div>
         </li>
         <li class="trouble-item">
@@ -173,14 +149,14 @@
           <div class="trouble-dot dot-red"></div>
           <div>
             <strong>Login not working</strong>
-            <p>Try resetting your password or clearing browser cookies</p>
+            <p>Check that you selected the correct role and entered your account details. Contact support if the problem continues.</p>
           </div>
         </li>
         <li class="trouble-item">
           <div class="trouble-dot dot-yellow"></div>
           <div>
             <strong>Leaderboard not loading</strong>
-            <p>Leaderboards refresh every 5 minutes — please wait and retry</p>
+            <p>Check your connection and reload the Leaderboard tab. If it still does not load, contact support.</p>
           </div>
         </li>
       </ul>
@@ -188,12 +164,50 @@
 
   </div>
 
+  <!-- GABLE Assistant stays outside content stacking layers so it clears the navbar and footer. -->
+  <section class="chat-window" id="chatWindow" role="dialog" aria-modal="false" aria-labelledby="chatTitle" aria-describedby="chatDescription" aria-hidden="true">
+    <header class="chat-header">
+      <div class="chat-identity">
+        <span class="chat-avatar" aria-hidden="true">G</span>
+        <div class="chat-heading">
+          <h2 id="chatTitle">GABLE Assistant</h2>
+          <p id="chatDescription"><span class="chat-status-dot" aria-hidden="true"></span>Platform help <span class="chat-header-divider" aria-hidden="true">·</span> No account access</p>
+        </div>
+      </div>
+      <button class="close-btn" type="button" aria-label="Close GABLE Assistant" onclick="toggleChat()">
+        <i data-lucide="x" aria-hidden="true"></i>
+      </button>
+    </header>
+    <div class="chat-messages" id="chatMessages" role="log" aria-label="Conversation with GABLE Assistant" aria-live="polite" aria-relevant="additions text">
+      <div class="chat-msg bot">
+        <span class="chat-msg-label">GABLE Assistant</span>
+        Hi! What can I help you with today?
+      </div>
+    </div>
+    <div class="chat-suggestions" id="chatSuggestions">
+      <span class="chat-suggestions-label">SUGGESTED QUESTIONS</span>
+      <div class="chat-suggestion-list">
+        <button type="button" data-prompt="Where can I find the quizzes assigned to my section?" onclick="useChatPrompt(this)">Find my section's quizzes</button>
+        <button type="button" data-prompt="How can I use XP for a grade boost?" onclick="useChatPrompt(this)">Use XP for a grade boost</button>
+        <button type="button" data-prompt="Why is my quiz score still pending?" onclick="useChatPrompt(this)">Check a pending score</button>
+      </div>
+    </div>
+    <form class="chat-input-area" id="chatForm" onsubmit="sendChat(event)">
+      <label class="sr-only" for="chatInput">Message GABLE Assistant</label>
+      <input type="text" id="chatInput" name="message" maxlength="2000" autocomplete="off" placeholder="Ask a question about GABLE..." />
+      <button type="submit" aria-label="Send message" title="Send message">
+        <i data-lucide="arrow-up" aria-hidden="true"></i>
+      </button>
+    </form>
+    <p class="chat-disclaimer">GABLE Assistant can make mistakes. Don’t share passwords or private account details.</p>
+  </section>
+
   <footer>
     <p>&copy; 2026 GABLE. All rights reserved.</p>
   </footer>
   
-  <script src="../assets/js/main.js?v=8"></script>
-  <script src="../assets/js/student/ai integration/chatbot.js"></script>
+  <script src="../assets/js/main.js?v=11"></script>
+  <script src="../assets/js/student/ai integration/chatbot.js?v=5"></script>
   <script>
     document.querySelectorAll('.faq-q').forEach(q => {
       q.addEventListener('click', () => {

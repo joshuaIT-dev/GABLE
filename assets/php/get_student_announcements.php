@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 header('Content-Type: application/json');
 
 require_once 'config.php';
@@ -8,22 +9,31 @@ platform_block_students_if_maintenance(); // Maintenance Mode (students only)
 
 try {
 
+    $studentId = $_SESSION['student'] ?? $_SESSION['student_id'] ?? null;
+    if (!$studentId) {
+        http_response_code(401);
+        echo json_encode(['success' => false, 'message' => 'Student session not found.']);
+        exit;
+    }
+
     $conn = getConnection();
 
     $sql = "
-        SELECT
-            announcement_id,
-            title,
-            message,
-            target,
-            priority,
-            created_at
-        FROM announcements
-        WHERE target IN ('all', 'students')
-        ORDER BY created_at DESC
+        SELECT a.announcement_id, a.title, a.message, a.target, a.priority, a.created_at,
+               COALESCE(r.is_read, 0) AS is_read
+        FROM announcements a
+        LEFT JOIN student_announcement_notification_reads r
+            ON r.student_id = ? AND r.announcement_id = a.announcement_id
+        LEFT JOIN student_notification_dismissals d
+            ON d.student_id = ? AND d.notification_type = 'announcement' AND d.notification_id = a.announcement_id
+        WHERE a.target IN ('all', 'students') AND d.notification_id IS NULL
+        ORDER BY a.created_at DESC
     ";
 
-    $result = $conn->query($sql);
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('ii', $studentId, $studentId);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if (!$result) {
         throw new Exception($conn->error);
@@ -42,7 +52,7 @@ try {
                             : 'All Students',
             'priority' => ucfirst($row['priority']),
             'sentAt'   => $row['created_at'],
-            'read'     => false
+            'read'     => (bool)$row['is_read']
         ];
     }
 
@@ -51,6 +61,7 @@ try {
         'announcements' => $announcements
     ]);
 
+    $stmt->close();
     $conn->close();
 
 } catch (Exception $e) {

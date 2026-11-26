@@ -58,6 +58,21 @@ function ciFormat(text) {
     return ciEscape(text).replace(/\n+/g, '<br>');
 }
 
+function ciFormatSummary(text) {
+    const source = String(text || '').trim().replace(/\r\n?/g, '\n').replace(/\*\*(.*?)\*\*/g, '$1');
+    const lines = source.split(/\n+/).map(line => line.replace(/^\s*(?:\d+[.)]\s*|[-*]\s*)/, '').trim()).filter(Boolean);
+    const findings = lines.filter(line => /^Problem:/i.test(line));
+    const blocks = findings.length ? findings : source.split(/(?<=[.!?])\s+(?=[A-Z0-9])/).map(line => line.trim()).filter(Boolean).slice(0, 4);
+    return blocks.map((block, index) => {
+        const match = block.match(/^Problem:\s*(.*?)\s*\|\s*Why:\s*(.*)$/i);
+        const title = match ? match[1] : `Finding ${index + 1}`;
+        const reason = match ? match[2] : block.replace(/^Problem:\s*/i, '');
+        const words = reason.split(/\s+/);
+        const shortReason = words.length > 28 ? `${words.slice(0, 28).join(' ')}…` : reason;
+        return `<article class="ci-finding"><span class="ci-finding-label">${match ? 'Problem' : 'Class insight'}</span><strong class="ci-finding-title">${ciEscape(title)}</strong><p class="ci-ai-text ci-ai-sentence">${ciEscape(shortReason)}</p></article>`;
+    }).join('');
+}
+
 // Cut a response back to its last complete sentence.
 function ciTrimToCompleteSentence(text) {
     const value = String(text || '').trim();
@@ -327,7 +342,7 @@ function ciBuildSummaryPrompt(snap, instructor) {
 
     return `You are an academic analytics assistant for ${instructor.name}${where}.
 
-Write a plain-language insight digest of 3 to 4 complete sentences (maximum 90 words), addressed directly to the instructor. Cover: (1) what the class is collectively struggling with, (2) which subjects need attention, (3) one specific action to take. Use only the data below. Never invent numbers, names or sections, and skip any figure that is missing. Finish every sentence. No bullet points and no headings.
+Return up to 4 separate lines, each exactly "Problem: <short issue> | Why: <brief data-backed explanation>". Keep each line under 20 words. Use only the data below; do not invent numbers, names or sections. No introduction or repeated overall summary. If there are no problems, say so in one short sentence.
 
 Class data:
 ${ciDescribeSnapshot(snap)}`;
@@ -667,7 +682,7 @@ async function runAISummary(force = false) {
 
         const result = await ciRequestAI(
             ciBuildSummaryPrompt(snap, instructor),
-            { maxTokens: 450, temperature: 0.4, refresh: force }
+            { maxTokens: 180, temperature: 0.3, refresh: force }
         );
 
         // A newer request started: ignore this one.
@@ -677,7 +692,7 @@ async function runAISummary(force = false) {
         document.querySelectorAll("#ci-ai-summary .ci-regenerate").forEach(button => { button.disabled = !!result.limitReached; button.textContent = result.limitReached ? "Saved response - 3/3 used" : `New response (${result.generations ?? 1}/3 used)`; });
 
         bodyEl.innerHTML =
-            `<p class="ci-ai-text">${ciFormat(result.text)}</p>${result.outdated ? '<p class="ci-ai-error">Results have changed. This is an older saved review; choose New response to update it.</p>' : ''}`;
+            `${ciFormatSummary(result.text)}${result.outdated ? '<p class="ci-ai-error">Results have changed. This is an older saved review; choose New response to update it.</p>' : ''}`;
 
         ciMarkUpdated();
 
@@ -688,7 +703,7 @@ async function runAISummary(force = false) {
         console.error('Class insight error:', error);
 
         bodyEl.innerHTML = `
-            <p class="ci-ai-text">${ciEscape(ciLocalSummary(snap))}</p>
+            ${ciFormatSummary(ciLocalSummary(snap))}
             <p class="ci-ai-text ci-ai-error">
                 ⚠️ The AI summary is unavailable right now, so a basic summary is shown.
                 <button class="ci-regenerate" onclick="generateAISummary(true)">↻ Try again</button>

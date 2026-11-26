@@ -110,6 +110,8 @@ function showConfirm(title, msg, btnLabel, onConfirm) {
 
     if (!overlay) return;
     document.body.appendChild(overlay);
+    overlay.classList.toggle('quiz-leave-confirm', title === 'Leave this quiz?');
+    overlay.classList.toggle('hint-confirm', title === 'Use a hint?');
 
     document.getElementById('confirm-title').textContent =
         title;
@@ -201,15 +203,16 @@ function navigateTo(href) {
 
 
 /* ── SHARED LOGOUT ───────────────────────────────────────────── */
-function logout(dest = 'Index.html') {
+function logout() {
   const role = document.body.classList.contains('admin-portal') ? 'admin'
-    : document.body.classList.contains('instructor-portal') ? 'instructor' : 'student';
+    : document.body.classList.contains('instructor-portal') || document.body.classList.contains('instructor-dashboard') ? 'instructor' : 'student';
+  const destination = role === 'instructor' || document.body.classList.contains('game-portal') ? 'Users.html' : 'Login.html';
   showToast('??', 'Logging out?');
   fetch('../assets/php/logout.php', {
     method: 'POST', credentials: 'include',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({ role })
-  }).catch(() => {}).finally(() => setTimeout(() => navigateTo(dest), 300));
+  }).catch(() => {}).finally(() => setTimeout(() => navigateTo(destination), 300));
 }
 
 

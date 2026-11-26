@@ -7,17 +7,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GABLE – Live Game</title>
+    <script src="../assets/js/color-theme.js?v=7"></script>
     <link rel="stylesheet" href="../assets/css/style.css?v=2">
     <link rel="stylesheet" href="../assets/css/game.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/lucide-icons.css">
 <link rel="stylesheet" href="../assets/css/actions.css">
-<link rel="stylesheet" href="../assets/css/game-workspace.css?v=16">
+<link rel="stylesheet" href="../assets/css/game-workspace.css?v=20">
 <link rel="stylesheet" href="../assets/css/brand-text.css?v=4">
+<link rel="stylesheet" href="../assets/css/color-modes.css?v=17">
     <script src="../cursor/cursor.js"></script>
 </head>
 
-<body class="game-portal">
+<body class="game-portal color-mode-page">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
 
@@ -26,6 +28,7 @@
         <div class="nav-brand"><span class="brand-mark">G</span><span class="brand-wordmark">GABLE<small>Classroom games</small></span></div>
 
         <div class="nav-actions">
+            <div class="theme-mount"></div>
             <button class="btn-exit-game" onclick="exitGame()"><i data-lucide="log-out" aria-hidden="true"></i> Log out</button>
 
             <div class="nav-timer">
@@ -410,8 +413,15 @@
                 <div class="result-title" id="result-title">Game Over!</div>
                 <div class="result-sub" id="result-sub"></div>
                 <div class="result-score-box" id="result-score-box">
-                    <div class="rsb-pct" id="result-pct"></div>
-                    <div class="rsb-label" id="result-label"></div>
+                    <div class="rsb-team-score" id="result-team-score" hidden>
+                        <div class="rsb-team alpha"><span>Team Alpha</span><strong id="result-alpha-score">0</strong></div>
+                        <span class="rsb-versus">VS</span>
+                        <div class="rsb-team beta"><span>Team Beta</span><strong id="result-beta-score">0</strong></div>
+                    </div>
+                    <div class="rsb-stat" id="result-stat">
+                        <div class="rsb-pct" id="result-pct"></div>
+                        <div class="rsb-label" id="result-label"></div>
+                    </div>
                     <div class="rsb-xp" id="result-xp"></div>
                 </div>
                 <button class="btn-play-again" onclick="resetToLobby()">🎮 Play Again</button>
@@ -422,18 +432,18 @@
 
     <dialog class="quit-game-dialog" id="quit-game-dialog" aria-labelledby="quit-game-title">
         <div class="quit-game-icon"><i data-lucide="log-out" aria-hidden="true"></i></div>
-        <h2 id="quit-game-title">Quit this game?</h2>
-        <p>Your current round will end if you leave.</p>
+        <h2 id="quit-game-title">Return to game selection?</h2>
+        <p>Your current round will end and return to the game selection screen.</p>
         <div class="quit-game-actions">
             <button type="button" class="quit-stay" onclick="document.getElementById(&quot;quit-game-dialog&quot;).close()">Keep playing</button>
-            <button type="button" class="quit-confirm" onclick="confirmQuitGame()">Quit game</button>
+            <button type="button" class="quit-confirm" onclick="confirmQuitGame()">Back to selection</button>
         </div>
     </dialog>
 
     <!-- TOAST -->
     <div class="toast" id="toast"><span id="toast-icon">✅</span>&nbsp;<span id="toast-msg"></span></div>
-    <script src="../assets/js/game.js?v=17"></script>
-    <script src="../assets/js/main.js?v=8"></script>
+    <script src="../assets/js/game.js?v=20"></script>
+    <script src="../assets/js/main.js?v=11"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="../assets/js/lucide-emoji.js?v=2"></script>
 </body>

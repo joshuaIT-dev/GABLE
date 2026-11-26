@@ -42,3 +42,26 @@
 #ci-container .review-library-button { min-height: 40px; padding: 9px 14px; border: 1px solid #4a6480; border-radius: 9px; background: #263e58; color: #e4eefb; font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; }
 #ci-container .review-library-button:hover { background: #33516f; }
 @media(max-width:600px) { #ci-container .ci-header-right { flex-wrap: wrap; justify-content: flex-start; } }
+
+/* Shared Saved Reviews dialog: restore light surfaces for both portals. */
+html[data-theme="light"] #review-dialog.review-overlay { color: #172033 !important; color-scheme: light; }
+html[data-theme="light"] #review-dialog .review-dialog { color: #172033 !important; background: #fff !important; border-color: #cfd8e5 !important; }
+html[data-theme="light"] #review-dialog .review-dialog-header { background: #f1f5fa !important; border-color: #d6dfeb !important; }
+html[data-theme="light"] #review-dialog h2,
+html[data-theme="light"] #review-dialog .saved-review-card h3 { color: #172033 !important; }
+html[data-theme="light"] #review-dialog .review-close { color: #344054 !important; background: #fff !important; border-color: #cbd5e1 !important; }
+html[data-theme="light"] #review-dialog .review-dialog-body { color: #344054 !important; scrollbar-color: #aab7c8 #edf1f6; }
+html[data-theme="light"] #review-dialog .review-filters,
+html[data-theme="light"] #review-dialog .review-check { color: #344054 !important; background: #f4f7fb !important; border-color: #d6dfeb !important; }
+html[data-theme="light"] #review-dialog :is(input:not([type=checkbox]),select) { color: #172033 !important; background: #fff !important; border-color: #cbd5e1 !important; color-scheme: light; }
+html[data-theme="light"] #review-dialog input::placeholder { color: #667085 !important; }
+html[data-theme="light"] #review-dialog .saved-review-card { color: #253248 !important; background: #f8fafd !important; border-color: #d6dfeb !important; }
+html[data-theme="light"] #review-dialog .saved-review-card :is(p,div,span,strong,small) { color: #253248 !important; }
+html[data-theme="light"] #review-dialog .saved-review-card .review-muted { color: #667085 !important; }
+html[data-theme="light"] #review-dialog .saved-review-text { color: #253248 !important; background: #fff !important; border-color: #d6dfeb !important; }
+html[data-theme="light"] #review-dialog .review-check :is(strong,small) { color: #344054 !important; }
+html[data-theme="light"] #review-dialog .review-muted { color: #667085 !important; }
+html[data-theme="light"] #review-dialog .review-dialog-actions { border-color: #d6dfeb !important; }
+html[data-theme="light"] #review-dialog .btn-secondary { color: #344054 !important; background: #f1f5fa !important; border-color: #cbd5e1 !important; }
+html[data-theme="light"] #review-dialog .review-delete { color: #a61b29 !important; background: #fff0f1 !important; border-color: #e7a8ae !important; }
+html[data-theme="light"] #review-dialog .review-export-message { color: #344054 !important; }

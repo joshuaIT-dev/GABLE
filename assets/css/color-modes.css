@@ -1,0 +1,496 @@
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg-deep: #f4f6fa;
+  --bg-mid: #eef1f6;
+  --bg-card: rgba(255,255,255,.96);
+  --bg-card-border: #dde3ec;
+  --public-card: #fff;
+  --public-card-raised: #f7f8fb;
+  --public-card-border: #dfe5ee;
+  --navbar-bg: rgba(255,255,255,.94);
+  --surface-hover: rgba(23,32,51,.06);
+  --surface-strong: rgba(23,32,51,.10);
+  --control-bg: #fff;
+  --control-border: #d6dde8;
+  --divider: #e2e7ef;
+  --shadow-card: 0 10px 24px rgba(32,48,76,.08);
+  --shadow-elevated: 0 24px 64px rgba(32,48,76,.16);
+  --page-grid: linear-gradient(90deg,transparent 11px,rgba(201,137,105,.07) 11px 12px,transparent 12px),repeating-linear-gradient(to bottom,transparent 0 47px,rgba(23,32,51,.025) 47px 48px);
+  --text: #172033;
+  --text-muted: #667085;
+  --pill-bg: rgba(112,69,192,.08);
+  --pill-hover: rgba(112,69,192,.14);
+  --action-button-bg: #17191d;
+  --action-button-color: #fff;
+  --action-button-hover: #30343a;
+  --theme-toggle-active-bg: #17191d;
+  --theme-toggle-active-color: #fff;
+  --theme-toggle-hover-bg: rgba(23,25,29,.12);
+  --theme-toggle-group-bg: #e9edf2;
+  --theme-toggle-group-border: #bcc5d1;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg-deep: #111214;
+  --bg-mid: #181a1d;
+  --bg-card: rgba(29,31,35,.96);
+  --bg-card-border: #383b41;
+  --public-card: #1b1d21;
+  --public-card-raised: #24272c;
+  --public-card-border: #383c43;
+  --navbar-bg: rgba(17,18,20,.96);
+  --surface-hover: rgba(255,255,255,.07);
+  --surface-strong: rgba(255,255,255,.11);
+  --control-bg: #202226;
+  --control-border: #42464e;
+  --divider: rgba(255,255,255,.12);
+  --shadow-card: 0 10px 24px rgba(0,0,0,.2);
+  --shadow-elevated: 0 24px 64px rgba(0,0,0,.4);
+  --page-grid: none;
+  --text: #f4f4f5;
+  --text-muted: #b2b5bc;
+  --action-button-bg: #f4f4f5;
+  --action-button-color: #17191d;
+  --action-button-hover: #dedee2;
+  --theme-toggle-active-bg: #e1e8f0;
+  --theme-toggle-active-color: #172033;
+  --theme-toggle-hover-bg: rgba(23,25,29,.14);
+  --theme-toggle-group-bg: #24272c;
+  --theme-toggle-group-border: #50545b;
+}
+
+:root[data-theme="current"] {
+  color-scheme: dark;
+  --navbar-bg: rgba(17,27,45,.94);
+  --control-bg: #15263d;
+  --control-border: #3a526e;
+  --action-button-bg: linear-gradient(135deg,#7c5cbf,#9b6fd4);
+  --action-button-color: #fff;
+  --action-button-hover: linear-gradient(135deg,#805bd0,#a47be0);
+  --theme-toggle-active-bg: #7c5cbf;
+  --theme-toggle-active-color: #fff;
+  --theme-toggle-hover-bg: rgba(255,255,255,.16);
+  --theme-toggle-group-bg: rgba(255,255,255,.10);
+  --theme-toggle-group-border: rgba(226,231,239,.35);
+}
+
+body.color-mode-page {
+  background-color: var(--bg-deep);
+  background-image: var(--page-grid);
+  color: var(--text);
+  transition: background-color .25s, color .25s;
+}
+:root[data-theme="light"] .color-mode-page .logo .brand-wordmark {
+  color: var(--text);
+  -webkit-text-fill-color: currentColor;
+}
+:root[data-theme="light"] .color-mode-page .hero-badge {
+  color: #54349b;
+  background: #f1ebfc;
+  border-color: #d8c9f1;
+}
+:root[data-theme="light"] .color-mode-page .hero h1 span {
+  background-image: linear-gradient(135deg, #59389b, #973b87);
+}
+:root[data-theme="light"] .color-mode-page .stat-card:nth-child(4n + 2) { --stat-accent: #5b3c9b; }
+
+.color-mode-page .form-group label { color: var(--text); }
+.color-mode-page :is(.login-card h1,.login-subtitle,.back-link,.select-arrow) { color: var(--text-muted); }
+.color-mode-page .login-card h1 { color: var(--text); }
+.color-mode-page .back-link:hover { color: var(--text); }
+.color-mode-page .form-group input,
+.color-mode-page .form-group select,
+.color-mode-page .form-group textarea {
+  background: var(--control-bg);
+  border-color: var(--control-border);
+  color: var(--text);
+}
+.color-mode-page .form-group input::placeholder,
+.color-mode-page .form-group textarea::placeholder { color: var(--text-muted); opacity: .72; }
+.color-mode-page .form-group :is(input,select,textarea):focus {
+  border-color: var(--purple-light);
+  box-shadow: 0 0 0 3px rgba(124,92,191,.2);
+}
+.color-mode-page .form-group select option { background: var(--public-card); color: var(--text); }
+.color-mode-page .select-wrap select { color: var(--text); background-color: var(--control-bg); }
+.color-mode-page .lock-icon { background: var(--action-button-bg); color: var(--action-button-color); }
+.color-mode-page .btn-login-submit {
+  background: var(--action-button-bg);
+  color: var(--action-button-color);
+  border: 1px solid transparent;
+}
+.color-mode-page .btn-login-submit:hover { background: var(--action-button-hover); }
+.color-mode-page .help-bubble {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  width: auto;
+  min-width: 88px;
+  padding: 0 .85rem;
+  border-color: var(--control-border);
+  background: var(--public-card-raised);
+  color: var(--text);
+  border-radius: 999px;
+  box-shadow: var(--shadow-card);
+}
+.color-mode-page .help-bubble:hover { background: var(--surface-strong); color: var(--text); }
+.help-bubble-icon {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--control-border);
+  border-radius: 50%;
+  font-size: .78rem;
+}
+.color-mode-page footer { border-color: var(--divider); }
+.color-mode-page :is(.btn-cta,.navbar .btn-login,.btn-primary,.btn-chat,.btn-plmun,.btn-start-game:not(:disabled),.btn-play-again) {
+  background: var(--action-button-bg) !important;
+  color: var(--action-button-color) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+.color-mode-page :is(.btn-cta,.navbar .btn-login,.btn-primary,.btn-chat,.btn-plmun,.btn-start-game:not(:disabled),.btn-play-again):hover {
+  background: var(--action-button-hover) !important;
+}
+.color-mode-page .chat-window { color: var(--text); background: var(--public-card); border-color: var(--public-card-border); }
+.color-mode-page .chat-header,
+.color-mode-page .chat-input-area,
+.color-mode-page .chat-disclaimer { background: var(--public-card-raised); border-color: var(--divider); }
+.color-mode-page .chat-heading h2,
+.color-mode-page .chat-msg strong { color: var(--text); }
+.color-mode-page :is(.chat-heading p,.chat-suggestions-label,.chat-typing,.chat-disclaimer) { color: var(--text-muted); }
+.color-mode-page .chat-header .close-btn { color: var(--text); background: var(--surface-strong); border-color: var(--control-border); }
+.color-mode-page .chat-header .close-btn:hover { color: var(--text); background: var(--surface-hover); }
+.color-mode-page .chat-header .close-btn :is(svg,.lucide) { color: inherit !important; stroke: currentColor; }
+.color-mode-page :is(.chat-messages,.chat-suggestions) { background: var(--bg-deep); }
+.color-mode-page .chat-msg:not(.user) { color: var(--text); background: var(--public-card-raised); border-color: var(--public-card-border); }
+.color-mode-page .chat-msg.user { color: var(--action-button-color); background: var(--action-button-bg); border-color: transparent; }
+.color-mode-page .chat-msg.user .chat-msg-label { color: inherit; }
+.color-mode-page .chat-msg-label { color: #6542a6; }
+.color-mode-page .chat-suggestion-list button { color: var(--text); background: var(--public-card-raised); border-color: var(--control-border); }
+.color-mode-page .chat-suggestion-list button:hover { background: var(--surface-strong); border-color: #7c5cbf; }
+.color-mode-page .chat-input-area input { color: var(--text); background: var(--control-bg); border-color: var(--control-border); }
+.color-mode-page .chat-input-area input::placeholder { color: var(--text-muted); }
+.color-mode-page .chat-input-area button { color: var(--action-button-color); background: var(--action-button-bg); }
+.color-mode-page .chat-input-area button:hover { background: var(--action-button-hover); }
+.color-mode-page :is(.chat-header .close-btn,.chat-suggestion-list button,.chat-input-area input,.chat-input-area button):focus-visible { outline-color: #7c5cbf; }
+
+.theme-toggle-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid var(--theme-toggle-group-border, var(--divider));
+  border-radius: 999px;
+  background: var(--theme-toggle-group-bg, var(--surface-hover));
+}
+.theme-toggle-option {
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.theme-toggle-option:hover { background: var(--theme-toggle-hover-bg); color: var(--text); }
+.theme-toggle-option[aria-pressed="true"] {
+  background: var(--theme-toggle-active-bg);
+  border-color: var(--theme-toggle-active-bg);
+  color: var(--theme-toggle-active-color);
+}
+.theme-toggle-option:focus-visible { outline: 3px solid var(--purple-light); outline-offset: 2px; }
+.theme-toggle-option svg { width: 16px; height: 16px; }
+::view-transition-old(root) { animation: none; }
+::view-transition-new(root) { animation: theme-page-reveal .7s ease-out both; }
+@keyframes theme-page-reveal {
+  from { clip-path: circle(0 at var(--theme-reveal-x) var(--theme-reveal-y)); }
+  to { clip-path: circle(150vmax at var(--theme-reveal-x) var(--theme-reveal-y)); }
+}
+.theme-mount--fixed {
+  position: fixed;
+  top: 1.5rem;
+  right: 2rem;
+  z-index: 200;
+}
+
+.users-portal { background: var(--bg-deep); color: var(--text); }
+.users-portal .top-bar { background: var(--navbar-bg); border: 0; }
+.users-portal .top-back { color: var(--text); background: var(--public-card-raised); border: 0; }
+.users-portal .theme-mount {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: .25rem;
+  padding-right: .9rem;
+  border-right: 1px solid var(--divider);
+}
+.users-portal .theme-toggle-group { border-color: var(--control-border); }
+.users-portal .top-brand,
+.users-portal .uc-action,
+.users-portal .pw-label { color: var(--text); }
+.users-portal .top-brand span,
+.users-portal .top-time,
+.users-portal .greeting,
+.users-portal .subhead,
+.users-portal .uc-role,
+.users-portal .access-note,
+.users-portal .bottom-bar { color: var(--text-muted); }
+.users-portal .user-card,
+.users-portal .pw-box { color: var(--text); background: var(--public-card); border-color: var(--public-card-border); }
+.users-portal .uc-action { border-color: var(--divider); }
+.users-portal .pw-input { color: var(--text); background: var(--control-bg); border-color: var(--control-border); }
+.users-portal .pw-toggle { color: var(--text-muted); }
+.users-portal .pw-actions button { color: var(--text); border-color: var(--control-border); }
+.users-portal .pw-actions .btn-pw-go,
+.users-portal .pw-actions .btn-pw-go:hover:not(.loading) { color: #fff !important; }
+.users-portal .pw-actions .btn-pw-go:hover:not(.loading) { background: #805bd0; }
+.users-portal .pw-prompt { color: var(--text); }
+.users-portal .pw-prompt::backdrop { background: rgba(0,0,0,.62); }
+.users-portal .uc-avatar,
+.users-portal .pw-avatar { color: var(--text); background: var(--public-card-raised); border-color: var(--control-border); }
+.users-portal .access-note button { color: var(--action-button-bg); }
+.users-portal .uc-avatar.game { background: #294641; border-color: #4c7169; }
+:root[data-theme="light"] .users-portal .uc-avatar.game { background: #e8f4ef; border-color: #b7d8ca; }
+
+.game-portal .navbar { background: var(--navbar-bg); border-color: var(--divider); border-bottom: 0 !important; }
+.game-portal .nav-actions { gap: 10px; }
+.game-portal .nav-actions > :is(.btn-exit-game,.nav-timer,.nav-mode,.theme-mount) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100px;
+  height: 40px;
+  min-height: 40px;
+  margin: 0;
+  padding: 0 8px;
+}
+.game-portal .nav-actions .theme-mount { width: 100px; padding: 0; }
+.game-portal .theme-toggle-group { width: 100px; height: 40px; justify-content: center; gap: 2px; padding: 3px; }
+.game-portal .theme-toggle-option { width: 28px; height: 28px; }
+.game-portal .theme-toggle-option svg { width: 15px; height: 15px; }
+.game-portal .toast {
+  color: var(--text);
+  background: var(--public-card);
+  border: 1px solid var(--public-card-border);
+  border-left: 4px solid #7c5cbf;
+  border-radius: 14px;
+  box-shadow: 0 14px 36px rgba(0,0,0,.24);
+}
+.game-portal #toast-icon {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  border-radius: 9px;
+  background: var(--surface-hover);
+}
+
+:root[data-theme="light"] .game-portal {
+  --text: #172033;
+  --text-muted: #667085;
+  color-scheme: light;
+  color: var(--text);
+}
+:root[data-theme="light"] .game-portal .navbar { background: var(--navbar-bg); border-color: var(--divider); }
+:root[data-theme="light"] .game-portal .brand-wordmark { color: var(--text); -webkit-text-fill-color: currentColor; }
+:root[data-theme="light"] .game-portal .brand-wordmark small { color: var(--text-muted); }
+:root[data-theme="light"] .game-portal :is(.nav-timer,.nav-mode) { color: var(--text); background: var(--public-card-raised); border-color: var(--control-border); }
+:root[data-theme="light"] .game-portal #nav-timer { color: #805b19; }
+:root[data-theme="light"] .game-portal .btn-exit-game { color: #8c3949; background: #fff0f2; border-color: #ecc7cf; }
+:root[data-theme="light"] .game-portal :is(.lobby-title,.mode-card,.mc-title,.score-box,.q-text,.buzzer-q-text,.hs-concept-word,.crossword-clue,.result-title) { color: var(--text); }
+:root[data-theme="light"] .game-portal :is(.lobby-sub,.mc-desc,.prog-label,.buzzer-waiting,.hs-concept-hint,.result-sub) { color: var(--text-muted); }
+:root[data-theme="light"] .game-portal .lobby-icon { color: #563b91; background: #f1ebfc; border-color: #d8c9f1; }
+:root[data-theme="light"] .game-portal .lobby-icon :is(svg,.lucide) { color: #563b91 !important; stroke: currentColor; }
+:root[data-theme="light"] .game-portal .game-config-field label { color: var(--text-muted); }
+:root[data-theme="light"] .game-portal #game-launch-status { color: #805b19; }
+:root[data-theme="light"] .game-portal .mode-card { background: var(--public-card); border-color: var(--public-card-border); }
+:root[data-theme="light"] .game-portal .mode-card:hover { background: #f7f8fb; border-color: #b8c6d8; }
+:root[data-theme="light"] .game-portal .mode-card.active { background: #edf3fc; border-color: #7b9cc4; box-shadow: inset 0 0 0 1px #7b9cc4; }
+:root[data-theme="light"] .game-portal .mc-icon { background: #eef1f6; }
+:root[data-theme="light"] .game-portal .lobby-config,
+:root[data-theme="light"] .game-portal :is(.question-card,.buzzer-q-wrap,.hotseat-concept-card,.crossword-panel,.result-screen,.result-score-box,#area-jumble>div) { color: var(--text); background: var(--public-card); border-color: var(--public-card-border); }
+:root[data-theme="light"] .game-portal :is(.lc-select,.crossword-answer,#jumble-answer) { color: var(--text); background: var(--control-bg); border-color: var(--control-border); }
+:root[data-theme="light"] .game-portal :is(.lc-select,#jumble-answer) option { color: var(--text); background: var(--public-card); }
+:root[data-theme="light"] .game-portal :is(.score-box,.score-box.beta) { background: var(--public-card-raised); }
+:root[data-theme="light"] .game-portal .score-box.alpha { border-color: #82a8cf; }
+:root[data-theme="light"] .game-portal .score-box.beta { border-color: #d1a0c0; }
+:root[data-theme="light"] .game-portal .prog-track { background: #dfe5ee; }
+:root[data-theme="light"] .game-portal .prog-label,
+:root[data-theme="light"] .game-portal :is(.q-num-label,.buzzer-q-num,.hs-eyebrow) { color: var(--text-muted); }
+:root[data-theme="light"] .game-portal .crossword-board-wrap { background: var(--public-card-raised); border-color: var(--public-card-border); }
+:root[data-theme="light"] .game-portal :is(.result-title,.rsb-pct,.rsb-xp) { color: var(--text); }
+:root[data-theme="light"] .game-portal .btn-start-game:disabled { color: #667085; background: #e9edf2; border-color: #d6dde8; }
+:root[data-theme="dark"] .game-portal .btn-start-game:disabled { color: #92959d; background: #303238; border-color: #42464e; }
+:root[data-theme="light"] .game-portal :is(.quit-game-dialog,#area-jumble>div) { color: var(--text); background: var(--public-card); border-color: var(--public-card-border); }
+
+:root[data-theme="dark"] .game-portal {
+  --text: #f4f4f5;
+  --text-muted: #b2b5bc;
+  color-scheme: dark;
+  color: var(--text);
+}
+:root[data-theme="dark"] .game-portal .navbar { background: var(--navbar-bg) !important; border-color: var(--divider); }
+:root[data-theme="dark"] .game-portal .brand-wordmark { color: var(--text); -webkit-text-fill-color: currentColor; }
+:root[data-theme="dark"] .game-portal .brand-wordmark small { color: var(--text-muted); }
+:root[data-theme="dark"] .game-portal :is(.nav-timer,.nav-mode) { color: var(--text); background: var(--public-card-raised); border-color: var(--control-border); }
+:root[data-theme="dark"] .game-portal #nav-timer { color: #efd399; }
+:root[data-theme="dark"] .game-portal :is(.lobby-title,.mode-card,.mc-title,.score-box,.q-text,.buzzer-q-text,.hs-concept-word,.crossword-clue,.result-title) { color: var(--text); }
+:root[data-theme="dark"] .game-portal :is(.lobby-sub,.mc-desc,.prog-label,.buzzer-waiting,.hs-concept-hint,.result-sub) { color: var(--text-muted); }
+:root[data-theme="dark"] .game-portal .lobby-icon { color: #c5b0ff; background: #24272c; border-color: #50545b; }
+:root[data-theme="dark"] .game-portal .lobby-icon :is(svg,.lucide) { color: #c5b0ff !important; stroke: currentColor; }
+:root[data-theme="dark"] .game-portal .mode-card { color: var(--text) !important; background: var(--public-card) !important; border-color: var(--public-card-border) !important; }
+:root[data-theme="dark"] .game-portal .mode-card:hover { background: var(--public-card-raised) !important; border-color: #666a73 !important; }
+:root[data-theme="dark"] .game-portal .mode-card.active { background: #302741 !important; border-color: #8b6cbd !important; box-shadow: inset 0 0 0 1px #8b6cbd; }
+:root[data-theme="dark"] .game-portal .mc-icon { background: var(--public-card-raised) !important; }
+:root[data-theme="dark"] .game-portal .lobby-config,
+:root[data-theme="dark"] .game-portal :is(.question-card,.buzzer-q-wrap,.hotseat-concept-card,.crossword-panel,.result-screen,.result-score-box,#area-jumble>div) { color: var(--text); background: var(--public-card) !important; border-color: var(--public-card-border); }
+:root[data-theme="dark"] .game-portal .game-config-field label { color: var(--text-muted); }
+:root[data-theme="dark"] .game-portal :is(.lc-select,.crossword-answer,#jumble-answer) { color: var(--text); background: var(--control-bg); border-color: var(--control-border); }
+:root[data-theme="dark"] .game-portal :is(.lc-select,#jumble-answer) option { color: var(--text); background: var(--public-card); }
+:root[data-theme="dark"] .game-portal :is(.score-box,.score-box.beta) { background: var(--public-card-raised); }
+:root[data-theme="dark"] .game-portal .score-box.alpha { border-color: #527ca9; }
+:root[data-theme="dark"] .game-portal .score-box.beta { border-color: #74566e; }
+:root[data-theme="dark"] .game-portal .prog-track { background: #303238; }
+:root[data-theme="dark"] .game-portal :is(.q-num-label,.buzzer-q-num,.hs-eyebrow) { color: var(--text-muted); }
+:root[data-theme="dark"] .game-portal .crossword-board-wrap { background: var(--public-card-raised); border-color: var(--public-card-border); }
+:root[data-theme="dark"] .game-portal :is(.result-title,.rsb-pct,.rsb-xp) { color: var(--text); }
+:root[data-theme="dark"] .game-portal :is(.quit-game-dialog,#area-jumble>div) { color: var(--text); background: var(--public-card); border-color: var(--public-card-border); }
+
+/* Game surfaces use the same readable neutral palette as the rest of the portal. */
+:root[data-theme="light"] .game-portal { background: var(--bg-deep); color: var(--text); }
+:root[data-theme="dark"] .game-portal { background: var(--bg-deep); color: var(--text); }
+:root[data-theme="light"] .game-portal #nav-timer.is-warning { color: #a15c00; }
+:root[data-theme="light"] .game-portal #nav-timer.is-danger { color: #b42332; }
+:root[data-theme="dark"] .game-portal #nav-timer.is-warning { color: #f4b942; }
+:root[data-theme="dark"] .game-portal #nav-timer.is-danger { color: #ff7272; }
+:root[data-theme="light"] .game-portal :is(.crossword-eyebrow,.crossword-direction,.hs-concept-label) { color: #6844a1; }
+:root[data-theme="dark"] .game-portal :is(.crossword-eyebrow,.crossword-direction,.hs-concept-label) { color: #c5b0ff; }
+:root[data-theme="light"] .game-portal .crossword-direction { background: #f1ebfc; }
+:root[data-theme="dark"] .game-portal .crossword-direction { background: #302741; }
+:root[data-theme="light"] .game-portal .hs-concept-word,
+:root[data-theme="dark"] .game-portal .hs-concept-word { background: none; -webkit-text-fill-color: currentColor; }
+:root[data-theme="light"] .game-portal .hs-concept-word { color: #563b91; }
+:root[data-theme="dark"] .game-portal .hs-concept-word { color: #d6c7ff; }
+:root[data-theme="light"] .game-portal .hs-countdown-num { color: var(--text); }
+:root[data-theme="dark"] .game-portal .hs-countdown-num { color: var(--text); }
+:root[data-theme="light"] .game-portal .hs-countdown-num.urgent { color: #b42332; }
+:root[data-theme="dark"] .game-portal .hs-countdown-num.urgent { color: #ff7272; }
+:root[data-theme="light"] .game-portal .crossword-cell { color: var(--text); background: #fff; border-color: #b8c3d2; }
+:root[data-theme="dark"] .game-portal .crossword-cell { color: var(--text); background: #292c32; border-color: #50545b; }
+:root[data-theme="light"] .game-portal .crossword-cell.block { background: #dfe4ec; border-color: transparent; }
+:root[data-theme="dark"] .game-portal .crossword-cell.block { background: #111214; border-color: transparent; }
+:root[data-theme="light"] .game-portal .crossword-cell.solved { background: #e7ddf7; border-color: #a98bd1; }
+:root[data-theme="dark"] .game-portal .crossword-cell.solved { background: #44365c; border-color: #8063aa; }
+:root[data-theme="light"] .game-portal .crossword-cell.active { background: #dcecff; border-color: #7aa6d9; }
+:root[data-theme="dark"] .game-portal .crossword-cell.active { background: #293c54; border-color: #6d94bf; }
+:root[data-theme="light"] .game-portal .crossword-letter { color: var(--text); }
+:root[data-theme="dark"] .game-portal .crossword-letter { color: var(--text); }
+:root[data-theme="light"] .game-portal :is(.crossword-submit,#area-jumble button) { color: #fff; background: #365e87 !important; border-color: #527ba5 !important; }
+:root[data-theme="dark"] .game-portal :is(.crossword-submit,#area-jumble button) { color: #f4f4f5; background: #3e4148 !important; border-color: #656a73 !important; }
+:root[data-theme="light"] .game-portal .crossword-steal { color: #795412; background: #fff6dc; border-color: #d9b96f; }
+:root[data-theme="dark"] .game-portal .crossword-steal { color: #f3d58e; background: #3a321f; border-color: #806c3f; }
+:root[data-theme="light"] .game-portal .hotseat-turn-badge { color: #3b5f88; background: #e8f1fb; border-color: #b5cbe3; }
+:root[data-theme="dark"] .game-portal .hotseat-turn-badge { color: #c9e1fb; background: #284967; border-color: #567da3; }
+:root[data-theme="light"] .game-portal .hotseat-turn-badge.beta { color: #8b416d; background: #faeaf3; border-color: #e8b9d1; }
+:root[data-theme="dark"] .game-portal .hotseat-turn-badge.beta { color: #f4a7d0; background: #482d40; border-color: #81536f; }
+:root[data-theme="light"] .game-portal .hs-btn.correct { color: #14634b; background: #e5f5ef; border-color: #91cbb5; }
+:root[data-theme="dark"] .game-portal .hs-btn.correct { color: #c1efdf; background: #245047; border-color: #548d7d; }
+:root[data-theme="light"] .game-portal .hs-btn.skip { color: #36536f; background: #edf2f8; border-color: #b8c8db; }
+:root[data-theme="dark"] .game-portal .hs-btn.skip { color: #d0e1f7; background: #293e58; border-color: #4a6687; }
+:root[data-theme="light"] .game-portal #jumble-word { color: #31577e; }
+:root[data-theme="dark"] .game-portal #jumble-word { color: #c2dcf8; }
+:root[data-theme="light"] .game-portal #jumble-hint { color: var(--text-muted); }
+:root[data-theme="dark"] .game-portal #jumble-hint { color: var(--text-muted); }
+:root[data-theme="light"] .game-portal #jumble-answer { background: var(--control-bg) !important; border-color: var(--control-border) !important; }
+:root[data-theme="dark"] .game-portal #jumble-answer { background: var(--control-bg) !important; border-color: var(--control-border) !important; }
+:root[data-theme="light"] .game-portal .score-box.beta { background: #fbf0f6; }
+:root[data-theme="dark"] .game-portal .score-box.beta { background: #332c43; }
+:root[data-theme="light"] .game-portal .sb-val.blue { color: #315f91; }
+:root[data-theme="light"] .game-portal .sb-val.pink { color: #9b4779; }
+:root[data-theme="light"] .game-portal .feedback-banner.correct { color: #14634b; background: #e5f5ef; border-color: #91cbb5; }
+:root[data-theme="light"] .game-portal .feedback-banner.wrong { color: #a52a37; background: #fff0f1; border-color: #e7aeb5; }
+:root[data-theme="light"] .game-portal .buzzer-screen button:first-of-type { color: #315f91 !important; background: #e8f1fb !important; border-color: #a9c4e2 !important; }
+:root[data-theme="light"] .game-portal .buzzer-screen button:nth-of-type(2) { color: var(--text) !important; background: #eef1f5 !important; border-color: #cbd3de !important; }
+:root[data-theme="light"] .game-portal .buzzer-screen button:last-of-type { color: #8b416d !important; background: #faeaf3 !important; border-color: #e8b9d1 !important; }
+:root[data-theme="dark"] .game-portal .buzzer-screen button:first-of-type { color: #7eb3ff !important; background: #23354b !important; border-color: #456a94 !important; }
+:root[data-theme="dark"] .game-portal .buzzer-screen button:nth-of-type(2) { color: var(--text) !important; background: #303238 !important; border-color: #50545b !important; }
+:root[data-theme="dark"] .game-portal .buzzer-screen button:last-of-type { color: #f4a7d0 !important; background: #482d40 !important; border-color: #81536f !important; }
+:root[data-theme="light"] .game-portal #kahoot-next-btn { color: #fff !important; background: #18835e !important; }
+:root[data-theme="dark"] .game-portal #kahoot-next-btn { color: #fff !important; background: #18835e !important; }
+:root[data-theme="light"] .game-portal :is(.rsb-team,.rsb-stat) { background: var(--public-card-raised); border-color: var(--public-card-border); }
+:root[data-theme="dark"] .game-portal :is(.rsb-team,.rsb-stat) { background: var(--public-card-raised); border-color: var(--public-card-border); }
+:root[data-theme="light"] .game-portal .rsb-team.alpha { background: #e8f1fb; border-color: #a9c4e2; }
+:root[data-theme="dark"] .game-portal .rsb-team.alpha { background: #203a55; border-color: #527ca9; }
+:root[data-theme="light"] .game-portal .rsb-team.beta { background: #faeaf3; border-color: #e8b9d1; }
+:root[data-theme="dark"] .game-portal .rsb-team.beta { background: #382e43; border-color: #805e80; }
+:root[data-theme="light"] .game-portal .rsb-team strong { color: var(--text); }
+:root[data-theme="dark"] .game-portal .rsb-team strong { color: var(--text); }
+:root[data-theme="light"] .game-portal .rsb-team.alpha span { color: #315f91; }
+:root[data-theme="light"] .game-portal .rsb-team.beta span { color: #8b416d; }
+:root[data-theme="dark"] .game-portal .rsb-team.alpha span { color: #a9c9ec; }
+:root[data-theme="dark"] .game-portal .rsb-team.beta span { color: #e6a7cb; }
+:root[data-theme="light"] .game-portal .rsb-xp { color: #795412; background: #fff6dc; }
+:root[data-theme="dark"] .game-portal .rsb-xp { color: #f3d58e; background: #3a321f; }
+:root[data-theme="light"] .game-portal .rsb-versus { color: var(--text-muted); }
+:root[data-theme="dark"] .game-portal .rsb-versus { color: var(--text-muted); }
+.game-portal .nav-actions > .nav-mode { width: auto; min-width: 100px; max-width: min(180px,calc(100vw - 32px)); flex: 0 1 auto; padding-inline: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+body:has(.login-card) .particle {
+  font-family: 'Silkscreen', monospace;
+  --particle-opacity: .5 !important;
+}
+:root[data-theme="light"] body:has(.login-card) { --page-grid: linear-gradient(90deg,transparent 11px,rgba(150,75,75,.125) 11px 12px,transparent 12px),repeating-linear-gradient(to bottom,transparent 0 47px,rgba(0,0,0,.07) 47px 48px); }
+:root[data-theme="dark"] body:has(.login-card) { --page-grid: linear-gradient(90deg,transparent 11px,rgba(210,145,145,.125) 11px 12px,transparent 12px),repeating-linear-gradient(to bottom,transparent 0 47px,rgba(255,255,255,.07) 47px 48px); }
+:root[data-theme="light"] body:has(.login-card) .particle { color: rgba(0,0,0,.9); }
+:root[data-theme="dark"] body:has(.login-card) .particle { color: rgba(255,255,255,.95); }
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle-option { transition: none; }
+}
+
+@media (max-width: 520px) {
+  .theme-mount--fixed { top: 1rem; right: 1rem; }
+}
+
+@media (max-width: 700px) {
+  .users-portal .top-bar { justify-content: flex-start; gap: .75rem; }
+  .users-portal .top-brand { margin-right: auto; }
+  .users-portal .theme-mount { order: 2; }
+  .users-portal .top-back { order: 3; }
+}
+
+/* Explicit action colors requested for public, login, and classroom pages. */
+.color-mode-page :is(.btn-cta,.navbar .btn-login,.btn-login-submit,.btn-chat,.btn-pw-go,.btn-start-game:not(:disabled)) { color: #fff !important; background: #244a73 !important; border-color: #3b6593 !important; box-shadow: none !important; }
+.color-mode-page :is(.btn-cta,.navbar .btn-login,.btn-login-submit,.btn-chat,.btn-pw-go,.btn-start-game:not(:disabled)):hover:not(:disabled) { background: #315f91 !important; }
+.color-mode-page .faq-q { color: #244a73 !important; }
+:root:is([data-theme="dark"],[data-theme="current"]) .color-mode-page .faq-q { color: #a9c8eb !important; }
+.game-portal .btn-start-game:not(:disabled) { color: #fff !important; background: #244a73 !important; border-color: #3b6593 !important; }
+.game-portal .btn-start-game:not(:disabled):hover { background: #315f91 !important; }
+.game-portal .btn-exit-game { color: #fff !important; background: #b42332 !important; border-color: #cf5360 !important; }
+.game-portal .btn-exit-game:hover { color: #fff !important; background: #941d2a !important; border-color: #b42332 !important; }
+.game-portal .toast { border-left: 1px solid var(--public-card-border) !important; }
+.users-portal .top-back { color: #fff !important; background: #244a73 !important; border-color: #3b6593 !important; }
+.users-portal .top-back:hover { background: #315f91 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .color-mode-page .role-card .pills .pill { color: #fff !important; background: #244a73 !important; border: 1px solid #3b6593 !important; }
+:root:is([data-theme="current"],[data-theme="light"],[data-theme="dark"]) .color-mode-page .role-card .pills .pill:hover { background: #315f91 !important; }
+.color-mode-page :is(.quick-card-icon,.contact-icon) { color: #173a5e !important; background: #eaf1fc !important; border: 1px solid #b7cce0; }
+.color-mode-page :is(.quick-card-icon,.contact-icon) :is(svg,.lucide) { color: #173a5e !important; stroke: #173a5e !important; }
+.color-mode-page .btn-chat,
+.color-mode-page .chat-input-area button { color: #fff !important; background: #244a73 !important; border-color: #3b6593 !important; }
+.color-mode-page :is(.btn-chat,.chat-input-area button):hover { color: #fff !important; background: #315f91 !important; }
+.color-mode-page .chat-input-area button :is(svg,.lucide) { color: #fff !important; stroke: #fff !important; }
+
+@media (max-width: 420px) {
+  .users-portal .top-bar { padding-inline: 1rem; }
+  .users-portal .top-brand { font-size: .95rem; }
+  .users-portal .top-back { padding: .55rem .65rem; }
+}

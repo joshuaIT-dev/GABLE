@@ -103,7 +103,12 @@ function renderInstructorProfile(instructor) {
 
     if (navAvatar) navAvatar.textContent = initials;
     if (navName)   navName.textContent = fullName;
-    if (navRole)   navRole.textContent = instructor.college || "Instructor";
+    if (navRole) {
+        navRole.textContent = instructor.college
+            ? getCollegeAbbreviation(instructor.college)
+            : "Instructor";
+        navRole.title = instructor.college || "Instructor";
+    }
 
     // ---- PROFILE MODAL: header card ----
     const modalAvatar = document.getElementById("profile-modal-avatar");
@@ -141,6 +146,7 @@ const collegeBadge = document.getElementById("profile-college-badge");
 
 if (collegeBadge) {
     collegeBadge.textContent = getCollegeAbbreviation(instructor.college);
+    collegeBadge.title = instructor.college || "College not assigned";
 }
 
 // 2. CURRENT LEVEL BADGE
@@ -170,15 +176,17 @@ if (levelBadge) {
         `Level ${currentLevel.num} ${currentLevel.name}`;
 }
 
-// 3. ADMIN-ASSIGNED GRADE
+// 3. TEACHING RANK EARNED THROUGH TEACHING XP
 const gradeBadge = document.getElementById("profile-grade-badge");
 
 if (gradeBadge) {
-    gradeBadge.textContent = instructor.grade || '--';
-    gradeBadge.dataset.rank = instructor.grade || '';
+    const xp = Math.max(0, Number(teachingXP) || 0);
+    const rank = getTeachingLevel(xp);
+    gradeBadge.textContent = rank.name;
+    gradeBadge.dataset.rank = rank.name;
     gradeBadge.classList.add('teaching-rank');
-    gradeBadge.parentElement.classList.toggle('is-unranked', !instructor.grade);
-    gradeBadge.parentElement.querySelector('small').textContent = instructor.grade ? 'Admin assigned' : 'Not ranked';
+    gradeBadge.parentElement.classList.remove('is-unranked');
+    gradeBadge.parentElement.querySelector('small').textContent = `${xp.toLocaleString()} XP · rank at ${rank.xp?.toLocaleString() ?? 0} XP`;
 }
 
 // ---- COLLEGE & PROGRAM ----
@@ -187,7 +195,9 @@ const programBlock = document.getElementById("profile-program-block");
 const programVal = document.getElementById("profile-program-val");
 
 if (collegeVal) {
-    collegeVal.textContent = instructor.college || "—";
+    collegeVal.textContent = getCollegeAbbreviation(instructor.college) || "—";
+    collegeVal.title = instructor.college || "College not assigned";
+    collegeVal.setAttribute("aria-label", instructor.college || "College not assigned");
 }
 
 if (programVal) {
@@ -207,6 +217,15 @@ function getCollegeAbbreviation(college) {
     if (!college) return "College";
 
     const value = college.trim();
+    const normalized = value
+        .toLowerCase()
+        .replace(/&/g, " and ")
+        .replace(/[^a-z0-9]+/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    if (/^college of information technology and (?:computer|omputer) studies$/.test(normalized)) {
+        return "CITCS";
+    }
 
     // Keep existing abbreviations
     if (value.length <= 8) {
@@ -332,6 +351,19 @@ function renderDrafts() {
 
 
 /* ── NOTIFICATIONS ──────────────────────────────────────────── */
+let instructorNotifTab = 'announcements';
+
+function switchInstructorNotifTab(tab, button) {
+    instructorNotifTab = tab;
+    document.querySelectorAll('#notif-dropdown .np-tab').forEach(item => {
+        const active = item === button;
+        item.classList.toggle('active', active);
+        item.setAttribute('aria-selected', String(active));
+    });
+    renderNotifications();
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+}
+
 function renderNotifications() {
 
     const unread = notifications.filter(n => !n.read).length;
@@ -344,56 +376,67 @@ function renderNotifications() {
     }
 
     const iconMap = {
-        flag: '🚩',
-        boost: '⭐',
-        submit: '📝',
-        announce: '📢'
+        flag: 'flag-triangle-right',
+        boost: 'zap',
+        submit: 'notebook-pen',
+        announce: 'megaphone',
+        student_xp_award: 'badge-plus'
     };
 
     const classMap = {
         flag: 'ni-flag',
         boost: 'ni-boost',
         submit: 'ni-submit',
-        announce: 'ni-announce'
+        announce: 'ni-announce',
+        student_xp_award: 'ni-boost'
     };
+
+    const unreadAnnouncements = notifications.filter(n => n.type === 'announce' && !n.read).length;
+    const unreadActivity = notifications.filter(n => n.type !== 'announce' && !n.read).length;
+    [['inotif-ann-count', unreadAnnouncements], ['inotif-activity-count', unreadActivity]].forEach(([id, count]) => {
+        const el = document.getElementById(id);
+        if (el) { el.textContent = count > 9 ? '9+' : String(count); el.hidden = count === 0; }
+    });
 
     const list = document.getElementById('notif-list');
 
     if (!list) return;
 
-    list.innerHTML = notifications.length
-        ? notifications
-            .slice()
-            .sort((a, b) => b.time - a.time)
-            .map(n => `
+    const visibleNotifications = notifications
+        .filter(n => instructorNotifTab === 'announcements' ? n.type === 'announce' : n.type !== 'announce')
+        .slice()
+        .sort((a, b) => b.time - a.time);
+
+    list.innerHTML = visibleNotifications.length
+        ? visibleNotifications.map(n => `
                 <div 
-                    class="notif-item ${n.read ? '' : 'unread'} priority-${(n.priority || 'Normal').toLowerCase()}"
+                    class="np-item notif-item ${n.read ? 'np-read' : 'np-unread unread'} priority-${(n.priority || 'Normal').toLowerCase()}"
                     onclick="openNotif('${n.id}')"
                 >
-                    <div class="notif-icon-wrap ${classMap[n.type] || 'ni-announce'}">
-                        ${iconMap[n.type] || '🔔'}
+                    <div class="np-item-icon notif-icon-wrap ${classMap[n.type] || 'ni-announce'}">
+                        <i data-lucide="${n.type === 'announce' && /urgent/i.test(n.priority || '') ? 'siren' : (iconMap[n.type] || 'bell')}" aria-hidden="true"></i>
                     </div>
 
-                    <div class="notif-body">
-                        <div class="notif-title-text">
-                            ${n.title}
+                    <div class="np-item-body notif-body">
+                        <div class="np-item-title notif-title-text">
+                            ${['final_opening','syllabus_alignment','student_xp_award'].includes(n.type) ? escapeHtml(n.title) : n.title}
                         </div>
 
-                        <div class="notif-desc">
-                            ${['final_opening','syllabus_alignment'].includes(n.type) ? escapeHtml(n.desc) : n.desc}
+                        <div class="np-item-preview notif-desc">
+                            ${['final_opening','syllabus_alignment','student_xp_award'].includes(n.type) ? escapeHtml(n.desc) : n.desc}
                         </div>
 
-                        <span class="notif-time">
-                            ${['final_opening','syllabus_alignment'].includes(n.type) ? 'System &middot; Automated notice &middot; ' : ''}${timeAgoInstr(n.time)}
+                        <span class="np-item-meta notif-time">
+                            ${['final_opening','syllabus_alignment'].includes(n.type) ? 'System &middot; Automated notice &middot; ' : n.type === 'student_xp_award' ? 'Instructor XP award &middot; ' : ''}${timeAgoInstr(n.time)}
                         </span>
                     </div>
 
-                    <div class="notif-dot"></div>
+                    ${n.read ? '' : '<div class="np-unread-dot notif-dot"></div>'}
                 </div>
             `)
             .join('')
         : `
-            <div class="notif-empty">
+            <div class="np-empty notif-empty">
                 <div class="notif-empty-icon">🔔</div>
                 No notifications yet.
             </div>
@@ -411,7 +454,12 @@ function timeAgoInstr(ts) {
 }
 
 window.toggleNotifDropdown = function () {
-    document.getElementById('notif-dropdown')?.classList.toggle('open');
+    const dropdown = document.getElementById('notif-dropdown');
+    dropdown?.classList.toggle('open');
+    if (dropdown?.classList.contains('open')) {
+        renderNotifications();
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
 };
 
 document.addEventListener('click', e => {
@@ -423,12 +471,13 @@ document.addEventListener('click', e => {
 function markAllNotifsRead() {
     notifications.forEach(n => n.read = true);
     renderNotifications();
+    if (typeof lucide !== 'undefined') lucide.createIcons();
     showToast('✅', 'All notifications marked as read.');
 }
 
 function openNotif(id) {
     const record=notifications.find(x=>x.id===id);
-    if (['final_opening','syllabus_alignment'].includes(record?.type)) fetch('../assets/php/get_instructor_notifications.php',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({notification_id:id})}).catch(()=>showToast('!', 'Could not save notification read status.'));
+    if (['final_opening','syllabus_alignment','student_xp_award'].includes(record?.type)) fetch('../assets/php/get_instructor_notifications.php',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({notification_id:id})}).catch(()=>showToast('!', 'Could not save notification read status.'));
     const n = notifications.find(x => x.id === id);
     if (!n) return;
     n.read = true;
@@ -549,7 +598,7 @@ async function loadInstructorQuizNotifications() {
 
                 notification =>
 
-                    !['submit','final_opening','syllabus_alignment'].includes(notification.type)
+                    !['submit','final_opening','syllabus_alignment','student_xp_award'].includes(notification.type)
 
             );
 
@@ -1155,12 +1204,12 @@ function getStudentLevel(xp) {
 }
 
 function getTeachingLevel(xp) {
-  if (xp >= 3000) return { num: 10, name: 'Legend',   cls: 'lp-legend'  };
-  if (xp >= 2200) return { num: 8,  name: 'Master',   cls: 'lp-master'  };
-  if (xp >= 1600) return { num: 6,  name: 'Expert',   cls: 'lp-expert'  };
-  if (xp >= 1000) return { num: 4,  name: 'Scholar',  cls: 'lp-scholar' };
-  if (xp >= 500)  return { num: 2,  name: 'Learner',  cls: 'lp-learner' };
-  return             { num: 1,  name: 'Novice',   cls: 'lp-novice'  };
+  if (xp >= 3000) return { xp: 3000, num: 10, name: 'Legend',   cls: 'lp-legend'  };
+  if (xp >= 2200) return { xp: 2200, num: 8,  name: 'Master',   cls: 'lp-master'  };
+  if (xp >= 1600) return { xp: 1600, num: 6,  name: 'Expert',   cls: 'lp-expert'  };
+  if (xp >= 1000) return { xp: 1000, num: 4,  name: 'Scholar',  cls: 'lp-scholar' };
+  if (xp >= 500)  return { xp: 500, num: 2,  name: 'Learner',  cls: 'lp-learner' };
+  return             { xp: 0, num: 1, name: 'Novice',   cls: 'lp-novice'  };
 }
 
 /* ── INSTRUCTOR XP PROGRESS ─────────────────────────────── */
@@ -1326,6 +1375,11 @@ function updateAnalyticsSummaryCards() {
     const scoreSubEl = getEl('analytics-score-change');
 
     if (classScoreEl) {
+        classScoreEl.classList.remove('is-low', 'is-watch', 'is-strong', 'is-empty');
+        classScoreEl.classList.add(averageScore === null ? 'is-empty' : averageScore < 60 ? 'is-low' : averageScore < 80 ? 'is-watch' : 'is-strong');
+    }
+
+    if (classScoreEl) {
         classScoreEl.textContent =
             averageScore === null ? '—' : `${averageScore}%`;
     }
@@ -1385,13 +1439,21 @@ function studentFrameClass(xp) {
 
 function renderStudents(list) {
   const c = document.getElementById('students-list');
+  const rosterPool = currentFilter === 'All'
+    ? students.slice()
+    : students.filter(student => normalizeInstructorSection(student.section) === normalizeInstructorSection(currentFilter));
+  rosterPool.sort((a, b) => Number(b.xp || 0) - Number(a.xp || 0) || Number(b.score || 0) - Number(a.score || 0));
+  const rosterRanks = new Map(rosterPool.map((student, index) => [students.indexOf(student), index + 1]));
+  const topCount = currentFilter === 'All' ? 5 : 3;
   if (!list.length) {
     c.innerHTML = '<div class="empty-state"><span class="emoji">🔍</span><p>No students found.</p></div>';
     return;
   }
   c.innerHTML = list.map((s, i) => {
+    const rosterRank = rosterRanks.get(students.indexOf(s)) || Number(s.rank) || 0;
+    const topRank = rosterRank > 0 && rosterRank <= topCount ? rosterRank : 0;
     return `
-    <div class="table-row roster-top-${Number(s.rank) <= 3 ? Number(s.rank) : 0}" onclick="openStudentDetail(${students.indexOf(s)})">
+    <div class="table-row roster-top-${topRank}" onclick="openStudentDetail(${students.indexOf(s)})">
       <div class="student-name">
         <div class="s-avatar ${studentFrameClass(s.level_xp ?? s.xp)}" style="background:${avatarColors[i % avatarColors.length]}">${s.name.split(' ').map(n => n[0]).join('').slice(0, 2)}</div>
         <div><div class="s-name">${s.name}</div><div class="s-id">${s.id}</div></div>
@@ -1534,6 +1596,114 @@ function setFilter(btn, section) {
 
 
 /* ── STUDENT DETAIL MODAL ───────────────────────────────────── */
+async function openInstructorXPAward() {
+  const sectionSelect = document.getElementById('award-xp-section');
+  const studentSelect = document.getElementById('award-xp-student-select');
+  const studentTrigger = document.getElementById('award-xp-student-trigger');
+  const studentLabel = document.getElementById('award-xp-student-label');
+  const studentOptions = document.getElementById('award-xp-student-options');
+  const studentHint = document.getElementById('award-xp-student-hint');
+  const form = document.getElementById('award-student-xp-form');
+  const status = document.getElementById('award-xp-status');
+  if (!sectionSelect || !studentSelect || !studentTrigger || !studentLabel || !studentOptions || !form) return;
+  if (!students.length) await loadInstructorStudents();
+  form.reset();
+  const sections = [...new Set(students.map(student => student.section).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+  sectionSelect.replaceChildren(new Option(sections.length ? 'Choose a section' : 'No assigned sections found', ''));
+  sections.forEach(section => sectionSelect.add(new Option(section, section)));
+  studentOptions.replaceChildren();
+  studentSelect.open = false;
+  studentTrigger.setAttribute('aria-disabled', 'true');
+  studentTrigger.setAttribute('aria-label', 'Choose one or more students');
+  studentTrigger.tabIndex = -1;
+  studentLabel.textContent = 'Select a section first';
+  if (studentHint) studentHint.textContent = 'Select a section to load its students.';
+  sectionSelect.onchange = () => {
+    const section = sectionSelect.value;
+    const roster = students.filter(student => student.section === section).sort((a, b) => a.name.localeCompare(b.name));
+    studentSelect.open = false;
+    studentOptions.replaceChildren();
+    if (roster.length) {
+      const heading = document.createElement('div');
+      heading.className = 'xp-award-options-heading';
+      const title = document.createElement('strong');
+      title.textContent = 'Students in this section';
+      const instruction = document.createElement('small');
+      instruction.textContent = 'Select one or more';
+      heading.append(title, instruction);
+      studentOptions.append(heading);
+    }
+    roster.forEach(student => {
+      const label = document.createElement('label');
+      label.className = 'xp-award-student-option';
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.value = String(student.student_id);
+      checkbox.addEventListener('change', () => {
+        label.classList.toggle('is-selected', checkbox.checked);
+        const selected = [...studentOptions.querySelectorAll('input:checked')].map(input => input.nextElementSibling.textContent);
+        const count = selected.length;
+        studentLabel.textContent = count === 1 ? selected[0] : count ? `${count} students selected` : 'Choose student(s)';
+        studentTrigger.setAttribute('aria-label', count ? `${studentLabel.textContent}. Choose students` : 'Choose one or more students');
+        if (studentHint) studentHint.textContent = count ? `${count} student${count === 1 ? '' : 's'} selected.` : `${roster.length} students available. Choose one or more.`;
+      });
+      const name = document.createElement('span');
+      name.textContent = student.name;
+      label.append(checkbox, name);
+      studentOptions.append(label);
+    });
+    studentTrigger.setAttribute('aria-disabled', String(!section || !roster.length));
+    studentTrigger.tabIndex = section && roster.length ? 0 : -1;
+    studentLabel.textContent = section ? (roster.length ? 'Choose student(s)' : 'No students in this section') : 'Select a section first';
+    studentTrigger.setAttribute('aria-label', 'Choose one or more students');
+    if (studentHint) studentHint.textContent = !section ? 'Select a section to load its students.' : roster.length ? `${roster.length} student${roster.length === 1 ? '' : 's'} in this section.` : 'No assigned students in this section.';
+  };
+  if (status) status.textContent = '';
+  openModal('modal-award-student-xp');
+}
+
+document.getElementById('award-xp-student-trigger')?.addEventListener('click', event => {
+  if (event.currentTarget.getAttribute('aria-disabled') === 'true') event.preventDefault();
+});
+document.addEventListener('click', event => {
+  const studentSelect = document.getElementById('award-xp-student-select');
+  if (studentSelect?.open && !studentSelect.contains(event.target)) studentSelect.open = false;
+});
+
+document.getElementById('award-student-xp-form')?.addEventListener('submit', async event => {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const submit = form.querySelector('[type="submit"]');
+  const status = document.getElementById('award-xp-status');
+  const studentIds = [...document.querySelectorAll('#award-xp-student-options input:checked')].map(input => Number(input.value));
+  if (!studentIds.length) {
+    if (status) status.textContent = 'Choose at least one student.';
+    return;
+  }
+  submit.disabled = true;
+  if (status) status.textContent = 'Recording this XP award…';
+  try {
+    const response = await fetch('../assets/php/award_student_xp.php', {
+      method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        student_ids: studentIds,
+        amount: Number(document.getElementById('award-xp-amount').value),
+        reason: document.getElementById('award-xp-reason').value.trim()
+      })
+    });
+    const data = await response.json();
+    if (!response.ok || !data.success) throw new Error(data.message || 'Could not award XP.');
+    await loadInstructorStudents();
+    await loadInstructorQuizNotifications();
+    closeModal('modal-award-student-xp');
+    showToast('XP awarded', `${Number(data.amount).toLocaleString()} XP sent to ${data.count} student${data.count === 1 ? '' : 's'}.`);
+  } catch (error) {
+    if (status) status.textContent = error.message;
+  } finally {
+    submit.disabled = false;
+  }
+});
+
 function openStudentDetail(idx) {
   const s = students[idx];
   if (!s) return;
@@ -7922,7 +8092,7 @@ function addQuestion(listId, countId, type = 'mc', existing = null) {
   div.id          = id;
   div.setAttribute('data-type', type);
 
-  const textVal = existing ? existing.text.replace(/"/g, '&quot;') : '';
+  const textVal = existing ? escapeHtml(existing.text || '') : '';
 
   if (type === 'mc') {
     const choices = existing?.choices || ['', '', '', ''];
@@ -7933,7 +8103,7 @@ function addQuestion(listId, countId, type = 'mc', existing = null) {
         <span class="q-type-tag q-type-mc">Multiple Choice</span>
         <button class="q-remove" onclick="removeQ('${id}','${listId}','${countId}')">✕</button>
       </div>
-      <input class="q-input" placeholder="Type your question here..." value="${textVal}">
+      <textarea class="q-input" rows="3" aria-label="Question ${eqCount}" placeholder="Type your question here...">${textVal}</textarea>
       <div class="q-choices">
         ${choices.map((c, i) => `
           <div class="q-choice-row">
@@ -7954,7 +8124,7 @@ function addQuestion(listId, countId, type = 'mc', existing = null) {
         <span class="q-type-tag q-type-id">Identification</span>
         <button class="q-remove" onclick="removeQ('${id}','${listId}','${countId}')">✕</button>
       </div>
-      <input class="q-input" placeholder="Type your identification question here..." value="${textVal}">
+      <textarea class="q-input" rows="3" aria-label="Identification question ${eqCount}" placeholder="Type your identification question here...">${textVal}</textarea>
       <div class="q-id-note">📝 Students will type their answer. You will manually grade this.</div>`;
   }
 
@@ -8439,6 +8609,8 @@ function renderInstrLeaderboard() {
     // RENDER TABLE
     // =====================================================
 
+    const highlightedTopCount = instrLbSection === 'All' ? 5 : 3;
+
     tbody.innerHTML =
         list.map((s, i) => {
 
@@ -8477,7 +8649,7 @@ function renderInstrLeaderboard() {
 
             return `
                 <div
-                    class="lb-row ${rank <= 5 ? 'lb-top lb-top-' + rank : ''}"
+                    class="lb-row ${rank <= highlightedTopCount ? 'lb-top lb-top-' + rank : ''}"
                     onclick="openStudentDetail(${students.indexOf(s)})"
                 >
 
@@ -9520,15 +9692,11 @@ function renderAnalyticsReferencePanels() {
     const safeArray = value => Array.isArray(value) ? value : [];
     const num = value => Number.isFinite(Number(value)) ? Number(value) : 0;
     const pct = value => `${Math.round(num(value))}%`;
-    const scoreValues = [];
     const allSubmissions = [];
 
     safeArray(quizzes).forEach(q => {
         safeArray(q.submissions).forEach(sub => {
             allSubmissions.push({ ...sub, quiz: q });
-            if (sub.score !== null && sub.score !== undefined && sub.score !== '' && Number.isFinite(Number(sub.score))) {
-                scoreValues.push(num(sub.score));
-            }
         });
     });
 
@@ -9541,46 +9709,69 @@ function renderAnalyticsReferencePanels() {
     });
     const formalCount = monthQuizzes.filter(q => String(q.mode || '').toLowerCase() === 'formal').length;
     const informalCount = monthQuizzes.filter(q => String(q.mode || '').toLowerCase() === 'informal').length;
-    const pendingReview = allSubmissions.filter(({quiz:q, ...sub}) =>
+    const monthSubmissions = allSubmissions.filter(({quiz}) => monthQuizzes.includes(quiz));
+    const pendingReview = monthSubmissions.filter(({quiz:q, ...sub}) =>
         safeArray(q.questions).some((question, qi) =>
             question.type === 'id' && sub.answers?.[qi]?.correct == null
         )
     ).length;
-    const completedCount = allSubmissions.filter(s => s.score !== null && s.score !== undefined && s.score !== '').length;
-    const completionRate = allSubmissions.length ? Math.round(completedCount / allSubmissions.length * 100) : 0;
-
     const activity = byId('analytics-activity-stats');
     if (activity) {
-        activity.innerHTML = [
-            ['formal','Formal Quizzes','Battle modes',formalCount,'analytics-purple'],
-            ['informal','Informal Quizzes','Homework & practice',informalCount,'analytics-blue'],
-            ['submissions','Submissions Received',`${completionRate}% with scores`,allSubmissions.length,'analytics-green'],
-            ['pending','Pending Review','Awaiting grading',pendingReview,'analytics-orange']
-        ].map((item) => `<div class="analytics-activity-stat"><span class="num ${item[4]}">${item[3]}</span><span class="label">${item[1]}</span><span class="sub">${item[2]}</span></div>`).join('');
+        const totalQuizzes = formalCount + informalCount;
+        const formalShare = totalQuizzes ? formalCount / totalQuizzes * 100 : 0;
+        const chart = totalQuizzes
+            ? `conic-gradient(#244a73 0 ${formalShare}%,#77a5d4 ${formalShare}% 100%)`
+            : 'conic-gradient(#8a96a8 0 100%)';
+        activity.innerHTML = `
+            <div class="analytics-activity-overview">
+                <div class="analytics-activity-donut" role="img" aria-label="${totalQuizzes} quizzes this month: ${formalCount} formal and ${informalCount} informal" style="background:${chart}">
+                    <span><strong>${totalQuizzes}</strong><small>quizzes</small></span>
+                </div>
+                <div class="analytics-activity-legend">
+                    <div><i class="is-formal"></i><span>Formal</span><strong>${formalCount}</strong></div>
+                    <div><i class="is-informal"></i><span>Informal</span><strong>${informalCount}</strong></div>
+                </div>
+            </div>
+            <div class="analytics-activity-footer">
+                <div><strong>${monthSubmissions.length}</strong><span>Submissions</span></div>
+                <div><strong>${pendingReview}</strong><span>Pending review</span></div>
+            </div>`;
     }
 
-    const bands = [
-        {label:'Excellent (95–100%)',min:95,max:100,color:'#22c55e'},
-        {label:'Good (85–94%)',min:85,max:94.999,color:'#3b82f6'},
-        {label:'Fair (75–84%)',min:75,max:84.999,color:'#f59e0b'},
-        {label:'Needs Work (<75%)',min:0,max:74.999,color:'#ef4444'}
-    ];
     const quality = byId('analytics-quality-distribution');
     if (quality) {
-        quality.innerHTML = scoreValues.length ? bands.map(b => {
-            const count = scoreValues.filter(s => s >= b.min && s <= b.max).length;
-            const share = Math.round(count / scoreValues.length * 100);
-            return `<div class="analytics-quality-row"><div class="analytics-quality-head"><span>${b.label}</span><strong>${share}%</strong></div><div class="analytics-quality-track"><div class="analytics-quality-fill" style="width:${share}%;background:${b.color}"></div></div></div>`;
-        }).join('') : '<div class="analytics-empty">Score distribution will appear after students submit scored quizzes.</div>';
+        const weeklyScores = Array.from({length:5}, () => []);
+        allSubmissions.forEach(submission => {
+            if (submission.score === null || submission.score === undefined || submission.score === '' || !Number.isFinite(Number(submission.score))) return;
+            const submittedAt = submission.submittedAt || submission.submitted_at || submission.completed_at;
+            if (!submittedAt) return;
+            const date = new Date(submittedAt);
+            if (Number.isNaN(date.getTime()) || date.getMonth() !== now.getMonth() || date.getFullYear() !== now.getFullYear()) return;
+            weeklyScores[Math.min(4, Math.floor((date.getDate() - 1) / 7))].push(num(submission.score));
+        });
+        const averages = weeklyScores.map(scores => scores.length ? Math.round(scores.reduce((sum, score) => sum + score, 0) / scores.length) : null);
+        const left = 42, right = 458, top = 18, bottom = 126;
+        const xAt = week => left + week * ((right - left) / 4);
+        const yAt = score => bottom - score * ((bottom - top) / 100);
+        const points = averages.map((score, week) => score === null ? null : ({x:xAt(week),y:yAt(score),score,week:week + 1}));
+        let path = '', connected = false;
+        points.forEach(point => {
+            if (!point) { connected = false; return; }
+            path += `${connected ? 'L' : 'M'}${point.x.toFixed(1)} ${point.y.toFixed(1)} `;
+            connected = true;
+        });
+        const validScores = averages.filter(score => score !== null);
+        const trendChange = validScores.length > 1 ? validScores[validScores.length - 1] - validScores[0] : null;
+        quality.innerHTML = validScores.length ? `
+            <svg class="analytics-trend-chart" viewBox="0 0 480 164" role="img" aria-label="Weekly average quiz scores: ${averages.map((score, i) => score === null ? `week ${i + 1} no scores` : `week ${i + 1} ${score}%`).join(', ')}">
+                ${[0,50,100].map(score => `<line class="analytics-trend-grid" x1="${left}" y1="${yAt(score)}" x2="${right}" y2="${yAt(score)}"/><text class="analytics-trend-axis" x="4" y="${yAt(score) + 4}">${score}%</text>`).join('')}
+                <path class="analytics-trend-line" d="${path.trim()}"/>
+                ${points.map(point => point ? `<circle class="analytics-trend-point" cx="${point.x}" cy="${point.y}" r="4"><title>Week ${point.week}: ${point.score}% average</title></circle>` : '').join('')}
+                ${averages.map((_, week) => `<text class="analytics-trend-axis analytics-trend-week" x="${xAt(week)}" y="153" text-anchor="middle">W${week + 1}</text>`).join('')}
+            </svg>
+            <div class="analytics-trend-caption"><span>${validScores.length} week${validScores.length === 1 ? '' : 's'} with scores</span><strong class="${trendChange === null ? '' : trendChange > 0 ? 'is-rising' : trendChange < 0 ? 'is-falling' : ''}">${trendChange === null ? 'Trend needs another week' : trendChange === 0 ? 'No change' : `${trendChange > 0 ? '+' : ''}${trendChange} pts since W${averages.findIndex(score => score !== null) + 1}`}</strong></div>`
+            : '<div class="analytics-empty">Dated quiz scores from this month will appear here.</div>';
     }
-
-    const xp = num(typeof teachingXP !== 'undefined' ? teachingXP : 0);
-    const xpLevel = typeof getTeachingLevel === 'function' ? getTeachingLevel(xp) : {num: Math.max(1, Math.floor(xp / 500) + 1), name:'Educator'};
-    const xpMilestones = [0, 500, 1000, 1600, 2200, 3000];
-    const nextMilestone = xpMilestones.find(value => value > xp) || xp + 500;
-    const progress = Math.min(100, Math.max(0, (xp / nextMilestone) * 100));
-    const xpProgress = byId('analytics-xp-progress');
-    if (xpProgress) xpProgress.innerHTML = `<div class="analytics-xp-level"><div class="analytics-xp-level-icon">${xpLevel.num || 1}</div><div class="analytics-xp-level-info"><strong>Level ${xpLevel.num || 1} — ${xpLevel.name || 'Educator'}</strong><span>${xp.toLocaleString()} / ${nextMilestone.toLocaleString()} XP toward next milestone</span><div class="analytics-progress-track"><div class="analytics-progress-fill" style="width:${progress}%;background:linear-gradient(90deg,#a45bc8,#e879f9)"></div></div></div></div>`;
 
     const subjectRows = new Map();
 
@@ -9658,29 +9849,18 @@ if (syllabus) {
             const width = value === null
                 ? 0
                 : Math.max(0, Math.min(100, value));
+            const barTone = value === null ? 'no-data' : value >= 85 ? 'strong' : value >= 70 ? 'watch' : 'low';
 
-            return `
-                <div class="analytics-subject-row">
-                    <div class="analytics-subject-top">
-                        <span>${row.subject}</span>
-
-                        <span class="analytics-subject-meta">
-                            ${row.section || 'Assigned subject'}
-                            ${row.xp ? ` • +${Math.round(row.xp)} XP` : ''}
-                            <strong>
-                                ${value === null ? 'No evaluations yet' : pct(value)}
-                            </strong>
-                        </span>
-                    </div>
-
-                    <div class="analytics-subject-track">
-                        <div
-                            class="analytics-subject-fill"
-                            style="width:${width}%">
-                        </div>
-                    </div>
+            const status = value === null ? 'Awaiting review' : value >= 85 ? 'Aligned' : value >= 70 ? 'Needs attention' : 'At risk';
+            return `<article class="analytics-subject-row">
+                <div class="analytics-subject-top">
+                    <div class="analytics-subject-label"><strong>${escapeHtml(row.subject)}</strong><span class="analytics-subject-meta">${escapeHtml(row.section || 'Assigned subject')}${row.xp ? ` · ${Math.round(row.xp)} XP earned` : ''}</span></div>
+                    <div class="analytics-subject-result"><strong class="analytics-subject-value">${value === null ? '—' : pct(value)}</strong><span class="analytics-subject-status is-${barTone}">${status}</span></div>
                 </div>
-            `;
+                <div class="analytics-subject-track" role="progressbar" aria-label="${escapeHtml(row.subject)} syllabus alignment" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${value === null ? 0 : Math.round(value)}">
+                    <div class="analytics-subject-fill is-${barTone}" style="width:${width}%"></div>
+                </div>
+            </article>`;
         }).join('')
         : '<div class="analytics-empty">Your assigned subjects will appear here when teaching assignments load.</div>';
 }
@@ -9701,7 +9881,7 @@ const overallEl = byId('analytics-overall-alignment');
 if (overallEl) {
     overallEl.innerHTML = `
         <span>✓ Overall syllabus alignment</span>
-        <strong style="color:${overall !== null && overall >= 85 ? '#4ade80' : '#fbbf24'}">
+        <strong class="${overall !== null && overall >= 85 ? 'is-passing' : 'is-needs-support'}">
             ${overall === null ? 'No alignment data yet' : pct(overall)}
         </strong>
     `;
@@ -9720,7 +9900,7 @@ if (overallEl) {
             const formalScores = allSubmissions.filter(s => String(s.quiz?.section || '').trim() === section && String(s.quiz?.mode || '').toLowerCase() === 'formal' && s.score !== null && s.score !== undefined && s.score !== '').map(s => num(s.score));
             const informalScores = allSubmissions.filter(s => String(s.quiz?.section || '').trim() === section && String(s.quiz?.mode || '').toLowerCase() === 'informal' && s.score !== null && s.score !== undefined && s.score !== '').map(s => num(s.score));
             const avg = arr => arr.length ? Math.round(arr.reduce((sum,v)=>sum+v,0)/arr.length) : null;
-            return `<div class="analytics-section-card"><div class="analytics-section-head"><div><strong>${section}</strong><small>${sectionStudents.length} students • ${new Set(assignmentSubjects.filter(a => String(a.section || '').trim() === section).map(a => a.subject_name)).size} subjects</small></div><div style="text-align:right"><div class="analytics-section-score" style="color:${passing !== null && passing >= 80 ? '#4ade80' : '#fbbf24'}">${passing === null ? '—' : `${passing}%`}</div><small>passing (80%+)</small></div></div><div class="analytics-section-substats"><div class="analytics-section-substat"><strong>${avg(formalScores) === null ? '—' : `${avg(formalScores)}%`}</strong><span>Formal avg</span></div><div class="analytics-section-substat"><strong>${avg(informalScores) === null ? '—' : `${avg(informalScores)}%`}</strong><span>Informal avg</span></div></div></div>`;
+            return `<div class="analytics-section-card"><div class="analytics-section-head"><div><strong>${section}</strong><small>${sectionStudents.length} students • ${new Set(assignmentSubjects.filter(a => String(a.section || '').trim() === section).map(a => a.subject_name)).size} subjects</small></div><div style="text-align:right"><div class="analytics-section-score ${passing !== null && passing >= 80 ? 'is-passing' : 'is-needs-support'}">${passing === null ? '—' : `${passing}%`}</div><small>passing (80%+)</small></div></div><div class="analytics-section-substats"><div class="analytics-section-substat"><strong>${avg(formalScores) === null ? '—' : `${avg(formalScores)}%`}</strong><span>Formal avg</span></div><div class="analytics-section-substat"><strong>${avg(informalScores) === null ? '—' : `${avg(informalScores)}%`}</strong><span>Informal avg</span></div></div></div>`;
         }).join('') : '<div class="analytics-empty">Section performance will appear when students or teaching assignments are available.</div>';
     }
 

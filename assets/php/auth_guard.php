@@ -11,7 +11,7 @@ function auth_enforce(mysqli $db): void {
  if(str_starts_with($endpoint,'admin_')||str_starts_with($endpoint,'get_admin_')||in_array($endpoint,['add_student.php','add_instructor.php','deactivate_account.php','send_announcement.php','draft_announcement.php','get_announcement_history.php','save_instructor_evaluation.php','quiz_evaluation.php'],true))$allowed=['admin'];
  elseif(in_array($endpoint,['syllabus.php'],true))$allowed=['admin','instructor'];
  elseif(in_array($endpoint,['reviewer.php','review_history.php'],true))$allowed=[($_GET['role']??'student')==='instructor'?'instructor':'student'];
- elseif(str_starts_with($endpoint,'get_instructor')||in_array($endpoint,['get_quiz.php','grade_submission.php','generate_ai_summary.php','IDashboard.php','quiz_alignment.php','resolve_flag.php','save_game_question.php','delete_game_question.php','get_game_questions.php','game_context.php','success_rate.php'],true))$allowed=['instructor'];
+ elseif(str_starts_with($endpoint,'get_instructor')||in_array($endpoint,['award_student_xp.php','get_quiz.php','grade_submission.php','generate_ai_summary.php','IDashboard.php','quiz_alignment.php','resolve_flag.php','save_game_question.php','delete_game_question.php','get_game_questions.php','game_context.php','success_rate.php'],true))$allowed=['instructor'];
  else $allowed=['student'];
  $role=null;$id=0;
  foreach($allowed as $candidate){$value=(int)($_SESSION[$candidate]??$_SESSION[$candidate.'_id']??0);if($value){$role=$candidate;$id=$value;break;}}

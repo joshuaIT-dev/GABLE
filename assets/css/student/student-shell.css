@@ -174,9 +174,26 @@
 .help-review-note { margin-top: 1rem; padding: 1rem; border: 1px dashed #486681; border-radius: 10px; }
 .help-review-note strong { font-size: .8rem; }
 .help-review-note p { margin: .4rem 0 0; }
+.help-rewards-note { padding: 1.1rem; border: 1px solid #3c5975; background: linear-gradient(145deg,#20364d,#1b2e44); }
+.help-rewards-heading { margin-bottom: .85rem; }
+.help-rewards-heading h3 { margin: .3rem 0 0; color: #e4effb; font-size: .95rem; line-height: 1.5; }
+.help-reward-list { display: grid; gap: .55rem; margin: 0; padding: 0; list-style: none; }
+.help-reward-list li { display: grid; grid-template-columns: minmax(110px,.32fr) minmax(0,1fr); gap: .5rem .85rem; padding: .7rem .8rem; border: 1px solid #344d66; border-radius: 9px; background: rgba(13,28,44,.35); }
+.help-reward-list li strong { color: #c9def5; font-size: .75rem; line-height: 1.5; }
+.help-reward-list li span { min-width: 0; color: #afc3da; font-size: .73rem; line-height: 1.6; overflow-wrap: anywhere; }
+.help-rewards-footer { display: flex; align-items: center; justify-content: space-between; gap: .8rem 1rem; flex-wrap: wrap; margin-top: .85rem; }
+.help-rewards-footer p { flex: 1 1 280px; margin: 0; }
+.help-rewards-cta { display: inline-flex; align-items: center; justify-content: center; gap: .45rem; min-height: 42px; padding: .55rem .85rem; border: 1px solid #54779a; border-radius: 9px; background: #294663; color: #e5f1ff; font: inherit; font-size: .73rem; font-weight: 600; cursor: pointer; }
+.help-rewards-cta:hover { background: #345877; }
+.help-rewards-cta:focus-visible { outline: 2px solid #a7cefa; outline-offset: 3px; }
+.help-grade-note { border-style: solid; border-color: #3c536c; background: rgba(31,50,71,.55); }
 @media (max-width: 600px) {
   .account-dialog-header, .account-dialog-body { padding: 1rem; }
   .help-topic-grid { grid-template-columns: 1fr; }
+  .help-rewards-note { padding: .85rem; }
+  .help-reward-list li { grid-template-columns: 1fr; gap: .2rem; }
+  .help-rewards-footer { align-items: stretch; }
+  .help-rewards-cta { width: 100%; }
   .student-navbar .notif-panel { width: min(390px,calc(100vw - 24px)); }
   .student-navbar .xp-popup { width: min(320px,calc(100vw - 24px)); }
 }
@@ -242,15 +259,55 @@ body:has(#modal-battle.open) { overflow: hidden; }
 #battle-body { flex: 1; min-height: 0; overflow-y: auto; }
 #battle-body:has(.battle-layout) { display: flex; flex-direction: column; overflow: hidden; }
 #modal-battle .battle-layout { flex: 1; min-height: 0; display: grid; grid-template-columns: 56px minmax(0,1fr); gap: 1rem; }
-#modal-battle .battle-main-col { min-height: 0; overflow-y: auto; padding-right: .4rem; }
+#modal-battle .battle-main-col { display: flex; flex-direction: column; min-height: 0; overflow: hidden; padding-right: .4rem; }
 #modal-battle .quiz-powerup-panel { margin: 0; overflow-y: auto; min-height: 0; }
 #modal-battle .quiz-powerup-actions { flex-direction: column; align-items: stretch; }
 #modal-battle .quiz-powerup-actions > * { width: 100%; box-sizing: border-box; justify-content: center; text-align: center; }
 #modal-battle .modal-close { padding: 0; line-height: 1; top: 1rem; right: 1rem; flex-shrink: 0; }
 #modal-battle .modal-close svg { display: block; width: 20px; height: 20px; margin: 0; flex-shrink: 0; }
 #modal-battle .xp-boost-banner { flex-shrink: 0; margin-bottom: .75rem; }
+#modal-battle .battle-question-content { display: flex; flex: 1; min-height: 0; flex-direction: column; overflow: hidden; }
+#modal-battle .battle-actions { flex-shrink: 0; margin-top: .75rem !important; padding: .75rem 0 0; background: #182a40; }
+#modal-battle .battle-question-content > .battle-info { padding: .65rem .8rem; margin-bottom: .55rem; }
+#modal-battle .battle-info p { margin: .25rem 0; line-height: 1.45; }
+#modal-battle .battle-meta-row { gap: .35rem; margin-top: .55rem; }
+#modal-battle .bm-item { padding: .35rem .5rem; }
+#modal-battle .battle-progress { margin-bottom: .6rem; }
+#modal-battle .battle-question-count { margin-bottom: .5rem !important; }
+#modal-battle .battle-question { display: flex; flex: 1; min-height: 0; flex-direction: column; overflow: hidden; padding: .75rem; }
+#modal-battle .bq-text { margin-bottom: .6rem; font-size: 1rem; line-height: 1.45; }
+#modal-battle .bq-options { flex: 1; min-height: 0; gap: .5rem; }
+#modal-battle .bq-option { padding: .6rem .75rem; line-height: 1.4; }
+#modal-battle .quiz-session-note { margin: .4rem 0 0; line-height: 1.35; }
+#modal-battle .hint-card { margin-top: .5rem; padding: .5rem .65rem; }
+#modal-battle .hint-card-header { margin-bottom: .25rem; }
+#modal-battle .hint-quote { padding: .25rem .6rem; font-size: .78rem; line-height: 1.4; }
+#modal-battle .battle-actions { gap: .5rem !important; }
+#modal-battle #hint-action-slot { flex: 0 0 auto; }
+#modal-battle .battle-actions .hint-used-badge { display: inline-flex; align-items: center; justify-content: center; margin: 0; padding: .45rem .75rem; white-space: nowrap; }
+#modal-battle .quiz-submit-button { display: inline-flex; align-items: center; justify-content: center; text-align: center; background: #15803d; border-color: #22c55e; color: #fff; }
+#modal-battle .quiz-submit-button:hover:not(:disabled) { background: #166534; border-color: #4ade80; }
+#modal-battle .quiz-leave-button { background: #7f1d1d; border-color: #ef4444; color: #fff; }
+#modal-battle .quiz-leave-button:hover { background: #991b1b; border-color: #f87171; }
+#modal-battle .quiz-leave-button:focus-visible { outline: 2px solid #fca5a5; outline-offset: 3px; }
 @media (max-width:700px) { #modal-battle .battle-layout { grid-template-columns: 56px minmax(0,1fr); gap: .5rem; } #modal-battle .quiz-powerup-panel { padding: .65rem; } #modal-battle .battle-question { padding: .75rem; } }
 @media (max-width:420px) { #modal-battle { padding: .4rem; } #modal-battle .modal-battle-wide { padding: .65rem; height: calc(100dvh - .8rem); max-height: calc(100dvh - .8rem); } #modal-battle .battle-layout { grid-template-columns: 48px minmax(0,1fr); } }
+@media (max-height:700px) {
+ #modal-battle .modal-battle-wide { padding: .8rem; }
+ #battle-title { margin-bottom: .5rem; font-size: 1.1rem; }
+ #modal-battle .battle-info p { font-size: .72rem; line-height: 1.35; }
+ #modal-battle .quiz-session-note { font-size: .62rem; }
+ #modal-battle .battle-question { padding: .55rem; }
+ #modal-battle .bq-options { gap: .35rem; }
+ #modal-battle .bq-option { padding: .45rem .6rem; }
+ #modal-battle .identification-answer-box textarea { min-height: 72px !important; }
+ #modal-battle .battle-actions { margin-top: .4rem !important; padding-top: .4rem; }
+}
+@media (max-width:600px) {
+ #modal-battle .battle-hint-text { display: none; }
+ #modal-battle .battle-actions { justify-content: flex-end; }
+ #modal-battle .battle-actions #next-btn { min-width: 0 !important; padding: .55rem .7rem; }
+}
 
 /* Results and reviews size to their content, rather than the active quiz workspace. */
 #modal-battle .modal-battle-wide:has(.battle-score-result) { width: min(620px,100%); height: auto; }
@@ -293,7 +350,7 @@ body:has(#modal-battle.open) { overflow: hidden; }
 #modal-battle:has(.battle-layout) #quiz-loadout { display: flex; flex-direction: column; align-items: center; order: -1; position: relative; z-index: 2; flex: 0 0 60px; box-sizing: border-box; height: calc(100dvh - 2rem); max-height: 92vh; padding: 1rem .4rem; border: 1px solid #354760; border-radius: 14px; background: #14253c; box-shadow: 0 12px 36px #0004; }
 /* The divider belongs to the quiz card edge, not the gap beside the loadout. */
 #modal-battle:has(.battle-layout) .modal-battle-wide { width: min(1126px,calc(100% - 74px)); flex: 0 1 1126px; max-height: 92vh; border-left: 1px solid #526b8d; }
-#modal-battle .battle-layout { display: flex; gap: 0; border: 0; }
+#modal-battle .battle-layout { display: flex; align-items: stretch; gap: 0; border: 0; }
 #modal-battle .battle-main-col { flex: 1; min-width: 0; padding: 0 .4rem 0 0; border: 0; background: transparent; }
 #quiz-loadout .powerup-tool summary { width: 44px; height: 44px; box-sizing: border-box; }
 @media(max-width:420px) { #modal-battle:has(.battle-layout) { gap: 10px; } #modal-battle:has(.battle-layout) #quiz-loadout { flex-basis: 52px; padding: .75rem .2rem; height: calc(100dvh - .8rem); max-height: calc(100dvh - .8rem); } #modal-battle:has(.battle-layout) .modal-battle-wide { width: calc(100% - 62px); max-height: calc(100dvh - .8rem); } }

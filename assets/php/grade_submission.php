@@ -692,8 +692,8 @@ try {
     /*
     |--------------------------------------------------------------------------
     | KEEP ANY GRADE BOOST
-    | If the student already redeemed a +1 Grade Boost on this result, the
-    | boost stays when the score is recalculated.
+    | Previously redeemed +1 Grade Boosts on this result stay applied when
+    | the score is recalculated.
     |--------------------------------------------------------------------------
     */
 

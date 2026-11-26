@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GABLE – Student Portal</title>
+    <script src="../assets/js/color-theme.js?v=7"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/student.css">
   <link rel="stylesheet" href="../assets/css/student/subjects.css?v=1">
@@ -13,8 +14,8 @@
 
     <link rel="stylesheet" href="../assets/css/student/levelup.css?v=2">
     <link rel="stylesheet" href="../assets/css/student/fiftyfifty.css">
-    <link rel="stylesheet" href="../assets/css/student/powerups.css?v=2">
-    <link rel="stylesheet" href="../assets/css/student/notifications.css">
+    <link rel="stylesheet" href="../assets/css/student/powerups.css?v=3">
+    <link rel="stylesheet" href="../assets/css/student/notifications.css?v=2">
     <link rel="stylesheet" href="../assets/css/student/battlerail.css">
 
     <!-- AI Integration -->
@@ -23,11 +24,13 @@
     <link rel="stylesheet" href="../assets/css/student/ai integration/weakspot.css">
     <link rel="stylesheet" href="../assets/css/student/ai integration/hints.css">
   <link rel="stylesheet" href="../assets/css/lucide-icons.css">
-    <link rel="stylesheet" href="../assets/css/student/student-shell.css?v=12">
+    <link rel="stylesheet" href="../assets/css/student/student-shell.css?v=16">
 <link rel="stylesheet" href="../assets/css/actions.css?v=2">
-<link rel="stylesheet" href="../assets/css/review-library.css?v=3">
+<link rel="stylesheet" href="../assets/css/review-library.css?v=4">
   <link rel="stylesheet" href="../assets/css/brand-text.css?v=5">
-<link rel="stylesheet" href="../assets/css/surfaces.css?v=2">
+<link rel="stylesheet" href="../assets/css/surfaces.css?v=3">
+<link rel="stylesheet" href="../assets/css/color-modes.css?v=15">
+<link rel="stylesheet" href="../assets/css/student/student-modes.css?v=58">
     <script src="../cursor/cursor.js"></script>
     <script src="../assets/js/student/subjects.js"></script>
 </head>
@@ -45,7 +48,13 @@
                     <button class="xp-nav-trigger" onclick="toggleXpPopup()" aria-controls="xp-popup" aria-expanded="false"><i data-lucide="zap" aria-hidden="true"></i><span class="nav-xp-copy"><small>Available</small><span class="xp-val" id="xp-display">0 XP</span></span></button>
                     <div class="xp-popup" id="xp-popup"><div class="xp-popup-heading"><div><span class="card-eyebrow">LEVEL PROGRESS</span><div class="xp-popup-label">Your next milestone</div></div><button class="xp-popup-dismiss" onclick="closeXpPopup()" aria-label="Close XP details"><i data-lucide="x" aria-hidden="true"></i></button></div><div class="xp-popup-level" id="popup-level-text"></div><div class="xp-popup-track"><div class="xp-popup-fill" id="popup-fill" style="width:0%"></div></div><div class="xp-popup-sub" id="popup-sub"></div><div class="xp-popup-btns"><button class="btn-xp-dash" onclick="switchTab('xp');closeXpPopup()">View rewards</button><button class="btn-xp-close" onclick="closeXpPopup()">Close</button></div></div>
                 </div>
-                <button class="btn-help" onclick="openModal('modal-help')" aria-label="Help"><i data-lucide="circle-help" aria-hidden="true"></i></button>
+                <details class="student-settings">
+                    <summary class="btn-settings" aria-label="Settings" title="Settings"><i data-lucide="settings" aria-hidden="true"></i></summary>
+                    <div class="student-settings-popover">
+                        <div class="settings-appearance"><span>Color mode</span><div class="theme-mount"></div></div>
+                        <button type="button" class="settings-help" onclick="this.closest('details').open=false;openModal('modal-help')"><i data-lucide="circle-help" aria-hidden="true"></i> Help</button>
+                    </div>
+                </details>
                 </div>
                 <div class="nav-account">
                 <button class="profile-badge" onclick="openModal('modal-profile');renderProfileRewards()" aria-label="Open your profile"><span class="s-avatar-nav" id="nav-avatar"></span><span class="profile-info"><strong id="nav-student-name">Student</strong><span id="nav-student-program"></span></span><i class="profile-chevron" data-lucide="chevron-down" aria-hidden="true"></i></button>
@@ -53,7 +62,7 @@
                 </div>
             </div>
         </div>
-        <div class="nav-tabs"><button class="nav-tab active" data-panel="home" aria-controls="panel-home" aria-current="page" onclick="switchTab('home')">Home</button><button class="nav-tab" data-panel="quizzes" aria-controls="panel-quizzes" onclick="switchTab('quizzes')">My Quizzes</button><button class="nav-tab" data-panel="scores" aria-controls="panel-scores" onclick="switchTab('scores')">Performance</button><button class="nav-tab" data-panel="leaderboard" aria-controls="panel-leaderboard" onclick="switchTab('leaderboard')">Leaderboard</button><button class="nav-tab" data-panel="studybuddy" aria-controls="panel-studybuddy" onclick="switchTab('studybuddy')">Study Buddy</button><button class="nav-tab" data-panel="powerups" aria-controls="panel-powerups" onclick="switchTab('powerups')">Power-Ups</button><button class="nav-tab" data-panel="xp" aria-controls="panel-xp" onclick="switchTab('xp')">XP &amp; Rewards</button></div>
+        <div class="nav-tabs"><button class="nav-tab active" data-panel="home" aria-controls="panel-home" aria-current="page" onclick="switchTab('home')">Home</button><button class="nav-tab" data-panel="quizzes" aria-controls="panel-quizzes" onclick="switchTab('quizzes')">My Quizzes</button><button class="nav-tab" data-panel="scores" aria-controls="panel-scores" onclick="switchTab('scores')">Performance</button><button class="nav-tab" data-panel="leaderboard" aria-controls="panel-leaderboard" onclick="switchTab('leaderboard')">Leaderboard</button><button class="nav-tab" data-panel="studybuddy" aria-controls="panel-studybuddy" onclick="switchTab('studybuddy')"><i data-lucide="bot" aria-hidden="true"></i> GAIA</button><button class="nav-tab" data-panel="powerups" aria-controls="panel-powerups" onclick="switchTab('powerups')">Power-Ups</button><button class="nav-tab" data-panel="xp" aria-controls="panel-xp" onclick="switchTab('xp')">XP &amp; Rewards</button></div>
     </nav>
 
     <div class="main">
@@ -63,7 +72,7 @@
 
             <div class="hero-banner student-home-hero fade-up">
                 <div class="hero-text"><div class="card-eyebrow">YOUR STUDENT WORKSPACE</div><h2 id="home-welcome"></h2><p id="home-summary"></p><div class="hero-streak"><button class="btn-join" onclick="switchTab('quizzes')">Continue to my quizzes <span aria-hidden="true">&rarr;</span></button><span class="streak-chip" id="home-streak"></span></div></div>
-                <div class="home-quick-actions"><span class="card-eyebrow">MAKE YOUR NEXT STEP COUNT</span><button onclick="switchTab('studybuddy')"><span><strong>Review a topic</strong><small>Work through it with Study Buddy</small></span><span aria-hidden="true">&rarr;</span></button><button onclick="switchTab('scores')"><span><strong>Check your progress</strong><small>See your results across subjects</small></span><span aria-hidden="true">&rarr;</span></button></div>
+                <div class="home-quick-actions"><span class="card-eyebrow">MAKE YOUR NEXT STEP COUNT</span><button onclick="switchTab('studybuddy')"><span><strong>Get GABLE help</strong><small>Ask GAIA about using the student portal</small></span><span aria-hidden="true">&rarr;</span></button><button onclick="switchTab('scores')"><span><strong>Check your progress</strong><small>See your results across subjects</small></span><span aria-hidden="true">&rarr;</span></button></div>
             </div>
 
             <section class="student-subjects-card"><div class="card-eyebrow">YOUR ENROLLMENT</div><h3>My subjects</h3><p class="metric-caption">Subjects and instructors assigned to your section.</p><div id="student-subjects-list"></div></section>
@@ -382,7 +391,7 @@
                     <button class="sb-new-chat" onclick="sbNewChat()">+ New conversation</button>
                     <div class="sb-history-heading"><h3>Chat history</h3><button onclick="sbLoadHistory()" aria-label="Refresh chat history" title="Refresh history"><i data-lucide="refresh-cw" aria-hidden="true"></i></button></div>
                     <div id="sb-history-list" class="sb-history-list" aria-label="Saved conversations"><p class="sb-history-empty">Loading conversations...</p></div>
-                    <details class="sb-study-options"><summary>Study tools</summary><label for="sb-subject-select">Subject context</label><select id="sb-subject-select" onchange="sbSetSubject(this.value)"><option value="">Any subject</option></select><button onclick="sbPrompt('explain')">Explain a concept</button><button onclick="sbPrompt('practice')">Practice with me</button><button onclick="sbPrompt('review')">Make a review plan</button></details>
+                    <details class="sb-study-options" open><summary><span class="sb-help-title"><i data-lucide="circle-help" aria-hidden="true"></i><span>Quick GABLE help</span></span></summary><button type="button" onclick="sbPrompt('quizzes')">Find my quizzes</button><button type="button" onclick="sbPrompt('results')">Understand my results</button><button type="button" onclick="sbPrompt('rewards')">Check XP and rewards</button></details>
                 </aside>
                 <div id="studybuddy-chat-host"></div>
             </div>
@@ -421,8 +430,8 @@
                 </section>
                 <section class="redeem-card xp-balance-panel">
                     <div class="card-eyebrow">AVAILABLE TO SPEND</div><h3>XP balance</h3><div class="rb-val" id="available-xp">0 XP</div><p class="metric-caption">Use your balance for hints or a grade boost.</p>
-                    <div class="redemption-details"><strong>Grade boost</strong><span>350 XP adds 1 percentage point to one eligible graded formal quiz. Maximum score: 100%.</span></div>
-                    <button class="btn-use-xp" id="btn-use-xp-main" onclick="confirmBoostFromXP()">Choose a quiz &middot; 350 XP</button><p id="boost-quiz-list" class="metric-caption"></p>
+                    <div class="redemption-details"><strong>Grade boost</strong><span>150 XP adds 1 percentage point to an eligible graded formal quiz. Boost the same result repeatedly up to 100%.</span></div>
+                    <button class="btn-use-xp" id="btn-use-xp-main" onclick="confirmBoostFromXP()">Choose a quiz &middot; 150 XP</button><p id="boost-quiz-list" class="metric-caption"></p>
                 </section>
                 <section class="redeem-card xp-owned-panel"><div class="card-eyebrow">YOUR COLLECTION</div><h3>Earned rewards</h3><p class="metric-caption">Remaining uses stay saved to your account.</p><div id="xp-rewards-wallet"></div><button class="btn-secondary" onclick="switchTab('powerups')">View all power-ups</button></section>
                 <section class="redeem-card xp-journey-panel"><div class="card-eyebrow">WHAT COMES NEXT</div><h3>Level milestones</h3><div id="xp-level-roadmap" class="level-roadmap"></div></section>
@@ -437,7 +446,7 @@
 
         <div class="modal modal-battle-wide">
 
-            <button class="modal-close" onclick="closeModal('modal-battle')" aria-label="Close">
+            <button class="modal-close quiz-leave-button" onclick="closeModal('modal-battle')" aria-label="Leave quiz">
                 <i data-lucide="x" class="emoji-lucide" aria-hidden="true"></i>
             </button>
 
@@ -471,9 +480,19 @@
                 <div class="help-topic-grid">
                     <article><span class="help-topic-number">01</span><h3>Take a quiz</h3><p>Open My Quizzes to see formal and informal activities assigned to your section. Choose a card to read the instructions and start.</p><button onclick="closeModal('modal-help');switchTab('quizzes')">My quizzes &rarr;</button></article>
                     <article><span class="help-topic-number">02</span><h3>Understand your results</h3><p>Multiple-choice answers can be graded automatically. Identification answers wait for instructor review. Performance shows your graded scores and completion.</p><button onclick="closeModal('modal-help');switchTab('scores')">View performance &rarr;</button></article>
-                    <article><span class="help-topic-number">03</span><h3>Unlock and use power-ups</h3><p>Complete assigned quizzes to earn semester XP. Rewards unlock once at these milestones: 300 XP: profile frame; 700: Streak Freeze; 1,200: 50/50; 2,000: 1.5x XP; 3,000: discounted hints; 4,500: free grade boost; 6,500: Master Crown. Spending XP does not lower your level.</p><p>Open Power-Ups for your remaining XP, saved uses and exact steps. Use 50/50 before answering a four-choice question. XP boosts apply to results earning base XP above zero. A grade boost needs a graded formal result below 100% with no previous boost, plus a token or 350 XP and enabled administrator settings.</p><button onclick="closeModal('modal-help');switchTab('powerups')">Check my power-ups &rarr;</button></article>
-                    <article><span class="help-topic-number">04</span><h3>Get help studying</h3><p>Ask Study Buddy to explain a concept or guide your review. Open the full tab for more space, or use the floating chat while browsing.</p><button onclick="closeModal('modal-help');switchTab('studybuddy')">Open Study Buddy &rarr;</button></article>
-                </div><div class="help-review-note"><strong>Already own a reward? These three apply automatically.</strong><ul><li><strong>1.5× XP:</strong> Finish a quiz that earns more than zero base XP. One use applies when the result receives its XP award; pending results wait for grading.</li><li><strong>50% off hints:</strong> Choose Hint before answering a question. You need 25 spendable XP and a remaining discount. One successful hint uses both; it is not free.</li><li><strong>Streak Freeze:</strong> Miss one day, then submit a quiz the following day. One freeze protects that missed day. Logging in alone does not count; longer gaps are not covered.</li></ul><p>No activation button is needed. Check <strong>Power-Ups → Your Power-Up Inventory</strong> for uses left. Used-up rewards stop applying.</p><button class="btn-secondary" onclick="closeModal('modal-help');switchTab('powerups')">Check my remaining uses</button></div><div class="help-review-note"><strong>Waiting for a grade?</strong><p>A result marked Awaiting review needs your instructor's feedback. Your final score and XP will appear after grading.</p></div>
+                    <article><span class="help-topic-number">03</span><h3>Unlock and use power-ups</h3><p>Complete assigned quizzes to earn semester XP. Rewards unlock once at these milestones: 300 XP: profile frame; 700: Streak Freeze; 1,200: 50/50; 2,000: 1.5x XP; 3,000: discounted hints; 4,500: free grade boost; 6,500: Master Crown. Spending XP does not lower your level.</p><p>Open Power-Ups for your remaining XP, saved uses and exact steps. Use 50/50 before answering a four-choice question. XP boosts apply to results earning base XP above zero. A grade boost needs a graded formal result below 100% and enabled administrator settings. Each 150 XP boost adds one percentage point; you can boost the same result repeatedly until it reaches 100%, or use an available free token.</p><button onclick="closeModal('modal-help');switchTab('powerups')">Check my power-ups &rarr;</button></article>
+                    <article><span class="help-topic-number">04</span><h3>Get help with GABLE</h3><p>Ask GAIA about portal navigation, quizzes, results, XP, rewards, and other documented GABLE features. GAIA cannot solve course or quiz questions.</p><button onclick="closeModal('modal-help');switchTab('studybuddy')">Open GAIA &rarr;</button></article>
+                </div>
+                <section class="help-review-note help-rewards-note" aria-labelledby="help-rewards-title">
+                    <div class="help-rewards-heading"><span class="help-topic-number">POWER-UP GUIDE</span><h3 id="help-rewards-title">Already own a reward? These apply automatically.</h3></div>
+                    <ul class="help-reward-list">
+                        <li><strong>1.5× XP</strong><span>Applies once when an eligible result earns XP. If grading is pending, it waits until grading finishes.</span></li>
+                        <li><strong>50% off hints</strong><span>Choose Hint before answering. Each discounted hint needs 25 spendable XP and uses one discount.</span></li>
+                        <li><strong>Streak Freeze</strong><span>Miss one day, then submit a quiz the next day. One freeze protects that day; logging in alone or returning later does not count.</span></li>
+                    </ul>
+                    <div class="help-rewards-footer"><p>No activation needed. Check your remaining uses in <strong>Power-Ups → Your Power-Up Inventory</strong>. Used-up rewards no longer apply.</p><button class="help-rewards-cta" onclick="closeModal('modal-help');switchTab('powerups')">Check remaining uses <span aria-hidden="true">→</span></button></div>
+                </section>
+                <div class="help-review-note help-grade-note"><strong>Waiting for a grade?</strong><p>A result marked Awaiting review needs your instructor's feedback. Your final score and XP will appear after grading.</p></div>
             </div>
             <footer class="account-dialog-footer"><button class="btn-secondary" onclick="closeModal('modal-help')">Got it</button></footer>
         </section>
@@ -641,9 +660,9 @@
     </div>
 
 
-    <script src="../assets/js/main.js?v=9"></script>
+    <script src="../assets/js/main.js?v=13"></script>
     <script src="../assets/js/student/college-display.js?v=3"></script>
-    <script src="../assets/js/student.js?v=10"></script>
+    <script src="../assets/js/student.js?v=12"></script>
 
     <!-- Level-Up — must load AFTER student.js -->
     <script src="../assets/js/student/levelup.js?v=4"></script>
@@ -657,12 +676,12 @@
     <script src="../assets/js/student/quiz-session.js"></script>
 
     <!-- Notifications — announcements, new quizzes, flag button -->
-    <script src="../assets/js/student/notifications.js"></script>
+    <script src="../assets/js/student/notifications.js?v=4"></script>
 
     <!-- AI Integration -->
     <script src="../assets/js/student/ai integration/explainer.js?v=3"></script>
-    <script src="../assets/js/student/ai integration/studybuddy.js"></script>
-    <script src="../assets/js/student/ai integration/weakspot.js"></script>
+    <script src="../assets/js/student/ai integration/studybuddy.js?v=2"></script>
+    <script src="../assets/js/student/ai integration/weakspot.js?v=3"></script>
     <script src="../assets/js/student/ai integration/hints.js"></script>
 
     <script>
@@ -709,7 +728,7 @@ document.addEventListener('change', function(e) {
 </script>
 
   <script src="https://unpkg.com/lucide@latest"></script>
-  <script src="../assets/js/lucide-emoji.js?v=4"></script>
+  <script src="../assets/js/lucide-emoji.js?v=6"></script>
 <script src="../assets/js/academic-document.js"></script>
 <script src="../assets/js/review-library.js?v=10"></script>
 </body>

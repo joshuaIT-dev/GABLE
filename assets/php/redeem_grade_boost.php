@@ -3,14 +3,15 @@
 |--------------------------------------------------------------------------
 | redeem_grade_boost.php   (student, POST JSON: {"submission_id": 123})
 |--------------------------------------------------------------------------
-| Redeems 350 XP for a +1 boost on ONE finished formal quiz result.
+| Redeems 150 XP for a +1 boost on one finished formal quiz result.
+| Repeated boosts are allowed until the result reaches 100%.
 |
 | The server decides everything - the browser only asks:
 |   1. Maintenance Mode and the Grade Boost Redemption setting are checked
 |   2. the result must belong to the logged-in student
 |   3. the quiz must be formal and fully graded, score below 100
-|   4. the result must not have been boosted already
-|   5. the student must have at least 350 XP available
+|   4. the result score must be below 100
+|   5. the student must have enough XP or an available free token
 |
 | Everything is done in ONE database transaction, and the student row is
 | locked first, so two quick clicks can never spend the same XP twice.
@@ -26,7 +27,7 @@ require_once __DIR__ . '/powerup_service.php';
 require_once __DIR__ . '/platform_guard.php';
 platform_block_students_if_maintenance();
 
-const GRADE_BOOST_COST = 350;
+const GRADE_BOOST_COST = 150;
 
 /** Problems that are the student's/request's fault (not server errors). */
 class GradeBoostException extends Exception {}
@@ -142,17 +143,6 @@ try {
         throw new GradeBoostException('This quiz already has a perfect score.', 422);
     }
 
-    // Already boosted?
-    $stmt = $conn->prepare('SELECT redemption_id FROM grade_boost_redemptions WHERE submission_id = ? LIMIT 1');
-    $stmt->bind_param('i', $submissionId);
-    $stmt->execute();
-    $already = $stmt->get_result()->fetch_assoc();
-    $stmt->close();
-
-    if ($already) {
-        throw new GradeBoostException('This quiz result has already been boosted.', 409);
-    }
-
     $state=pu_sync($conn,$studentId);
     $balance=$state['xp'];
     $useFree=($input['use_free_token'] ?? false) === true;
@@ -160,7 +150,7 @@ try {
     if ($useFree) {
         if (!pu_owned($conn,$studentId,'free_boost')) throw new GradeBoostException('No free grade boost token available.',422);
         pu_consume($conn,$studentId,'free_boost');
-    } elseif ($balance<$cost) throw new GradeBoostException('Not enough XP. You need 350 XP.',422);
+    } elseif ($balance<$cost) throw new GradeBoostException('Not enough XP. You need 150 XP.',422);
     $scoreAfter=min(100.0,$scoreBefore+1.0);
     // Record the redemption.
     $stmt = $conn->prepare(
@@ -211,11 +201,6 @@ try {
     }
 
     error_log('GABLE redeem_grade_boost: ' . $e->getMessage());
-
-    // A duplicate-key error means another request boosted this result first.
-    if ((int)$e->getCode() === 1062) {
-        platform_json_exit(409, ['success' => false, 'message' => 'This quiz result has already been boosted.']);
-    }
 
     platform_json_exit(500, [
         'success' => false,

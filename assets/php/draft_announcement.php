@@ -169,7 +169,7 @@ $prompt .= "\nWrite a clear announcement of 2-4 sentences. Do not invent dates, 
 
 /* --------------------------------------------------------------- call */
 
-$models = ['llama-3.3-70b-versatile', 'openai/gpt-oss-20b'];
+$models = ['openai/gpt-oss-20b'];
 $lastProblem = 'The AI service did not return a draft.';
 $content = null;
 

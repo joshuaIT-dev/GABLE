@@ -5,17 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GABLE – Select User</title>
+    <script src="../assets/js/color-theme.js?v=7"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css?v=2">
-    <link rel="stylesheet" href="../assets/css/users.css?v=2">
+    <link rel="stylesheet" href="../assets/css/users.css?v=5">
   <link rel="stylesheet" href="../assets/css/lucide-icons.css">
 <link rel="stylesheet" href="../assets/css/actions.css">
 <link rel="stylesheet" href="../assets/css/brand-text.css?v=4">
+    <link rel="stylesheet" href="../assets/css/color-modes.css?v=18">
     <script src="../cursor/cursor.js"></script>
 </head>
 
-<body>
-    <header class="top-bar"><a class="top-brand" href="Index.html">GABLE <span>Instructor access</span></a><div class="top-time" id="clock"></div><button class="top-back" onclick="goBack()">Back to login</button></header>
+<body class="users-portal color-mode-page">
+    <header class="top-bar">
+        <a class="top-brand" href="Index.html">GABLE <span>Instructor access</span></a>
+        <div class="top-time" id="clock"></div>
+        <div class="theme-mount"></div>
+        <button class="top-back" onclick="goBack()">Back to login</button>
+    </header>
     <main class="content">
         <div class="greeting">YOUR TEACHING WORKSPACE</div>
         <h1 class="heading">Where would you like to go?</h1>
@@ -23,7 +30,7 @@
         <div class="users-grid" id="users-grid"></div>
         <p class="access-note">Signing in as a student or administrator? <button onclick="goBack()">Choose another role</button></p>
     </main>
-    <footer class="bottom-bar">GABLE &middot; Game Based Learning Environment</footer>
+    <footer class="bottom-bar">GABLE - Gamified Academic-Based Learning Environment</footer>
 
     <!-- INSTRUCTOR LOGIN PROMPT -->
     <dialog class="pw-prompt" id="pw-prompt" aria-labelledby="pw-name">
@@ -64,7 +71,7 @@
     </dialog>
 
     <script src="../assets/js/users.js"></script>
-    <script src="../assets/js/main.js?v=8"></script>
+    <script src="../assets/js/main.js?v=11"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="../assets/js/lucide-emoji.js"></script>
 </body>

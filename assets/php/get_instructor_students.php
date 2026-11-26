@@ -133,10 +133,9 @@ try {
             ------------------------------------------------------
             */
 
-            COALESCE(
-                SUM(CASE WHEN qs.submission_id > (SELECT submission_cutoff FROM current_xp_semester) AND qs.status IN ('submitted','graded') THEN qs.xp_earned ELSE 0 END),
-                0
-            ) + (SELECT COALESCE(SUM(g.bonus),0) FROM student_powerup_grants g WHERE g.student_id=s.student_id) AS total_xp,
+            COALESCE(SUM(CASE WHEN qs.submission_id > (SELECT submission_cutoff FROM current_xp_semester) AND qs.status IN ('submitted','graded') THEN qs.xp_earned ELSE 0 END),0)
+            + (SELECT COALESCE(SUM(g.bonus),0) FROM student_powerup_grants g WHERE g.student_id=s.student_id)
+            + (SELECT COALESCE(SUM(a.amount),0) FROM instructor_student_xp_awards a WHERE a.student_id=s.student_id AND a.semester_id=(SELECT semester_id FROM current_xp_semester)) AS total_xp,
             (SELECT lifetime_xp FROM student_reward_progress WHERE student_id=s.student_id) AS level_xp,
 
 

@@ -196,11 +196,11 @@ body {
 .toggle-pw {
   position: absolute; right: 1rem; top: 50%; transform: translateY(-50%);
   background: none; border: none;
-  color: rgba(255, 255, 255, 0.40);
+  color: var(--text, #fff);
   cursor: pointer; font-size: 1rem; padding: 0;
-  transition: color .2s;
 }
-.toggle-pw:hover { color: rgba(255, 255, 255, 0.80); }
+.toggle-pw > .lucide { color: inherit; }
+.toggle-pw:hover { opacity: .8; }
 
 
 .form-group {
@@ -306,4 +306,3 @@ body {
   .id-field-wrap, .error-msg, .btn-login-submit, .help-bubble { transition: none; }
   .particle { animation: none; opacity: .1; }
 }
-

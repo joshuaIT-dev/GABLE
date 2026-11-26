@@ -22,7 +22,6 @@ function getHintCost() {
 
 /* ── Render hint button HTML (called from renderBattleQuestion) ── */
 function renderHintButton() {
-  const qKey       = `${activeBattle?.id}-${battleCurrentQ}`;
   const alreadyUsed = powerupEffects.some(effect => effect.type === 'hint' && Number(effect.question_index) === battleCurrentQ);
   const cost        = getHintCost();
   const canAfford   = studentXP >= cost;
@@ -64,9 +63,8 @@ async function requestHint() {
 }
 
 function showHintCard(hintText, cost) {
-    document.querySelector('.hint-card')?.remove();
-    document.querySelector('.btn-hint')?.remove();
-    document.querySelector('.hint-used-badge')?.remove();
+    const battleBody = document.getElementById('battle-body');
+    battleBody?.querySelector('.hint-card')?.remove();
 
     const card = document.createElement('div');
     card.className = 'hint-card';
@@ -96,9 +94,9 @@ function showHintCard(hintText, cost) {
      * .bq-options
      */
     const target =
-        document.querySelector('.identification-answer-box') ||
-        document.querySelector('.bq-options') ||
-        document.querySelector('.battle-question');
+        battleBody?.querySelector('.identification-answer-box') ||
+        battleBody?.querySelector('.bq-options') ||
+        battleBody?.querySelector('.battle-question');
 
     if (target) {
         target.insertAdjacentElement('afterend', card);
@@ -107,17 +105,11 @@ function showHintCard(hintText, cost) {
         return;
     }
 
-    // Add "Hint used" badge near the quiz navigation
-    const nav =
-        document.querySelector('.battle-actions') ||
-        document.querySelector('.battle-action-row');
-
-    if (nav) {
-        const badge = document.createElement('div');
-
+    const hintSlot = document.getElementById('hint-action-slot');
+    if (hintSlot) {
+        const badge = document.createElement('span');
         badge.className = 'hint-used-badge';
         badge.textContent = '💡 Hint used';
-
-        nav.insertAdjacentElement('beforebegin', badge);
+        hintSlot.replaceChildren(badge);
     }
 }

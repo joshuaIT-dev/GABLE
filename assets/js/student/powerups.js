@@ -182,7 +182,7 @@ function powerupInstructions(type) {
     fifty_fifty: 'Open a quiz with four-choice multiple-choice questions. Use 50/50 before answering; one use removes two wrong choices.',
     xp_multiplier: 'Finish a quiz that earns base XP above zero. The bonus applies when XP is awarded, after grading if review is needed. Covers two results.',
     hint_discount: 'Before answering, choose Hint in a quiz. Keep at least 25 spendable XP; each discounted hint uses 25 XP and one of your three discounts.',
-    free_boost: 'Finish a formal quiz and wait for grading. Choose a result below 100% that has not already been boosted, then select Use token. Grade boosts must be enabled by the administrator.',
+    free_boost: 'After grading, choose a formal result below 100% and select Use token. Repeat boosts up to 100%. Grade boosts must be enabled by the administrator.',
     crown: 'Finish quizzes to receive the automatic +10 XP when each result earns its XP award. Open My Profile to equip the golden frame.'
   }[type] || '';
 }
@@ -223,5 +223,3 @@ function renderPowerupCatalog() {
       </div>`;
   }).join('');
 }
-
-

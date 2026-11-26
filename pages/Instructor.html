@@ -4,14 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../assets/js/color-theme.js?v=7"></script>
 
     <title>GABLE – Instructor Dashboard</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="../assets/css/style.css?v=2">
-    <link rel="stylesheet" href="../assets/css/instructor.css">
-    <link rel="stylesheet" href="../assets/css/instructor/additions.css">
+    <link rel="stylesheet" href="../assets/css/instructor.css?v=2">
+    <link rel="stylesheet" href="../assets/css/instructor/additions.css?v=2">
 
     <!-- AI integration -->
     <link rel="stylesheet" href="../assets/css/instructor/ai integration/insight.css">
@@ -324,20 +325,29 @@
     margin:0 0 14px;font-size:.82rem;font-weight:800;
 }
 .analytics-panel-kicker { margin:-8px 0 13px;color:rgba(255,255,255,.5);font-size:.62rem; }
-.analytics-activity-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px; }
-.analytics-activity-stat {
-    min-width:0;padding:12px;border:1px solid rgba(255,255,255,.09);
-    border-radius:10px;background:rgba(255,255,255,.035);
-}
-.analytics-activity-stat .num {display:block;font-size:1.35rem;font-weight:800;line-height:1.25;margin-bottom:3px}
-.analytics-activity-stat .label {display:block;font-size:.62rem;font-weight:700}
-.analytics-activity-stat .sub {display:block;font-size:.55rem;color:rgba(255,255,255,.48);margin-top:3px}
-.analytics-purple {color:#b18af2}.analytics-blue {color:#82b8ff}.analytics-green {color:#4ade80}.analytics-orange {color:#fbbf24}
-.analytics-quality {margin-top:17px}
-.analytics-quality-row {margin:10px 0}
-.analytics-quality-head {display:flex;justify-content:space-between;gap:8px;font-size:.59rem;margin-bottom:5px;color:rgba(255,255,255,.76)}
-.analytics-quality-track,.analytics-progress-track {height:6px;border-radius:99px;background:rgba(255,255,255,.10);overflow:hidden}
-.analytics-quality-fill,.analytics-progress-fill {height:100%;border-radius:99px;transition:width .25s ease}
+.analytics-activity-grid { display:grid;grid-template-columns:1fr;gap:8px; }
+.analytics-activity-overview { display:flex;align-items:center;justify-content:center;gap:24px;min-height:158px; }
+.analytics-activity-donut { position:relative;display:grid;place-items:center;flex:0 0 132px;width:132px;height:132px;border-radius:50%; }
+.analytics-activity-donut::before { content:"";position:absolute;inset:13px;border-radius:50%;background:rgba(34,31,61,.98); }
+.analytics-activity-donut > span { position:relative;display:grid;text-align:center;gap:2px; }
+.analytics-activity-donut strong { font-size:1.45rem;line-height:1.1; }
+.analytics-activity-donut small { color:rgba(255,255,255,.58);font-size:.58rem; }
+.analytics-activity-legend { display:grid;gap:13px;min-width:130px; }
+.analytics-activity-legend > div,.analytics-activity-footer > div { display:flex;align-items:center;gap:8px;font-size:.67rem; }
+.analytics-activity-legend i { width:9px;height:9px;border-radius:50%;background:#244a73; }
+.analytics-activity-legend i.is-informal { background:#77a5d4; }
+.analytics-activity-legend strong { margin-left:auto; }
+.analytics-activity-footer { display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:12px;border-top:1px solid rgba(255,255,255,.1); }
+.analytics-activity-footer > div { justify-content:space-between;padding:9px 10px;border:1px solid rgba(255,255,255,.08);border-radius:9px;background:rgba(255,255,255,.035); }
+.analytics-activity-footer span { color:rgba(255,255,255,.58);font-size:.57rem; }
+.analytics-trend-chart { display:block;width:100%;height:auto;overflow:visible; }
+.analytics-trend-grid { stroke:rgba(255,255,255,.10);stroke-width:1;stroke-dasharray:3 5; }
+.analytics-trend-axis { fill:rgba(255,255,255,.5);font:10px Poppins,sans-serif; }
+.analytics-trend-line { fill:none;stroke:#77a5d4;stroke-width:3;stroke-linecap:round;stroke-linejoin:round; }
+.analytics-trend-point { fill:#fff;stroke:#244a73;stroke-width:3; }
+.analytics-trend-caption { display:flex;justify-content:space-between;gap:8px;margin:4px 4px 0;color:rgba(255,255,255,.6);font-size:.6rem; }
+.analytics-trend-caption strong { color:#d7e8f9; }
+.analytics-trend-caption .is-rising { color:#4ade80; }.analytics-trend-caption .is-falling { color:#fb7185; }
 .analytics-xp-level {
     display:flex;align-items:center;gap:11px;padding:12px;border-radius:11px;
     border:1px solid rgba(165,127,224,.25);
@@ -356,11 +366,16 @@
 .analytics-xp-source span:first-child {color:rgba(255,255,255,.78)}
 .analytics-xp-source strong {white-space:nowrap;color:#fbbf24;font-size:.59rem}
 .analytics-tip {margin-top:12px;padding:10px 11px;border-radius:9px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.24);color:rgba(255,255,255,.72);font-size:.58rem;line-height:1.5}
-.analytics-subject-row {margin:0 0 14px}
-.analytics-subject-top {display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:.62rem;font-weight:700}
-.analytics-subject-meta {display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.48);font-size:.53rem;white-space:nowrap}
-.analytics-subject-track {height:5px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden;margin-top:7px}
-.analytics-subject-fill {height:100%;border-radius:99px;background:linear-gradient(90deg,#8d63d7,#b47af0)}
+.analytics-subject-row {margin:0 0 10px;padding:12px 13px;border:1px solid rgba(255,255,255,.09);border-radius:12px;background:rgba(255,255,255,.025)}
+.analytics-subject-top {display:flex;align-items:center;justify-content:space-between;gap:12px}
+.analytics-subject-label {display:grid;gap:4px;min-width:0}.analytics-subject-label strong {font-size:.68rem;overflow-wrap:anywhere}
+.analytics-subject-meta {color:rgba(255,255,255,.52);font-size:.54rem;line-height:1.4}
+.analytics-subject-result {display:grid;justify-items:end;gap:4px;flex:0 0 auto}.analytics-subject-value {font-size:.82rem;line-height:1}
+.analytics-subject-status {padding:3px 7px;border-radius:99px;font-size:.49rem;font-weight:700;white-space:nowrap;background:rgba(255,255,255,.08);color:#c7d0dd}
+.analytics-subject-status.is-strong {color:#77d7ad;background:rgba(53,132,104,.14)}.analytics-subject-status.is-watch {color:#eac579;background:rgba(180,134,53,.14)}.analytics-subject-status.is-low {color:#f4a0a3;background:rgba(187,95,98,.14)}
+.analytics-subject-track {height:8px;background:rgba(255,255,255,.10);border-radius:99px;overflow:hidden;margin-top:11px}
+.analytics-subject-fill {height:100%;border-radius:99px;background:#244a73;transition:width .25s ease}
+.analytics-subject-fill.is-strong {background:#358468}.analytics-subject-fill.is-watch {background:#b48635}.analytics-subject-fill.is-low {background:#bb5f62}.analytics-subject-fill.is-no-data {background:#8793a3}
 .analytics-overall {display:flex;justify-content:space-between;gap:8px;align-items:center;padding:9px 10px;border-radius:9px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);font-size:.58rem;color:rgba(255,255,255,.7)}
 .analytics-section-card {padding:12px;margin-top:9px;border:1px solid rgba(255,255,255,.08);border-radius:11px;background:rgba(255,255,255,.025)}
 .analytics-section-head {display:flex;justify-content:space-between;align-items:center;gap:10px}
@@ -374,22 +389,26 @@
 .analytics-empty {padding:15px;border:1px dashed rgba(255,255,255,.13);border-radius:10px;text-align:center;color:rgba(255,255,255,.5);font-size:.65rem;line-height:1.5}
 @media(max-width:850px){.analytics-reference-grid{grid-template-columns:1fr}}
 @media(max-width:520px){
- .analytics-activity-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .analytics-activity-grid{grid-template-columns:1fr}
  .analytics-panel-card{padding:13px}
- .analytics-subject-top{align-items:flex-start;flex-direction:column;gap:4px}
+ .analytics-subject-top{align-items:flex-start}
+ .analytics-activity-overview{gap:16px}.analytics-activity-donut{flex-basis:112px;width:112px;height:112px}.analytics-activity-legend{min-width:115px}
 }
 
 </style>
   <link rel="stylesheet" href="../assets/css/lucide-icons.css">
-    <link rel="stylesheet" href="../assets/css/instructor/workspace.css?v=13">
+    <link rel="stylesheet" href="../assets/css/instructor/workspace.css?v=24">
 <link rel="stylesheet" href="../assets/css/actions.css?v=2">
-<link rel="stylesheet" href="../assets/css/review-library.css?v=4">
-<link rel="stylesheet" href="../assets/css/syllabus.css?v=216">
+<link rel="stylesheet" href="../assets/css/review-library.css?v=5">
+<link rel="stylesheet" href="../assets/css/syllabus.css?v=218">
 <link rel="stylesheet" href="../assets/css/brand-text.css?v=4">
 <link rel="stylesheet" href="../assets/css/surfaces.css?v=2">
     <script src="../cursor/cursor.js"></script>
 <link rel="stylesheet" href="../assets/css/teaching-ranks.css?v=1">
 <link rel="stylesheet" href="../assets/css/student-frames.css?v=4">
+<link rel="stylesheet" href="../assets/css/color-modes.css?v=15">
+<link rel="stylesheet" href="../assets/css/instructor/modes.css?v=59">
+<link rel="stylesheet" href="../assets/css/notification-panel.css?v=3">
 </head>
 
 <body class="instructor-portal">
@@ -447,26 +466,34 @@
                     <span class="notif-badge" id="notif-badge">0</span>
                 </button>
 
-                <div class="notif-dropdown" id="notif-dropdown">
+                <div class="notif-dropdown gable-notif-panel" id="notif-dropdown">
 
                     <div class="notif-header">
 
-                        <span class="notif-header-title">
-                            Notifications
-                        </span>
+                        <span class="notif-header-title"><i data-lucide="bell" aria-hidden="true"></i> Notifications</span>
 
                         <button class="notif-mark-all" onclick="markAllNotifsRead()">
                             Mark all read
                         </button>
+                        <button class="np-close-btn" onclick="toggleNotifDropdown()" aria-label="Close notifications"><i data-lucide="x" aria-hidden="true"></i></button>
 
                     </div>
-
-                    <div class="notif-list" id="notif-list"></div>
+                    <div class="np-tabs" role="tablist" aria-label="Notification categories">
+                        <button class="np-tab active" id="inotif-tab-announcements" role="tab" aria-selected="true" onclick="switchInstructorNotifTab('announcements', this)"><i data-lucide="megaphone" aria-hidden="true"></i> Announcements <span class="np-tab-badge" id="inotif-ann-count" hidden></span></button>
+                        <button class="np-tab" id="inotif-tab-activity" role="tab" aria-selected="false" onclick="switchInstructorNotifTab('activity', this)"><i data-lucide="clipboard-check" aria-hidden="true"></i> Student Activity <span class="np-tab-badge" id="inotif-activity-count" hidden></span></button>
+                    </div>
+                    <div class="notif-list np-body" id="notif-list" role="tabpanel"></div>
 
                 </div>
 
             </div>
 
+            <details class="instructor-settings">
+                <summary aria-label="Settings" title="Settings"><i data-lucide="settings" aria-hidden="true"></i></summary>
+                <div class="instructor-settings-popover">
+                    <div class="settings-appearance"><span>Color mode</span><div class="theme-mount"></div></div>
+                </div>
+            </details>
 
             
 <!-- TEACHING XP -->
@@ -617,7 +644,7 @@
 
                 <button type="button" class="quick-card" onclick="openReportsModal()">
 
-                    <div class="quick-icon qi-pink lucide-icon"><i data-lucide="chart-no-axes-column-increasing" aria-hidden="true"></i></div>
+                    <div class="quick-icon quick-icon-deep-blue lucide-icon"><i data-lucide="chart-no-axes-column-increasing" aria-hidden="true"></i></div>
 
                     <div>
 
@@ -635,6 +662,12 @@
                         ›
                     </span>
 </button>
+
+                <button type="button" class="quick-card" onclick="openInstructorXPAward()">
+                    <div class="quick-icon qi-purple lucide-icon"><i data-lucide="badge-plus" aria-hidden="true"></i></div>
+                    <div><h4>Award Student XP</h4><p>Give bonus XP to a student in your sections</p></div>
+                    <span class="quick-arrow" aria-hidden="true">›</span>
+                </button>
 
                 </div>
 
@@ -793,7 +826,7 @@
                         Total Students
                     </div>
 
-                    <div class="metric-val" style="color:var(--purple-light)" id="analytics-total-students">
+                    <div class="metric-val analytics-total-students" id="analytics-total-students">
                     </div>
 
                     <div class="metric-sub" id="analytics-student-sub">
@@ -812,14 +845,13 @@
                         Avg Class Score
                     </div>
 
-                    <div class="metric-val" style="color:var(--green)" id="analytics-class-score">
+                    <div class="metric-val analytics-class-score" id="analytics-class-score">
                     </div>
 
                     <div class="metric-up" id="analytics-score-change">
                     </div>
 
                 </div>
-
 
                 <!-- TEACHING XP -->
 
@@ -831,7 +863,7 @@
                         Teaching XP
                     </div>
 
-                    <div class="metric-val" style="color:var(--gold)" id="analytics-teaching-xp">
+                    <div class="metric-val analytics-teaching-xp" id="analytics-teaching-xp">
                     </div>
 
                     <div class="metric-sub" id="analytics-teaching-level">
@@ -850,7 +882,7 @@
                         Quiz Completion
                     </div>
 
-                    <div class="metric-val" style="color:var(--pink-light)" id="analytics-completion">
+                    <div class="metric-val analytics-completion" id="analytics-completion">
                     </div>
 
                     <div class="metric-sub" id="analytics-quiz-count">
@@ -864,27 +896,19 @@
 
             <div class="analytics-reference-grid fade-up-1">
                 <section class="analytics-panel-card">
-                    <h3 class="analytics-panel-title">🗓️ Quiz Activity This Month</h3>
+                    <h3 class="analytics-panel-title"><i data-lucide="calendar-days" aria-hidden="true"></i> Quiz Activity This Month</h3>
                     <div class="analytics-activity-grid" id="analytics-activity-stats"></div>
-                    <div class="analytics-quality">
-                        <h4 class="analytics-panel-title" style="font-size:.68rem;margin-bottom:10px">Quiz Quality Distribution</h4>
-                        <div id="analytics-quality-distribution"></div>
-                    </div>
                 </section>
 
                 <section class="analytics-panel-card">
-                    <h3 class="analytics-panel-title">⭐ Teaching XP &amp; Level Progress</h3>
-                    <div id="analytics-xp-progress"></div>
-                    <div class="analytics-xp-sources">
-                        <h4 class="analytics-panel-title" style="font-size:.66rem;margin-bottom:3px">XP Sources This Month</h4>
-                        <div id="analytics-xp-sources"></div>
-                    </div>
-                    <div class="analytics-tip" id="analytics-xp-tip"></div>
+                    <h3 class="analytics-panel-title"><i data-lucide="chart-no-axes-combined" aria-hidden="true"></i> Quiz Quality Trend</h3>
+                    <p class="analytics-panel-kicker">Average score by week this month</p>
+                    <div id="analytics-quality-distribution"></div>
                 </section>
 
                 <section class="analytics-panel-card">
                     <div class="analytics-panel-title" style="justify-content:space-between">
-                        <span>📐 Syllabus Alignment by Subject</span>
+                        <span><i data-lucide="book-check" aria-hidden="true"></i> Syllabus Alignment by Subject</span>
                         <span id="analytics-year-badge" style="font-size:.52rem;color:#fbbf24;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);padding:4px 7px;border-radius:99px">Your teaching load</span>
                     </div>
                     <div id="analytics-syllabus-subjects"></div>
@@ -893,7 +917,7 @@
 
                 <section class="analytics-panel-card">
                     <div class="analytics-panel-title" style="justify-content:space-between">
-                        <span>📊 Student Performance by Section</span>
+                        <span><i data-lucide="chart-no-axes-column-increasing" aria-hidden="true"></i> Student Performance by Section</span>
                         <span id="analytics-section-year-badge" style="font-size:.52rem;color:#fbbf24;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);padding:4px 7px;border-radius:99px">Your sections</span>
                     </div>
                     <div id="analytics-section-performance"></div>
@@ -1278,19 +1302,15 @@
 <div class="modal-overlay" id="modal-team-games">
     <div class="modal team-game-modal">
 
-        <button class="modal-close" onclick="closeModal('modal-team-games')" aria-label="Close">✕</button>
+        <div class="workspace-dialog-header team-game-dialog-header">
+            <div class="team-game-dialog-heading">
+                <h2>Team Classroom Games — Question Panel</h2>
+                <p class="team-game-modal-subtitle">Design and manage questions for each game mode. Select a mode to get started.</p>
+            </div>
+            <button class="modal-close" onclick="closeModal('modal-team-games')" aria-label="Close dialog"><i data-lucide="x" aria-hidden="true"></i></button>
+        </div>
 
         <div id="team-game-setup-view" class="team-game-setup-view">
-
-            <div class="team-game-heading">
-                <div>
-                    <h2>🎮 Team Classroom Games — Question Panel</h2>
-                    <p class="team-game-modal-subtitle">
-                        Design and manage questions for each game mode. Select a mode to get started.
-                    </p>
-                </div>
-            </div>
-
             <!-- =====================================================
      GAME DETAILS
 ====================================================== -->
@@ -1951,6 +1971,23 @@
             </div>
 
         </div>
+
+<div class="modal-overlay" id="modal-award-student-xp">
+    <div class="modal student-xp-award-modal" role="dialog" aria-modal="true" aria-labelledby="award-student-xp-title">
+        <button class="modal-close" aria-label="Close dialog" onclick="closeModal('modal-award-student-xp')"><i data-lucide="x" aria-hidden="true"></i></button>
+        <span class="xp-award-eyebrow">STUDENT REWARD</span>
+        <h2 id="award-student-xp-title">Award student XP</h2>
+        <p class="syllabus-muted xp-award-description">Bonus XP is added to the student’s current semester balance and recorded with your reason.</p>
+        <form id="award-student-xp-form" class="student-xp-award-form">
+            <div class="form-group xp-award-field"><label for="award-xp-section"><span>1</span> Choose a section</label><div class="xp-award-select-wrap"><select id="award-xp-section" required></select><i data-lucide="chevron-down" aria-hidden="true"></i></div><small>Only sections assigned to you are listed.</small></div>
+            <div class="form-group xp-award-field"><label><span>2</span> Choose student(s)</label><details class="xp-award-multi-select" id="award-xp-student-select"><summary id="award-xp-student-trigger" aria-label="Choose one or more students" aria-disabled="true"><span id="award-xp-student-label">Select a section first</span><i data-lucide="chevron-down" aria-hidden="true"></i></summary><div class="xp-award-student-options" id="award-xp-student-options" role="group" aria-label="Students in selected section"></div></details><small id="award-xp-student-hint">Select a section to load its students.</small></div>
+            <div class="form-group xp-award-field"><label for="award-xp-amount"><span>3</span> XP amount</label><div class="xp-award-amount"><input id="award-xp-amount" type="number" min="1" max="500" value="25" required><span>XP</span></div><small>Award 1–500 XP.</small></div>
+            <div class="form-group xp-award-field"><label for="award-xp-reason"><span>4</span> Reason</label><textarea id="award-xp-reason" minlength="5" maxlength="200" placeholder="Explain why this student is receiving XP" required></textarea></div>
+            <p id="award-xp-status" class="syllabus-status" role="status" aria-live="polite"></p>
+            <div class="modal-footer"><button type="button" class="btn-secondary" onclick="closeModal('modal-award-student-xp')">Cancel</button><button type="submit" class="btn-primary xp-award-submit">Award XP</button></div>
+        </form>
+    </div>
+</div>
 <div class="modal-overlay" id="modal-profile">
 
             <div class="modal instructor-profile-dialog" role="dialog" aria-modal="true" aria-label="Instructor profile">
@@ -1966,7 +2003,7 @@
 
 
                 <div class="profile-modal-card">
-                    <div class="profile-rank-display"><span>TEACHING RANK</span><strong id="profile-grade-badge">--</strong><small>Admin assigned</small></div>
+                    <div class="profile-rank-display"><span>TEACHING RANK</span><strong id="profile-grade-badge">--</strong><small>Based on Teaching XP</small></div>
 
                     <div class="profile-modal-avatar" id="profile-modal-avatar">
                         DM
@@ -2301,23 +2338,23 @@
 
         </div>
 
-<script src="../assets/js/main.js?v=8"></script>
+<script src="../assets/js/main.js?v=11"></script>
 <script src="../assets/js/academic-document.js"></script>
 
-    <script src="../assets/js/instructor.js?v=10"></script>
+    <script src="../assets/js/instructor.js?v=26"></script>
 
     <!-- Word document export -->
     <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
 
     <!-- AI integration -->
-    <script src="../assets/js/instructor/ai integration/insight.js?v=2"></script>
+    <script src="../assets/js/instructor/ai integration/insight.js?v=8"></script>
 
 
   <script src="https://unpkg.com/lucide@latest"></script>
-  <script src="../assets/js/lucide-emoji.js"></script>
+  <script src="../assets/js/lucide-emoji.js?v=6"></script>
 <script src="../assets/js/review-library.js?v=9"></script>
 <script src="../assets/js/syllabus.js?v=14"></script>
-<script src="../assets/js/instructor-xp.js?v=4"></script>
+<script src="../assets/js/instructor-xp.js?v=6"></script>
 </body>
 
 </html>

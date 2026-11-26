@@ -379,7 +379,7 @@ select {
    TOAST
 ══════════════════════ */
 .toast {
-  position: fixed; bottom: 6rem; right: 2rem; z-index: 999;
+  position: fixed; bottom: 6rem; right: 2rem; z-index: 10000;
   background: #1a1740;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 14px; padding: .9rem 1.4rem;

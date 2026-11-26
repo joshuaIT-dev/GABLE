@@ -4,27 +4,25 @@
    Depends on: main.js  (showToast)
    ═══════════════════════════════════════════════════════════════ */
 
-let exitToDashboard = false;
 const gameTabId = sessionStorage.getItem('gableGameTabId') || Array.from(crypto.getRandomValues(new Uint8Array(32)), b => b.toString(16).padStart(2, '0')).join('');
 sessionStorage.setItem('gableGameTabId', gameTabId);
 let gameInProgress = false;
 
 function exitGame() {
-    exitToDashboard = !gameInProgress;
-    document.getElementById('quit-game-title').textContent = exitToDashboard ? 'Log out?' : 'Quit this game?';
-    document.querySelector('#quit-game-dialog p').textContent = exitToDashboard
-        ? 'You will be logged out of your account.'
-        : 'Your current round will end and return to the game lobby.';
-    document.querySelector('.quit-confirm').textContent = exitToDashboard ? 'Log out' : 'Quit game';
+    if (!gameInProgress) {
+        sessionStorage.removeItem('gableGameTabId');
+        logout();
+        return;
+    }
+    document.getElementById('quit-game-title').textContent = 'Return to game selection?';
+    document.querySelector('#quit-game-dialog p').textContent = 'Your current round will end and return to the game selection screen.';
+    document.querySelector('.quit-confirm').textContent = 'Back to selection';
     document.getElementById('quit-game-dialog').showModal();
 }
 
 function confirmQuitGame() {
     document.getElementById('quit-game-dialog').close();
-    if (exitToDashboard) {
-        sessionStorage.removeItem('gableGameTabId');
-        logout();
-    } else resetToLobby();
+    resetToLobby();
 }
 
 
@@ -942,8 +940,6 @@ function selectMode(m, el) {
     mode = m;
     document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('active'));
     el.classList.add('active');
-    document.querySelector('.btn-exit-game').innerHTML = '<i data-lucide="log-out" aria-hidden="true"></i> Quit game';
-    if (window.lucide) lucide.createIcons();
     const btn = document.getElementById('btn-start');
     const labels = {
         buzzer: '🔔 Start Team Buzzer',
@@ -1132,7 +1128,7 @@ duration =
 
 
     gameInProgress = true;
-    document.querySelector('.btn-exit-game').innerHTML = '<i data-lucide="log-out" aria-hidden="true"></i> Quit game';
+    document.querySelector('.btn-exit-game').innerHTML = '<i data-lucide="arrow-left" aria-hidden="true"></i> Back';
     if (window.lucide) lucide.createIcons();
 
     console.log(
@@ -1252,7 +1248,8 @@ function startTimer() {
         const el = document.getElementById('nav-timer');
         if (el) {
             el.textContent = m + ':' + s;
-            el.style.color = rem <= 30 ? '#ef4444' : rem <= 60 ? '#f59e0b' : '#fff';
+            el.classList.toggle('is-warning', rem <= 60 && rem > 30);
+            el.classList.toggle('is-danger', rem <= 30);
         }
         if (rem <= 0) {
             clearInterval(timer);
@@ -4599,9 +4596,10 @@ function endGame(reason) {
     document.querySelectorAll('.game-area').forEach(a => a.classList.remove('active'));
     document.getElementById('area-result').classList.add('active');
 
-    let icon, title, sub, pct, label, xpText;
+    let icon, title, sub, pct, label, xpText, teamScore = null;
 
      if (mode === 'buzzer') {
+        teamScore = [buzzerA, buzzerB];
         const winner = buzzerA > buzzerB ? '🔵 Team Alpha wins!' : buzzerB > buzzerA ? '🩷 Team Beta wins!' : "🤝 It's a Tie!";
         icon = buzzerA > buzzerB ? '🔵' : buzzerB > buzzerA ? '🩷' : '🤝';
         title = winner;
@@ -4622,6 +4620,7 @@ function endGame(reason) {
         xpText =
         `🏆 Final Score: ${kahootScore} points`;
     } else if (mode === 'hotseat') {
+        teamScore = [hsScoreA, hsScoreB];
         const winner = hsScoreA > hsScoreB ? '🔵 Team Alpha wins!' : hsScoreB > hsScoreA ? '🩷 Team Beta wins!' : "🤝 It's a Tie!";
         icon = hsScoreA > hsScoreB ? '🔵' : hsScoreB > hsScoreA ? '🩷' : '🤝';
         title = winner;
@@ -4637,6 +4636,8 @@ function endGame(reason) {
     label = 'Words Solved';
     xpText = `+${jumbleScore * 15} XP`;
     } else if (mode === 'crossword') {
+
+    teamScore = [cwScoreA, cwScoreB];
 
     const winner =
         cwScoreA > cwScoreB
@@ -4679,6 +4680,12 @@ function endGame(reason) {
     document.getElementById('result-pct').textContent = pct;
     document.getElementById('result-label').textContent = label;
     document.getElementById('result-xp').textContent = xpText;
+    document.getElementById('result-stat').hidden = Boolean(teamScore);
+    document.getElementById('result-team-score').hidden = !teamScore;
+    if (teamScore) {
+        document.getElementById('result-alpha-score').textContent = teamScore[0];
+        document.getElementById('result-beta-score').textContent = teamScore[1];
+    }
 }
 
 
@@ -4713,7 +4720,7 @@ cwGrid = [];
     document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('active'));
     document.getElementById('lobby').style.display = '';
     document.getElementById('nav-timer').textContent = '--:--';
-    document.getElementById('nav-timer').style.color = '#fff';
+    document.getElementById('nav-timer').classList.remove('is-warning', 'is-danger');
     document.getElementById('nav-mode').textContent = 'Waiting';
     document.querySelector('.btn-exit-game').innerHTML = '<i data-lucide="log-out" aria-hidden="true"></i> Log out';
     if (window.lucide) lucide.createIcons();

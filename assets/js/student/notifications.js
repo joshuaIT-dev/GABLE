@@ -60,9 +60,9 @@ function getTotalUnread() {
    FEATURE 1 — NOTIFICATION BELL
 ════════════════════════════════════════ */
 function injectNotifBell() {
-    // Insert bell button into navbar before the help button
-    const helpBtn = document.querySelector('.btn-help');
-    if (!helpBtn || document.getElementById('notif-bell-btn')) return;
+    // Keep notifications beside Settings, outside its popover.
+    const settings = document.querySelector('.student-settings');
+    if (!settings || document.getElementById('notif-bell-btn')) return;
 
     const bell = document.createElement('div');
     bell.className = 'notif-bell-wrap';
@@ -72,7 +72,7 @@ function injectNotifBell() {
       <i data-lucide="bell" aria-hidden="true"></i>
       <span class="notif-badge" id="notif-badge" style="display:none">0</span>
     </button>`;
-    helpBtn.insertAdjacentElement('beforebegin', bell);
+    settings.insertAdjacentElement('beforebegin', bell);
     updateNotifBadge();
 }
 
@@ -208,7 +208,7 @@ function renderNotifTab(tab) {
             </div>
           </div>
 
-          ${!a.read ? '<div class="np-unread-dot"></div>' : ''}
+          ${a.read && Number(a.id) ? `<button type="button" class="np-delete-read" aria-label="Delete read notification" title="Delete read notification" onclick="deleteReadNotification(event,'announcement',${i})"><i data-lucide="trash-2" aria-hidden="true"></i></button>` : (!a.read ? '<div class="np-unread-dot"></div>' : '')}
         </div>
       `;
     }).join('');
@@ -237,9 +237,11 @@ function renderNotifTab(tab) {
       // =================================
       if (q.notificationType === 'system') {
         const escape = value => { const span=document.createElement('span'); span.textContent=value || ''; return span.innerHTML; };
-        return `<div class="np-item ${q.seen ? 'np-read' : 'np-unread'}" onclick="openNewQuizNotif(${i})"><div class="np-item-body"><div class="np-item-meta">System &middot; Automated notice &middot; ${date}</div><div class="np-item-title">${escape(q.title)}</div><div class="np-item-preview">${escape(q.message)}</div></div>${q.seen ? '' : '<div class="np-unread-dot"></div>'}</div>`;
+        const trash = q.seen && q.notificationId ? `<button type="button" class="np-delete-read" aria-label="Delete read notification" title="Delete read notification" onclick="deleteReadNotification(event,'system',${i})"><i data-lucide="trash-2" aria-hidden="true"></i></button>` : '';
+        return `<div class="np-item ${q.seen ? 'np-read' : 'np-unread'}" onclick="openNewQuizNotif(${i})"><div class="np-item-body"><div class="np-item-meta">System &middot; Automated notice &middot; ${date}</div><div class="np-item-title">${escape(q.title)}</div><div class="np-item-preview">${escape(q.message)}</div></div>${trash}${q.seen ? '' : '<div class="np-unread-dot"></div>'}</div>`;
       }
       if (q.notificationType === 'quiz_graded') {
+        const trash = q.seen && q.quizId ? `<button type="button" class="np-delete-read" aria-label="Delete read notification" title="Delete read notification" onclick="deleteReadNotification(event,'quiz',${i})"><i data-lucide="trash-2" aria-hidden="true"></i></button>` : '';
 
         return `
           <div class="np-item ${q.seen ? 'np-read' : 'np-unread'}"
@@ -271,9 +273,7 @@ function renderNotifTab(tab) {
 
             </div>
 
-            ${!q.seen
-              ? '<div class="np-unread-dot"></div>'
-              : ''}
+            ${trash || (!q.seen ? '<div class="np-unread-dot"></div>' : '')}
 
           </div>
         `;
@@ -282,6 +282,7 @@ function renderNotifTab(tab) {
       // =================================
       // NEW QUIZ POSTED NOTIFICATION
       // =================================
+      const trash = q.seen && q.quizId ? `<button type="button" class="np-delete-read" aria-label="Delete read notification" title="Delete read notification" onclick="deleteReadNotification(event,'quiz',${i})"><i data-lucide="trash-2" aria-hidden="true"></i></button>` : '';
       return `
         <div class="np-item ${q.seen ? 'np-read' : 'np-unread'}"
              onclick="openNewQuizNotif(${i})">
@@ -309,9 +310,7 @@ function renderNotifTab(tab) {
 
           </div>
 
-          ${!q.seen
-            ? '<div class="np-unread-dot"></div>'
-            : ''}
+          ${trash || (!q.seen ? '<div class="np-unread-dot"></div>' : '')}
 
         </div>
       `;
@@ -319,8 +318,32 @@ function renderNotifTab(tab) {
   }
 }
 
+async function deleteReadNotification(event, type, index) {
+  event.stopPropagation();
+  const item = type === 'announcement' ? announcements[index] : newQuizNotifs[index];
+  if (!item || (type === 'announcement' ? !item.read : !item.seen)) return;
+  const id = type === 'announcement' ? Number(item.id) : Number(type === 'system' ? item.notificationId : item.quizId);
+  const kind = type || (item.notificationType === 'system' ? 'system' : 'quiz');
+  if (!id) return;
+  try {
+    const response = await fetch('../assets/php/mark_student_quiz_notification_read.php', {
+      method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(kind === 'announcement' ? { delete_read: true, notification_type: kind, announcement_id: id } : kind === 'system' ? { delete_read: true, notification_type: kind, notification_id: id } : { delete_read: true, notification_type: kind, quiz_id: id })
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.message || 'Could not delete this notification.');
+    if (kind === 'announcement') announcements.splice(index, 1);
+    else newQuizNotifs = newQuizNotifs.filter(notification => String(kind === 'system' ? notification.notificationId : notification.quizId) !== String(id));
+    updateNotifBadge();
+    renderNotifTab(kind === 'announcement' ? 'announcements' : 'quizzes');
+  } catch (error) {
+    showToast('System', error.message);
+  }
+}
+
 function openAnnouncement(i) {
   announcements[i].read = true;
+  if (Number(announcements[i].id)) fetch('../assets/php/mark_student_quiz_notification_read.php', { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ announcement_read: true, announcement_id: Number(announcements[i].id) }) }).catch(() => {});
   updateNotifBadge();
   closeNotifPanel();
 
@@ -333,7 +356,7 @@ function openAnnouncement(i) {
   if (!document.getElementById('modal-announcement')) {
     document.body.insertAdjacentHTML('beforeend', `
       <div class="modal-overlay" id="modal-announcement">
-        <div class="modal" style="max-width:480px">
+        <div class="modal announcement-dialog" style="max-width:480px">
           <button class="modal-close" onclick="closeModal('modal-announcement')">✕</button>
           <h2 id="ann-modal-title">Announcement</h2>
           <div id="ann-modal-body"></div>
@@ -359,12 +382,10 @@ function openAnnouncement(i) {
         ${new Date(a.sentAt).toLocaleDateString('en-PH', { month: 'long', day: 'numeric', year: 'numeric' })}
       </span>
     </div>
-    <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
-      border-radius:14px;padding:1.1rem 1.25rem;font-size:.88rem;
-      color:rgba(255,255,255,.85);line-height:1.7">
+    <div class="announcement-message">
       ${a.body}
     </div>
-    <div style="font-size:.72rem;color:var(--text-muted);margin-top:.75rem">
+    <div class="announcement-target">
       Sent to: ${a.target}
     </div>`;
   openModal('modal-announcement');
@@ -500,6 +521,7 @@ async function openNewQuizNotif(i) {
 
 async function markAllRead() {
     await fetch('../assets/php/mark_student_quiz_notification_read.php', {method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({system_all:true})});
+    const unreadAnnouncementNotifications = announcements.filter(announcement => !announcement.read && Number(announcement.id));
 
     /*
     ---------------------------------------
@@ -619,6 +641,11 @@ async function markAllRead() {
             )
 
         );
+
+        await Promise.all(unreadAnnouncementNotifications.map(announcement => fetch('../assets/php/mark_student_quiz_notification_read.php', {
+            method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ announcement_read: true, announcement_id: Number(announcement.id) })
+        })));
 
 
     } catch (error) {

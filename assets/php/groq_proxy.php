@@ -73,7 +73,7 @@ curl_setopt_array($curl, [
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_TIMEOUT => 35,
     CURLOPT_HTTPHEADER => ['Authorization: Bearer ' . $apiKey, 'Content-Type: application/json'],
-    CURLOPT_POSTFIELDS => json_encode(['model' => 'llama-3.3-70b-versatile', 'max_tokens' => $maxTokens, 'messages' => $messages]),
+    CURLOPT_POSTFIELDS => json_encode(['model' => 'openai/gpt-oss-20b', 'max_tokens' => $maxTokens, 'reasoning_effort' => 'low', 'include_reasoning' => false, 'messages' => $messages]),
 ]);
 $response = curl_exec($curl);
 $status = (int)curl_getinfo($curl, CURLINFO_HTTP_CODE);

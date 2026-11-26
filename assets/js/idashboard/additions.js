@@ -159,6 +159,7 @@ function idbUnreadAnnounceCount() {
 }
 
 let idbNotifications = [];
+let idbNotifTab = 'announcements';
 
 /* ──────────────────────────────────────
    DASHBOARD STATISTICS
@@ -480,7 +481,11 @@ function idbNotifIconClass(type) {
 }
 
 function idbNotifEmoji(type) {
-    return { submit: '📥', flag: '🚩', boost: '⚡', announce: '📢' }[type] || '📢';
+    return { submit: '\u{1F4DD}', flag: '\u{1F6A9}', boost: '\u{26A1}', announce: '\u{1F4E2}' }[type] || '\u{1F514}';
+}
+
+function idbNotifLucideIcon(type) {
+    return { submit: 'notebook-pen', flag: 'flag-triangle-right', boost: 'zap', announce: 'megaphone' }[type] || 'bell';
 }
 
 // ==========================================
@@ -1424,7 +1429,20 @@ function toggleIdbBell(e) {
     if (!dd) return;
     const opening = !dd.classList.contains('open');
     dd.classList.toggle('open');
-    if (opening) idbRenderNotifList();
+    if (opening) {
+        idbRenderNotifList();
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+}
+
+function switchIdbNotifTab(tab, button) {
+    idbNotifTab = tab;
+    document.querySelectorAll('#idb-notif-dropdown .np-tab').forEach(item => {
+        const active = item === button;
+        item.classList.toggle('active', active);
+        item.setAttribute('aria-selected', String(active));
+    });
+    idbRenderNotifList();
 }
 
 function idbMarkNotifRead(id) {
@@ -1436,6 +1454,7 @@ function idbMarkNotifRead(id) {
         if (dot) dot.style.opacity = '0';
     }
     idbRefreshBadges();
+    idbUpdateNotifTabCounts();
     idbRenderSidebarNotifs();
 }
 
@@ -1446,6 +1465,8 @@ function idbMarkAllNotifsRead() {
         const dot = el.querySelector('.idb-nd-dot');
         if (dot) dot.style.opacity = '0';
     });
+    idbUpdateNotifTabCounts();
+    idbRenderNotifList();
     idbRefreshBadges();
     idbRenderSidebarNotifs();
 }
@@ -1467,8 +1488,11 @@ function idbRenderNotifList() {
 
     if (!el) return;
 
+    idbUpdateNotifTabCounts();
+    const visibleNotifications = idbNotifications.filter(n => idbNotifTab === 'announcements' ? n.type === 'announce' : n.type !== 'announce');
 
-    if (!idbNotifications.length) {
+
+    if (!visibleNotifications.length) {
 
         el.innerHTML = `
             <div class="idb-nd-empty">
@@ -1482,46 +1506,56 @@ function idbRenderNotifList() {
 
 
     el.innerHTML =
-        idbNotifications.map(n => {
+        visibleNotifications.map(n => {
 
             const isRead =
                 idbReadNotifs.has(n.id);
 
             return `
                 <div
-                    class="idb-nd-item ${isRead ? '' : 'unread'}"
+                    class="np-item idb-nd-item ${isRead ? 'np-read' : 'np-unread unread'}"
                     id="idb-ni-${n.id}"
                     onclick="idbMarkNotifRead('${n.id}')"
                 >
 
                     <div
-                        class="idb-nd-icon ${idbNotifIconClass(n.type)}"
+                        class="np-item-icon idb-nd-icon ${idbNotifIconClass(n.type)}"
                     >
-                        ${idbNotifEmoji(n.type)}
+                        <i data-lucide="${idbNotifLucideIcon(n.type)}" aria-hidden="true"></i>
                     </div>
 
-                    <div class="idb-nd-body">
+                    <div class="np-item-body idb-nd-body">
 
-                        <div class="idb-nd-title2">
+                        <div class="np-item-title idb-nd-title2">
                             ${n.title}
                         </div>
 
-                        <div class="idb-nd-desc">
+                        <div class="np-item-preview idb-nd-desc">
                             ${n.desc}
                         </div>
 
-                        <span class="idb-nd-time">
+                        <span class="np-item-meta idb-nd-time">
                             ${n.time}
                         </span>
 
                     </div>
 
-                    <div class="idb-nd-dot"></div>
+                    ${isRead ? '' : '<div class="np-unread-dot idb-nd-dot"></div>'}
 
                 </div>
             `;
 
         }).join('');
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+}
+
+function idbUpdateNotifTabCounts() {
+    const announcements = idbNotifications.filter(n => n.type === 'announce' && !idbReadNotifs.has(n.id)).length;
+    const activity = idbNotifications.filter(n => n.type !== 'announce' && !idbReadNotifs.has(n.id)).length;
+    [['idb-notif-ann-count', announcements], ['idb-notif-activity-count', activity]].forEach(([id, count]) => {
+        const el = document.getElementById(id);
+        if (el) { el.textContent = count > 9 ? '9+' : String(count); el.hidden = count === 0; }
+    });
 }
 
 /* ── Sidebar recent alerts (3 most recent unread first) ── */

@@ -54,19 +54,19 @@ async function chooseGradeBoost(useFree = false) {
     const data = await response.json();
     if (!response.ok || !data.success) throw new Error(data.message || 'Could not load quiz results.');
     if (!data.enabled) throw new Error('Grade boosts are disabled by the administrator.');
-    if (!data.eligible.length) throw new Error('No eligible results. Complete a formal quiz and wait for grading; perfect or already boosted results cannot be boosted.');
+    if (!data.eligible.length) throw new Error('No eligible results. Complete a formal quiz and wait for grading. Results at 100% cannot be boosted further.');
     document.getElementById('powerup-grade-dialog')?.remove();
     const dialog = document.createElement('dialog');
     dialog.id = 'powerup-grade-dialog';
     dialog.className = 'powerup-grade-dialog';
     const heading = document.createElement('h2');
-    heading.textContent = useFree ? 'Use a free grade boost' : 'Redeem 350 XP';
+    heading.textContent = useFree ? 'Use a free grade boost' : `Redeem ${data.cost} XP`;
     dialog.append(heading);
     const description = document.createElement('p');
-    description.textContent = 'Choose one graded formal quiz. Adds 1 percentage point, up to 100%.';
+    description.textContent = `Choose a graded formal quiz. Each boost adds 1 percentage point, up to 100%. You can boost the same result again for ${data.cost} XP.`;
     dialog.append(description);dialog.setAttribute('aria-labelledby','grade-boost-title');heading.id='grade-boost-title';
     const choices=document.createElement('div');choices.className='grade-boost-choices';dialog.append(choices);
-    const confirm=document.createElement('button');confirm.className='btn-primary';confirm.textContent=useFree?'Apply free boost':'Confirm - spend 350 XP';confirm.disabled=true;
+    const confirm=document.createElement('button');confirm.className='btn-primary';confirm.textContent=useFree?'Apply free boost':`Confirm - spend ${data.cost} XP`;confirm.disabled=true;
 
     for (const item of data.eligible) {
       const button = document.createElement('button');

@@ -664,7 +664,7 @@
   border-radius: 10px; padding: .65rem .85rem;
 }
 .q-num   { width: 24px; height: 24px; border-radius: 6px; background: rgba(124,92,191,0.30); display: flex; align-items: center; justify-content: center; font-size: .7rem; font-weight: 700; flex-shrink: 0; }
-.q-input { flex: 1; background: none; border: none; outline: none; color: #fff; font-family: 'Poppins', sans-serif; font-size: .83rem; }
+.q-input { flex: 1; min-width: 0; min-height: 76px; width: 100%; box-sizing: border-box; resize: vertical; padding: .55rem .65rem; border: 1px solid rgba(255,255,255,.12); border-radius: 8px; background: rgba(0,0,0,.12); outline: none; color: #fff; font-family: 'Poppins', sans-serif; font-size: .83rem; line-height: 1.55; }
 .q-input::placeholder { color: rgba(255,255,255,0.30); }
 .q-remove { background: none; border: none; color: rgba(255,255,255,0.30); cursor: pointer; font-size: .95rem; padding: 0; transition: color .2s; }
 .q-remove:hover { color: #f47fc4; }

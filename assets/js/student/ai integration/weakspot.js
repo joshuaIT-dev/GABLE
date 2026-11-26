@@ -5,18 +5,12 @@
    Purpose:
    - Reads existing performance data.
    - Shows subjects that need review.
-   - Opens the CURRENT GABLE chatbot when a weak spot is clicked.
+   - Opens the Performance tab when a weak spot is clicked.
 
    IMPORTANT:
-   - This version is connected to chatbot.js, NOT the old Study Buddy API.
-   - Clicking a subject ONLY opens the chatbot.
-   - The subject is NOT sent to the chatbot.
-   - The input is NOT pre-filled.
-   - The chatbot can answer according to the student's actual question.
+   - Weak spot actions lead to subject results, not AI tutoring.
 
-   Requires:
-   - student.js / existing performance data
-   - chatbot.js loaded before this file
+   Requires student.js / existing performance data.
    ═══════════════════════════════════════════════════════════ */
 
 
@@ -154,78 +148,37 @@ function wsIcon(avg) {
 }
 
 
-/* ════════════════════════════════════════════════════════════
-   CHATBOT CONNECTION
-
-   IMPORTANT:
-
-   The Weak Spot Radar does NOT tell the chatbot which
-   subject to answer about.
-
-   Clicking a Weak Spot only opens the existing GABLE
-   chatbot.
-
-   chatbot.js uses:
-   - #chatWindow
-   - #chatInput
-
-   We intentionally DO NOT use:
-   - sbToggle()
-   - sbSetSubject()
-   - sbCurrentSubject
-   - #sb-input
-
-   The student is free to ask any question.
-   ════════════════════════════════════════════════════════════ */
+/* Weak spot actions open Performance; GAIA is limited to GABLE website help. */
 
 
-function wsOpenStudyBuddy(subject) {
+function wsShowPerformance(trigger) {
+    const card = trigger instanceof Element
+        ? trigger.closest('.ws-detail-card')
+        : null;
+    const subjectName = card?.querySelector('.ws-detail-name')?.textContent?.trim();
 
-    // Open Study Buddy if it is currently closed
-    if (typeof sbToggle === 'function') {
-        if (typeof sbOpen === 'undefined' || !sbOpen) {
-            sbToggle();
-        }
-    } else {
-        console.warn(
-            'Weak Spot Radar: Study Buddy function sbToggle() was not found.'
-        );
-        return;
-    }
+    if (typeof switchTab === 'function') switchTab('scores');
 
-    // Put the weak subject into the Study Buddy input
-    setTimeout(() => {
-
-        const input = document.getElementById('sb-input');
-
-        if (input && subject) {
-            input.value = `Can u help me review ${subject}?`;
-            input.focus();
-
-            // Put cursor at the end of the message
-            input.setSelectionRange(
-                input.value.length,
-                input.value.length
-            );
+    // Let the scores panel become visible before scrolling to its subject card.
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+        const subjectGrid = document.getElementById('subject-performance-grid');
+        if (!subjectGrid) {
+            document.getElementById('panel-scores')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            return;
         }
 
-    }, 350);
-}
+        const subjectCard = subjectName
+            ? [...subjectGrid.querySelectorAll('.subject-result-card')].find(item =>
+                item.querySelector('h4')?.textContent?.trim().toLocaleLowerCase() === subjectName.toLocaleLowerCase()
+            )
+            : null;
 
-
-/*
-   Topic button compatibility.
-
-   Topic chips also simply open the chatbot.
-
-   They do NOT force the chatbot to talk about
-   the subject or topic.
-*/
-
-function wsOpenStudyBuddyTopic() {
-
-    wsOpenStudyBuddy();
-
+        (subjectCard || subjectGrid).scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (subjectCard) {
+            subjectCard.setAttribute('tabindex', '-1');
+            subjectCard.focus({ preventScroll: true });
+        }
+    }));
 }
 
 
@@ -324,7 +277,7 @@ function renderWeakSpotHome() {
                     <div
                         class="ws-nudge ${wsColor(s.avg)}"
 
-                        onclick="wsOpenStudyBuddy('${s.subject}')"
+                        onclick="wsShowPerformance()"
 
                         role="button"
 
@@ -335,7 +288,7 @@ function renderWeakSpotHome() {
                                 event.key === 'Enter' ||
                                 event.key === ' '
                             ) {
-                                wsOpenStudyBuddy();
+                                wsShowPerformance();
                             }
                         "
                     >
@@ -574,12 +527,10 @@ function renderWeakSpotPerformance() {
                                         <button
                                             class="ws-study-btn"
 
-                                            onclick="
-    wsOpenStudyBuddy('${s.subject}')
-"
+                                            onclick="wsShowPerformance(this)"
                                         >
 
-                                            🤖 Study This
+                                            View subject results
 
                                         </button>
 
@@ -728,9 +679,6 @@ function renderWeakSpotPerformance() {
                                                             ws-topic-chip
                                                         "
 
-                                                        onclick="
-                                                            wsOpenStudyBuddyTopic()
-                                                        "
                                                     >
 
                                                         ${t}

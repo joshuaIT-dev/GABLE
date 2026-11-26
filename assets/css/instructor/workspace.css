@@ -37,12 +37,14 @@ body.instructor-portal {
 .instructor-portal .profile-info span { font-size: 10px; color: #9bafc8; }
 .instructor-portal :is(.btn-logout, .notif-bell-btn) { display: grid; place-items: center; width: 40px; height: 44px; padding: 0; background: transparent; border: 1px solid transparent; border-radius: 10px; color: #a9b9cd; }
 .instructor-portal .notif-bell-btn:hover { background: #283d54; border-color: #405974; transform: none; }
-.instructor-portal .btn-logout:hover { background: #432f3a; border-color: #79505d; color: #f0bcc5; }
+.instructor-portal .btn-logout { color:#b42332; }
+.instructor-portal .btn-logout:hover { background:rgba(180,35,50,.12); border-color:transparent; color:#941d2a; }
 .instructor-portal .nav-right svg { width: 17px; height: 17px; }
 .instructor-portal .notif-badge { top: 2px; right: 0; background: #a74e61; border: 2px solid #111b2d; }
 .instructor-portal .main { width: 100%; max-width: 1200px; padding: 32px 24px 64px; }
 .instructor-portal .panel { min-width: 0; }
 .instructor-portal :is(button, input, select, textarea, [tabindex]):focus-visible { outline: 2px solid #a0c9ff; outline-offset: 3px; }
+.instructor-portal .xp-award-multi-select > summary:focus-visible { outline:2px solid #a0c9ff; outline-offset:3px; }
 .instructor-portal button { font-family: inherit; }
 .instructor-portal :is(.hero-banner, .my-students-hero, .lb-hero, .flagged-hero, .workspace-heading) {
   padding: 28px; margin-bottom: 24px; border: 1px solid #3a526c;
@@ -64,15 +66,27 @@ body.instructor-portal {
 .instructor-portal .msh-tags { margin-top: 14px; flex-wrap: wrap; }
 .instructor-portal :is(.btn-view, .btn-view.blue, .btn-view.dark, .btn-continue, .btn-view-students, .btn-primary, .btn-xp-dash) { background: #355f91; border: 1px solid #5a7da8; color: #fff; box-shadow: none; }
 .instructor-portal :is(.btn-create, .btn-view, .btn-edit, .btn-danger, .btn-continue, .btn-delete, .btn-post-draft) { min-height: 40px; }
-.instructor-portal .quick-actions { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; width: 100%; margin: 0 0 22px; }
+.instructor-portal .quick-actions { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 12px; width: 100%; margin: 0 0 22px; }
 .instructor-portal :is(.quick-card, .quiz-card, .draft-card, .teaching-load-card, .metric-card, .analytics-panel-card, .subject-card, .flagged-card) {
   background: var(--bg-card); border: 1px solid var(--bg-card-border); border-radius: 14px; box-shadow: none; backdrop-filter: none; min-width: 0;
 }
 .instructor-portal .quick-card { padding: 14px 16px; background: rgba(12,25,42,.4); border-color: #3b526c; border-radius: 11px; color: inherit; font: inherit; text-align: left; gap: 12px; }
 .instructor-portal .quick-card:hover, .instructor-portal .quiz-card:hover { transform: none; border-color: #6089b4; background: #1d324b; box-shadow: 0 6px 24px #07132240; }
 .instructor-portal .quick-icon { width: 32px; height: 32px; background: #2b4564; color: #a8c9fa; }
+.instructor-portal .quick-icon-deep-blue { background:transparent !important; color:#173a5e !important; }
+.instructor-portal .quick-icon-deep-blue > .lucide { color:#173a5e !important; stroke:currentColor; }
 .instructor-portal .quick-card h4 { font-size: 13px; }
 .instructor-portal .quick-card p { font-size: 11px; line-height: 1.5; }
+.instructor-portal .student-xp-award-form { display:grid; gap:10px; margin-top:18px; }
+.instructor-portal .student-xp-award-form .xp-award-field > label { margin:4px 0 -4px; font-size:12px; font-weight:600; }
+.instructor-portal .student-xp-award-form textarea { min-height:90px; resize:vertical; }
+.instructor-portal .student-xp-award-form .modal-footer { display:flex; justify-content:flex-end; gap:10px; margin-top:6px; }
+.instructor-portal .student-xp-award-form .modal-footer button { min-height:42px; padding:10px 16px; border-radius:9px; }
+.instructor-portal #modal-award-student-xp .syllabus-status:empty { display:none; }
+.instructor-portal #modal-award-student-xp .student-xp-award-modal { width:min(560px,calc(100vw - 28px)); padding:28px; }
+.instructor-portal #modal-award-student-xp .xp-award-eyebrow { display:block; margin-bottom:6px; color:#8eb5e5; font-size:10px; font-weight:700; letter-spacing:.12em; }
+.instructor-portal #modal-award-student-xp #award-student-xp-title { margin:0; padding:0; font-size:22px; }
+.instructor-portal #modal-award-student-xp .xp-award-description { margin-top:7px; line-height:1.6; }
 .instructor-portal .section-title { font-size: 16px; flex-wrap: wrap; margin: 24px 0 12px; }
 .instructor-portal .live-badge { background: #284d48; color: #a6e7d1; }
 .instructor-portal .quiz-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-bottom: 24px; }
@@ -179,8 +193,50 @@ body.instructor-portal {
 .instructor-portal .team-game-footer { background: #192e46; }
 .instructor-portal .team-game-mode-panel { background: #13253b; }
 .instructor-portal .team-game-mode.active { background: #2c466c; border-color: #83a9d7; }
-.instructor-portal .notif-dropdown { width: min(380px, calc(100vw - 24px)); }
+.instructor-portal .gable-notif-panel { width:min(390px,calc(100vw - 24px)); max-height:min(600px,calc(100dvh - 110px)); border-radius:14px; }
+.instructor-portal .gable-notif-panel .notif-header { min-height:0; padding:1rem; gap:.75rem; }
+.instructor-portal .gable-notif-panel .notif-header-title { font-size:.9rem; }
+.instructor-portal .gable-notif-panel .notif-mark-all { font-size:.68rem; }
+.instructor-portal .gable-notif-panel .np-close-btn { width:34px; height:34px; flex-basis:34px; border-radius:8px; }
+.instructor-portal .gable-notif-panel .np-tabs { gap:.4rem; padding:.65rem; }
+.instructor-portal .gable-notif-panel .np-tab { min-height:0; padding:.65rem .4rem; font-size:.73rem; }
+.instructor-portal .gable-notif-panel .notif-list { padding:.5rem; }
+.instructor-portal .gable-notif-panel .np-item { gap:.75rem; padding:.75rem 1.15rem; }
+.instructor-portal .gable-notif-panel .np-item-icon { width:36px; height:36px; flex-basis:36px; }
+.instructor-portal .gable-notif-panel .np-item-title { font-size:.82rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.instructor-portal .gable-notif-panel .np-item-preview { font-size:.72rem; }
+.instructor-portal .gable-notif-panel .np-item-meta { font-size:.65rem; }
 .instructor-portal .xp-popup { width: min(330px, calc(100vw - 24px)); }
+.instructor-portal .student-xp-award-form { gap:15px; margin-top:22px; }
+.instructor-portal .student-xp-award-form .xp-award-field { display:grid; gap:9px; min-width:0; margin:0; padding:13px; border:1px solid var(--public-card-border,#405572); border-radius:12px; background:var(--public-card-raised,#1c2d43); }
+.instructor-portal .student-xp-award-form .xp-award-field > label { display:flex; align-items:center; gap:9px; margin:0; font-size:12px; }
+.instructor-portal .student-xp-award-form .xp-award-field > label > span { display:grid; place-items:center; width:23px; height:23px; flex:0 0 23px; border-radius:7px; background:#dceaff; color:#173a5e; font-size:10px; font-weight:700; }
+.instructor-portal .student-xp-award-form .xp-award-field small { color:var(--text-muted); font-size:10px; line-height:1.5; }
+.instructor-portal .student-xp-award-form :is(select,input,textarea) { margin:0; width:100%; min-width:0; }
+.instructor-portal .student-xp-award-form .xp-award-select-wrap { position:relative; }
+.instructor-portal .student-xp-award-form .xp-award-select-wrap > .lucide { position:absolute; top:50%; right:13px; width:17px; height:17px; color:#7293b7; transform:translateY(-50%); pointer-events:none; }
+.instructor-portal .student-xp-award-form .xp-award-select-wrap select { appearance:none; padding-right:42px; cursor:pointer; }
+.instructor-portal .xp-award-multi-select { position:relative; min-width:0; }
+.instructor-portal .xp-award-multi-select > summary { display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:44px; padding:10px 13px; border:1px solid #405572; border-radius:9px; background:#112138; color:#eef4fc; cursor:pointer; list-style:none; }
+.instructor-portal .xp-award-multi-select > summary::-webkit-details-marker { display:none; }
+.instructor-portal .xp-award-multi-select > summary[aria-disabled="true"] { opacity:.58; cursor:not-allowed; }
+.instructor-portal .xp-award-multi-select > summary > span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.instructor-portal .xp-award-multi-select > summary > .lucide { width:17px; height:17px; flex:0 0 17px; transition:transform .16s ease; }
+.instructor-portal .xp-award-multi-select[open] > summary > .lucide { transform:rotate(180deg); }
+.instructor-portal .xp-award-student-options { position:absolute; z-index:20; inset:calc(100% + 6px) 0 auto; display:grid; gap:3px; max-height:250px; overflow:auto; padding:7px; border:1px solid #405572; border-radius:11px; background:#192b40; box-shadow:0 14px 34px #07132280; }
+.instructor-portal .xp-award-options-heading { position:sticky; top:-7px; z-index:1; display:flex; justify-content:space-between; align-items:center; gap:10px; margin:-7px -7px 3px; padding:10px 12px; border-bottom:1px solid #405572; background:#192b40; }
+.instructor-portal .xp-award-options-heading strong { font-size:11px; }
+.instructor-portal .xp-award-options-heading small { font-size:10px; }
+.instructor-portal .xp-award-student-option { display:flex; align-items:center; gap:11px; min-height:42px; margin:0; padding:8px 10px; border:1px solid transparent; border-radius:8px; cursor:pointer; transition:background .15s,border-color .15s; }
+.instructor-portal .xp-award-student-option:hover { background:#263e56; }
+.instructor-portal .xp-award-student-option.is-selected { background:rgba(49,95,145,.22); border-color:#456b94; }
+.instructor-portal .xp-award-student-option input { width:16px; height:16px; flex:0 0 16px; margin:0; accent-color:#244a73; }
+.instructor-portal .xp-award-student-option > span { display:block; min-width:0; overflow:hidden; color:inherit; font-size:12px; font-weight:500; line-height:1.4; text-overflow:ellipsis; white-space:nowrap; }
+.instructor-portal .student-xp-award-form .xp-award-amount { position:relative; }
+.instructor-portal .student-xp-award-form .xp-award-amount input { padding-right:48px; }
+.instructor-portal .student-xp-award-form .xp-award-amount>span { position:absolute; top:50%; right:14px; transform:translateY(-50%); color:var(--text-muted); font-size:12px; font-weight:700; pointer-events:none; }
+.instructor-portal .student-xp-award-form .modal-footer { margin-top:2px; }
+@media(max-width:600px){.instructor-portal #modal-award-student-xp .student-xp-award-modal{padding:22px}.instructor-portal .student-xp-award-form .modal-footer{flex-direction:column-reverse}.instructor-portal .student-xp-award-form .modal-footer button{width:100%}}
 @media (min-width: 851px) and (max-width: 1100px) {
   .instructor-portal .profile-info { display: none; }
 }
@@ -193,6 +249,7 @@ body.instructor-portal {
   .instructor-portal .hero-banner { flex-direction: column; align-items: stretch; }
   .instructor-portal .quick-actions { width: 100%; }
 }
+@media (max-width: 1100px) { .instructor-portal .quick-actions { grid-template-columns: repeat(2,minmax(0,1fr)); } }
 @media (max-width: 800px) {
   .instructor-portal .main { padding: 20px 16px 40px; }
   .instructor-portal .subject-cards, .instructor-portal .analytics-reference-grid { grid-template-columns: 1fr; }
@@ -216,7 +273,7 @@ body.instructor-portal {
   .instructor-portal .brand-wordmark { font-size: 14px; }
   .instructor-portal .nav-account { padding-left: 5px; }
   .instructor-portal .nav-right { gap: 5px; }
-  .instructor-portal .btn-logout { font-size: 11px; padding: 8px 6px; }
+  .instructor-portal .btn-logout { width:40px; height:44px; padding:0; }
   .instructor-portal .quiz-grid, .instructor-portal .tl-grid { grid-template-columns: 1fr; }
   .instructor-portal :is(.hero-banner, .my-students-hero, .lb-hero, .flagged-hero, .workspace-heading) { padding: 20px; }
   .instructor-portal .analytics-panel-card { padding: 16px; }
@@ -380,15 +437,16 @@ body.instructor-portal {
 }
 /* Profile keeps its controls visible while long assignments scroll inside. */
 .instructor-portal #modal-profile { padding: 16px; background: rgba(6,14,25,.78); backdrop-filter: blur(6px); }
-.instructor-portal #modal-profile .instructor-profile-dialog { width: min(600px,100%); max-width: 600px; max-height: calc(100dvh - 32px); padding: 0; display: flex; flex-direction: column; overflow: hidden; }
-.instructor-portal .profile-dialog-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 22px; background: #1f344c; border-bottom: 1px solid #354c65; flex-shrink: 0; }
+.instructor-portal #modal-profile .instructor-profile-dialog { width: min(640px,100%); max-width: 640px; max-height: calc(100dvh - 32px); padding: 0; display: flex; flex-direction: column; overflow: hidden; }
+.instructor-portal .profile-dialog-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; background: #1f344c; border-bottom: 1px solid #354c65; flex-shrink: 0; }
 .instructor-portal .profile-dialog-header h2 { margin: 0; padding: 0; font-size: 18px; font-weight: 600; }
 .instructor-portal .profile-dialog-header .modal-close { position: static; order: 1; flex-shrink: 0; background: #2b425b; border: 1px solid #4a627d; }
-.instructor-portal .profile-dialog-body { padding: 22px; overflow-y: auto; min-height: 0; }
-.instructor-portal .profile-modal-card { display: grid; grid-template-columns: 56px minmax(0,1fr); gap: 16px; padding: 0; margin-bottom: 20px; background: none; border: 0; }
+.instructor-portal .profile-dialog-body { padding: 24px; overflow-y: auto; min-height: 0; }
+.instructor-portal .profile-modal-card { display: grid; grid-template-columns: 56px minmax(0,1fr) minmax(96px,116px); align-items: start; gap: 16px; padding: 16px; margin-bottom: 20px; background: #1b2f45; border: 1px solid #354e68; border-radius: 14px; }
 .instructor-portal .profile-modal-avatar { width: 56px; height: 56px; border-radius: 14px; background: #365777; font-size: 20px; }
-.instructor-portal .profile-modal-info { min-width: 0; }
-.instructor-portal .profile-modal-info h3 { font-size: 17px; overflow-wrap: anywhere; }
+.instructor-portal .profile-modal-info { min-width: 0; align-self: center; }
+.instructor-portal .profile-modal-info h3 { margin-bottom: 4px; font-size: 17px; line-height: 1.35; overflow-wrap: anywhere; }
+.instructor-portal .profile-modal-info .fac-id { overflow-wrap: anywhere; }
 .instructor-portal .profile-badges { gap: 6px; }
 .instructor-portal .pbadge { font-size: 10px; border-radius: 6px; background: #263e56; border-color: #3e5873; color: #b9cfe6; }
 .instructor-portal .profile-xp { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: #243d56; border: 1px solid #425e7c; border-radius: 12px; text-align: left; }
@@ -401,9 +459,9 @@ body.instructor-portal {
 .instructor-portal .asgn-left { flex: 1; min-width: 160px; }
 .instructor-portal .asgn-name { font-size: 13px; }
 .instructor-portal .asgn-sub { color: #9eb5cd; }
-.instructor-portal #modal-profile .modal-footer { flex-shrink: 0; margin: 0; padding: 14px 22px; background: #1b2e44; border-top: 1px solid #354c65; }
+.instructor-portal #modal-profile .modal-footer { display:flex; justify-content:space-between; gap:.75rem; flex-shrink: 0; margin: 0; padding: 14px 24px; background: #1b2e44; border-top: 1px solid #354c65; }
 .instructor-portal #modal-profile .btn-save { background: #2c4865; border: 1px solid #52708f; }
-@media (max-width: 480px) { .instructor-portal .pdc-grid { grid-template-columns: 1fr; } .instructor-portal .profile-dialog-body { padding: 16px; } }
+@media (max-width: 480px) { .instructor-portal .pdc-grid { grid-template-columns: 1fr; } .instructor-portal .profile-dialog-body { padding: 18px; } .instructor-portal #modal-profile .modal-footer { padding: .75rem 1rem; } }
 @media (prefers-reduced-motion: reduce) {
   .instructor-portal *, .instructor-portal *::before, .instructor-portal *::after { animation: none !important; transition: none !important; }
 }
@@ -440,11 +498,13 @@ body.instructor-portal {
 .instructor-portal #modal-profile .modal-footer button { min-height: 42px; min-width: 0; padding: .65rem 1rem; background: #2c4865; border: 1px solid #52708f; border-radius: 9px; }
 @media (max-width: 600px) { .instructor-portal #modal-profile .modal-footer { padding: .75rem 1rem; } .instructor-portal #modal-profile .modal-footer button { flex: 1 1 0; } }
 
-.instructor-portal #modal-profile .profile-modal-card{grid-template-columns:56px minmax(0,1fr) 116px;align-items:start}
-.instructor-portal #modal-profile .profile-rank-display{grid-column:3;grid-row:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:112px;padding:12px 8px;box-sizing:border-box;border:1px solid #ac8d55;border-radius:14px;background:#332e24;color:#f4d79b;text-align:center}
+.instructor-portal #modal-profile .profile-modal-card{grid-template-columns:56px minmax(0,1fr) minmax(96px,116px)}
+.instructor-portal #modal-profile .profile-rank-display{grid-column:3;grid-row:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;width:100%;min-width:0;min-height:112px;padding:12px 8px;box-sizing:border-box;border:1px solid #ac8d55;border-radius:14px;background:#332e24;color:#f4d79b;text-align:center}
 .instructor-portal #modal-profile .profile-modal-avatar{grid-column:1;grid-row:1}.instructor-portal #modal-profile .profile-modal-info{grid-column:2;grid-row:1}
 .instructor-portal #modal-profile .profile-rank-display>span{font-size:9px;font-weight:600;letter-spacing:.08em}.instructor-portal #modal-profile .profile-rank-display>strong{font-size:32px;font-weight:800;line-height:1.15;white-space:nowrap}.instructor-portal #modal-profile .profile-rank-display>small{font-size:10px;line-height:1.5;color:#d5c39f}.instructor-portal #modal-profile .profile-rank-display.is-unranked{background:#233247;border-color:#4b617b;color:#c7d5e6}.instructor-portal #modal-profile .profile-rank-display.is-unranked small{color:#b4c5da}
-@media(max-width:480px){.instructor-portal #modal-profile .profile-modal-card{grid-template-columns:minmax(0,1fr) 106px;gap:14px}.instructor-portal #modal-profile .profile-modal-avatar{grid-column:1;grid-row:1}.instructor-portal #modal-profile .profile-rank-display{grid-column:2;grid-row:1/3}.instructor-portal #modal-profile .profile-modal-info{grid-column:1;grid-row:2}.instructor-portal #modal-profile .profile-rank-display>strong{font-size:28px}}
+.instructor-portal #modal-profile .profile-rank-display>span,.instructor-portal #modal-profile .profile-rank-display>small{display:none!important}
+.instructor-portal #modal-profile .profile-rank-display{min-height:0;padding:10px;gap:0}
+@media(max-width:480px){.instructor-portal #modal-profile .profile-modal-card{grid-template-columns:minmax(0,1fr) 96px;gap:14px;padding:14px}.instructor-portal #modal-profile .profile-modal-avatar{grid-column:1;grid-row:1}.instructor-portal #modal-profile .profile-rank-display{grid-column:2;grid-row:1/3}.instructor-portal #modal-profile .profile-modal-info{grid-column:1;grid-row:2}.instructor-portal #modal-profile .profile-rank-display>strong{font-size:28px}}
 
 #modal-student-detail .modal{width:min(640px,calc(100vw - 32px));max-width:640px!important;padding:28px;background:#14243a;border:1px solid #354c68;border-radius:18px;color:#eaf1fc}
 #modal-student-detail h2{padding-right:36px;margin:0;font-size:23px}
@@ -472,4 +532,9 @@ body.instructor-portal {
 .instructor-portal #panel-leaderboard .lb-row{margin-bottom:.4rem;border-radius:10px}
 .instructor-portal #panel-leaderboard .lb-row.lb-top{border:1px solid var(--lb-accent);border-left-width:4px;background:var(--lb-tint)}
 .instructor-portal #panel-leaderboard .lb-top .lb-rank-num{color:var(--lb-accent);font-weight:800}
-.instructor-portal #students-list :is(.roster-top-1,.roster-top-2,.roster-top-3){border:1px solid var(--roster-accent);border-left-width:4px;background:var(--roster-tint);border-radius:10px;margin-bottom:.4rem}
+.instructor-portal #students-list .roster-top-1{--roster-accent:#f6cb65;--roster-tint:rgba(246,203,101,.12)}
+.instructor-portal #students-list .roster-top-2{--roster-accent:#c1d2e5;--roster-tint:rgba(193,210,229,.10)}
+.instructor-portal #students-list .roster-top-3{--roster-accent:#e7a275;--roster-tint:rgba(231,162,117,.12)}
+.instructor-portal #students-list .roster-top-4{--roster-accent:#b69af2;--roster-tint:rgba(182,154,242,.12)}
+.instructor-portal #students-list .roster-top-5{--roster-accent:#6bd8c4;--roster-tint:rgba(107,216,196,.10)}
+.instructor-portal #students-list :is(.roster-top-1,.roster-top-2,.roster-top-3,.roster-top-4,.roster-top-5){border:1px solid var(--roster-accent);border-left-width:4px;background:var(--roster-tint);border-radius:10px;margin-bottom:.4rem}

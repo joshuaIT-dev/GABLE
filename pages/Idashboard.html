@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../assets/js/color-theme.js?v=1"></script>
 
     <title>GABLE – Instructor Dashboard</title>
 
@@ -18,6 +19,9 @@
 <link rel="stylesheet" href="../assets/css/brand-text.css?v=4">
     <script src="../cursor/cursor.js"></script>
 <link rel="stylesheet" href="../assets/css/teaching-ranks.css?v=1">
+<link rel="stylesheet" href="../assets/css/color-modes.css?v=2">
+<link rel="stylesheet" href="../assets/css/instructor/modes.css?v=36">
+<link rel="stylesheet" href="../assets/css/notification-panel.css?v=2">
 </head>
 
 <body class="instructor-dashboard">
@@ -61,25 +65,35 @@
                 </button>
 
                 <!-- Notification Dropdown -->
-                <div class="idb-notif-dropdown" id="idb-notif-dropdown">
+                <div class="idb-notif-dropdown gable-notif-panel" id="idb-notif-dropdown">
 
                     <div class="idb-nd-header">
 
-                        <span class="idb-nd-title">
-                            Notifications
-                        </span>
+                        <span class="idb-nd-title"><i data-lucide="bell" aria-hidden="true"></i> Notifications</span>
 
                         <button class="idb-nd-mark-all" onclick="idbMarkAllNotifsRead()">
                             Mark all read
                         </button>
+                        <button class="np-close-btn" onclick="toggleIdbBell(event)" aria-label="Close notifications"><i data-lucide="x" aria-hidden="true"></i></button>
 
                     </div>
-
-                    <div class="idb-nd-list" id="idb-nd-list"></div>
+                    <div class="np-tabs" role="tablist" aria-label="Notification categories">
+                        <button class="np-tab active" id="idb-notif-tab-announcements" role="tab" aria-selected="true" onclick="switchIdbNotifTab('announcements', this)"><i data-lucide="megaphone" aria-hidden="true"></i> Announcements <span class="np-tab-badge" id="idb-notif-ann-count" hidden></span></button>
+                        <button class="np-tab" id="idb-notif-tab-activity" role="tab" aria-selected="false" onclick="switchIdbNotifTab('activity', this)"><i data-lucide="clipboard-check" aria-hidden="true"></i> Student Activity <span class="np-tab-badge" id="idb-notif-activity-count" hidden></span></button>
+                    </div>
+                    <div class="idb-nd-list np-body" id="idb-nd-list" role="tabpanel"></div>
 
                 </div>
 
             </div>
+
+            <details class="instructor-settings">
+                <summary aria-label="Settings" title="Settings"><i data-lucide="settings" aria-hidden="true"></i></summary>
+                <div class="instructor-settings-popover">
+                    <span>Color mode</span>
+                    <div class="theme-mount"></div>
+                </div>
+            </details>
 
 
             <!-- TEACHING XP -->
@@ -1210,9 +1224,9 @@
          JAVASCRIPT
     ═══════════════════════════════════════════════ -->
 
-    <script src="../assets/js/main.js?v=8"></script>
+    <script src="../assets/js/main.js?v=11"></script>
     <script src="../assets/js/idashboard.js?v=8"></script>
-    <script src="../assets/js/idashboard/additions.js?v=10"></script>
+    <script src="../assets/js/idashboard/additions.js?v=11"></script>
 
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="../assets/js/lucide-emoji.js"></script>

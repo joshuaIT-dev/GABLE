@@ -55,6 +55,18 @@ body.student-portal .leaderboard-card .lb-row:not(.me):hover,
 body.instructor-portal #panel-leaderboard .lb-row:not(.lb-top):hover{
  background:var(--surface-summary);
 }
+body.student-portal #panel-xp .level-milestone.current{
+ border-color:#8bbaff;color:#8bbaff;
+}
+body.student-portal #panel-xp .level-milestone.reached:not(.current){
+ border-color:#4ade80;color:#4ade80;
+}
+body.student-portal #panel-xp .level-milestone.locked:not(.current){
+ border-color:#94a3b8;color:#94a3b8;
+}
+body.student-portal #panel-xp .level-milestone:is(.current,.reached,.locked) :is(.milestone-number,strong,span){
+ color:inherit;
+}
 /* Neutral totals; color remains on icons, badges, progress, and awarded amounts. */
 body.admin-portal .ov-card .ov-val,
 body.instructor-portal .metric-card .metric-value,

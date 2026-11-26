@@ -48,6 +48,30 @@ try {
     if ($_SERVER['REQUEST_METHOD']==='POST') {
         if (stripos($_SERVER['CONTENT_TYPE'] ?? '', 'application/json')!==0) throw new RuntimeException('JSON required.');
         $input=json_decode(file_get_contents('php://input'),true) ?: [];
+        if (!empty($input['delete_read'])) {
+            $type=$input['notification_type'] ?? '';
+            if ($type==='system' && !empty($input['notification_id'])) {
+                $delete=pu_query($conn,'DELETE FROM student_system_notifications WHERE student_id=? AND notification_id=? AND is_read=1',[$studentId,(int)$input['notification_id']]);
+            } elseif ($type==='announcement' && !empty($input['announcement_id'])) {
+                $id=(int)$input['announcement_id'];
+                $read=pu_query($conn,'SELECT 1 FROM student_announcement_notification_reads WHERE student_id=? AND announcement_id=?',[$studentId,$id])->get_result()->num_rows;
+                if (!$read) throw new RuntimeException('Only read notifications can be deleted.');
+                $delete=pu_query($conn,"INSERT IGNORE INTO student_notification_dismissals(student_id,notification_type,notification_id) VALUES (?,'announcement',?)",[$studentId,$id]);
+            } elseif ($type==='quiz' && !empty($input['quiz_id'])) {
+                $id=(int)$input['quiz_id'];
+                $read=pu_query($conn,'SELECT 1 FROM student_quiz_notification_reads WHERE student_id=? AND quiz_id=? AND is_read=1',[$studentId,$id])->get_result()->num_rows;
+                if (!$read) throw new RuntimeException('Only read notifications can be deleted.');
+                $delete=pu_query($conn,"INSERT IGNORE INTO student_notification_dismissals(student_id,notification_type,notification_id) VALUES (?,'quiz',?)",[$studentId,$id]);
+            } else {
+                throw new RuntimeException('Invalid notification.');
+            }
+            if ($delete->affected_rows!==1) throw new RuntimeException('This notification is already deleted or cannot be deleted.');
+            echo json_encode(['success'=>true]); exit;
+        }
+        if (!empty($input['announcement_read']) && !empty($input['announcement_id'])) {
+            pu_query($conn,'INSERT IGNORE INTO student_announcement_notification_reads(student_id,announcement_id) VALUES (?,?)',[$studentId,(int)$input['announcement_id']]);
+            echo json_encode(['success'=>true]); exit;
+        }
         if (!empty($input['notification_id'])) pu_query($conn,'UPDATE student_system_notifications SET is_read=1 WHERE student_id=? AND notification_id=?',[$studentId,(int)$input['notification_id']]);
         elseif (!empty($input['system_all'])) pu_query($conn,'UPDATE student_system_notifications SET is_read=1 WHERE student_id=?',[$studentId]);
         else pu_query($conn,'INSERT IGNORE INTO student_quiz_notification_reads(student_id,quiz_id) VALUES (?,?)',[$studentId,(int)($input['quiz_id'] ?? 0)]);
@@ -153,9 +177,19 @@ try {
 
             AND r.student_id = ?
 
+        LEFT JOIN student_notification_dismissals d
+
+            ON d.student_id = ?
+
+            AND d.notification_type = 'quiz'
+
+            AND d.notification_id = q.quiz_id
+
         WHERE
 
     q.status = 'active'
+
+AND d.notification_id IS NULL
 
 AND (
 
@@ -196,7 +230,9 @@ AND (
 
     $stmt->bind_param(
 
-    "iss",
+    "iiss",
+
+    $studentId,
 
     $studentId,
 

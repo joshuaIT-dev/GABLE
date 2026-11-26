@@ -502,14 +502,15 @@
    Shown inside battle modal when boost is active
 ══════════════════════ */
 .xp-boost-banner {
-  display: flex; align-items: center; gap: .6rem;
+  display: flex; flex-direction: column; align-items: flex-start; gap: .2rem;
   background: rgba(34,211,238,.1);
   border: 1px solid rgba(34,211,238,.3);
   border-radius: 10px; padding: .55rem .85rem;
   margin-bottom: .85rem;
-  font-size: .75rem; font-weight: 700; color: #22d3ee;
+  font-size: .75rem; line-height: 1.45; color: #22d3ee;
   animation: boost-glow 2s ease-in-out infinite;
 }
+.xp-boost-banner strong { font-weight: 700; }
 @keyframes boost-glow {
   0%,100% { box-shadow: 0 0 0 rgba(34,211,238,0); }
   50%      { box-shadow: 0 0 12px rgba(34,211,238,.25); }

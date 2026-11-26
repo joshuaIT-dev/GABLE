@@ -14,7 +14,7 @@
 |   - it is fully graded (status 'graded', or 'submitted' with no
 |     identification questions waiting for the instructor)
 |   - the score is below 100
-|   - it has not been boosted before
+|   - additional boosts may be redeemed until the score reaches 100
 |--------------------------------------------------------------------------
 */
 
@@ -52,13 +52,11 @@ try {
                 q.title, q.questions
          FROM quiz_idsubmissions s
          INNER JOIN quizzes q ON q.quiz_id = s.quiz_id
-         LEFT JOIN grade_boost_redemptions r ON r.submission_id = s.submission_id
          WHERE s.student_id = ?
            AND s.submission_id > (SELECT submission_cutoff FROM current_xp_semester)
            AND LOWER(q.mode) = 'formal'
            AND s.status IN ('submitted', 'graded')
            AND s.score < 100
-           AND r.redemption_id IS NULL
          ORDER BY s.submitted_at DESC"
     );
     $stmt->bind_param('i', $studentId);
@@ -102,7 +100,7 @@ try {
     echo json_encode([
         'success'     => true,
         'enabled'     => $enabled,
-        'cost'        => 350,
+        'cost'        => 150,
         'earned_xp'   => $earned,
         'spent_xp'    => $spent,
         'balance'     => max(0, $earned - $spent),

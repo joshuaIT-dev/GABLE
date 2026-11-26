@@ -2085,4 +2085,9 @@
 .lb-top-3 { --lb-accent: #e7a275; --lb-tint: rgba(231,162,117,.12); }
 .lb-top-4 { --lb-accent: #b69af2; --lb-tint: rgba(182,154,242,.12); }
 .lb-top-5 { --lb-accent: #6bd8c4; --lb-tint: rgba(107,216,196,.10); }
+.lb-top-6 { --lb-accent: #8bd17c; --lb-tint: rgba(139,209,124,.10); }
+.lb-top-7 { --lb-accent: #70b8f5; --lb-tint: rgba(112,184,245,.10); }
+.lb-top-8 { --lb-accent: #ee91c5; --lb-tint: rgba(238,145,197,.10); }
+.lb-top-9 { --lb-accent: #e9a85b; --lb-tint: rgba(233,168,91,.10); }
+.lb-top-10 { --lb-accent: #8fa6ff; --lb-tint: rgba(143,166,255,.10); }
 @media(max-width:560px) { .lb-row { gap:.6rem; padding:.8rem .5rem; } .lb-info { min-width:0; overflow-wrap:anywhere; } .lb-score { display:none; } .lb-avatar { width:34px; height:34px; } }

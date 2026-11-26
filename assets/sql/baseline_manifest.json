@@ -7,5 +7,6 @@
     "20261114_admin_quiz_removal.sql",
     "20261114_maintenance_countdown.sql",
     "20261114_syllabus.sql",
-    "20261115_alignment_workflow.sql"
+    "20261115_alignment_workflow.sql",
+    "20261125_student_notification_dismissals.sql"
 ]

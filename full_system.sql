@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `grade_boost_redemptions` (
   `score_after` decimal(5,2) NOT NULL DEFAULT 0.00,
   `redeemed_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`redemption_id`),
-  UNIQUE KEY `uq_boost_submission` (`submission_id`),
+  KEY `idx_boost_submission` (`submission_id`),
   KEY `idx_boost_student` (`student_id`),
   KEY `idx_boost_quiz` (`quiz_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -281,6 +281,19 @@ CREATE TABLE IF NOT EXISTS `student_quiz_notification_reads` (
   PRIMARY KEY (`notification_read_id`),
   UNIQUE KEY `unique_student_quiz` (`student_id`,`quiz_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE IF NOT EXISTS `student_announcement_notification_reads` (
+  `student_id` int(11) NOT NULL,
+  `announcement_id` int(11) NOT NULL,
+  `read_at` timestamp NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`student_id`,`announcement_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE IF NOT EXISTS `student_notification_dismissals` (
+  `student_id` int(11) NOT NULL,
+  `notification_type` varchar(20) NOT NULL,
+  `notification_id` int(11) NOT NULL,
+  `dismissed_at` timestamp NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`student_id`,`notification_type`,`notification_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 CREATE TABLE IF NOT EXISTS `student_reward_progress` (
   `student_id` int(11) NOT NULL,
   `lifetime_xp` int(11) NOT NULL DEFAULT 0,

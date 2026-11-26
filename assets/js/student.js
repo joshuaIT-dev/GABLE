@@ -3306,10 +3306,11 @@ async function renderLeaderboard(filter = 'section', page = 1) {
     page = Math.max(1, Math.min(page, pages));
     const offset = (page - 1) * 50;
     const fragment = document.createDocumentFragment();
+    const highlightedTopCount = filter === 'overall' ? 5 : 3;
     data.slice(offset, offset + 50).forEach((student, index) => {
         const row = document.createElement('div'); row.className = 'lb-row' + (student.isMe ? ' me' : '');
         const position = offset + index + 1;
-        if (position <= 5) row.classList.add('lb-top', `lb-top-${position}`);
+        if (position <= highlightedTopCount) row.classList.add('lb-top', `lb-top-${position}`);
         const rank = document.createElement('div'); rank.className = 'lb-rank'; rank.textContent = '#' + (offset + index + 1);
         const avatar = document.createElement('div'); avatar.className = 'lb-avatar';
         const level = getLevelForXP(Number(student.level_xp) || 0);
@@ -3354,13 +3355,13 @@ function renderXP() {
   setText('next-level-chip', info.atMax ? 'Maximum level reached' : `Next unlock: Level ${info.levelNum + 1}`);
   document.getElementById('xp-bar-fill-main').style.width = `${info.pct}%`;
   const boost = document.getElementById('btn-use-xp-main');
-  boost.disabled = studentXP < 350;
-  setText('boost-quiz-list', studentXP < 350 ? `${(350 - studentXP).toLocaleString()} more XP needed for a grade boost.` : 'Select an eligible result to review and apply your boost.');
+  boost.disabled = studentXP < 150;
+  setText('boost-quiz-list', studentXP < 150 ? `${(150 - studentXP).toLocaleString()} more XP needed for a grade boost.` : 'Each boost costs 150 XP and adds 1 point. Repeat on the same result until it reaches 100%.');
   document.getElementById('xp-rewards-wallet').innerHTML = coupons.length
     ? renderCouponsSection()
     : '<div class="xp-reward-empty"><strong>Your first reward is ahead</strong><p>Reach Level 2 at 300 semester XP to unlock your Apprentice badge. Complete quizzes to begin your collection.</p></div>';
   document.getElementById('xp-level-roadmap').innerHTML = LEVELS.map(level => `
-    <div class="level-milestone ${level.level === info.levelNum ? 'current' : ''}">
+    <div class="level-milestone ${level.level === info.levelNum ? 'current' : level.level < info.levelNum ? 'reached' : 'locked'}">
       <span class="milestone-number">${level.level}</span><div><strong>${level.name}</strong><span>${level.reward?.label || 'Your starting point'}</span></div>
       <div class="milestone-status"><strong>${level.xpRequired.toLocaleString()} XP</strong><span>${level.level === info.levelNum ? 'Current level' : level.level < info.levelNum ? 'Reached' : 'Locked'}</span></div>
     </div>`).join('');
@@ -3524,8 +3525,8 @@ function renderBattleQuestion() {
 
       ? `
         <div class="xp-boost-banner">
-          ⚡ 1.5x XP Boost Active!
-          Applies to your next eligible result when grading finishes.
+          <strong>⚡ 1.5x XP Boost Active!</strong>
+          <span>Applies to your next eligible result when grading finishes.</span>
         </div>
       `
 
@@ -3545,12 +3546,14 @@ function renderBattleQuestion() {
     'battle-body'
   ).innerHTML = `
 
-    ${multiplierBanner}
-
     <div class="battle-layout">
 
 
       <div class="battle-main-col">
+
+        <div class="battle-question-content">
+
+        ${multiplierBanner}
 
         <div class="battle-info">
 
@@ -3592,6 +3595,7 @@ function renderBattleQuestion() {
         </div>
 
         <div
+          class="battle-question-count"
           style="
             font-size:.72rem;
             color:var(--text-muted);
@@ -3686,7 +3690,10 @@ ${
       </div>
 
 
-        <p class="quiz-session-note">The timer keeps running when closed. ${quizSession?.open_count === 3 ? 'Final opening: finish before leaving.' : 'You can open this quiz up to three times.'}</p>
+        <p class="quiz-session-note">Timer continues if closed · ${quizSession?.open_count === 3 ? 'final opening' : 'up to 3 openings'}</p>
+
+        </div>
+
         <!-- QUIZ NAVIGATION -->
 
         <div
@@ -3720,7 +3727,7 @@ ${
             </span>
 
 
-${typeof renderHintButton === 'function' ? renderHintButton() : ''}
+<div id="hint-action-slot">${typeof renderHintButton === 'function' ? renderHintButton() : ''}</div>
 
 <!-- FLAG QUESTION BUTTON -->
 ${
@@ -3732,7 +3739,7 @@ ${
 <!-- NEXT / SUBMIT BUTTON -->
 <button
     id="next-btn"
-    class="btn-primary"
+    class="btn-primary ${idx === q.questions.length - 1 ? 'quiz-submit-button' : ''}"
     onclick="nextQuestion()"
     style="
         min-width:150px;
@@ -3752,7 +3759,7 @@ ${
 >
     ${
         idx === q.questions.length - 1
-            ? 'Submit Quiz 🚀'
+            ? 'Submit Quiz'
             : 'Next Question →'
     }
 </button>
@@ -4569,6 +4576,16 @@ document.addEventListener(
 
   }
 );
+
+document.addEventListener('click', e => {
+  document.querySelectorAll('.student-settings[open]').forEach(settings => {
+    if (!settings.contains(e.target)) settings.open = false;
+  });
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.querySelectorAll('.student-settings[open]').forEach(settings => { settings.open = false; });
+});
 
 
 /* ═══ MODALS ═══ */

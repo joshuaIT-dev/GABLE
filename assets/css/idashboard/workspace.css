@@ -20,7 +20,7 @@
 .instructor-dashboard .dash-stat-card { padding: 18px; border-radius: 14px; box-shadow: none; }
 .instructor-dashboard .dash-stat-card:hover { transform: none; border-color: #607c99; }
 .instructor-dashboard .dsc-icon { display: grid; place-items: center; width: 34px; height: 34px; background: #273c54; color: #bad0e8; border-radius: 9px; }
-.instructor-dashboard .dsc-val { color: #d7e5f5 !important; font-size: 28px; }
+.instructor-dashboard .dsc-val { font-size: 28px; }
 .instructor-dashboard .dsc-label { font-size: 12px; }
 .instructor-dashboard .tq-card { padding: 22px; background: linear-gradient(115deg,#1c2d43,#243b52); border-color: #3a526c; border-radius: 16px; margin-bottom: 24px; }
 .instructor-dashboard .tq-card::before { display: none; }
